@@ -3,6 +3,9 @@ package br.jus.stf.autuacao.recebimento.domain.model;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 
 import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
@@ -16,33 +19,35 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 18.12.2015
  */
 @Entity
+@Table(name = "REMESSA", schema = "RECEBIMENTO")
 public class Remessa extends EntitySupport<Remessa, ProtocoloId> implements AggregateRoot<Remessa, ProtocoloId> {
 
     @EmbeddedId
     private ProtocoloId protocoloId;
     
-    @Column
+    @Column(name = "SIG_CLASSE")
     private String classeId;
     
-    @Column
+    @Column(name ="QTD_VOLUME")
     private Integer volumes;
     
-    @Column
+    @Column(name = "QTD_APENSO")
     private Integer apensos;
     
-    @Column
+    @Column(name = "TIP_FORMA_RECEBIMENTO")
     private String formaRecebimento;
     
-    @Column
+    @Column(name = "NUM_SEDEX")
     private String numeroSedex;
     
-    @Column
+    @Column(name = "TIP_STATUS")
+	@Enumerated(EnumType.STRING)
     private Status status;
     
-    @Column
+    @Column(name = "DSC_MOTIVO")
     private String motivo;
     
-    @Column
+    @Column(name = "TIP_PROCESSO")
     private String tipoProcesso;
 
     public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, String formaRecebimento, String numero, String tipoProcesso, Status status) {

@@ -1,0 +1,26 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: recebimento
+  datasource:
+    url: jdbc:h2:mem:recebimento;MODE=Oracle;DB_CLOSE_DELAY=-1
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+eureka:  
+  client:
+    serviceUrl:
+      defaultZone: http://discovery:8761/eureka/
+  instance:
+    preferIpAddress: true
+    
+flyway:
+  validate-on-migrate: false

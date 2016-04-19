@@ -24,9 +24,9 @@ import javax.persistence.Table;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.Validate;
 
-import br.jus.stf.autuacao.recebimento.domain.model.support.ClassePeticionavel;
-import br.jus.stf.autuacao.recebimento.domain.model.support.ModeloDevolucao;
-import br.jus.stf.autuacao.recebimento.domain.model.support.Preferencia;
+import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
+import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
+import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.TextoId;

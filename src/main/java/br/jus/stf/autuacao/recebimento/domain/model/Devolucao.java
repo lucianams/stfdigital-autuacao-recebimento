@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.Validate;
 
-import br.jus.stf.autuacao.recebimento.domain.model.support.ModeloDevolucao;
+import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 import br.jus.stf.core.framework.domaindrivendesign.ValueObjectSupport;
 import br.jus.stf.core.shared.documento.TextoId;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;

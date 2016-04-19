@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
-import br.jus.stf.autuacao.recebimento.domain.model.support.ModeloDevolucao;
-import br.jus.stf.autuacao.recebimento.domain.model.support.ModeloDevolucaoRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
+import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucaoRepository;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 
 /**

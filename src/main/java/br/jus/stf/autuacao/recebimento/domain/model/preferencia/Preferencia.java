@@ -1,11 +1,11 @@
-package br.jus.stf.autuacao.recebimento.domain.model.support;
+package br.jus.stf.autuacao.recebimento.domain.model.preferencia;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import br.jus.stf.core.framework.domaindrivendesign.ValueObjectSupport;
+import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.preferencia.PreferenciaId;
 
 /**
@@ -16,7 +16,7 @@ import br.jus.stf.core.shared.preferencia.PreferenciaId;
  */
 @Entity
 @Table(name = "PREFERENCIA", schema = "RECEBIMENTO")
-public class Preferencia extends ValueObjectSupport<Preferencia> {
+public class Preferencia extends EntitySupport<Preferencia, PreferenciaId> {
 	
 	@EmbeddedId
 	private PreferenciaId id;
@@ -28,7 +28,8 @@ public class Preferencia extends ValueObjectSupport<Preferencia> {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
-	public PreferenciaId id() {
+	@Override
+	public PreferenciaId identity() {
 		return id;
 	}
 	

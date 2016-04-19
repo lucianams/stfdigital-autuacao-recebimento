@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.support;
+package br.jus.stf.autuacao.recebimento.domain.model.documento;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -7,7 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import br.jus.stf.core.framework.domaindrivendesign.ValueObjectSupport;
+import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.DocumentoId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.documento.TipoDocumentoId;
@@ -20,7 +20,7 @@ import br.jus.stf.core.shared.documento.TipoDocumentoId;
  */
 @Entity
 @Table(name = "MODELO_DEVOLUCAO", schema = "RECEBIMENTO")
-public class ModeloDevolucao extends ValueObjectSupport<ModeloDevolucao> {
+public class ModeloDevolucao extends EntitySupport<ModeloDevolucao, ModeloDocumentoId> {
 	
 	@EmbeddedId
 	private ModeloDocumentoId id;
@@ -47,7 +47,8 @@ public class ModeloDevolucao extends ValueObjectSupport<ModeloDevolucao> {
 		this.template = template;
 	}
 	
-	public ModeloDocumentoId id() {
+	@Override
+	public ModeloDocumentoId identity() {
 		return id;
 	}
 	

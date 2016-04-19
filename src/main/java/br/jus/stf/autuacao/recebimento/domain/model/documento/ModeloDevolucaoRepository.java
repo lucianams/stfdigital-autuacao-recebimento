@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.support;
+package br.jus.stf.autuacao.recebimento.domain.model.documento;
 
 import java.util.List;
 

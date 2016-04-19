@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.support;
+package br.jus.stf.autuacao.recebimento.domain.model.classe;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
@@ -15,7 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import br.jus.stf.core.framework.domaindrivendesign.ValueObjectSupport;
+import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
+import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.classe.ClasseId;
 
 /**
@@ -26,7 +27,7 @@ import br.jus.stf.core.shared.classe.ClasseId;
  */
 @Entity
 @Table(name = "CLASSE_PETICIONAVEL", schema = "RECEBIMENTO")
-public class ClassePeticionavel extends ValueObjectSupport<ClassePeticionavel> {
+public class ClassePeticionavel extends EntitySupport<ClassePeticionavel, ClasseId> {
 	
 	@EmbeddedId
 	private ClasseId sigla;
@@ -43,7 +44,8 @@ public class ClassePeticionavel extends ValueObjectSupport<ClassePeticionavel> {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
-	public ClasseId sigla() {
+	@Override
+	public ClasseId identity() {
 		return sigla;
 	}
 	

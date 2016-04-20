@@ -73,8 +73,9 @@ public class RecebimentoApplicationService {
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
     	FormaRecebimento formaRecebimento = FormaRecebimento.valueOf(command.getFormaRecebimento());
-        Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
-				formaRecebimento, command.getNumeroSedex(), tipoProcesso, status);
+        //TODO: Alterar para pegar recebedor pelo usuário da sessão.
+    	Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
+				formaRecebimento, command.getNumeroSedex(), "USUARIO_FALSO", tipoProcesso, status);
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));

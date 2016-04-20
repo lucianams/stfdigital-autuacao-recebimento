@@ -2,6 +2,7 @@ package br.jus.stf.autuacao.recebimento.domain.model;
 
 import static javax.persistence.CascadeType.ALL;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -79,18 +80,25 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     @JoinTable(name = "REMESSA_PREFERENCIA", schema = "RECEBIMENTO", joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
 		inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
     private Set<Preferencia> preferencias = new HashSet<>(0);
+    
+    @Column(name = "SIG_RECEBEDOR", nullable = false)
+    private String recebedor;
+    
+    @Column(name = "DAT_RECEBIMENTO", nullable = false)
+    private Date dataRecebimento = new Date();
 
     public Remessa() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Status status) {
+    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, String recebedor, Status status) {
 		Validate.notNull(protocolo, "Protocolo requerido.");
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
 		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
-    	Validate.isTrue(formaRecebimento.exigeNumeracao() && StringUtils.isEmpty(numeroSedex.trim()),
+		Validate.isTrue(formaRecebimento.exigeNumeracao() && !StringUtils.isEmpty(numeroSedex),
 				"Forma de recebimento exige número de sedex.");
+    	Validate.notBlank(recebedor, "Recebedor requerido.");
     	Validate.notNull(status, "Status requerido.");
     	
     	this.protocoloId = protocolo.identity();
@@ -98,6 +106,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.apensos = apensos;
         this.formaRecebimento = formaRecebimento;
         this.numeroSedex = numeroSedex;
+        this.recebedor = recebedor;
         this.status = status;
     }
     

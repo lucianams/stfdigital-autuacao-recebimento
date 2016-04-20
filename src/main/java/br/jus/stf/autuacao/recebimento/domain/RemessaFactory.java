@@ -20,15 +20,15 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @Component
 public class RemessaFactory {
 
-    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, TipoProcesso tipoProcesso, Status status) {
+    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, String recebedor, TipoProcesso tipoProcesso, Status status) {
         Remessa remessa;
         
 		switch (tipoProcesso) {
 		case ORIGINARIO:
-			remessa = new RemessaOriginaria(protocolo, volumes, apensos, formaRecebimento, numeroSedex, status);
+			remessa = new RemessaOriginaria(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
 			break;
 		case RECURSAL:
-			remessa = new RemessaRecursal(protocolo, volumes, apensos, formaRecebimento, numeroSedex, status);
+			remessa = new RemessaRecursal(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
 			break;
 		default:
 			throw new IllegalArgumentException(String.format("Tipo de processo não localizado: %s.", tipoProcesso));

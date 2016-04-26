@@ -11,24 +11,50 @@
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
 
-                <form name="basicForm" ng-submit="vm.sendForm(this)" class="md-inline-form" novalidate>
+                <form name="basicForm" ng-submit="registro.sendForm(this)" class="md-inline-form">
 
-                    <div class="form-title">Classificação</div>
-
-                    <div layout="column" layout-gt-xs="row">
+                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container flex>
-                            <label>Classe</label>
-                            <md-select ng-model="vm.basicForm.state">
-                                <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
-                                    {{state.abbrev}}
+                            <label>Quantidade de volumes</label>
+                            <input ng-model="registro.basicForm.qtdVolumes" class="ng-pristine ng-valid md-input ng-empty">
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label for="input_qtd">Quantidade de apensos</label>
+                            <input ng-model="registro.basicForm.qtdApensos" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row">
+                        
+                        <md-input-container flex>
+                            <label>Forma de Envio</label>
+                            <md-select ng-model="registro.basicForm.tipoRecebimento">
+                                <md-option></md-option>
+                                <md-option ng-repeat="tipo in registro.formasRecebimento" value="{{tipo.descricao}}">
+                                    {{tipo.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label for="input_qtd">Número do Sedex</label>
+                            <input ng-model="registro.basicForm.numSedex" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-gt-xs="row">
+                        <md-input-container flex="50">
+                            <label>Tipo de Processo</label>
+                            <md-select ng-model="registro.basicForm.tipoProcesso">
+                                <md-option></md-option>
+                                <md-option ng-repeat="tipo in registro.tiposProcessos" value="{{tipo.id}}">
+                                    {{tipo.nome}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                     </div>
 
                     <md-button type="submit" class="md-raised md-accent" aria-label="Submit" ng-disabled="basicForm.$invalid || basicForm.$pristine">
-                        Submit
+                        Registrar
                     </md-button>
+                      
                 </form>
 
             </div>

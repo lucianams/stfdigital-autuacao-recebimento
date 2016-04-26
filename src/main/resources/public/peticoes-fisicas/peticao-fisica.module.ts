@@ -1,27 +1,32 @@
 import ITranslatePartialLoaderProvider = angular.translate.ITranslatePartialLoaderProvider;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
-import ITemplateCacheService = angular.ITemplateCacheService;
+import {PeticaoFisicaService} from "./peticao-fisica.service";
 
 /** @ngInject **/
 function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider,
-                $stateProvider: IStateProvider) {
+                $stateProvider: IStateProvider,
+                properties: any) {
 
-    $translatePartialLoaderProvider.addPart('http://docker:8765/recebimento/peticoes-fisicas');
+    $translatePartialLoaderProvider.addPart(properties.url + ':' + properties.port + '/recebimento/peticoes-fisicas');
 
     $stateProvider.state('app.novo-processo.recebimento', {
-        url: '/peticao-fisica',
-        views: {
-            'content@app.autenticado': {
-                templateUrl: 'http://docker:8765/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
-                controller: 'app.novo-processo.recebimento.PeticaoFisicaController',
-                controllerAs: 'vm'
+        url : '/peticao-fisica',
+        views : {
+            'content@app.autenticado' : {
+                templateUrl : properties.url + ':' + properties.port + '/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
+                controller : 'app.novo-processo.peticoes-fisicas.PeticaoFisicaController',
+                controllerAs: 'registro'
             }
+        },
+        resolve : {
+            formasRecebimento : ['app.novo-processo.peticoes-fisicas.PeticaoFisicaService', (peticaoFisicaService: PeticaoFisicaService) => {
+                return peticaoFisicaService.consultarFormasRecebimento();
+            }]
         }
     });
 }
 
-let recebimento: IModule = angular.module('app.novo-processo.recebimento', ['app.novo-processo']);
+let recebimento: IModule = angular.module('app.novo-processo.peticoes-fisicas', ['app.novo-processo', 'app.constants']);
 recebimento.config(config);
-
 export default recebimento;

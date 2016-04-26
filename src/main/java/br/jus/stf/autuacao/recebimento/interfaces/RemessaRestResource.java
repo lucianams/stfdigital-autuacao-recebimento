@@ -1,5 +1,9 @@
 package br.jus.stf.autuacao.recebimento.interfaces;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,8 @@ import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDev
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
+import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
+import br.jus.stf.autuacao.recebimento.infra.FormaRecebimentoDto;
 
 /**
  * @author Rodrigo Barreiros
@@ -63,6 +69,13 @@ public class RemessaRestResource {
         }
         
         recebimentoApplicationService.handle(command);
+    }
+	
+	@RequestMapping(value="/formas-recebimento", method = RequestMethod.GET)
+    public List<FormaRecebimentoDto> consultarFormasRecebimento(){
+    	return Arrays.asList(FormaRecebimento.values()).stream()
+    			.map(forma -> new FormaRecebimentoDto(forma.descricao(), forma.exigeNumeracao()))
+    			.collect(Collectors.toList());
     }
 
 	private String message(BindingResult binding) {

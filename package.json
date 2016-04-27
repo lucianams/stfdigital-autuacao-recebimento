@@ -4,7 +4,7 @@
   "dependencies": {},
   "scripts": {
     "test": "gulp test",
-    "postinstall": "typings install"
+    "postinstall": "typings install && gulp build"
   },
   "devDependencies": {
     "chalk": "~1.1.1",

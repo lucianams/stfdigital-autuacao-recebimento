@@ -22,6 +22,7 @@ buildscript {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPlugin}")
         classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.6.0")
+        classpath("com.moowork.gradle:gradle-node-plugin:0.12")
     }
 }
 
@@ -36,6 +37,8 @@ apply plugin: 'maven'
 apply plugin: 'java'
 
 apply plugin: "com.palantir.docker"
+
+apply plugin: 'com.moowork.node'
 
 repositories {
     mavenLocal()
@@ -88,6 +91,10 @@ dependencies {
     testCompile("com.jayway.jsonpath:json-path")
     
     compile("org.springframework.boot:spring-boot-starter-test")
+}
+
+processResources {
+    dependsOn tasks.npmInstall
 }
 
 docker {

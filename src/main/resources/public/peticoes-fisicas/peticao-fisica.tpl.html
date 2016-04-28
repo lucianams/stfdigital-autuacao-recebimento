@@ -27,9 +27,9 @@
                         
                         <md-input-container flex>
                             <label>Forma de Envio</label>
-                            <md-select ng-model="registro.basicForm.tipoRecebimento">
+                            <md-select ng-model="registro.basicForm.formaRecebimento">
                                 <md-option></md-option>
-                                <md-option ng-repeat="tipo in registro.formasRecebimento" value="{{tipo.descricao}}">
+                                <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.descricao}}">
                                     {{tipo.descricao}}
                                 </md-option>
                             </md-select>

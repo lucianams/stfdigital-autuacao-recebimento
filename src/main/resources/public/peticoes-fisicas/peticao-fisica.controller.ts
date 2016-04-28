@@ -7,8 +7,9 @@ export class PeticaoFisicaController {
 
     public basicForm: Object = {};
     public formWizard: Object = {};
-//        public states: Object[] = PeticaoFisicaController.mockClasses();
+    public formaRecebimento: String = "";
     public tiposProcessos : Object[] = PeticaoFisicaController.mockTiposProcessos();
+    public tipoProcesso : String = "";
 
     static $inject = ['$state', 'app.novo-processo.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
     
@@ -31,7 +32,7 @@ export class PeticaoFisicaController {
         }
 *///
     private static mockPeticao(): PeticaoFisica {
-        return new PeticaoFisica('BALCAO', 1, 1, "SR123456789BR", "ORIGINARIO");
+        return new PeticaoFisica(formaRecebimento, 1, 1, "SR123456789BR", "ORIGINARIO");
     }
     
     private static mockTiposProcessos() : Object[]{

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import br.jus.stf.core.shared.preferencia.PreferenciaId;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
@@ -25,7 +26,7 @@ public class PreautuarRemessaCommand {
 	@NotBlank
 	private String classeId;
 	
-    private Set<Long> preferencias;
+    private Set<PreferenciaId> preferencias;
 	
 	public ProtocoloId getProtocoloId() {
 		return protocoloId;
@@ -35,7 +36,7 @@ public class PreautuarRemessaCommand {
 		return classeId;
 	}
 	
-	public Set<Long> getPreferencias() {
+	public Set<PreferenciaId> getPreferencias() {
 		return preferencias;
 	}
 	

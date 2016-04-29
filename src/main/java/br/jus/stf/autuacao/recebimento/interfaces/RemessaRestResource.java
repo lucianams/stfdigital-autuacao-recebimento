@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService;
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
@@ -36,12 +37,12 @@ public class RemessaRestResource {
     private RecebimentoApplicationService recebimentoApplicationService; 
     
     @RequestMapping(method = RequestMethod.POST)
-    public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
+    public Long registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
         
-        recebimentoApplicationService.handle(command);
+        return recebimentoApplicationService.handle(command);
     }
 
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
@@ -52,9 +53,9 @@ public class RemessaRestResource {
         
         recebimentoApplicationService.handle(command);
     }
-
+    
     @RequestMapping(value = "/devolucao", method = RequestMethod.POST)
-    public void devolver(@RequestBody @Valid PrepararOficioParaDevolucaoCommand command, BindingResult binding) {
+    public void devolver(@RequestBody @Valid DevolverRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
@@ -62,8 +63,17 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
 
-    @RequestMapping(value = "/assinatura", method = RequestMethod.POST)
-    public void assinar(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command, BindingResult binding) {
+    @RequestMapping(value = "/devolucao-oficio", method = RequestMethod.POST)
+    public void prepararOficio(@RequestBody @Valid PrepararOficioParaDevolucaoCommand command, BindingResult binding) {
+        if (binding.hasErrors()) {
+            throw new IllegalArgumentException(message(binding));
+        }
+        
+        recebimentoApplicationService.handle(command);
+    }
+
+    @RequestMapping(value = "/devolucao-assinatura", method = RequestMethod.POST)
+    public void assinarOficio(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }

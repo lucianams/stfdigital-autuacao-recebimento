@@ -25,12 +25,7 @@ public class PreautuarRemessaCommand {
 	@NotBlank
 	private String classeId;
 	
-    @NotBlank
-	private String transicao;
-    
-    private String motivo;
-	
-	private Set<Long> preferencias;
+    private Set<Long> preferencias;
 	
 	public ProtocoloId getProtocoloId() {
 		return protocoloId;
@@ -39,14 +34,6 @@ public class PreautuarRemessaCommand {
 	public String getClasseId() {
 		return classeId;
 	}
-	
-	public String getTransicao() {
-        return transicao;
-    }
-	
-	public String getMotivo() {
-        return motivo;
-    }
 	
 	public Set<Long> getPreferencias() {
 		return preferencias;

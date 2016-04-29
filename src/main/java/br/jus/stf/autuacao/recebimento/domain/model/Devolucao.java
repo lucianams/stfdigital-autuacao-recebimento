@@ -46,17 +46,21 @@ public class Devolucao extends ValueObjectSupport<Devolucao> {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
-	public Devolucao(String motivacao) {
+	public Devolucao(ProtocoloId remessa, String motivacao) {
+		Validate.notNull(remessa, "Remessa requerida.");
 		Validate.notBlank(motivacao, "Motivação requerida.");
 		
+		this.remessa = remessa;
 		this.motivacao = motivacao;
 	}
 	
-	public Devolucao(String motivacao, MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto) {
-		this(motivacao);
+	public Devolucao(ProtocoloId remessa, String motivacao, MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto) {
+		this(remessa, motivacao);
 		
 		Validate.notNull(motivo, "Motivo requerido.");
 		Validate.notNull(modelo, "Modelo requerido.");
+		Validate.isTrue(motivo.tiposDocumento().contains(modelo.tipo()),
+				"O modelo e o motivo de devolução são incompatíveis.");
 		Validate.notNull(texto, "Texto requerido.");
 		
 		this.motivo = motivo;

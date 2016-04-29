@@ -7,6 +7,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.Validate;
+
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.DocumentoId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
@@ -41,6 +43,11 @@ public class ModeloDevolucao extends EntitySupport<ModeloDevolucao, ModeloDocume
 	}
 	
 	public ModeloDevolucao(ModeloDocumentoId id, String nome, TipoDocumentoId tipo, DocumentoId template) {
+		Validate.notNull(id, "Id é requerido.");
+		Validate.notBlank(nome, "Nome é requerido.");
+		Validate.notNull(tipo, "Tipo é requerido.");
+		Validate.notNull(template, "Template é requerido.");
+		
 		this.id = id;
 		this.nome = nome;
 		this.tipo = tipo;

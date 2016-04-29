@@ -26,18 +26,12 @@ Insert into RECEBIMENTO.CLASSE_PETICIONAVEL (SIG_CLASSE,NOM_CLASSE) values ('MI'
 Insert into RECEBIMENTO.CLASSE_PETICIONAVEL (SIG_CLASSE,NOM_CLASSE) values ('AC','AÇÃO CAUTELAR');
 Insert into RECEBIMENTO.CLASSE_PETICIONAVEL (SIG_CLASSE,NOM_CLASSE) values ('RvC','REVISÃO CRIMINAL');
 
--- SELECT seq_tipo_preferencia seq_preferencia, dsc_preferencia nom_preferencia FROM judiciario.tipo_preferencia;
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (8,'Medida Liminar');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (9,'Tutela Antecipada');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (12,'Réu Preso');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (13,'Convertido em processo eletrônico');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (2,'Criminal');
+-- SELECT seq_tipo_preferencia seq_preferencia, dsc_preferencia nom_preferencia FROM judiciario.tipo_preferencia WHERE seq_tipo_preferencia IN (SELECT seq_tipo_preferencia FROM judiciario.classe_tipo_preferencia WHERE flg_ativo = 'S' AND sig_classe IN (SELECT sig_classe FROM judiciario.classe WHERE flg_ativo = 'S' AND flg_admite_meio_eletronico = 'S' AND flg_admite_peticionador_web = 'S'));
 Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (3,'Eleitoral');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (4,'Militar com Assunto Criminal');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (5,'RE de Agravo Provido');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (6,'Outros');
+Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (8,'Medida Liminar');
+Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (2,'Criminal');
+Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (12,'Réu Preso');
 Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (1,'Maior de 60 anos ou portador de doença grave');
-Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (7,'Indígena');
 Insert into RECEBIMENTO.PREFERENCIA (SEQ_PREFERENCIA,NOM_PREFERENCIA) values (15,'Assistência Judiciária Gratuita');
 
 -- SELECT sig_classe, seq_tipo_preferencia seq_preferencia FROM judiciario.classe_tipo_preferencia WHERE flg_ativo = 'S' AND sig_classe IN (SELECT sig_classe FROM judiciario.classe WHERE flg_ativo = 'S' AND flg_admite_meio_eletronico = 'S' AND flg_admite_peticionador_web = 'S');

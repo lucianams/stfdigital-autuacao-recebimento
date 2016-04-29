@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
@@ -68,7 +69,7 @@ public class RecebimentoApplicationService {
     private StatusAdapter statusAdapter;
     
     @Transactional
-    public void handle(RegistrarRemessaCommand command) {
+    public Long handle(RegistrarRemessaCommand command) {
     	Protocolo protocolo = protocoloAdapter.novoProtocolo();
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
@@ -79,30 +80,30 @@ public class RecebimentoApplicationService {
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
+        
+        return remessa.identity().toLong();
     }
 
     @Transactional
     public void handle(PreautuarRemessaCommand command) {
         Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
-        Status status = statusAdapter.nextStatus(remessa.identity(), command.getTransicao());
-        
-        switch(status) {
-        case RECEBIDA:
-        	ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
-            Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
-            		.map(prefs -> prefs.stream()
-            				.map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
-            				.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
-            		.get();
+        Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
+        ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
+		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
+				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
+						.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
+				.get();
             
-        	remessa.preautuar(classe, preferencias, status);
-        	break;
-        case DEVOLUCAO:
-        	remessa.iniciarDevolucao(command.getMotivo(), status);
-        	break;
-		default:
-			break;
-        }
+        remessa.preautuar(classe, preferencias, status);
+        remessaRepository.save(remessa);
+    }
+    
+    @Transactional
+    public void handle(DevolverRemessaCommand command) {
+        Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
+        Status status = statusAdapter.nextStatus(remessa.identity(), "DEVOLVER");
+        
+        remessa.iniciarDevolucao(command.getMotivo(), status);
         remessaRepository.save(remessa);
     }
 

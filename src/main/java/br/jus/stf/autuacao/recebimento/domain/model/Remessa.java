@@ -96,7 +96,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
 		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
-		Validate.isTrue(formaRecebimento.exigeNumeracao() && !StringUtils.isEmpty(numeroSedex),
+		Validate.isTrue(!formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex),
 				"Forma de recebimento exige número de sedex.");
     	Validate.notBlank(recebedor, "Recebedor requerido.");
     	Validate.notNull(status, "Status requerido.");
@@ -115,7 +115,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Status status) {
 		Validate.notNull(classe, "Classe requerida.");
 		Validate.notNull(status, "Status requerido.");
-    	Validate.isTrue(!classe.preferencias().containsAll(preferencias),
+    	Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
 				"Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
     	
     	this.classe = classe;
@@ -127,20 +127,15 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	Validate.notBlank(motivacao, "Motivação requerida.");
     	Validate.notNull(status, "Status requerido.");
     	
-        devolucao = new Devolucao(motivacao);
+        devolucao = new Devolucao(protocoloId, motivacao);
         this.status = status;
     }
 
     public void elaborarDevolucao(MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto, Status status) {
     	Validate.notNull(devolucao, "O processo de devolução não está iniciado.");
-    	Validate.notNull(motivo, "Motivo requerido.");
-    	Validate.notNull(modelo, "Modelo requerido.");
-		Validate.isTrue(!motivo.tiposDocumento().contains(modelo.tipo()),
-				"O modelo e o motivo de devolução são incompatíveis.");
-    	Validate.notNull(texto, "Texto requerido.");
     	Validate.notNull(status, "Status requerido.");
     	
-    	devolucao = new Devolucao(devolucao.motivacao(), motivo, modelo, texto);
+    	devolucao = new Devolucao(protocoloId, devolucao.motivacao(), motivo, modelo, texto);
         this.status = status;
     }
 

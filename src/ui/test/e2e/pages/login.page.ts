@@ -1,19 +1,22 @@
-/**
- * Page da tela de login
- */
-declare var module;
+import ElementFinder = protractor.ElementFinder;
+
+declare var exports;
 
 class LoginPage {
-    usernameInput = element(by.id('username'));
-    passwordInput = element(by.id('password'));
     
-    submitButton = element(by.css('Button[ng-click^=["loginCtrl.login"]'));
+    private usernameInput: ElementFinder = element(by.model('vm.form.usuario'));
+    private passwordInput: ElementFinder = element(by.model('vm.form.senha'));
+    private submitButton: ElementFinder = element(by.css('button[type="submit"]'));
     
-    login(username, password) : void {
+    public open(): void {
+        browser.get('/login');
+    }
+    
+    public login(username, password): void {
         this.usernameInput.sendKeys(username);
         this.passwordInput.sendKeys(password);
         this.submitButton.click();
     }
 }
 
-module.exports = new LoginPage();
+exports = LoginPage;

@@ -14,6 +14,8 @@ var libraryTypeScript = 'typings/main/**/*.d.ts';
 var tsOutputPath = path.join(conf.paths.src, '/');
 var tsGenFiles = path.join(conf.paths.src, '/**/*.js');
 var tsGenMapFiles = path.join(conf.paths.src, '/**/*.js.map');
+var allTypeScriptE2E = path.join(conf.paths.e2e, '/**/*.ts');
+var tsOutputPathE2E = path.join(conf.paths.e2e, '/');
 
 /**
  * Install all typings files
@@ -42,6 +44,16 @@ gulp.task('compile-ts', ['ts-lint'], function () {
         .pipe($.ngAnnotate())
         .pipe($.sourcemaps.write('.'))
         .pipe(gulp.dest(tsOutputPath));
+});
+
+/**
+ * Compile TypeScript and include references to library and app .d.ts files.
+ */
+gulp.task('compile-e2e-ts', ['ts-lint'], function () {
+    return gulp.src([allTypeScriptE2E, libraryTypeScript])
+        .pipe($.typescript(tsProject))
+        .pipe($.ngAnnotate())
+        .pipe(gulp.dest(tsOutputPathE2E));
 });
 
 /**

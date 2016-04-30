@@ -13,6 +13,7 @@ typings
 # JS Main
 src/main/resources/public/**/*.js
 src/main/resources/public/**/*.js.map
+src/ui/test/e2e/**/*.js
 
 # --------------------------------
 

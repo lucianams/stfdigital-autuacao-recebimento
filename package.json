@@ -7,6 +7,8 @@
     "postinstall": "typings install"
   },
   "devDependencies": {
+    "browser-sync": "~2.11.1",
+    "browser-sync-spa": "~1.0.3",    
     "chalk": "~1.1.1",
     "del": "~2.0.2",
     "eslint-plugin-angular": "^1.0.0",

@@ -18,10 +18,10 @@ function listFiles() {
 
   var patterns = wiredep(wiredepOptions).js
       .concat([
-        path.join(conf.paths.src, '/app/**/*.module.js'),
-        path.join(conf.paths.src, '/app/**/*.js'),
-        path.join(conf.paths.src, '/**/*.spec.js'),
-        path.join(conf.paths.src, '/**/*.mock.js'),
+        path.join(conf.paths.src, '/main/public/**/*.module.js'),
+        path.join(conf.paths.src, '/main/public/**/*.js'),
+        path.join(conf.paths.src, 'ui/test/e2e/**/*.spec.js'),
+        path.join(conf.paths.src, 'ui/test/e2e/**/*.mock.js'),
       ])
       .concat(pathSrcHtml);
 
@@ -68,9 +68,9 @@ module.exports = function(config) {
       'karma-angular-filesort',
       //'karma-coverage',
       'karma-jasmine',
-      'karma-ng-html2js-preprocessor'
-	  'karma-html-reporter',
-	  'karma-mocha-reporter' 
+      'karma-ng-html2js-preprocessor',
+	    'karma-html-reporter',
+	    'karma-mocha-reporter' 
     ],
 
     coverageReporter: {

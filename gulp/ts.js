@@ -9,6 +9,7 @@ var $ = require('gulp-load-plugins')({
 });
 
 var tsProject = $.typescript.createProject('tsconfig.json');
+var tsProjectE2E = $.typescript.createProject(path.join(conf.paths.test, '/tsconfig.json'));
 var allTypeScript = path.join(conf.paths.src, '/**/*.ts');
 var libraryTypeScript = 'typings/main/**/*.d.ts';
 var tsOutputPath = path.join(conf.paths.src, '/');
@@ -51,7 +52,7 @@ gulp.task('compile-ts', ['ts-lint'], function () {
  */
 gulp.task('compile-e2e-ts', ['ts-lint'], function () {
     return gulp.src([allTypeScriptE2E, libraryTypeScript])
-        .pipe($.typescript(tsProject))
+        .pipe($.typescript(tsProjectE2E))
         .pipe($.ngAnnotate())
         .pipe(gulp.dest(tsOutputPathE2E));
 });

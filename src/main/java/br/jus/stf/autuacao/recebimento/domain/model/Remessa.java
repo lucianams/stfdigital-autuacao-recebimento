@@ -124,7 +124,6 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     }
     
     public void iniciarDevolucao(String motivacao, Status status) {
-    	Validate.notBlank(motivacao, "Motivação requerida.");
     	Validate.notNull(status, "Status requerido.");
     	
         devolucao = new Devolucao(protocoloId, motivacao);

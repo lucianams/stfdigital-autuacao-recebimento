@@ -43,10 +43,10 @@ public class ModeloDevolucao extends EntitySupport<ModeloDevolucao, ModeloDocume
 	}
 	
 	public ModeloDevolucao(ModeloDocumentoId id, String nome, TipoDocumentoId tipo, DocumentoId template) {
-		Validate.notNull(id, "Id é requerido.");
-		Validate.notBlank(nome, "Nome é requerido.");
-		Validate.notNull(tipo, "Tipo é requerido.");
-		Validate.notNull(template, "Template é requerido.");
+		Validate.notNull(id, "Id requerido.");
+		Validate.notBlank(nome, "Nome requerido.");
+		Validate.notNull(tipo, "Tipo requerido.");
+		Validate.notNull(template, "Template requerido.");
 		
 		this.id = id;
 		this.nome = nome;

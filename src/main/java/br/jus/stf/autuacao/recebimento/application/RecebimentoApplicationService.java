@@ -19,6 +19,7 @@ import br.jus.stf.autuacao.recebimento.domain.RemessaFactory;
 import br.jus.stf.autuacao.recebimento.domain.StatusAdapter;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
+import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
@@ -31,6 +32,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepos
 import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
+import br.jus.stf.core.shared.identidade.PessoaId;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 
@@ -73,9 +75,10 @@ public class RecebimentoApplicationService {
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
     	FormaRecebimento formaRecebimento = FormaRecebimento.valueOf(command.getFormaRecebimento());
-        //TODO: Alterar para pegar recebedor pelo usuário da sessão.
+        //TODO: Alterar para pegar dados do recebedor pelo usuário da sessão.
+    	Recebedor recebedor = new Recebedor("USUARIO_FALSO", new PessoaId(1L));
     	Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
-				formaRecebimento, command.getNumeroSedex(), "USUARIO_FALSO", tipoProcesso, status);
+				formaRecebimento, command.getNumeroSedex(), recebedor, tipoProcesso, status);
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));

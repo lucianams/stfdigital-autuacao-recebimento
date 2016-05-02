@@ -20,7 +20,7 @@ public class RemessaOriginaria extends Remessa {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, String recebedor, Status status) {
+    public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, Status status) {
 		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
     }
     

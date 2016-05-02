@@ -9,6 +9,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -81,8 +82,9 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 		inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
     private Set<Preferencia> preferencias = new HashSet<>(0);
     
-    @Column(name = "SIG_RECEBEDOR", nullable = false)
-    private String recebedor;
+    @Embedded
+    @Column(nullable = false)
+    private Recebedor recebedor;
     
     @Column(name = "DAT_RECEBIMENTO", nullable = false)
     private Date dataRecebimento = new Date();
@@ -91,14 +93,14 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, String recebedor, Status status) {
+    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, Status status) {
 		Validate.notNull(protocolo, "Protocolo requerido.");
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
 		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
 		Validate.isTrue(!formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex),
 				"Forma de recebimento exige número de sedex.");
-    	Validate.notBlank(recebedor, "Recebedor requerido.");
+    	Validate.notNull(recebedor, "Recebedor requerido.");
     	Validate.notNull(status, "Status requerido.");
     	
     	this.protocoloId = protocolo.identity();

@@ -3,6 +3,7 @@ package br.jus.stf.autuacao.recebimento.domain;
 import org.springframework.stereotype.Component;
 
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
+import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
@@ -20,7 +21,7 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @Component
 public class RemessaFactory {
 
-    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, String recebedor, TipoProcesso tipoProcesso, Status status) {
+    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, TipoProcesso tipoProcesso, Status status) {
         Remessa remessa;
         
 		switch (tipoProcesso) {

@@ -1,8 +1,6 @@
 import ElementFinder = protractor.ElementFinder;
 
-declare var exports;
-
-class PrincipalPage {
+export class PrincipalPage {
     
     private linkIniciarProcesso: ElementFinder = element(by.css('a[ui-sref="app.novo-processo"]'));
     
@@ -13,10 +11,8 @@ class PrincipalPage {
     
     public iniciar
     public login(username, password): void {
-        this.submitButton.sendKeys(username);
+        /*this.submitButton.sendKeys(username);
         this.passwordInput.sendKeys(password);
-        this.submitButton.click();
+        this.submitButton.click();*/
     }
 }
-
-exports = LoginPage;

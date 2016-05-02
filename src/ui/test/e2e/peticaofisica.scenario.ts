@@ -1,9 +1,10 @@
-declare var require;
+import {LoginPage} from "./pages/login.page";
+import {PrincipalPage}  from "./pages/principal.page";
 
-describe('Autuação de Petições Físicas Originárias', () => {
-    
-    var loginPage : LoginPage = require('./pages/login.page');
-    var principaPage : PrincipalPage = require('./pages/principal.page');
+describe('Autuação de Petições Físicas Originárias', () => {	
+	
+    var loginPage: LoginPage = new LoginPage();
+    var principalPage: PrincipalPage = new PrincipalPage();
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();

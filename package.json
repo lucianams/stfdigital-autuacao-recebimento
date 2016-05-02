@@ -4,7 +4,7 @@
   "dependencies": {},
   "scripts": {
     "test": "gulp test",
-    "postinstall": "typings install"
+    "postinstall": "typings install && gulp build"
   },
   "devDependencies": {
     "browser-sync": "~2.11.1",

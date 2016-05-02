@@ -12,6 +12,7 @@ var tsProject = $.typescript.createProject('tsconfig.json');
 var tsProjectE2E = $.typescript.createProject(path.join(conf.paths.test, '/tsconfig.json'));
 var allTypeScript = path.join(conf.paths.src, '/**/*.ts');
 var libraryTypeScript = 'typings/main/**/*.d.ts';
+var libraryTypeScript = path.join(conf.paths.test, '/typings/main/**/*.d.ts');
 var tsOutputPath = path.join(conf.paths.src, '/');
 var tsGenFiles = path.join(conf.paths.src, '/**/*.js');
 var tsGenMapFiles = path.join(conf.paths.src, '/**/*.js.map');
@@ -22,7 +23,15 @@ var tsOutputPathE2E = path.join(conf.paths.e2e, '/');
  * Install all typings files
  */
 gulp.task('install-typings',function(){
-    gulp.src('typings.json')
+    return gulp.src('typings.json')
+        .pipe($.typings());
+});
+
+/**
+ * Install all e2e typings files
+ */
+gulp.task('install-e2e-typings',function(){
+    gulp.src(path.join(conf.paths.test, '/typings.json'))
         .pipe($.typings());
 });
 
@@ -50,7 +59,7 @@ gulp.task('compile-ts', ['ts-lint'], function () {
 /**
  * Compile TypeScript and include references to library and app .d.ts files.
  */
-gulp.task('compile-e2e-ts', ['ts-lint'], function () {
+gulp.task('compile-e2e-ts', ['install-e2e-typings', 'ts-lint'], function () {
     return gulp.src([allTypeScriptE2E, libraryTypeScript])
         .pipe($.typescript(tsProjectE2E))
         .pipe($.ngAnnotate())

@@ -30,7 +30,7 @@ public class RabbitConfiguration {
 
 	public static final String REMESSA_RECEBIDA_QUEUE = "autuacao.remessa.recebida";
 
-	@Value("${rabbitmq.host:localhost}")
+	@Value("${rabbitmq.host:rabbit}")
 	private String host;
 	
 	@Value("${rabbitmq.port:5672}")

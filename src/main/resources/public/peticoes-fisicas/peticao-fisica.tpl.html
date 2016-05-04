@@ -11,7 +11,7 @@
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
 
-                <form name="basicForm" ng-submit="registro.sendForm(this)" class="md-inline-form">
+                <form name="basicForm" ng-submit="registro.registrarPeticao(this)" class="md-inline-form">
 
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container flex>
@@ -30,7 +30,7 @@
                             <md-select ng-model="registro.basicForm.formaRecebimento" id="formaRecimento">
                                 <md-option></md-option>
                                 <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.descricao}}">
-                                    {{tipo.descricao}}
+                                    {{forma.descricao}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -51,7 +51,7 @@
                         </md-input-container>
                     </div>
 
-                    <md-button type="submit" class="md-raised md-accent" aria-label="Submit" ng-disabled="basicForm.$invalid || basicForm.$pristine">
+                    <md-button type="submit" class="md-raised md-accent" id="btnRegistrarPeticao" aria-label="Submit" ng-disabled="basicForm.$invalid || basicForm.$pristine">
                         Registrar
                     </md-button>
                       

@@ -6,10 +6,13 @@ import recebimento from "./peticao-fisica.module";
 export class PeticaoFisicaController {
 
     public basicForm: Object = {};
+	public qtdVolumes : number;
+	public qtdApensos : number;
+	public numSedex : number;
     public formWizard: Object = {};
-    public formaRecebimento: String = "";
+    public formaRecebimento: string = "";
     public tiposProcessos : Object[] = PeticaoFisicaController.mockTiposProcessos();
-    public tipoProcesso : String = "";
+    public tipoProcesso : string = "";
 
     static $inject = ['$state', 'app.novo-processo.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
     
@@ -17,8 +20,8 @@ export class PeticaoFisicaController {
                 private peticaoFisicaService: PeticaoFisicaService,
                 public formasRecebimento) { }
 
-    public sendForm(): void {
-        this.peticaoFisicaService.registrar(PeticaoFisicaController.mockPeticao())
+    public registrarPeticao(): void {
+        this.peticaoFisicaService.registrar(this.commandPeticaoFisica())
             .then(() => {
                 this.formWizard = {};
                 this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
@@ -31,8 +34,8 @@ export class PeticaoFisicaController {
                 .map(state => { return {abbrev: state}; });
         }
 *///
-    private static mockPeticao(): PeticaoFisica {
-        return new PeticaoFisica(formaRecebimento, 1, 1, "SR123456789BR", "ORIGINARIO");
+    private commandPeticaoFisica(): PeticaoFisica {
+        return new PeticaoFisica(this.formaRecebimento.toUpperCase(), this.qtdVolumes, this.qtdApensos, this.numSedex.toString(), this.tipoProcesso.toUpperCase());
     }
     
     private static mockTiposProcessos() : Object[]{

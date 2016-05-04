@@ -19,7 +19,11 @@ describe('Autuação de Petições Físicas Originárias', () => {
     });
     
     it('Deveria preencher as informações da petição física', () => {
-    	
+    	recebimentoPage.preencherQtdVolumes(2);
+    	recebimentoPage.preencherQtdApensos(3);
+    	recebimentoPage.selecionarFormaRecebimento();
+    	recebimentoPage.selecionarTipoRecebimento();
+    	recebimentoPage.registrarPeticao();
     });
     
 });

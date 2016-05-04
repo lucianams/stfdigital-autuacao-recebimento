@@ -19,4 +19,13 @@ export class RecebimentoPage {
 		element(by.id('numSedex')).sendKeys(quantidade.toString());
 	};
 	
+	public selecionarTipoRecebimento() : void {
+		element(by.id('tipoProcesso')).click();
+		element.all(by.repeater('tipo in registro.tiposProcessos')).get(0).click();
+	};
+	
+	public registrarPeticao() : void {
+		element(by.id('btnRegistrarPeticao')).click();
+	};
+	
 }

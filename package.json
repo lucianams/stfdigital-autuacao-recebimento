@@ -13,7 +13,6 @@
     "del": "~2.0.2",
     "eslint-plugin-angular": "^1.0.0",
     "estraverse": "~4.1.0",
-    "bower": "^1.7.9",
     "gulp": "^3.9.1",
     "gulp-angular-filesort": "~1.1.1",
     "gulp-angular-templatecache": "~1.8.0",

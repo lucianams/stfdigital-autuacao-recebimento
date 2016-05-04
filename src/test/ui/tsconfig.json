@@ -4,12 +4,10 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "sourceMap": false,
-        "removeComments": false
+        "removeComments": true
     },
     "exclude": [
       "typings/browser",
-      "typings/browser.d.ts",
-      "node_modules",
-      "bower_components"
+      "typings/browser.d.ts"
     ]
 }

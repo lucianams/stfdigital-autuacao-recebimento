@@ -8,13 +8,13 @@ function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider
                 $stateProvider: IStateProvider,
                 properties: any) {
 
-    $translatePartialLoaderProvider.addPart(properties.url + ':' + properties.port + '/recebimento/peticoes-fisicas');
+    $translatePartialLoaderProvider.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 
     $stateProvider.state('app.novo-processo.recebimento', {
         url : '/peticao-fisica',
         views : {
             'content@app.autenticado' : {
-                templateUrl : properties.url + ':' + properties.port + '/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
+                templateUrl : properties.apiUrl + '/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
                 controller : 'app.novo-processo.peticoes-fisicas.PeticaoFisicaController',
                 controllerAs: 'registro'
             }

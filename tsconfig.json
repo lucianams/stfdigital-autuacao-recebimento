@@ -10,6 +10,7 @@
       "typings/browser",
       "typings/browser.d.ts",
       "node_modules",
-      "bower_components"
+      "build",
+      "src/test/ui"
     ]
 }

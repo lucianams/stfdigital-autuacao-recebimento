@@ -18,7 +18,8 @@ function browserSyncInit()
 
     browserSync.instance = browserSync.init({
         startPath: '/',
-        proxy : proxy
+        proxy : proxy,
+        open : false
     });
 }
 

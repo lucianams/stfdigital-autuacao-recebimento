@@ -16,7 +16,7 @@ export class RecebimentoPage {
 	};
 	
 	public preencherNumSedex(quantidade : number) : void {
-		element(by.id('numSedex')).sendKeys(quantidade.toString());
+		element(by.id('numeroSedex')).sendKeys(quantidade.toString());
 	};
 	
 	public selecionarTipoRecebimento() : void {

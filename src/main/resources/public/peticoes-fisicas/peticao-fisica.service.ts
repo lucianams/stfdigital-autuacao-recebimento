@@ -8,54 +8,13 @@ export class FormaRecebimento {
     constructor(public descricao: string, public exigeNumero: boolean ) {}
 }
 
-export class PeticaoFisica {
+export class PeticaoFisicaCommand {
     
-    constructor(private _formaRecebimento: string, 
-                private _volumes: number,
-                private _apensos: number,
-                private _numeroSedex: string,
-                private _tipoProcesso: string) { }    
-
-	public get formaRecebimento(): string {
-		return this._formaRecebimento;
-	}
-
-	public set formaRecebimento(value: string) {
-		this._formaRecebimento = value;
-	}
-
-	public get volumes(): number {
-		return this._volumes;
-	}
-
-	public set volumes(value: number) {
-		this._volumes = value;
-	}
-    
-	public get apensos(): number {
-		return this._apensos;
-	}
-
-	public set apensos(value: number) {
-		this._apensos = value;
-	}
-
-	public get numeroSedex(): string {
-		return this._numeroSedex;
-	}
-
-	public set numeroSedex(value: string) {
-		this._numeroSedex = value;
-	}
-    
-	public get tipoProcesso(): string {
-		return this._tipoProcesso;
-	}
-
-	public set tipoProcesso(value: string) {
-		this._tipoProcesso = value;
-	}     
-    
+    constructor(public formaRecebimento: string, 
+                public volumes: number,
+                public apensos: number,
+                public numeroSedex: string,
+                public tipoProcesso: string) { }    
 }
 
 export class PeticaoFisicaService {
@@ -65,7 +24,7 @@ export class PeticaoFisicaService {
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties) { }
 
-    public registrar(peticao: PeticaoFisica): IPromise<any> {            
+    public registrar(peticao: PeticaoFisicaCommand): IPromise<any> {            
         return this.$http.post(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa, peticao);
     }
     

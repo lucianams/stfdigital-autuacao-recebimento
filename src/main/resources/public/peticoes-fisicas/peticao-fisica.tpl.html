@@ -16,18 +16,18 @@
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container flex>
                             <label>Quantidade de volumes</label>
-                            <input ng-model="registro.basicForm.qtdVolumes" id="qtdVolumes" class="ng-pristine ng-valid md-input ng-empty">
+                            <input ng-model="registro.qtdVolumes" id="qtdVolumes" class="ng-pristine ng-valid md-input ng-empty">
                         </md-input-container>
                         <md-input-container flex>
                             <label for="input_qtd">Quantidade de apensos</label>
-                            <input ng-model="registro.basicForm.qtdApensos" id="qtdApensos" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
+                            <input ng-model="registro.qtdApensos" id="qtdApensos" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
                         </md-input-container>
                     </div>
                     <div layout="column" layout-gt-xs="row">
                         
                         <md-input-container flex>
                             <label>Forma de Envio</label>
-                            <md-select ng-model="registro.basicForm.formaRecebimento" id="formaRecimento">
+                            <md-select ng-model="registro.formaRecebimento" id="formaRecimento">
                                 <md-option></md-option>
                                 <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.descricao}}">
                                     {{forma.descricao}}
@@ -36,13 +36,13 @@
                         </md-input-container>
                         <md-input-container flex>
                             <label for="input_qtd">Número do Sedex</label>
-                            <input ng-model="registro.basicForm.numSedex" id="numSedex" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
+                            <input ng-model="registro.numSedex" id="numeroSedex" class="ng-pristine ng-valid md-input ng-not-empty" id="input_qtd" aria-invalid="false">
                         </md-input-container>
                     </div>
                     <div layout="row" layout-gt-xs="row">
                         <md-input-container flex="50">
                             <label>Tipo de Processo</label>
-                            <md-select ng-model="registro.basicForm.tipoProcesso" id="tipoProcesso">
+                            <md-select ng-model="registro.tipoProcesso" id="tipoProcesso">
                                 <md-option></md-option>
                                 <md-option ng-repeat="tipo in registro.tiposProcessos" value="{{tipo.id}}">
                                     {{tipo.nome}}

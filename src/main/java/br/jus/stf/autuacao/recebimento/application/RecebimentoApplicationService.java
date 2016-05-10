@@ -31,6 +31,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
 import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
+import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.identidade.PessoaId;
 import br.jus.stf.core.shared.processo.TipoProcesso;
@@ -98,6 +99,7 @@ public class RecebimentoApplicationService {
             
         remessa.preautuar(classe, preferencias, status);
         remessaRepository.save(remessa);
+        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString()));
     }
     
     @Transactional

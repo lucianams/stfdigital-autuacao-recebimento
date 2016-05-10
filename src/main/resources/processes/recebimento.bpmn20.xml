@@ -47,9 +47,7 @@
         
         <endEvent id="originario-recebido" name="Remessa Recebida">
             <documentation>RECEBIDA</documentation>
-	        <extensionElements>
-	            <activiti:executionListener expression="${recebimentoFinalizadoListener.handle(execution.getVariable('informationId'))}" event="end" />
-	        </extensionElements>
+	        <terminateEventDefinition/>
         </endEvent>    
         
         <sequenceFlow id="devolver-originario" name="devolver" sourceRef="preautuacao-originario" targetRef="devolucao">

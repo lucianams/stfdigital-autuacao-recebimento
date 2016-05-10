@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import br.jus.stf.core.framework.domaindrivendesign.DomainEvent;
 import br.jus.stf.core.framework.domaindrivendesign.DomainEventPublisher;
+import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 
 /**
@@ -24,6 +25,7 @@ public class RabbitEventPublisher implements DomainEventPublisher {
 	
 	static {
 		queues.put(RemessaRegistrada.class, RabbitConfiguration.REMESSA_REGISTRADA_QUEUE);
+		queues.put(RecebimentoFinalizado.class, RabbitConfiguration.REMESSA_RECEBIDA_QUEUE);
 	}
 
 	@Autowired

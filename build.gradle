@@ -100,8 +100,10 @@ npmInstall.dependsOn npm_prune
 gulp_build.dependsOn tasks.npmInstall
 processResources.dependsOn gulp_build
 
+ext.dockerImageTag = project.hasProperty('dockerImageTag') ? project.getProperty('dockerImageTag') : ''
+
 docker {
-    name jar.baseName
+    name jar.baseName + (dockerImageTag ? ':' + dockerImageTag : '')
     dockerfile 'src/main/docker/Dockerfile'
     dependsOn tasks.jar, tasks.bootRepackage, tasks.build
 }

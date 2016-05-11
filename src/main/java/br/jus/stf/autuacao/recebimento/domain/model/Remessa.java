@@ -69,7 +69,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     @Column(name = "NUM_SEDEX")
     private String numeroSedex;
     
-    @Column(name = "TIP_STATUS")
+    @Column(name = "TIP_STATUS", nullable = false)
 	@Enumerated(EnumType.STRING)
     private Status status;
     

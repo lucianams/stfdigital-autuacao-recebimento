@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
@@ -33,6 +35,7 @@ import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.TextoId;
 import br.jus.stf.core.shared.processo.TipoProcesso;
+import br.jus.stf.core.shared.protocolo.Numero;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
@@ -55,6 +58,13 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     @ManyToOne
     @JoinColumn(name = "SIG_CLASSE", nullable = false)
 	private ClassePeticionavel classe;
+    
+    @Embedded
+    @AttributeOverrides( {
+        @AttributeOverride(name="numero", column = @Column(name="NUM_REMESSA", nullable = false)),
+        @AttributeOverride(name="ano", column = @Column(name="NUM_ANO", nullable = false))
+    } )
+    private Numero numero;
     
     @Column(name ="QTD_VOLUME", nullable = false)
     private Integer volumes;
@@ -104,6 +114,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	Validate.notNull(status, "Status requerido.");
     	
     	this.protocoloId = protocolo.identity();
+    	this.numero = protocolo.numero();
         this.volumes = volumes;
         this.apensos = apensos;
         this.formaRecebimento = formaRecebimento;
@@ -142,6 +153,10 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 
     public void devolver(Status status) {
         this.status = status;
+    }
+    
+    public Numero numero() {
+    	return numero;
     }
 
     @Override

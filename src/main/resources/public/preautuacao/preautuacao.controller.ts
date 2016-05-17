@@ -11,7 +11,7 @@ import preautuacao from "./preautuacao.module";
 
 
 export class Preferencia {
-	constructor (public id : String, public nome : String){}
+	constructor (public id : number, public nome : String){}
 }
 
 export class Classe {
@@ -27,7 +27,7 @@ export class PreautuacaoController {
 	public motivo : String;
 	public processoId : number;
 	public preferencias : Array<Preferencia>;
-	public preferenciasSelecionadas : Array<Object>;
+	public preferenciasSelecionadas : Array<number>;
 
 	static $inject = ['$state', 'app.novo-processo.preautuacao.PreautuacaoService', 'classes', '$stateParams'];
 	
@@ -54,11 +54,7 @@ export class PreautuacaoController {
 	};
 
 	private commandPreautuacao(): PreautuarRemessaCommand {
-		let preferencias : Array<number>;
-		for (let preferencia of this.preferenciasSelecionadas){
-			preferencias.push(Number(preferencia));
-		}
-	    return new PreautuarRemessaCommand(1, this.classe.id, preferencias);
+	    return new PreautuarRemessaCommand(1, this.classe.id, this.preferenciasSelecionadas);
 	};
 	
 	public mockPeticaoPreautuacao () : Object {

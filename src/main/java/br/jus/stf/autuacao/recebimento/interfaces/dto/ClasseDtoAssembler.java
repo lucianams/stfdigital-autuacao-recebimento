@@ -1,10 +1,5 @@
 package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Validate;

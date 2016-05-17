@@ -6,15 +6,15 @@ package br.jus.stf.autuacao.recebimento.interfaces.dto;
  */
 public class PreferenciaDto {
 	
-	private String id;
+	private Long id;
 	private String nome;
 	
-	public PreferenciaDto(String id, String nome) {
+	public PreferenciaDto(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 

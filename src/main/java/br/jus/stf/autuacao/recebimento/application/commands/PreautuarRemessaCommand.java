@@ -26,7 +26,7 @@ public class PreautuarRemessaCommand {
 	@NotBlank
 	private String classeId;
 	
-    private Set<PreferenciaId> preferencias;
+    private Set<Long> preferencias;
 	
 	public ProtocoloId getProtocoloId() {
 		return protocoloId;
@@ -36,7 +36,7 @@ public class PreautuarRemessaCommand {
 		return classeId;
 	}
 	
-	public Set<PreferenciaId> getPreferencias() {
+	public Set<Long> getPreferencias() {
 		return preferencias;
 	}
 	

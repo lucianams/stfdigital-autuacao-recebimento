@@ -34,6 +34,7 @@ import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.identidade.PessoaId;
+import br.jus.stf.core.shared.preferencia.PreferenciaId;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 
@@ -93,7 +94,7 @@ public class RecebimentoApplicationService {
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
-				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(pref))
+				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
 				.get();
             

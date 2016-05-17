@@ -7,7 +7,7 @@ export class PreautuarRemessaCommand {
     
     constructor(public protocoloId: number, 
                 public classeId: String,
-                public preferencias: Array<Object>) {}    
+                public preferencias: Array<number>) {}    
 }
 
 export class Remessa {
@@ -17,7 +17,7 @@ export class Remessa {
 }
 
 export class Preferencia {
-	constructor(public id : string, public nome: string ) {}
+	constructor(public id : number, public nome: string ) {}
 }
 
 export class Processo{
@@ -42,14 +42,7 @@ export class PreautuacaoService {
                     return response.data; 
                 });
     }
-    
-/*    public carregarPreferencias() : IPromise<Preferencia[]> {
-        return this.$http.get(this.properties.url + ":" + this.properties.port + PreautuacaoService.apiRemessas + '/preferencia')
-                .then((response: IHttpPromiseCallbackArg<Preferencia[]>) => { 
-                    return response.data; 
-                });
-    }
- */   
+      
 }
 
 preautuacao.service('app.novo-processo.preautuacao.PreautuacaoService', PreautuacaoService);

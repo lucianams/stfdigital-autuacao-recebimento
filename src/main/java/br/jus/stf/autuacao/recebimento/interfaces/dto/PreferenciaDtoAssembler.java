@@ -17,6 +17,6 @@ public class PreferenciaDtoAssembler {
 	
 	public PreferenciaDto toDto(Preferencia prefenrecia) {
 		Validate.notNull(prefenrecia);
-		return new PreferenciaDto(prefenrecia.identity().toString(), prefenrecia.nome());
+		return new PreferenciaDto(prefenrecia.identity().toLong(), prefenrecia.nome());
 	}
 }

@@ -24,7 +24,7 @@ export class PeticaoFisicaService {
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties) { }
 
-    public registrar(peticao: PeticaoFisicaCommand): IPromise<any> {            
+    public registrar(peticao: PeticaoFisicaCommand): IPromise<any> {
         return this.$http.post(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa, peticao);
     }
     

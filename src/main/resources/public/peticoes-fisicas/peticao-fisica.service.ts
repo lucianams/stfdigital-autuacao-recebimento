@@ -25,7 +25,7 @@ export class PeticaoFisicaService {
     constructor(private $http: IHttpService, private properties) { }
 
     public registrar(peticao: PeticaoFisicaCommand): IPromise<any> {
-        return this.$http.post(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa, peticao);
+        return this.$http.post(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa + '/recebimento', peticao);
     }
     
     public consultarFormasRecebimento() : IPromise<FormaRecebimento[]> {

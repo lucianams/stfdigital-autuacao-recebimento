@@ -65,7 +65,7 @@ public class RemessaRestResource {
 	@Autowired
 	private PreferenciaRepository preferenciaRepository;
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
     public Long registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));

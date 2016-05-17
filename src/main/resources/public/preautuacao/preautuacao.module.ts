@@ -11,7 +11,7 @@ function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider
 
     $translatePartialLoaderProvider.addPart(properties.apiUrl + '/recebimento/preautuacao');
 
-    $stateProvider.state('app.novo-processo.recebimento', {
+    $stateProvider.state('app.novo-processo.recebimento-preautuacao', {
         url : '/preautuacao',
         views : {
             'content@app.autenticado' : {

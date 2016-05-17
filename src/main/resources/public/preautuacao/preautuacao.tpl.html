@@ -57,12 +57,12 @@
                     <div>
 						<md-input-container class="md-block">
           					<label>Informe se a petição está correta ou indevida</label>
-          					<textarea ng-model="preautuacao.motivo" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          					<textarea ng-model="preautuacao.motivo" md-maxlength="150" rows="5" md-select-on-focus id="motivo"></textarea>
         				</md-input-container>
                     </div>
                     <md-button type="button" class="md-raised md-accent" id="btnRegistrarpreautuacao" 
                     	ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click ="preautuacao.registrarPreautuacao()" >
-                        	Autuar
+                        	Preautuar
                     </md-button>
                       
                 </form>

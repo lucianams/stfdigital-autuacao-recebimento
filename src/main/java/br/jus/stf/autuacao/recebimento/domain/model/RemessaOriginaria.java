@@ -3,6 +3,7 @@ package br.jus.stf.autuacao.recebimento.domain.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 
@@ -20,8 +21,8 @@ public class RemessaOriginaria extends Remessa {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, Status status) {
-		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
+    public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
+		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
     }
     
     public TipoProcesso tipoProcesso() {

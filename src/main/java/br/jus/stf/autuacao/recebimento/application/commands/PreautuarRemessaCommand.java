@@ -6,9 +6,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.jus.stf.core.shared.preferencia.PreferenciaId;
-import br.jus.stf.core.shared.protocolo.ProtocoloId;
-
 /**
  * Objeto usado para enviar os dados necessários para préautuar uma remessa física.
  * 
@@ -21,14 +18,17 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 public class PreautuarRemessaCommand {
 
 	@NotNull
-	private ProtocoloId protocoloId;
+	private Long protocoloId;
 	
 	@NotBlank
 	private String classeId;
 	
-    private Set<PreferenciaId> preferencias;
+	@NotBlank
+	private String sigilo;
 	
-	public ProtocoloId getProtocoloId() {
+    private Set<Long> preferencias;
+	
+	public Long getProtocoloId() {
 		return protocoloId;
 	}
 	
@@ -36,8 +36,12 @@ public class PreautuarRemessaCommand {
 		return classeId;
 	}
 	
-	public Set<PreferenciaId> getPreferencias() {
+	public Set<Long> getPreferencias() {
 		return preferencias;
+	}
+	
+	public String getSigilo() {
+		return sigilo;
 	}
 	
 }

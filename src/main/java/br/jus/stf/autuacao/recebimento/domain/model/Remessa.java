@@ -34,6 +34,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.TextoId;
+import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Numero;
 import br.jus.stf.core.shared.protocolo.Protocolo;
@@ -63,7 +64,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     @AttributeOverrides( {
         @AttributeOverride(name="numero", column = @Column(name="NUM_REMESSA", nullable = false)),
         @AttributeOverride(name="ano", column = @Column(name="NUM_ANO", nullable = false))
-    } )
+    })
     private Numero numero;
     
     @Column(name ="QTD_VOLUME", nullable = false)
@@ -98,19 +99,24 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     
     @Column(name = "DAT_RECEBIMENTO", nullable = false)
     private Date dataRecebimento = new Date();
+    
+    @Column(name = "TIP_SIGILO", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Sigilo sigilo;
 
     public Remessa() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, Status status) {
+    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		Validate.notNull(protocolo, "Protocolo requerido.");
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
 		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
 		Validate.isTrue(!formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex),
 				"Forma de recebimento exige número de sedex.");
-    	Validate.notNull(recebedor, "Recebedor requerido.");
+		Validate.notNull(sigilo, "Sigilo requerido.");
+		Validate.notNull(recebedor, "Recebedor requerido.");
     	Validate.notNull(status, "Status requerido.");
     	
     	this.protocoloId = protocolo.identity();
@@ -119,20 +125,23 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.apensos = apensos;
         this.formaRecebimento = formaRecebimento;
         this.numeroSedex = numeroSedex;
+        this.sigilo = sigilo;
         this.recebedor = recebedor;
         this.status = status;
     }
     
     public abstract TipoProcesso tipoProcesso();
     
-    public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Status status) {
+    public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
 		Validate.notNull(classe, "Classe requerida.");
+		Validate.notNull(sigilo, "Sigilo requerido.");
 		Validate.notNull(status, "Status requerido.");
     	Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
 				"Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
     	
     	this.classe = classe;
-		this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
+    	this.sigilo = sigilo;
+    	this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
     	this.status = status;
     }
     

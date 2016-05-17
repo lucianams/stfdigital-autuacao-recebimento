@@ -24,8 +24,8 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 @SpringApplicationConfiguration(ApplicationContextInitializer.class)
 public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	
-	private final String remessaValida = "{\"formaRecebimento\":\"SEDEX\", \"volumes\":1, \"tipoProcesso\":\"ORIGINARIO\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\"}";
-	private final String remessaParaPreautuar = "{\"protocoloId\":@protocoloId, \"classeId\":\"ADI\", \"preferencias\":[3,8]}";
+	private final String remessaValida = "{\"formaRecebimento\":\"SEDEX\", \"volumes\":1, \"tipoProcesso\":\"ORIGINARIO\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\", \"sigilo\":\"PUBLICO\"}";
+	private final String remessaParaPreautuar = "{\"protocoloId\":@protocoloId, \"classeId\":\"ADI\", \"preferencias\":[3,8], \"sigilo\":\"PUBLICO\"}";
 	private final String remessaParaDevolver = "{\"protocoloId\":@protocoloId, \"motivo\":\"Remessa inválida.\"}";
 	private final String remessaParaPrepararOficio = "{\"protocoloId\":@protocoloId, \"motivo\":1, \"modeloId\":1, \"textoId\":1}";
 	private final String remessaParaAssinarOficio = "{\"protocoloId\":@protocoloId}";

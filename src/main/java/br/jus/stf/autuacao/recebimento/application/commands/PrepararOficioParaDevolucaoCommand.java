@@ -2,9 +2,7 @@ package br.jus.stf.autuacao.recebimento.application.commands;
 
 import javax.validation.constraints.NotNull;
 
-import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.documento.TextoId;
-import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
  * @author Rodrigo Barreiros
@@ -16,18 +14,18 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 public class PrepararOficioParaDevolucaoCommand {
 
     @NotNull
-	private ProtocoloId protocoloId;
+	private Long protocoloId;
     
     @NotNull
     private Long motivo;
     
     @NotNull
-    private ModeloDocumentoId modeloId;
+    private Long modeloId;
     
     @NotNull
     private TextoId textoId;
     
-    public ProtocoloId getProtocoloId() {
+    public Long getProtocoloId() {
         return protocoloId;
     }
     
@@ -35,7 +33,7 @@ public class PrepararOficioParaDevolucaoCommand {
     	return motivo;
     }
     
-    public ModeloDocumentoId getModeloId() {
+    public Long getModeloId() {
     	return modeloId;
     }
     

@@ -31,11 +31,15 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
 import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
+import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.identidade.PessoaId;
+import br.jus.stf.core.shared.preferencia.PreferenciaId;
+import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
+import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
  * @author Rodrigo Barreiros
@@ -76,10 +80,11 @@ public class RecebimentoApplicationService {
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
     	FormaRecebimento formaRecebimento = FormaRecebimento.valueOf(command.getFormaRecebimento());
-        //TODO: Alterar para pegar dados do recebedor pelo usuário da sessão.
+    	Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
+    	//TODO: Alterar para pegar dados do recebedor pelo usuário da sessão.
     	Recebedor recebedor = new Recebedor("USUARIO_FALSO", new PessoaId(1L));
     	Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
-				formaRecebimento, command.getNumeroSedex(), recebedor, tipoProcesso, status);
+				formaRecebimento, command.getNumeroSedex(), sigilo, tipoProcesso, recebedor, status);
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
@@ -89,22 +94,23 @@ public class RecebimentoApplicationService {
 
     @Transactional
     public void handle(PreautuarRemessaCommand command) {
-        Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
+        Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
+        Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
-				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(pref))
+				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
 				.get();
             
-        remessa.preautuar(classe, preferencias, status);
+        remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
-        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString()));
+        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString()));
     }
     
     @Transactional
     public void handle(DevolverRemessaCommand command) {
-        Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
+        Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "DEVOLVER");
         
         remessa.iniciarDevolucao(command.getMotivo(), status);
@@ -113,10 +119,10 @@ public class RecebimentoApplicationService {
 
     @Transactional
     public void handle(PrepararOficioParaDevolucaoCommand command) {
-        Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
+        Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());
         MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(command.getMotivo());
-        ModeloDevolucao modelo = modeloDevolucaoRepository.findOne(command.getModeloId());
+        ModeloDevolucao modelo = modeloDevolucaoRepository.findOne(new ModeloDocumentoId(command.getModeloId()));
         
         remessa.elaborarDevolucao(motivo, modelo, command.getTextoId(), status);
         remessaRepository.save(remessa);
@@ -124,7 +130,7 @@ public class RecebimentoApplicationService {
 
     @Transactional
     public void handle(AssinarOficioParaDevolucaoCommand command) {
-        Remessa remessa = remessaRepository.findOne(command.getProtocoloId());
+        Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());
         
         remessa.devolver(status);

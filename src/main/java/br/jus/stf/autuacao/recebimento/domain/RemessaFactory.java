@@ -8,6 +8,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
+import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 
@@ -21,15 +22,15 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @Component
 public class RemessaFactory {
 
-    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Recebedor recebedor, TipoProcesso tipoProcesso, Status status) {
+    public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, TipoProcesso tipoProcesso, Recebedor recebedor, Status status) {
         Remessa remessa;
         
 		switch (tipoProcesso) {
 		case ORIGINARIO:
-			remessa = new RemessaOriginaria(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
+			remessa = new RemessaOriginaria(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
 			break;
 		case RECURSAL:
-			remessa = new RemessaRecursal(protocolo, volumes, apensos, formaRecebimento, numeroSedex, recebedor, status);
+			remessa = new RemessaRecursal(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
 			break;
 		default:
 			throw new IllegalArgumentException(String.format("Tipo de processo não localizado: %s.", tipoProcesso));

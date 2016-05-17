@@ -28,6 +28,9 @@ public class RegistrarRemessaCommand {
     @NotBlank
     private String tipoProcesso;
     
+    @NotBlank
+    private String sigilo;
+    
     public String getFormaRecebimento() {
         return formaRecebimento;
     }
@@ -47,5 +50,9 @@ public class RegistrarRemessaCommand {
     public String getTipoProcesso() {
         return tipoProcesso;
     }
+
+	public String getSigilo() {
+		return sigilo;
+	}
     
 }

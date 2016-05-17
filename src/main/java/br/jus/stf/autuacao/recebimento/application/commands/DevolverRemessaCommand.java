@@ -4,8 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import br.jus.stf.core.shared.protocolo.ProtocoloId;
-
 /**
  * Objeto usado para enviar os dados necessários para devolver uma remessa.
  * 
@@ -17,12 +15,12 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 public class DevolverRemessaCommand {
 
 	@NotNull
-	private ProtocoloId protocoloId;
+	private Long protocoloId;
 	
 	@NotBlank
 	private String motivo;
 	
-	public ProtocoloId getProtocoloId() {
+	public Long getProtocoloId() {
 		return protocoloId;
 	}
 	

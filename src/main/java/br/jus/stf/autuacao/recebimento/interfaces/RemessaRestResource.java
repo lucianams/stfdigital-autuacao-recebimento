@@ -22,8 +22,14 @@ import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDe
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
 import br.jus.stf.autuacao.recebimento.infra.RemessaDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
@@ -46,6 +52,18 @@ public class RemessaRestResource {
 	
 	@Autowired
 	private RemessaDtoAssembler remessaDtoAssembler;
+	
+	@Autowired
+	private ClassePeticionavelRepository classePeticionavelRepository;
+	
+	@Autowired
+	private ClasseDtoAssembler classeDtoAssembler;
+	
+	@Autowired
+	private PreferenciaDtoAssembler preferenciaDtoAssembler;
+	
+	@Autowired
+	private PreferenciaRepository preferenciaRepository;
     
     @RequestMapping(method = RequestMethod.POST)
     public Long registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
@@ -103,6 +121,18 @@ public class RemessaRestResource {
     	return Arrays.asList(FormaRecebimento.values()).stream()
     			.map(forma -> new FormaRecebimentoDto(forma.descricao(), forma.exigeNumeracao()))
     			.collect(Collectors.toList());
+    }
+	
+	@RequestMapping(value="/classe", method = RequestMethod.GET)
+    public List<ClasseDto> listarClasses(){
+    	return classePeticionavelRepository.findAll().stream()
+    			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
+    }
+	
+	@RequestMapping(value="/preferencia", method = RequestMethod.GET)
+    public List<PreferenciaDto> listarPrefencias(){
+    	return preferenciaRepository.findAll().stream()
+    			.map(preferencia -> preferenciaDtoAssembler.toDto(preferencia)).collect(Collectors.toList());
     }
 
 	private String message(BindingResult binding) {

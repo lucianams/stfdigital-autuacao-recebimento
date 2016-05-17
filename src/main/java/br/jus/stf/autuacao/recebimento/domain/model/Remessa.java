@@ -136,7 +136,8 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 		Validate.notNull(classe, "Classe requerida.");
 		Validate.notNull(sigilo, "Sigilo requerido.");
 		Validate.notNull(status, "Status requerido.");
-    	Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
+    	Validate.isTrue(tipoProcesso().equals(classe.tipo()), "O tipo da remessa e da classe são incompatíveis.");
+		Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
 				"Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
     	
     	this.classe = classe;
@@ -166,6 +167,10 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     
     public Numero numero() {
     	return numero;
+    }
+    
+    public Sigilo sigilo() {
+    	return sigilo;
     }
 
     @Override

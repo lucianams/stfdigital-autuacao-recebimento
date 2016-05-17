@@ -32,5 +32,3 @@ alter table recebimento.remessa add column sig_recebedor varchar2(30) not null;
 alter table recebimento.remessa add column dat_recebimento date not null;
 alter table recebimento.remessa add constraint uk_reme_num_remessa unique key (num_remessa, num_ano);
 alter table recebimento.remessa add constraint fk_classe_peticionavel_reme foreign key (sig_classe) references recebimento.classe_peticionavel(sig_classe);
-alter table recebimento.remessa add column tip_sigilo varchar2(15) not null;
-alter table recebimento.remessa add constraint ck_reme_tip_sigilo check (tip_sigilo in ('PUBLICO', 'SEGREDO_JUSTICA'));

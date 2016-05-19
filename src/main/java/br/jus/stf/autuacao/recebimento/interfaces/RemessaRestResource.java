@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,17 @@ import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaComm
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
-import br.jus.stf.autuacao.recebimento.infra.FormaRecebimentoDto;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
+import br.jus.stf.autuacao.recebimento.infra.RemessaDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDtoAssembler;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
+import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
  * @author Rodrigo Barreiros
@@ -35,8 +46,26 @@ public class RemessaRestResource {
     private static final String REMESSA_INVALIDA_PATTERN = "Remessa Inválida: %S";
 	@Autowired
     private RecebimentoApplicationService recebimentoApplicationService; 
+	
+	@Autowired 
+	private RemessaRepository remessaRepossitory;
+	
+	@Autowired
+	private RemessaDtoAssembler remessaDtoAssembler;
+	
+	@Autowired
+	private ClassePeticionavelRepository classePeticionavelRepository;
+	
+	@Autowired
+	private ClasseDtoAssembler classeDtoAssembler;
+	
+	@Autowired
+	private PreferenciaDtoAssembler preferenciaDtoAssembler;
+	
+	@Autowired
+	private PreferenciaRepository preferenciaRepository;
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
     public Long registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
@@ -44,6 +73,12 @@ public class RemessaRestResource {
         
         return recebimentoApplicationService.handle(command);
     }
+    
+    @RequestMapping(value="/{protocoloId}", method = RequestMethod.GET)
+    public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id){
+    	return  remessaDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
+    }
+    
 
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
     public void preautuar(@RequestBody @Valid PreautuarRemessaCommand command, BindingResult binding) {
@@ -86,6 +121,18 @@ public class RemessaRestResource {
     	return Arrays.asList(FormaRecebimento.values()).stream()
     			.map(forma -> new FormaRecebimentoDto(forma.descricao(), forma.exigeNumeracao()))
     			.collect(Collectors.toList());
+    }
+	
+	@RequestMapping(value="/classe", method = RequestMethod.GET)
+    public List<ClasseDto> listarClasses(){
+    	return classePeticionavelRepository.findAll().stream()
+    			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
+    }
+	
+	@RequestMapping(value="/preferencia", method = RequestMethod.GET)
+    public List<PreferenciaDto> listarPrefencias(){
+    	return preferenciaRepository.findAll().stream()
+    			.map(preferencia -> preferenciaDtoAssembler.toDto(preferencia)).collect(Collectors.toList());
     }
 
 	private String message(BindingResult binding) {

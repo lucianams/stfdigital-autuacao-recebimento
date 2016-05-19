@@ -26,12 +26,6 @@ export class PeticaoFisicaController {
         });
     }
 
-/*        private static mockClasses(): Object[] {
-            return ('ADI ADO')
-                .split(' ')
-                .map(state => { return {abbrev: state}; });
-        }
-*///
     private commandPeticaoFisica(): PeticaoFisicaCommand {
         return new PeticaoFisicaCommand(this.formaRecebimento.toUpperCase(), this.qtdVolumes, this.qtdApensos, this.numeroSedex, this.tipoProcesso.toUpperCase());
     }

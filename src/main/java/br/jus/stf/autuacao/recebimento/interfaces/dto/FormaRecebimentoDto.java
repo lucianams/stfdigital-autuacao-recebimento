@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.infra;
+package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
 public class FormaRecebimentoDto {
 	

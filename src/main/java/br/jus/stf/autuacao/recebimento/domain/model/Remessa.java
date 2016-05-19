@@ -177,5 +177,25 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     public ProtocoloId identity() {
         return protocoloId;
     }
+
+	public ClassePeticionavel classe() {
+		return classe;
+	}
+
+	public Integer volumes() {
+		return volumes;
+	}
+
+	public Integer apensos() {
+		return apensos;
+	}
+
+	public FormaRecebimento formaRecebimento() {
+		return formaRecebimento;
+	}
+
+	public String numeroSedex() {
+		return numeroSedex;
+	}
     
 }

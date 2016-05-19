@@ -10,7 +10,7 @@ function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider
 
     $translatePartialLoaderProvider.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 
-    $stateProvider.state('app.novo-processo.recebimento', {
+    $stateProvider.state('app.novo-processo.recebimento-peticao-fisica', {
         url : '/peticao-fisica',
         views : {
             'content@app.autenticado' : {

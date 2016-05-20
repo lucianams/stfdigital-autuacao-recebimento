@@ -1,15 +1,12 @@
-import ITranslatePartialLoaderProvider = angular.translate.ITranslatePartialLoaderProvider;
+import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 //import {AutuacaoService} from "./autuacao.service";
 import {ClasseService} from "./classe.service";
 
 /** @ngInject **/
-function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider,
-                $stateProvider: IStateProvider,
+function config($stateProvider: IStateProvider,
                 properties: any) {
-
-    $translatePartialLoaderProvider.addPart(properties.apiUrl + '/recebimento/preautuacao');
 
     $stateProvider.state('app.novo-processo.recebimento-preautuacao', {
         url : '/preautuacao',
@@ -28,6 +25,13 @@ function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider
     });
 }
 
+/** @ngInject **/
+function run($translatePartialLoader: ITranslatePartialLoaderService,
+			 properties: any) {
+	
+	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/preautuacao');
+}
+
 let preautuacao: IModule = angular.module('app.novo-processo.preautuacao', ['app.novo-processo', 'app.constants']);
-preautuacao.config(config);
+preautuacao.config(config).run(run);
 export default preautuacao;

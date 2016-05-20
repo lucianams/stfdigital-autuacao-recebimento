@@ -1,17 +1,14 @@
-import ITranslatePartialLoaderProvider = angular.translate.ITranslatePartialLoaderProvider;
+import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {PeticaoFisicaService} from "./peticao-fisica.service";
 
 /** @ngInject **/
-function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider,
-                $stateProvider: IStateProvider,
+function config($stateProvider: IStateProvider,
                 properties: any) {
 
-    $translatePartialLoaderProvider.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
-
     $stateProvider.state('app.novo-processo.recebimento-peticao-fisica', {
-        url : '/peticao-fisica',
+        url : '/recebimento',
         views : {
             'content@app.autenticado' : {
                 templateUrl : properties.apiUrl + '/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
@@ -27,6 +24,13 @@ function config($translatePartialLoaderProvider: ITranslatePartialLoaderProvider
     });
 }
 
+/** @ngInject **/
+function run($translatePartialLoader: ITranslatePartialLoaderService,
+			 properties: any) {
+	
+	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
+}
+
 let recebimento: IModule = angular.module('app.novo-processo.peticoes-fisicas', ['app.novo-processo', 'app.constants']);
-recebimento.config(config);
+recebimento.config(config).run(run);
 export default recebimento;

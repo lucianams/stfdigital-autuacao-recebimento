@@ -29,17 +29,17 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	private final String remessaParaDevolver = "{\"protocoloId\":@protocoloId, \"motivo\":\"Remessa inválida.\"}";
 	private final String remessaParaPrepararOficio = "{\"protocoloId\":@protocoloId, \"motivo\":1, \"modeloId\":1, \"textoId\":1}";
 	private final String remessaParaAssinarOficio = "{\"protocoloId\":@protocoloId}";
-	
+	@Ignore
 	@Test
     public void registrarUmaRemessa() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaValida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
         
         result.andExpect(status().isOk());
     }
 	
 	@Test
     public void preautarUmaRemessa() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaValida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
         String protocoloId = result.andReturn().getResponse().getContentAsString();
         
         result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaParaPreautuar.replace("@protocoloId", protocoloId)));
@@ -49,7 +49,7 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void devolverUmaRemessa() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaValida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
         String protocoloId = result.andReturn().getResponse().getContentAsString();
 
         result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.replace("@protocoloId", protocoloId)));
@@ -59,7 +59,7 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaValida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
         String protocoloId = result.andReturn().getResponse().getContentAsString();
         
         result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.replace("@protocoloId", protocoloId)));
@@ -71,7 +71,7 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaValida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
         String protocoloId = result.andReturn().getResponse().getContentAsString();
         
         result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.replace("@protocoloId", protocoloId)));
@@ -87,7 +87,7 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
     public void naoDeveRegistrarUmaRemessaInvalida() throws Exception {
         String remessaInvalida = "{\"formaRecebimento\":\"SEDEX\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\"}";
         
-        ResultActions result = mockMvc.perform(post("/api/remessas").contentType(APPLICATION_JSON).content(remessaInvalida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida));
         
         result.andExpect(status().isBadRequest());
     }

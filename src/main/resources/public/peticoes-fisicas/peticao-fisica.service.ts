@@ -14,7 +14,8 @@ export class PeticaoFisicaCommand {
                 public volumes: number,
                 public apensos: number,
                 public numeroSedex: string,
-                public tipoProcesso: string) { }    
+                public tipoProcesso: string,
+                public sigilo: string = 'PUBLICO') { }
 }
 
 export class PeticaoFisicaService {

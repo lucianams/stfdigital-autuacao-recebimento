@@ -6,8 +6,14 @@ import preautuacao from "./preautuacao.module";
 export class PreautuarRemessaCommand {
     
     constructor(public protocoloId: number, 
-                public classeId: String,
-                public preferencias: Array<number>) {}    
+                public classeId: string,
+                public preferencias: Array<number>, public sigilo: string = 'PUBLICO') {}    
+}
+
+export class DevolverRemessaCommand {
+	
+	constructor(public protocoloId: number, public motivo: string) {}
+	
 }
 
 export class Remessa {
@@ -42,7 +48,11 @@ export class PreautuacaoService {
                     return response.data; 
                 });
     }
-      
+    
+    public devolver(command: DevolverRemessaCommand): IPromise<any> {
+    	return this.$http.post(this.properties.apiUrl + PreautuacaoService.apiRemessa + '/devolucao', command);
+    }
+    
 }
 
 preautuacao.service('app.novo-processo.preautuacao.PreautuacaoService', PreautuacaoService);

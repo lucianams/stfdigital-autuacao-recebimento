@@ -1,0 +1,50 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+
+        <div class="md-title mt-10">Devolução</div>
+        <div class="pb-16">Informe a classe, as preferências, os envolvidos e os documentos para enviar a petição</div>
+
+        <div layout="row">
+
+            <!-- BASIC FORM -->
+            <div class="form-wrapper md-whiteframe-1dp" flex="100">
+
+                <form name="formularioDevolucao" ng-submit="registro.registrarPeticao(this)" class="md-inline-form">
+                    <div layout="column" layout-gt-xs="row">
+                        <md-input-container flex>
+                            <label>Motivo da Devolução</label>
+                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao">
+                                <md-option></md-option>
+                                <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" value="{{motivoDevolucao.id}}">
+                                    {{motivoDevolucao.descricao}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Modelo</label>
+                            <md-select ng-model="vm.modelo" id="modeloTexto">
+                                <md-option></md-option>
+                                <md-option ng-repeat="modelo in vm.modelos" value="{{modelo.id}}">
+                                    {{modelo.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar texto" ng-disabled="formularioDevolucao.$invalid || formularioDevolucao.$pristine">
+                        Finalizar texto
+                    </md-button>
+                      
+                </form>
+
+            </div>
+            <!-- / BASIC FORM -->
+
+        </div>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

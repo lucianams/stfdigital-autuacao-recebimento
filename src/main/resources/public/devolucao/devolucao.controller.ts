@@ -1,6 +1,7 @@
 import IStateService = angular.ui.IStateService;
 import IPromise = angular.IPromise;
-import {DevolucaoService, MotivoDevolucao, Modelo, Tag} from "./devolucao.service";
+import {DevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto} from "./devolucao.service";
+import {Documento} from "./documento";
 import devolucao from "./devolucao.module";
 
 export class DevolucaoController {
@@ -12,9 +13,15 @@ export class DevolucaoController {
     public motivoDevolucao: MotivoDevolucao;
     public modelo: Modelo;
     
-    public tags: Tag[];
+    public substituicoesTags: SubstituicaoTag[];
+
+    public texto: Texto;
     
     public showEditor: boolean = false;
+    
+    public editor: any = {};
+    
+    public documento: Documento;
 
     constructor(private $state: IStateService, private devolucaoService: DevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[]) { }
@@ -31,7 +38,9 @@ export class DevolucaoController {
     public extrairTags(): void {
     	this.devolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
-    			this.tags = tags;
+    			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
+    				return new SubstituicaoTag(tag.nome, "");
+    			});
     		}
     	);
     }
@@ -41,11 +50,19 @@ export class DevolucaoController {
     }
     
     public tagsCarregadas(): boolean {
-    	return this.tags != null;
+    	return this.substituicoesTags != null;
     }
     
     public gerarTexto(): void {
-    	
+    	this.devolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
+    		.then((texto: Texto) => {
+    			this.texto = texto;
+    			this.documento = {
+					id: texto.documentoId,
+					nome: 'Documento de Devolução'
+				};
+				this.showEditor = true;
+    		});
     }
     
 }

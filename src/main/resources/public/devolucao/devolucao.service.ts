@@ -22,8 +22,17 @@ export interface Tag {
 	nome: string;
 }
 
-export class GerarTextoPeticaoCommand {
-	constructor(peticaoId: number, public modeloId: number, public substituicoes) {}
+export class SubstituicaoTag {
+	constructor(public nome: string, public valor: string){}
+}
+
+export interface Texto {
+	id: number;
+	documentoId: number;
+}
+
+export class GerarTextoCommand {
+	constructor(public modeloId: number, public substituicoes: SubstituicaoTag[]) {}
 }
 
 export class DevolucaoService {
@@ -31,6 +40,7 @@ export class DevolucaoService {
     private static apiRemessa: string = '/recebimento/api/devolucao';
     private static apiModelos: string = '/documents/api/modelos';
     private static apiDocumentos: string = '/documents/api/documentos';
+    private static apiTextos: string = '/documents/api/textos';
 
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties) { }
@@ -56,8 +66,11 @@ export class DevolucaoService {
     		});
     }
     
-    public gerarTextoComTags(command: GerarTextoPeticaoCommand) {
-    	
+    public gerarTextoComTags(command: GerarTextoCommand) {
+    	return this.$http.post(this.properties.apiUrl + DevolucaoService.apiTextos + "/gerar-texto", command)
+    		.then((response: IHttpPromiseCallbackArg<Texto>) => {
+    			return response.data;
+    		});
     }
 }
 

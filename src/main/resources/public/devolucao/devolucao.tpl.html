@@ -3,38 +3,52 @@
     <!-- CONTENT -->
     <div class="content" layout="column">
 
-        <div class="md-title mt-10">Devolução</div>
-        <div class="pb-16">Informe a classe, as preferências, os envolvidos e os documentos para enviar a petição</div>
+        <div class="md-title mt-10"><span translate="REMESSA.DEVOLUCAO.TITULO">Elaboração de Ofício de devolução de Remessa</span></div>
+        <div class="pb-16"><span translate="REMESSA.DEVOLUCAO.DESCRICAO">Informe o motivo da devolução, o modelo, os valores das tags e elabore o texto</span></div>
 
         <div layout="row">
 
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
-
                 <form name="formularioDevolucao" ng-submit="registro.registrarPeticao(this)" class="md-inline-form">
                     <div layout="column" layout-gt-xs="row">
                         <md-input-container flex>
                             <label>Motivo da Devolução</label>
-                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao">
+                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao" ng-change="vm.carregarModelos()" required>
                                 <md-option></md-option>
-                                <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" value="{{motivoDevolucao.id}}">
+                                <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" ng-value="motivoDevolucao">
                                     {{motivoDevolucao.descricao}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container flex>
                             <label>Modelo</label>
-                            <md-select ng-model="vm.modelo" id="modeloTexto">
+                            <md-select ng-model="vm.modelo" id="modeloTexto" ng-change="vm.extrairTags()" required>
                                 <md-option></md-option>
-                                <md-option ng-repeat="modelo in vm.modelos" value="{{modelo.id}}">
+                                <md-option ng-repeat="modelo in vm.modelos" ng-value="modelo">
                                     {{modelo.nome}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                     </div>
 
-                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar texto" ng-disabled="formularioDevolucao.$invalid || formularioDevolucao.$pristine">
-                        Finalizar texto
+                    <p ng-show="vm.tagsCarregadas() && !vm.showEditor" class="text-center"><strong>Preencha as Tags e clique em Gerar Texto</strong></p>
+
+                    <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-gt-xs="row" ng-repeat="tag in vm.tags">
+                        <md-input-container flex>
+                            <label for="tag-{{$index}}">{{tag.nome}}</label>
+                            <input type="text" id="tag-{{$index}}" name="tag-{{$index}}" ng-model="tag.valor">
+                        </md-input-container>
+                    </div>
+
+                    <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-align="end end" layout-gt-xs="row">
+                        <md-button type="button" class="md-raised md-accent" aria-label="Gerar Texto" ng-click="vm.gerarTexto()">
+                        Gerar Texto
+                        </md-button>
+                    </div>
+
+                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar texto" ng-disabled="formularioDevolucao.$invalid || formularioDevolucao.$pristine || !formularioDevolucao.isTextoCriado()">
+                        Finalizar
                     </md-button>
                       
                 </form>

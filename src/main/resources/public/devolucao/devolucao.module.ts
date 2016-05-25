@@ -4,8 +4,7 @@ import IModule = angular.IModule;
 import {DevolucaoService} from "./devolucao.service";
 
 /** @ngInject **/
-function config($stateProvider: IStateProvider,
-                properties: any) {
+function config($stateProvider: IStateProvider, properties: any) {
 
     $stateProvider.state('app.novo-processo.recebimento-devolucao', {
         url : '/devolucao',
@@ -25,9 +24,7 @@ function config($stateProvider: IStateProvider,
 }
 
 /** @ngInject **/
-function run($translatePartialLoader: ITranslatePartialLoaderService,
-			 properties: any) {
-	
+function run($translatePartialLoader: ITranslatePartialLoaderService, properties: any) {
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
 }
 

@@ -1,5 +1,8 @@
 package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
+import java.util.Set;
+
+import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 /**
@@ -9,6 +12,7 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * @since 15.03.2016
  *
  */
+@ApiModel("Contém os dados de um motivo de devolução")
 public class MotivoDevolucaoDto {
 	@ApiModelProperty(value = "Id do motivo.")
 	private Long id;
@@ -16,9 +20,13 @@ public class MotivoDevolucaoDto {
 	@ApiModelProperty(value = "Descrição do motivo")
 	private String descricao;
 	
-	public MotivoDevolucaoDto(Long id, String descricao) {
+	@ApiModelProperty(value = "Os tipos de documento associados ao motivo")
+	private Set<Long> tiposDocumento;
+	
+	public MotivoDevolucaoDto(Long id, String descricao, Set<Long> tiposDocumento) {
 		this.id = id;
 		this.descricao = descricao;
+		this.tiposDocumento = tiposDocumento;
 	}
 	
 	public Long getId() {
@@ -27,5 +35,9 @@ public class MotivoDevolucaoDto {
 	
 	public String getDescricao() {
 		return descricao;
+	}
+
+	public Set<Long> getTiposDocumento() {
+		return tiposDocumento;
 	}
 }

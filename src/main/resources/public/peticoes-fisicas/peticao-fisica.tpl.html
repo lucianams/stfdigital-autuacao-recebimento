@@ -29,7 +29,7 @@
                             <label>Forma de Envio</label>
                             <md-select ng-model="registro.formaRecebimento" id="formaRecimento">
                                 <md-option></md-option>
-                                <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.descricao}}">
+                                <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.sigla}}">
                                     {{forma.descricao}}
                                 </md-option>
                             </md-select>

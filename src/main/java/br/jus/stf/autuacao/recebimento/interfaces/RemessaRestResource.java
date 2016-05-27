@@ -120,7 +120,7 @@ public class RemessaRestResource {
 	@RequestMapping(value="/formas-recebimento", method = RequestMethod.GET)
     public List<FormaRecebimentoDto> consultarFormasRecebimento(){
     	return Arrays.asList(FormaRecebimento.values()).stream()
-    			.map(forma -> new FormaRecebimentoDto(forma.descricao(), forma.exigeNumeracao()))
+    			.map(forma -> new FormaRecebimentoDto(forma.name(), forma.descricao(), forma.exigeNumeracao()))
     			.collect(Collectors.toList());
     }
 	

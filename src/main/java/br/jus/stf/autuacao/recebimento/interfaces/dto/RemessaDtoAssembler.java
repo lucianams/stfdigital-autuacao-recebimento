@@ -9,10 +9,9 @@ import br.jus.stf.autuacao.recebimento.infra.RemessaDto;
 @Component
 public class RemessaDtoAssembler {
 	
-		public RemessaDto toDto(Remessa remessa) {
-			Validate.notNull(remessa);
-			return new RemessaDto(remessa.classe().toString(), remessa.volumes(), remessa.apensos(), remessa.formaRecebimento().toString(), remessa.numeroSedex());
-		} 
-	
-
+	public RemessaDto toDto(Remessa remessa) {
+		Validate.notNull(remessa);
+		String classe = remessa.classe() != null ? remessa.classe().toString() : "";
+		return new RemessaDto(classe, remessa.volumes(), remessa.apensos(), remessa.formaRecebimento().toString(), remessa.numeroSedex());
+	} 
 }

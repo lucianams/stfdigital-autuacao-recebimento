@@ -31,6 +31,7 @@ import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
+import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
@@ -123,9 +124,16 @@ public class RemessaRestResource {
     			.collect(Collectors.toList());
     }
 	
-	@RequestMapping(value="/classe", method = RequestMethod.GET)
+	@RequestMapping(value="/classes", method = RequestMethod.GET)
     public List<ClasseDto> listarClasses(){
     	return classePeticionavelRepository.findAll().stream()
+    			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
+    }
+	
+	@RequestMapping(value="/classes/tipos-remessa/{tipoRemessa}", method = RequestMethod.GET)
+    public List<ClasseDto> consultarClassesPorTipoRemessa(@PathVariable("tipoRemessa") String tipoRemessa){
+    	TipoProcesso tipoProcesso = TipoProcesso.valueOf(tipoRemessa); 
+		return classePeticionavelRepository.findByTipo(tipoProcesso).stream()
     			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
     }
 	

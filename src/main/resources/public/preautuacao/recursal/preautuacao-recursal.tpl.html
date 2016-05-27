@@ -1,0 +1,62 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+    <!-- CONTENT -->
+    <div class="content" layout="column">
+        <div class="md-title mt-10">Preautuação de Processos Recursais</div>
+        <div class="pb-16">Informe a preferência e a motição da petição</div>
+        <div layout="row">
+            <!-- BASIC FORM -->
+            <div class="form-wrapper md-whiteframe-1dp" flex="100">
+                <form name="basicForm" class="md-inline-form">
+                	<div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+	                    <md-input-container flex>
+	                        <label>Quantidade de volumes</label>
+	                        <input ng-model="vm.remessa.qtdVolumes" id="txtQtdVolumes" class="ng-pristine md-input ng-empty">
+	                    </md-input-container>
+	                    <md-input-container flex>
+	                        <label>Quantidade de apensos</label>
+	                        <input ng-model="vm.remessa.qtdApensos" id="txtQtdApensos" class="ng-pristine md-input ng-empty">
+	                    </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+	                    <md-input-container flex>
+	                        <label>Forma de Recebimento </label>
+	                        <input ng-model="vm.remessa.formaRecebimento" id="txtFormaRecebimento" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                    </md-input-container>
+	                    <md-input-container flex>
+	                        <label>Número de Sedex</label>
+	                        <input ng-model="vm.remessa.numeroSedex" id="txtNumeroSedex" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                    </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                    	<md-input-container flex>
+                            <label>Classificação</label>
+                            <md-select ng-model="vm.classe" id="cboClasse" ng-change="vm.carregarPreferencias()">
+                                <md-option></md-option>
+                                <md-option ng-repeat="classe in vm.classes" ng-value="classe">
+                                    {{classe.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Preferências</label>
+                            <md-select multiple ng-model="vm.preferenciasSelecionadas" id="cboPreferencias">
+                                <md-option ng-repeat="preferencia in vm.preferencias" value="{{preferencia.id}}">
+                                    {{preferencia.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div>
+						<md-input-container class="md-block">
+          					<label>Informe se a petição está correta ou indevida</label>
+          					<textarea ng-model="vm.motivo" md-maxlength="150" rows="5" md-select-on-focus id="txtMotivo"></textarea>
+        				</md-input-container>
+                    </div>
+                    <md-button type="button" class="md-raised md-accent" id="btnPreautuarRecursal" ng-click ="vm.preautuarProcessoRecursal()">
+                        	Preautuar
+                    </md-button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

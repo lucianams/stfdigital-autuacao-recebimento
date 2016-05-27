@@ -192,3 +192,10 @@ Insert into RECEBIMENTO.MODELO_DEVOLUCAO (SEQ_MODELO_DOCUMENTO,NOM_MODELO_DOCUME
 Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (1, 8);
 Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (2, 8);
 Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (3, 8);
+/*
+Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (1, 'RE' , 1, 1, 'SEDEX', '123456789BR', 'RECEBIDA', 1, 2016, 'KAKAROTO', SYSDATE, 'RECURSAL', 'PUBLICO');
+Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (2, 'ADI', 2, 1, 'SEDEX', '444555667BR', 'RECEBIDA', 2, 2016, 'JASPION', SYSDATE, 'RECURSAL', 'PUBLICO');
+Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (3, 'HD' , 3, 2, 'MALOTE', '', 'RECEBIDA', 3, 2016, 'SHADOW MOON', SYSDATE, 'ORIGINARIO', 'PUBLICO');
+Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (4, 'HD' , 4, 1, 'BALCAO', '', 'RECEBIDA', 4, 2016, 'VINICIUS', SYSDATE, 'ORIGINARIO', 'PUBLICO');
+*/
+

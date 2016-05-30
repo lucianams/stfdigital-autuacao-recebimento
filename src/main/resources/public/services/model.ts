@@ -45,3 +45,13 @@ export class Processo {
         this.remessa = remessa;
     }
 }
+
+export class TipoProcesso {
+    public id: string;
+    public nome: string;
+    
+    constructor(id: string, nome: string){
+        this.id = id;
+        this.nome = nome;
+    }
+}

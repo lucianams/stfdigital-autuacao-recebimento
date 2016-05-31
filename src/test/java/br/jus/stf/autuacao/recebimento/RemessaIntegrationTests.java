@@ -29,7 +29,7 @@ public class RemessaIntegrationTests extends IntegrationTestsSupport {
 	private final String remessaParaDevolver = "{\"protocoloId\":@protocoloId, \"motivo\":\"Remessa inválida.\"}";
 	private final String remessaParaPrepararOficio = "{\"protocoloId\":@protocoloId, \"motivo\":1, \"modeloId\":1, \"textoId\":1}";
 	private final String remessaParaAssinarOficio = "{\"protocoloId\":@protocoloId}";
-	@Ignore
+
 	@Test
     public void registrarUmaRemessa() throws Exception {
         ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));

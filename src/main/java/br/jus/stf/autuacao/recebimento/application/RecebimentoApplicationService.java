@@ -32,6 +32,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepos
 import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
+import br.jus.stf.core.shared.documento.TextoId;
 import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.identidade.PessoaId;
@@ -124,7 +125,7 @@ public class RecebimentoApplicationService {
         MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(command.getMotivo());
         ModeloDevolucao modelo = modeloDevolucaoRepository.findOne(new ModeloDocumentoId(command.getModeloId()));
         
-        remessa.elaborarDevolucao(motivo, modelo, command.getTextoId(), status);
+        remessa.elaborarDevolucao(motivo, modelo, new TextoId(command.getTextoId()), status);
         remessaRepository.save(remessa);
     }
 

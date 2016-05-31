@@ -4,7 +4,7 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacao from "./preautuacao.module";
-import {PreautuacaoService} from "./preautuacao.service";
+import {PreautuacaoService, DevolverRemessaCommand} from "./preautuacao.service";
 import {ClasseService} from "../../services/classe.service";
 
 export class PreautuacaoController {
@@ -45,6 +45,17 @@ export class PreautuacaoController {
 	 */
 	public carregarPreferencias(): void {
 		 this.preferencias = this.classe.preferencias;
+	}
+	
+	public devolver(): void {
+		this.preautuacaoService.devolver(this.commandDevolucao())
+			.then(() => {
+			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+		});
+	}
+	
+	private commandDevolucao(): DevolverRemessaCommand {
+		return new DevolverRemessaCommand(2, this.motivo);
 	}
 	
 	/*

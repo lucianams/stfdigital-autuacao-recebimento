@@ -29,6 +29,10 @@ export class RegistrarRecebimentoCommand {
     }
 }
 
+export class DevolverRemessaCommand {
+	constructor(public protocoloId: number, public motivo: string) {}
+}	  
+
 export class PreautuacaoService {
 
     private static urlServicoRemessa: string = "/recebimento/api/remessas";
@@ -73,7 +77,11 @@ export class PreautuacaoService {
         let cmd: PreautuarRemessaCommand = new PreautuarRemessaCommand(protocoloId, classeId, sigilo, preferencias);
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
             PreautuacaoService.urlServicoPreautuacao + "/preautuacao", cmd);        
-    } 
+    }
+    
+	public devolver(command: DevolverRemessaCommand): IPromise<any> {
+		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoRemessa + '/devolucao', command);
+	}
 }
 
 preautuacao.service("app.novo-processo.preautuacao.PreautuacaoService", PreautuacaoService);

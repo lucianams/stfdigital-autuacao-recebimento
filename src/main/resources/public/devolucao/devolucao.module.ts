@@ -2,6 +2,7 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {DevolucaoService} from "./devolucao.service";
+import {Remessa} from "./../services/model";
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
@@ -18,7 +19,10 @@ function config($stateProvider: IStateProvider, properties: any) {
         resolve : {
             motivosDevolucao : ['app.novo-processo.devolucao.DevolucaoService', (devolucaoService: DevolucaoService) => {
                 return devolucaoService.listarMotivosDevolucao();
-            }]
+            }],
+            protocolo: () => {
+            	return new Promise<number>((resolve, reject) => resolve(2) );
+            }
         }
     });
 }

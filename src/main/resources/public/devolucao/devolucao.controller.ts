@@ -1,12 +1,12 @@
 import IStateService = angular.ui.IStateService;
 import IPromise = angular.IPromise;
-import {DevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto} from "./devolucao.service";
+import {DevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./devolucao.service";
 import {Documento} from "./documento";
 import devolucao from "./devolucao.module";
 
 export class DevolucaoController {
 	
-    static $inject = ['$state', 'app.novo-processo.devolucao.DevolucaoService', 'motivosDevolucao'];
+    static $inject = ['$state', 'app.novo-processo.devolucao.DevolucaoService', 'motivosDevolucao', 'protocolo'];
     
     public modelos: Modelo[];
     
@@ -22,13 +22,22 @@ export class DevolucaoController {
     public editor: any = {};
     
     public documento: Documento;
+    
+    public edicaoIniciada: boolean = false;
+    
+    public tagsSendoCarregadas: boolean = false;
 
     constructor(private $state: IStateService, private devolucaoService: DevolucaoService,
-                public motivosDevolucao: MotivoDevolucao[]) { }
+                public motivosDevolucao: MotivoDevolucao[], private protocolo: number) {
+    	
+    }
+    
+    public callbackEdicaoIniciada() {
+    	this.edicaoIniciada = true;
+    }
     
     public carregarModelos(): void {
-    	console.log(this.motivoDevolucao);
-    	this.devolucaoService.consultarModelosPorTiposDocumento(this.motivoDevolucao.tiposDocumento).then(
+    	this.devolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
     		(modelos: Modelo[]) => {
     			this.modelos = modelos;
     		}
@@ -36,22 +45,33 @@ export class DevolucaoController {
     }
 	
     public extrairTags(): void {
+    	this.tagsSendoCarregadas = true;
     	this.devolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
     			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
     				return new SubstituicaoTag(tag.nome, "");
     			});
     		}
-    	);
+    	).finally(() => {
+    		this.tagsSendoCarregadas = false;
+    	});
     }
     
     public isTextoCriado(): boolean {
-    	return false;
+    	return this.edicaoIniciada;
     }
     
     public tagsCarregadas(): boolean {
     	return this.substituicoesTags != null;
     }
+    
+	concluiuEdicao() {
+		this.devolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
+			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
+		)).then(() => {
+			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+		});
+	}
     
     public gerarTexto(): void {
     	this.devolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
@@ -63,6 +83,10 @@ export class DevolucaoController {
 				};
 				this.showEditor = true;
     		});
+    }
+    
+    public finalizarDevolucao(): void {
+    	this.editor.api.salvar();
     }
     
 }

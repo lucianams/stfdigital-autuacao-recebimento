@@ -64,7 +64,10 @@
                     	ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click ="preautuacao.preautuarProcessoOriginario()" >
                         	Preautuar
                     </md-button>
-                      
+                    <md-button type="button" class="md-raised md-accent" id="btnDevolverRemessa" 
+                        ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click ="preautuacao.devolver()">
+                        Devolver
+                    </md-button>
                 </form>
 
             </div>

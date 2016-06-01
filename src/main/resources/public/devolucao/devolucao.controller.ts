@@ -24,6 +24,8 @@ export class DevolucaoController {
     public documento: Documento;
     
     public edicaoIniciada: boolean = false;
+    
+    public tagsSendoCarregadas: boolean = false;
 
     constructor(private $state: IStateService, private devolucaoService: DevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number) {
@@ -43,13 +45,16 @@ export class DevolucaoController {
     }
 	
     public extrairTags(): void {
+    	this.tagsSendoCarregadas = true;
     	this.devolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
     			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
     				return new SubstituicaoTag(tag.nome, "");
     			});
     		}
-    	);
+    	).finally(() => {
+    		this.tagsSendoCarregadas = false;
+    	});
     }
     
     public isTextoCriado(): boolean {

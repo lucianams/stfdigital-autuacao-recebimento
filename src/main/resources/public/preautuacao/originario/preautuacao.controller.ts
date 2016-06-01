@@ -51,7 +51,7 @@ export class PreautuacaoController {
 	}
 	
 	private commandDevolucao(): DevolverRemessaCommand {
-		return new DevolverRemessaCommand(2, this.motivo);
+		return new DevolverRemessaCommand(this.protocoloId, this.motivo);
 	}
 	
 	/*

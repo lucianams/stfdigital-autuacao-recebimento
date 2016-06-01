@@ -21,7 +21,11 @@ function config($stateProvider: IStateProvider, properties: any) {
                 return devolucaoService.listarMotivosDevolucao();
             }],
             protocolo: () => {
-            	return new Promise<number>((resolve, reject) => resolve(2) );
+            	return new Promise<number>((resolve, reject) => {
+            		let protocoloIdString : string = prompt("Digite o protocolo.", "2");
+            		let protocoloId : number = parseInt(protocoloIdString);
+            		resolve(protocoloId);
+            	});
             }
         }
     });

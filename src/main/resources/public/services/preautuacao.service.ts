@@ -1,8 +1,14 @@
+/*
+ Serviço usado para retornar os tipos de processos.
+ @author anderson.araujo
+ @since 27/05/2016
+ */
+
 import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
-import {Processo, Remessa, Preferencia} from "../../services/model";
-import preautuacao from "./preautuacao.module";
+import preautuacaoServices from "../services/services.module";
+import {TipoProcesso, Classe, Remessa} from "../services/model";
 
 export class PreautuarRemessaCommand {
     constructor(public protocoloId: number, 
@@ -31,21 +37,45 @@ export class RegistrarRecebimentoCommand {
 
 export class DevolverRemessaCommand {
 	constructor(public protocoloId: number, public motivo: string) {}
-}	  
+}
 
 export class PreautuacaoService {
 
-    private static urlServicoRemessa: string = "/recebimento/api/remessas";
-    private static urlServicoPreautuacao: string = "/recebimento/api/remessas";
-
+    private static urlServicoPreautuacao: string = '/recebimento/api/remessas';
+    
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties) { }
+    
+    /* 
+     * Retorna uma array de tipos de processos.
+     * @return Tipos de processos.
+     */
+    public listarTiposProcessos() : Array<TipoProcesso> {
+        let tiposProcesso = new Array<TipoProcesso>();
+        tiposProcesso.push(new TipoProcesso("ORIGINARIO", "Originário"));
+        tiposProcesso.push(new TipoProcesso("RECURSAL", "RECURSAL"));
+        return tiposProcesso;
+    }
+    
+    /* 
+     * Retorna uma array classes conforme o tipo de remessa informado.
+     * @param tipoRemessa Tipo de remessa (ORIGINARIO/RECURSAL).
+     * @return Array de classes.
+     */
+    public listarClassesPorTipoRemessa(tipoRemessa: string) : IPromise<Classe[]> {
+        return this.$http.get(this.properties.url + ":" + this.properties.port 
+            + PreautuacaoService.urlServicoPreautuacao + "/classes/tipos-remessa/" + tipoRemessa)
+                .then((response: IHttpPromiseCallbackArg<Classe[]>) => { 
+                    return response.data; 
+                });
+    }
+    
     /*
      * Função temporária para registrar uma remessa para ser usada na préautuação. Após a implementação do 
      * mecanismo de ações, esta função deve ser removida, juntamente com a classe RegistrarRecebimentoCommand.
      */
-    public gerarRemessa(): IPromise<number> {
-        let cmd = new RegistrarRecebimentoCommand("SEDEX", 1, 1, "SE987654321BR", "ORIGINARIO", "PUBLICO");
+    public gerarRemessa(tipo: string): IPromise<number> {
+        let cmd = new RegistrarRecebimentoCommand("SEDEX", 1, 1, "SE123456789BR", tipo, "PUBLICO");
         return this.$http.post(this.properties.url + ":" + this.properties.port + "/recebimento/api/remessas/recebimento", cmd).then(
             (response: IHttpPromiseCallbackArg<number>) => { 
                 return response.data; 
@@ -59,7 +89,7 @@ export class PreautuacaoService {
      */    
     public consultarRemessa(protocoloId: number): IPromise<Remessa> {
         return this.$http.get(this.properties.url + ":" + this.properties.port + 
-            PreautuacaoService.urlServicoRemessa + '/' + protocoloId).then(
+            PreautuacaoService.urlServicoPreautuacao + '/' + protocoloId).then(
                 (response: IHttpPromiseCallbackArg<Remessa>) => { 
                 return response.data; 
             });
@@ -72,18 +102,16 @@ export class PreautuacaoService {
      * @param sigilo Sigilo do processo.
      * @param preferencias Preferências processuais.
      */
-    
-    public preautuarProcessoOriginario(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>): IPromise<any> {
+    public preautuarProcesso(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>): IPromise<any> {
         let cmd: PreautuarRemessaCommand = new PreautuarRemessaCommand(protocoloId, classeId, sigilo, preferencias);
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
-            PreautuacaoService.urlServicoPreautuacao + "/preautuacao", cmd);        
+            PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmd);        
     }
     
 	public devolver(command: DevolverRemessaCommand): IPromise<any> {
-		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoRemessa + '/devolucao', command);
+		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao + '/devolucao', command);
 	}
 }
 
-preautuacao.service("app.novo-processo.preautuacao.PreautuacaoService", PreautuacaoService);
-
-export default preautuacao;
+preautuacaoServices.service("app.novo-processo.preautuacao-services.PreautuacaoService", PreautuacaoService);
+export default preautuacaoServices;

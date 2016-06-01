@@ -1,8 +1,7 @@
 import ElementFinder = protractor.ElementFinder;
 
 export class PreautuacaoPage {
-	
-	
+		
 	public selecionarClasse() : void {
 		element(by.id('classes')).click();
 		element.all(by.repeater('classe in preautuacao.classes')).get(2).click();
@@ -19,5 +18,4 @@ export class PreautuacaoPage {
 	public registrarPreautuacao() : void {
 		element(by.id('btnRegistrarpreautuacao')).click();
 	};
-	
 }

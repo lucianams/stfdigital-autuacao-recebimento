@@ -4,8 +4,7 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacao from "./preautuacao.module";
-import {PreautuacaoService, DevolverRemessaCommand} from "./preautuacao.service";
-import {ClasseService} from "../../services/classe.service";
+import {PreautuacaoService, DevolverRemessaCommand} from "../../services/preautuacao.service";
 
 export class PreautuacaoController {
 	public basicForm: Object = {};
@@ -17,16 +16,13 @@ export class PreautuacaoController {
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 
-	static $inject = ["$state", 
-		"app.novo-processo.preautuacao.PreautuacaoService", 
-		"app.novo-processo.preautuacao-services.ClasseService"];
+	static $inject = ["$state", "app.novo-processo.preautuacao-services.PreautuacaoService"];
 	
     /** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService,
-		private classeService: ClasseService){
+	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
 				
 		/* Substituir pelo nº do protocolo passado como parâmetro. */
-		preautuacaoService.gerarRemessa().then((protocoloId: number) => {
+		preautuacaoService.gerarRemessa("ORIGINARIO").then((protocoloId: number) => {
 			this.protocoloId = protocoloId;
 			
 			preautuacaoService.consultarRemessa(this.protocoloId).then((remessa: Remessa) => {
@@ -34,7 +30,7 @@ export class PreautuacaoController {
 			});		
 		});
 
-		classeService.listar("ORIGINARIO").then((classes: Classe[]) => {
+		preautuacaoService.listarClassesPorTipoRemessa("ORIGINARIO").then((classes: Classe[]) => {
 			this.classes = classes;
 		});
 	}
@@ -62,7 +58,7 @@ export class PreautuacaoController {
 	 * Realiza a préautuação do processo recursal.
 	 */
 	public preautuarProcessoOriginario(): void {
-		this.preautuacaoService.preautuarProcessoOriginario(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+		this.preautuacaoService.preautuarProcesso(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
 	        .then(() => {
 	            this.$state.go("app.tarefas.minhas-tarefas", {}, { reload: true	});
 		});

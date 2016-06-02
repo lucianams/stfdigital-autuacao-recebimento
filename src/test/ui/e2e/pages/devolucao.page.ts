@@ -17,4 +17,25 @@ export class DevolucaoPage {
 		browser.wait(textoPreenchaTags.isDisplayed());
 	}
 	
+	public gerarTexto(): void {
+		let botaoGerarTexto = element(by.id('btnGerarTexto'));
+		browser.executeScript("arguments[0].scrollIntoView();", botaoGerarTexto.getWebElement());
+		botaoGerarTexto.click();
+	}
+	
+	public aguardarTextoCarregado(): void {
+		browser.wait(() => {
+			var els = element.all(by.css('.editor-directive.edicao-iniciada'));
+			return els.count().then(function(size) {
+				return size > 0;
+			});
+		}, 10000);
+	}
+	
+	public finalizarElaboracao(): void {
+		let botaoFinalizarTexto = element(by.id('btnFinalizarTexto'));
+		browser.executeScript("arguments[0].scrollIntoView();", botaoFinalizarTexto.getWebElement());
+		botaoFinalizarTexto.click();
+	}
+	
 }

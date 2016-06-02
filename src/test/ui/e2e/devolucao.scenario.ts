@@ -37,15 +37,12 @@ describe('Devolucação de Petições Físicas Originárias', () => {
 	    devolucaoPage.aguardarCarregamentoTags();
     });
     
-	it('Deveria preencher tags', () => {
-	    
-    });
-    
 	it('Deveria gerar texto', () => {
-	    
+	    devolucaoPage.gerarTexto();
+	    devolucaoPage.aguardarTextoCarregado();
     });
 	
 	it('Deveria finalizar elaboração do texto', () => {
-	    
+	    devolucaoPage.finalizarElaboracao();
     });
 });

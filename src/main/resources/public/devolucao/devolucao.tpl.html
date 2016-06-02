@@ -31,8 +31,10 @@
                             </md-select>
                         </md-input-container>
                     </div>
-
-                    <p ng-show="vm.tagsCarregadas() && !vm.showEditor" class="text-center"><strong>Preencha as Tags e clique em Gerar Texto</strong></p>
+                    <div layout="column" layout-gt-xs="row" ng-if="vm.tagsSendoCarregadas || vm.modelosSendoCarregados">
+                        <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
+                    </div>
+                    <p id="textoPreenchaTags" ng-show="vm.tagsCarregadas() && !vm.showEditor" class="text-center"><strong>Preencha as Tags e clique em Gerar Texto</strong></p>
 
                     <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-gt-xs="row" ng-repeat="tag in vm.substituicoesTags">
                         <md-input-container flex>
@@ -51,8 +53,8 @@
                         <div ng-if="vm.documento" onlyoffice-editor="vm.documento" api="vm.editor.api" edicao-concluida="vm.concluiuEdicao()" edicao-iniciada="vm.callbackEdicaoIniciada()" aguardar-conclusao="true" style="width: 100%;"></div>
                     </div>
                     
-                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar texto" ng-disabled="formularioDevolucao.$invalid || formularioDevolucao.$pristine || !vm.isTextoCriado()">
-                        Finalizar
+                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar Elaboração" ng-disabled="formularioDevolucao.$invalid || !vm.isTextoCriado()">
+                        Finalizar Elaboração
                     </md-button>
                       
                 </form>

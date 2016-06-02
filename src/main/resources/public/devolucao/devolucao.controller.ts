@@ -6,7 +6,7 @@ import devolucao from "./devolucao.module";
 
 export class DevolucaoController {
 	
-    static $inject = ['$state', 'app.novo-processo.devolucao.DevolucaoService', 'motivosDevolucao', 'protocolo'];
+    static $inject = ['$state', 'app.novo-processo.devolucao.DevolucaoService', 'motivosDevolucao', 'protocolo', 'app.messaging.MessagesService'];
     
     public modelos: Modelo[];
     
@@ -24,9 +24,13 @@ export class DevolucaoController {
     public documento: Documento;
     
     public edicaoIniciada: boolean = false;
+    
+    public tagsSendoCarregadas: boolean = false;
+    
+    public modelosSendoCarregados: boolean = false;
 
     constructor(private $state: IStateService, private devolucaoService: DevolucaoService,
-                public motivosDevolucao: MotivoDevolucao[], private protocolo: number) {
+                public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private MessagesService) {
     	
     }
     
@@ -35,21 +39,33 @@ export class DevolucaoController {
     }
     
     public carregarModelos(): void {
+    	this.modelosSendoCarregados = true;
     	this.devolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
     		(modelos: Modelo[]) => {
     			this.modelos = modelos;
+    		},
+    		() => {
+    			this.MessagesService.error("Erro ao carregar os modelos.");
     		}
-    	)
+    	).finally(() => {
+    		this.modelosSendoCarregados = false;
+    	});
     }
 	
     public extrairTags(): void {
+    	this.tagsSendoCarregadas = true;
     	this.devolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
     			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
     				return new SubstituicaoTag(tag.nome, "");
     			});
+    		},
+    		() => {
+    			this.MessagesService.error("Erro ao carregar as tags.");
     		}
-    	);
+    	).finally(() => {
+    		this.tagsSendoCarregadas = false;
+    	});
     }
     
     public isTextoCriado(): boolean {
@@ -65,6 +81,9 @@ export class DevolucaoController {
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
 			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+			this.MessagesService.success("Documento de devolução elaborado com sucesso!");
+		}, () => {
+			this.MessagesService.error("Erro ao concluir a elaboração do texto!");
 		});
 	}
     
@@ -77,6 +96,8 @@ export class DevolucaoController {
 					nome: 'Documento de Devolução'
 				};
 				this.showEditor = true;
+    		}, () => {
+    			this.MessagesService.error("Erro ao gerar o texto.");
     		});
     }
     

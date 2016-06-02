@@ -80,8 +80,8 @@ export class DevolucaoController {
 		this.devolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
-			this.MessagesService.success("Documento de devolução elaborado com sucesso!");
 			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+			this.MessagesService.success("Documento de devolução elaborado com sucesso!");
 		}, () => {
 			this.MessagesService.error("Erro ao concluir a elaboração do texto!");
 		});

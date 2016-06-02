@@ -25,6 +25,7 @@ function config($stateProvider: IStateProvider, properties: any) {
             		let protocoloIdString : string = prompt("Digite o protocolo.", "2");
             		let protocoloId : number = parseInt(protocoloIdString);
             		resolve(protocoloId);
+            		//resolve(2);
             	});
             }
         }
@@ -36,6 +37,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
 }
 
-let devolucao: IModule = angular.module('app.novo-processo.devolucao', ['app.novo-processo', 'app.constants']);
+let devolucao: IModule = angular.module('app.novo-processo.devolucao', ['app.novo-processo', 'app.constants', 'app.messaging']);
 devolucao.config(config).run(run);
 export default devolucao;

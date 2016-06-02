@@ -18,4 +18,8 @@ export class PreautuacaoPage {
 	public registrarPreautuacao() : void {
 		element(by.id('btnRegistrarpreautuacao')).click();
 	};
+	
+	public devolver() : void {
+		element(by.id('btnDevolverRemessa')).click();
+	};
 }

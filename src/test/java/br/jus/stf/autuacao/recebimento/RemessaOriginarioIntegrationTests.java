@@ -34,7 +34,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void preautarUmaRemessa() throws Exception {
-        loadDataTests("preautarUmaRemessa.sql");
+        loadDataTests("preautarRemessaOriginario.sql");
         
         String remessaParaPreautuar = "{\"protocoloId\":@protocoloId, \"classeId\":\"ADI\", \"preferencias\":[3,8], \"sigilo\":\"PUBLICO\"}";
         String protocoloId = "9000";
@@ -45,7 +45,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void devolverUmaRemessa() throws Exception {
-		loadDataTests("devolverUmaRemessa.sql");
+		loadDataTests("devolverRemessaOriginario.sql");
 		
 		String remessaParaDevolver = "{\"protocoloId\":@protocoloId, \"motivo\":\"Remessa inválida.\"}";
         String protocoloId = "9001";
@@ -57,7 +57,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
-        loadDataTests("prepararOficioDevolucaoDaRemessa.sql");
+        loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
 		
 		String remessaParaPrepararOficio = "{\"protocoloId\":@protocoloId, \"motivo\":1, \"modeloId\":1, \"textoId\":1}";
 		String protocoloId = "9002";
@@ -68,7 +68,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
-        loadDataTests("assinarOficioDevolucaoDaRemessa.sql");
+        loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
 		
         String remessaParaAssinarOficio = "{\"protocoloId\":@protocoloId}";
 		String protocoloId = "9003";

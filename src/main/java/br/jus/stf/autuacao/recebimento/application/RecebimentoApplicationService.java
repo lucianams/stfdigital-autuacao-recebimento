@@ -78,7 +78,7 @@ public class RecebimentoApplicationService {
     private StatusAdapter statusAdapter;
      
     @Command
-    public Long handle(RegistrarRemessaCommand command) {
+    public void handle(RegistrarRemessaCommand command) {
     	Protocolo protocolo = protocoloAdapter.novoProtocolo();
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
@@ -91,8 +91,7 @@ public class RecebimentoApplicationService {
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
-        
-        return remessa.identity().toLong();
+        remessa.identity().toLong();
     }
 
     @Command

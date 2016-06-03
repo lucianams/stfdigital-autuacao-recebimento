@@ -2,8 +2,6 @@ package br.jus.stf.autuacao.recebimento.application.commands;
 
 import javax.validation.constraints.NotNull;
 
-import br.jus.stf.core.shared.documento.TextoId;
-
 /**
  * @author Rodrigo Barreiros
  * @author Rafael Alencar
@@ -23,7 +21,7 @@ public class PrepararOficioParaDevolucaoCommand {
     private Long modeloId;
     
     @NotNull
-    private TextoId textoId;
+    private Long textoId;
     
     public Long getProtocoloId() {
         return protocoloId;
@@ -37,7 +35,7 @@ public class PrepararOficioParaDevolucaoCommand {
     	return modeloId;
     }
     
-    public TextoId getTextoId() {
+    public Long getTextoId() {
     	return textoId;
     }
     

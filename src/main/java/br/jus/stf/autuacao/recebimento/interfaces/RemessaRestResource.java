@@ -67,12 +67,12 @@ public class RemessaRestResource {
 	private PreferenciaRepository preferenciaRepository;
     
     @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
-    public Long registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
+    public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
         
-        return recebimentoApplicationService.handle(command);
+        recebimentoApplicationService.handle(command);
     }
     
     @RequestMapping(value="/{protocoloId}", method = RequestMethod.GET)

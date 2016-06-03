@@ -20,7 +20,7 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
  * @since 1.0.0
  * @since 18.12.2015
  */
-//@Ignore
+@Ignore
 @SpringApplicationConfiguration(ApplicationContextInitializer.class)
 public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	

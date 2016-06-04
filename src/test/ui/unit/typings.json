@@ -1,0 +1,7 @@
+{
+  "ambientDependencies": {
+    "jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#b76dd8a7f95b71696982befbb7589940d27e940b",
+    "angular-mocks": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#5b7257019ae959533341a715b339d2562bbf9b85"
+  }
+}

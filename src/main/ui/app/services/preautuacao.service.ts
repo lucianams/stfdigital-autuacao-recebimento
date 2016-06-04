@@ -1,14 +1,14 @@
-/*
- Serviço usado para retornar os tipos de processos.
- @author anderson.araujo
- @since 27/05/2016
- */
-
 import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
-import preautuacaoServices from "../services/services.module";
-import {TipoProcesso, Classe, Remessa} from "../services/model";
+import preautuacaoServices from "./services.module";
+import {TipoProcesso, Classe, Remessa} from "./model";
+
+/*
+Serviço usado para retornar os tipos de processos.
+@author anderson.araujo
+@since 27/05/2016
+*/
 
 export class PreautuarRemessaCommand {
     constructor(public protocoloId: number, 

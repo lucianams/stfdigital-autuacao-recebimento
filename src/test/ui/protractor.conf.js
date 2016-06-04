@@ -23,7 +23,7 @@ exports.config = {
       '-browserTimeout=60' 
   ],
 
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://docker:8443',
 
   // Spec patterns are relative to the current working directory when
   // protractor is called.

@@ -23,13 +23,11 @@ function runProtractor(done)
             configFile: path.join(conf.paths.test, '/protractor.conf.js'),
             args      : args
         }))
-        .on('error', function (err)
-        {
+        .on('error', function (err) {
             // Make sure failed tests cause gulp to exit non-zero
             throw err;
         })
-        .on('end', function ()
-        {
+        .on('end', function () {
             // Close browser sync server
             browserSync.exit();
             done();
@@ -37,4 +35,4 @@ function runProtractor(done)
 }
 
 gulp.task('test:e2e', ['protractor']);
-gulp.task('protractor', ['serve:e2e', 'webdriver-update'], runProtractor);
+gulp.task('protractor', ['webdriver-update', 'compile-ts:e2e'], runProtractor);

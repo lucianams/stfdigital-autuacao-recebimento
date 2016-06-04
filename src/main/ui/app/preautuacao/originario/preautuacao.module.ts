@@ -10,7 +10,7 @@ function config($stateProvider: IStateProvider,
         url : "/preautuacao/originario",
         views : {
             "content@app.autenticado" : {
-                templateUrl : properties.apiUrl + "/recebimento/preautuacao/originario/preautuacao.tpl.html",
+                templateUrl : "./preautuacao.tpl.html",
                 controller : "app.novo-processo.preautuacao.PreautuacaoController",
                 controllerAs: "preautuacao"
             }

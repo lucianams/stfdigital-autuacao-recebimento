@@ -10,7 +10,7 @@ function config($stateProvider: IStateProvider,
         url : "/preautuacao/recursal",
         views : {
             "content@app.autenticado" : {
-                templateUrl : properties.apiUrl + "/recebimento/preautuacao/recursal/preautuacao-recursal.tpl.html",
+                templateUrl : "./preautuacao-recursal.tpl.html",
                 controller : "app.novo-processo.preautuacao-recursal.PreautuacaoRecursalController",
                 controllerAs: "vm"
             }

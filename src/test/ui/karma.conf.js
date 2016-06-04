@@ -1,76 +1,65 @@
 'use strict';
 
 var path = require('path');
-var conf = require('./gulp/conf');
+var conf = require('./../../../gulp/conf');
 
 var _ = require('lodash');
 var wiredep = require('wiredep');
 
-var pathSrcHtml = [
-  path.join(conf.paths.src, '/**/*.html')
-];
+function listIncludeFiles() {
+  console.log(path.resolve(conf.paths.unit));
+	var wiredepOptions = _.extend({}, conf.wiredep, {
+	    dependencies: true,
+	    devDependencies: true
+	});
 
-function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
-    dependencies: true,
-    devDependencies: true
+	var patterns = wiredep(wiredepOptions).js.map(function(pathz) {
+    return '.' + path.resolve(pathz).replace(path.resolve(conf.paths.root), '').replace(/\\/g,"/");
   });
-
-  var patterns = wiredep(wiredepOptions).js
-      .concat([
-        path.join(conf.paths.src, '/main/public/**/*.module.js'),
-        path.join(conf.paths.src, '/main/public/**/*.js'),
-        path.join(conf.paths.src, 'ui/test/e2e/**/*.spec.js'),
-        path.join(conf.paths.src, 'ui/test/e2e/**/*.mock.js'),
-      ])
-      .concat(pathSrcHtml);
-
-  var files = patterns.map(function(pattern) {
-    return {
-      pattern: pattern
-    };
-  });
-  files.push({
-    pattern: path.join(conf.paths.src, '/assets/**/*'),
-    included: false,
-    served: true,
-    watched: false
-  });
-  return files;
+	
+	patterns.push(path.join(conf.paths.unit, 'mock/**/*.js'));
+	
+	return patterns;
 }
 
+function listFiles() {
+  var patterns = listIncludeFiles();
+  
+  patterns.push('src/main/resources/public/devolucao.js');
+  
+  var files = patterns.map(function(pattern) {
+    return {
+      pattern: pattern,
+      included: false
+    };
+  });
+  files.push(path.join(conf.paths.test, 'unit/app/**/*.js'));
+  return files;
+}
 module.exports = function(config) {
-
   var configuration = {
     files: listFiles(),
 
     singleRun: true,
+    
+    basePath: '../../..',
 
     autoWatch: false,
 
-    ngHtml2JsPreprocessor: {
-      stripPrefix: conf.paths.src + '/',
-      moduleName: 'generatorGulpAngular'
-    },
+    logLevel: 'info',
 
-    logLevel: 'WARN',
+    frameworks: ['systemjs', 'jasmine'],
 
-    frameworks: ['jasmine', 'angular-filesort'],
-
-    angularFilesort: {
-      whitelist: [path.join(conf.paths.src, '/**/!(*.html|*.spec|*.mock).js')]
-    },
-
-    browsers : ['PhantomJS'],
+    browsers : ['Chrome'],
 
     plugins : [
+      'karma-systemjs',
       'karma-phantomjs-launcher',
-      'karma-angular-filesort',
+      'karma-chrome-launcher',
       //'karma-coverage',
       'karma-jasmine',
-      'karma-ng-html2js-preprocessor',
-	    'karma-html-reporter',
-	    'karma-mocha-reporter' 
+	  'karma-html-reporter',
+	  'karma-mocha-reporter'
     ],
 
     coverageReporter: {
@@ -78,10 +67,21 @@ module.exports = function(config) {
       dir : 'coverage/'
     },
 
-    reporters: ['progress'],
+    reporters: ['mocha', 'html'],
+
+    htmlReporter : {
+		outputDir : path.join(conf.paths.unit, 'results/html')
+	},
+    
+    systemjs: {
+    	configFile:  path.join(conf.paths.test, 'system.conf.js'),
+    	serveFiles: ['src/main/resources/public/devolucao.js', 'src/main/resources/public/maps/devolucao.js.map'],
+    	includeFiles: listIncludeFiles()
+    },
 
     proxies: {
-      '/assets/': path.join('/base/', conf.paths.src, '/assets/')
+      '/base/recebimento/devolucao': '/base/src/main/resources/public/devolucao.js',
+      '/base/recebimento/maps/devolucao.js.map': '/base/src/main/resources/public/maps/devolucao.js.map'
     }
   };
 
@@ -89,10 +89,10 @@ module.exports = function(config) {
   // The coverage preprocessor is added in gulp/unit-test.js only for single tests
   // It was not possible to do it there because karma doesn't let us now if we are
   // running a single test or not
-  configuration.preprocessors = {};
-  pathSrcHtml.forEach(function(path) {
-    configuration.preprocessors[path] = ['ng-html2js'];
-  });
-
+//  configuration.preprocessors = {};
+//  pathSrcHtml.forEach(function(path) {
+//    configuration.preprocessors[path] = ['ng-html2js'];
+//  });
+//
   config.set(configuration);
 };

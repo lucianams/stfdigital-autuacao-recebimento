@@ -6,15 +6,9 @@ var conf = require('./conf');
 
 var $ = require('gulp-load-plugins')();
 
-function buildScripts()
-{
-    return gulp.src(path.join(conf.paths.src, '/main/resources/public/**/*.js'))
-        .pipe($.jshint())
-        .pipe($.jshint.reporter('jshint-stylish'))
-        .pipe($.size())
-};
-
-gulp.task('scripts', ['compile-ts'], function ()
-{
-    return buildScripts();
+gulp.task('scripts', ['ts-lint'], function() {
+    return gulp.src(path.join(conf.paths.src, 'bundle.config.js'))
+    	.pipe($.bundleAssets())
+    	.pipe($.size())
+        .pipe(gulp.dest(conf.paths.dist));
 });

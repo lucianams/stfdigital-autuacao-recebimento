@@ -11,7 +11,7 @@ function config($stateProvider: IStateProvider,
         url : '/recebimento',
         views : {
             'content@app.autenticado' : {
-                templateUrl : properties.apiUrl + '/recebimento/peticoes-fisicas/peticao-fisica.tpl.html',
+                templateUrl : './peticao-fisica.tpl.html',
                 controller : 'app.novo-processo.peticoes-fisicas.PeticaoFisicaController',
                 controllerAs: 'registro'
             }

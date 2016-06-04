@@ -1,15 +1,13 @@
-/**
- * Controlador responsável por mediar as interações entre o front-end e o back-end.
- * @author anderson.araujo
- * @since 23/05/2016
- */
-
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
-import preautuacaoRecursal from "./preautuacao-recursal.module";
-import {PreautuacaoService} from "../../services/preautuacao.service";
+import preautuacao from "./preautuacao.module";
+import {PreautuacaoService, DevolverRemessaCommand} from "../../services/preautuacao.service";
 
-export class PreautuacaoRecursalController {
+/**
+ * @author Viniciusk
+ */
+
+export class PreautuacaoController {
 	public basicForm: Object = {};
 	public protocoloId: number;
 	public remessa: Remessa;
@@ -18,14 +16,14 @@ export class PreautuacaoRecursalController {
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
-	
+
 	static $inject = ["$state", "app.novo-processo.preautuacao-services.PreautuacaoService"];
 	
-	/** @ngInject **/
+    /** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
 				
 		/* Substituir pelo nº do protocolo passado como parâmetro. */
-		preautuacaoService.gerarRemessa("RECURSAL").then((protocoloId: number) => {
+		preautuacaoService.gerarRemessa("ORIGINARIO").then((protocoloId: number) => {
 			this.protocoloId = protocoloId;
 			
 			preautuacaoService.consultarRemessa(this.protocoloId).then((remessa: Remessa) => {
@@ -33,12 +31,12 @@ export class PreautuacaoRecursalController {
 			});		
 		});
 
-		preautuacaoService.listarClassesPorTipoRemessa("RECURSAL").then((classes: Classe[]) => {
+		preautuacaoService.listarClassesPorTipoRemessa("ORIGINARIO").then((classes: Classe[]) => {
 			this.classes = classes;
 		});
 	}
-	
-	/*
+    
+    /*
 	 * Carrega as preferências da classe selecionada.
 	 * @return Array de objetos Preferencia.
 	 */
@@ -46,17 +44,27 @@ export class PreautuacaoRecursalController {
 		 this.preferencias = this.classe.preferencias;
 	}
 	
+	public devolver(): void {
+		this.preautuacaoService.devolver(this.commandDevolucao())
+			.then(() => {
+			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+		});
+	}
+	
+	private commandDevolucao(): DevolverRemessaCommand {
+		return new DevolverRemessaCommand(this.protocoloId, this.motivo);
+	}
+	
 	/*
 	 * Realiza a préautuação do processo recursal.
 	 */
-	
-	public preautuarProcessoRecursal(): void {
+	public preautuarProcessoOriginario(): void {
 		this.preautuacaoService.preautuarProcesso(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
 	        .then(() => {
-	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
-	    	});
+	            this.$state.go("app.tarefas.minhas-tarefas", {}, { reload: true	});
+		});
 	}
 }
 
-preautuacaoRecursal.controller("app.novo-processo.preautuacao-recursal.PreautuacaoRecursalController", PreautuacaoRecursalController);
-export default preautuacaoRecursal;
+preautuacao.controller("app.novo-processo.preautuacao.PreautuacaoController", PreautuacaoController);
+export default preautuacao;

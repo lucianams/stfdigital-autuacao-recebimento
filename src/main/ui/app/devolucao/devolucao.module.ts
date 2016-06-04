@@ -11,7 +11,7 @@ function config($stateProvider: IStateProvider, properties: any) {
         url : '/devolucao',
         views : {
             'content@app.autenticado' : {
-                templateUrl : properties.apiUrl + '/recebimento/devolucao/devolucao.tpl.html',
+                templateUrl : './devolucao.tpl.html',
                 controller : 'app.novo-processo.devolucao.DevolucaoController',
                 controllerAs: 'vm'
             }

@@ -1,8 +1,8 @@
 import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
-import preautuacaoServices from "../services/services.module";
-import {Classe, Preferencia} from "../services/model";
+import preautuacaoServices from "./services.module";
+import {Classe, Preferencia} from "./model";
 
 export class ClasseService {
 

@@ -29,3 +29,16 @@ services:
     image: plataforma-ui
     ports:
      - "8443:8443"
+  mongo:
+    container_name: mongo
+    image: mongo:3
+    ports:
+     - "27017:27017"
+  documents:
+    container_name: documents
+    image: documents
+    ports:
+     - "8094:8094"
+     - "8194:8194"
+    environment:
+     - spring.profiles.active=development

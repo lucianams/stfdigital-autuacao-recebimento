@@ -1,0 +1,11 @@
+sudo: required
+
+language: java
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+
+install: true
+script: gradle docker

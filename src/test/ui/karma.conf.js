@@ -17,15 +17,13 @@ function listIncludeFiles() {
     return '.' + path.resolve(pathz).replace(path.resolve(conf.paths.root), '').replace(/\\/g,"/");
   });
 	
-	patterns.push(path.join(conf.paths.unit, 'mock/**/*.js'));
-	
 	return patterns;
 }
 
 function listFiles() {
   var patterns = listIncludeFiles();
   
-  patterns.push('src/main/resources/public/devolucao.js');
+  patterns.push('src/main/resources/public/**/*.js');
   
   var files = patterns.map(function(pattern) {
     return {
@@ -33,7 +31,7 @@ function listFiles() {
       included: false
     };
   });
-  files.push(path.join(conf.paths.test, 'unit/app/**/*.js'));
+  files.push(path.join(conf.paths.test, 'unit/build/**/*.js'));
   return files;
 }
 module.exports = function(config) {
@@ -70,18 +68,18 @@ module.exports = function(config) {
     reporters: ['mocha', 'html'],
 
     htmlReporter : {
-		outputDir : path.join(conf.paths.unit, 'results/html')
-	},
+		  outputDir : path.join(conf.paths.unit, 'results/html')
+	  },
     
     systemjs: {
     	configFile:  path.join(conf.paths.test, 'system.conf.js'),
-    	serveFiles: ['src/main/resources/public/devolucao.js', 'src/main/resources/public/maps/devolucao.js.map'],
+    	serveFiles: ['src/main/resources/public/**/*.js', 'src/main/resources/public/maps/**/*.js.map',
+                  path.join(conf.paths.unit, 'build/**/*.js.map'), 'node_modules/systemjs/**/*.js', 'node_modules/systemjs/**/*.js.map'],
     	includeFiles: listIncludeFiles()
     },
 
     proxies: {
-      '/base/recebimento/devolucao': '/base/src/main/resources/public/devolucao.js',
-      '/base/recebimento/maps/devolucao.js.map': '/base/src/main/resources/public/maps/devolucao.js.map'
+      '/base/recebimento/': '/base/src/main/resources/public/'
     }
   };
 

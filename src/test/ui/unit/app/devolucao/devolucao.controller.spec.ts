@@ -1,14 +1,15 @@
-import "recebimento/devolucao";
-import {DevolucaoController} from "../../../../../main/ui/app/devolucao/devolucao.controller";
+//import "recebimento/devolucao";
+import {DevolucaoController} from "recebimento/devolucao/devolucao.controller";
 
 describe('Devolução Controller', () => {
 	
-	beforeEach(angular.mock.module('app.novo-processo.devolucao'));
+	//beforeEach(angular.mock.module('app.novo-processo.devolucao'));
 	
 	let controller: DevolucaoController;
 	
 	beforeEach(inject(($rootScope, $httpBackend: angular.IHttpBackendService, $controller: angular.IControllerService) => {
 		var scope = $rootScope.$new();
+		let ctrl = new DevolucaoController(null, null, null, null, null);
 		/*
 		controller = <DevolucaoController>$controller('app.novo-processo.devolucao.DevolucaoController', {
 			$scope : scope,

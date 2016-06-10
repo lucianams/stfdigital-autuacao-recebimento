@@ -15,13 +15,12 @@ src/test/ui/unit/typings
 # JS Main
 src/main/resources/public
 
-# JS Test
-src/test/ui/**/*.js
-
 # JS Test E2E
+src/test/ui/e2e/**/*.js
 src/test/ui/e2e/results
 
 # JS Test Unit
+src/test/ui/unit/**/*.js
 src/test/ui/unit/bower_components
 src/test/ui/unit/results
 

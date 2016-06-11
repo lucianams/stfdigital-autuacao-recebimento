@@ -4,4 +4,6 @@ jdk:
 
 install:
   - git clone https://github.com/supremotribunalfederal/stfdigital-plataforma-core
+  - cd stfdigital-plataforma-core
+  - cd -
   - gradle install

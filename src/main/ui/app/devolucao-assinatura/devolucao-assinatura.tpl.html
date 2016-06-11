@@ -6,63 +6,112 @@
         <div class="md-title mt-10"><span translate="REMESSA.DEVOLUCAO-ASSINATURA.TITULO">Assinatura de Ofício de devolução de Remessa</span></div>
         <div class="pb-16"><span translate="REMESSA.DEVOLUCAO-ASSINATURA.DESCRICAO">Selecione as petições cujos ofícios de devolução serão assinados</span></div>
 
-        <div layout="row">
-
-            <!-- BASIC FORM -->
-            <div class="form-wrapper md-whiteframe-1dp" flex="100">
-                <form name="formularioDevolucao" ng-submit="vm.finalizarDevolucao()" class="md-inline-form">
-                    <div layout="column" layout-gt-xs="row">
-                        <md-input-container flex>
-                            <label>Motivo da Devolução</label>
-                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao" ng-change="vm.carregarModelos()" required>
-                                <md-option></md-option>
-                                <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" ng-value="motivoDevolucao">
-                                    {{motivoDevolucao.descricao}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container flex>
-                            <label>Modelo</label>
-                            <md-select ng-model="vm.modelo" id="modeloTexto" ng-change="vm.extrairTags()" required>
-                                <md-option></md-option>
-                                <md-option ng-repeat="modelo in vm.modelos" ng-value="modelo">
-                                    {{modelo.nome}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                    </div>
-                    <div layout="column" layout-gt-xs="row" ng-if="vm.tagsSendoCarregadas || vm.modelosSendoCarregados">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular>
-                    </div>
-                    <p id="textoPreenchaTags" ng-show="vm.tagsCarregadas() && !vm.showEditor" class="text-center"><strong>Preencha as Tags e clique em Gerar Texto</strong></p>
-
-                    <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-gt-xs="row" ng-repeat="tag in vm.substituicoesTags">
-                        <md-input-container flex>
-                            <label for="tag-{{$index}}">{{tag.nome}}</label>
-                            <input type="text" id="tag-{{$index}}" name="tag-{{$index}}" ng-model="tag.valor">
-                        </md-input-container>
-                    </div>
-
-                    <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-align="end end" layout-gt-xs="row">
-                        <md-button id="btnGerarTexto" type="button" class="md-raised md-accent" aria-label="Gerar Texto" ng-click="vm.gerarTexto()">
-                        Gerar Texto
-                        </md-button>
-                    </div>
-
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
-                        <div ng-if="vm.documento" onlyoffice-editor="vm.documento" api="vm.editor.api" edicao-concluida="vm.concluiuEdicao()" edicao-iniciada="vm.callbackEdicaoIniciada()" aguardar-conclusao="true" style="width: 100%;"></div>
-                    </div>
-                    
-                    <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar Elaboração" ng-disabled="formularioDevolucao.$invalid || !vm.isTextoCriado()">
-                        Finalizar Elaboração
-                    </md-button>
-                      
-                </form>
-
+        <div class="simple-table-container md-whiteframe-4dp">
+            <div class="table-title">
+                Remessas
             </div>
-            <!-- / BASIC FORM -->
 
+            <table class="simple" ms-responsive-table>
+                <thead>
+                    <tr>
+                        <th>
+                            <md-checkbox aria-label="Selecionar todos"
+                                         ng-checked="isChecked()"
+                                         md-indeterminate="isIndeterminate()"
+                                         ng-click="toggleAll()">
+                            </md-checkbox>
+                        </th>
+                        <th>Remessa</th>
+                        <th>Documento de Devolução</th>
+                        <th>Arquivo Original</th>
+                        <th>Progresso</th>
+                    </tr>
+                </thead>
+
+                <tfoot>
+                    <tr>
+                        <td></td>
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                    <tr ng-repeat="remessa in vm.remessas">
+                        <td>
+                            <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                            </md-checkbox>
+                        </td>
+                        <td>1/2016</td>
+                        <td>Ofício</td>
+                        <td>Visualizar</td>
+                        <td>Progresso</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
+        <div layout="row">
+            <md-button type="button" class="md-raised md-accent" id="btnAssinar" aria-label="Assinar">
+                Assinar
+            </md-button>
+        </div>
+
+<!--         <div layout="row"> -->
+
+<!--             BASIC FORM -->
+<!--             <div class="form-wrapper md-whiteframe-1dp" flex="100"> -->
+<!--                 <form name="formularioDevolucao" ng-submit="vm.finalizarDevolucao()" class="md-inline-form"> -->
+<!--                     <div layout="column" layout-gt-xs="row"> -->
+<!--                         <md-input-container flex> -->
+<!--                             <label>Motivo da Devolução</label> -->
+<!--                             <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao" ng-change="vm.carregarModelos()" required> -->
+<!--                                 <md-option></md-option> -->
+<!--                                 <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" ng-value="motivoDevolucao"> -->
+<!--                                     {{motivoDevolucao.descricao}} -->
+<!--                                 </md-option> -->
+<!--                             </md-select> -->
+<!--                         </md-input-container> -->
+<!--                         <md-input-container flex> -->
+<!--                             <label>Modelo</label> -->
+<!--                             <md-select ng-model="vm.modelo" id="modeloTexto" ng-change="vm.extrairTags()" required> -->
+<!--                                 <md-option></md-option> -->
+<!--                                 <md-option ng-repeat="modelo in vm.modelos" ng-value="modelo"> -->
+<!--                                     {{modelo.nome}} -->
+<!--                                 </md-option> -->
+<!--                             </md-select> -->
+<!--                         </md-input-container> -->
+<!--                     </div> -->
+<!--                     <div layout="column" layout-gt-xs="row" ng-if="vm.tagsSendoCarregadas || vm.modelosSendoCarregados"> -->
+<!--                         <md-progress-circular md-mode="indeterminate" md-diameter="20px"></md-progress-circular> -->
+<!--                     </div> -->
+<!--                     <p id="textoPreenchaTags" ng-show="vm.tagsCarregadas() && !vm.showEditor" class="text-center"><strong>Preencha as Tags e clique em Gerar Texto</strong></p> -->
+
+<!--                     <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-gt-xs="row" ng-repeat="tag in vm.substituicoesTags"> -->
+<!--                         <md-input-container flex> -->
+<!--                             <label for="tag-{{$index}}">{{tag.nome}}</label> -->
+<!--                             <input type="text" id="tag-{{$index}}" name="tag-{{$index}}" ng-model="tag.valor"> -->
+<!--                         </md-input-container> -->
+<!--                     </div> -->
+
+<!--                     <div ng-show="vm.tagsCarregadas() && !vm.showEditor" layout="column" layout-align="end end" layout-gt-xs="row"> -->
+<!--                         <md-button id="btnGerarTexto" type="button" class="md-raised md-accent" aria-label="Gerar Texto" ng-click="vm.gerarTexto()"> -->
+<!--                         Gerar Texto -->
+<!--                         </md-button> -->
+<!--                     </div> -->
+
+<!--                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row"> -->
+<!--                         <div ng-if="vm.documento" onlyoffice-editor="vm.documento" api="vm.editor.api" edicao-concluida="vm.concluiuEdicao()" edicao-iniciada="vm.callbackEdicaoIniciada()" aguardar-conclusao="true" style="width: 100%;"></div> -->
+<!--                     </div> -->
+                    
+<!--                     <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar Elaboração" ng-disabled="formularioDevolucao.$invalid || !vm.isTextoCriado()"> -->
+<!--                         Finalizar Elaboração -->
+<!--                     </md-button> -->
+                      
+<!--                 </form> -->
+
+<!--             </div> -->
+<!--             / BASIC FORM -->
+
+<!--         </div> -->
 
     </div>
     <!-- / CONTENT -->

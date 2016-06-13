@@ -17,6 +17,13 @@ export class PreautuarRemessaCommand {
                 public preferencias: Array<number>) {}    
 }
 
+export class PreautuarRecursalCommand {
+    constructor(public protocoloId: number, 
+                public classeId: string,
+                public sigilo: string,
+                public preferencias: Array<number>) {}    
+}
+
 export class RegistrarRecebimentoCommand {
     public formaRecebimento: string;
     public volumes: number;
@@ -106,6 +113,19 @@ export class PreautuacaoService {
         let cmd: PreautuarRemessaCommand = new PreautuarRemessaCommand(protocoloId, classeId, sigilo, preferencias);
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
             PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmd);        
+    }
+    
+    /*
+     * Envia os dados da préautuação para o serviço de recebimento (back-end).
+     * @param protocoloId Nº do protocolo de recebimento da remessa.
+     * @param classeId Id da classe processual.
+     * @param sigilo Sigilo do processo.
+     * @param preferencias Preferências processuais.
+     */
+    public preautuarRecursal(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>): IPromise<any> {
+        let cmd: PreautuarRecursalCommand = new PreautuarRecursalCommand(protocoloId, classeId, sigilo, preferencias);
+        return this.$http.post(this.properties.url + ":" + this.properties.port + 
+            PreautuacaoService.urlServicoPreautuacao + '/preautuacao-recursal', cmd);        
     }
     
 	public devolver(command: DevolverRemessaCommand): IPromise<any> {

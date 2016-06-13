@@ -5,11 +5,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
@@ -29,7 +31,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucaoRep
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
 import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
-import br.jus.stf.core.framework.command.Command;
+import br.jus.stf.core.framework.component.command.Command;
 import br.jus.stf.core.framework.domaindrivendesign.ApplicationService;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
@@ -77,7 +79,7 @@ public class RecebimentoApplicationService {
     @Autowired
     private StatusAdapter statusAdapter;
      
-    @Command
+    @Command(description = "Nova petição física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
     	Protocolo protocolo = protocoloAdapter.novoProtocolo();
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
@@ -94,7 +96,7 @@ public class RecebimentoApplicationService {
         remessa.identity().toLong();
     }
 
-    @Command
+    @Command(description = "Preautuação")
     public void handle(PreautuarRemessaCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
@@ -110,7 +112,15 @@ public class RecebimentoApplicationService {
         publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString()));
     }
     
-    @Command
+    @Command(description = "Preautuação de recursais")
+    public void handle(PreautuarRecursalCommand command) {
+    	//TODO: A implementação da preautuação de recursal está incompleta, assim estamos reaproveitando a remessa
+    	PreautuarRemessaCommand preautuarRemessaCommand = new PreautuarRemessaCommand();
+    	BeanUtils.copyProperties(command, preautuarRemessaCommand);
+    	handle(preautuarRemessaCommand);
+    }
+    
+    @Command(description = "Devolução")
     public void handle(DevolverRemessaCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "DEVOLVER");
@@ -119,7 +129,7 @@ public class RecebimentoApplicationService {
         remessaRepository.save(remessa);
     }
 
-    @Command
+    @Command(description = "Preparar Ofício para Devolução", value = "preparar-oficio-devolucao")
     public void handle(PrepararOficioParaDevolucaoCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());
@@ -130,7 +140,7 @@ public class RecebimentoApplicationService {
         remessaRepository.save(remessa);
     }
 
-    @Command
+    @Command(description = "Assinar Ofício para Devolução", value = "assinar-oficio-devolucao")
     public void handle(AssinarOficioParaDevolucaoCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());

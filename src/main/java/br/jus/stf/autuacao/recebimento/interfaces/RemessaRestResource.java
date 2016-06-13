@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService;
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
@@ -83,6 +84,15 @@ public class RemessaRestResource {
 
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
     public void preautuar(@RequestBody @Valid PreautuarRemessaCommand command, BindingResult binding) {
+        if (binding.hasErrors()) {
+            throw new IllegalArgumentException(message(binding));
+        }
+        
+        recebimentoApplicationService.handle(command);
+    }
+    
+    @RequestMapping(value = "/preautuacao-recursal", method = RequestMethod.POST)
+    public void preautuarRecursal(@RequestBody @Valid PreautuarRecursalCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }

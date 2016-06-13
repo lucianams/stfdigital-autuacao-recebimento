@@ -1,0 +1,29 @@
+[
+    {
+        "id": "registrar-remessa",
+        "stateName": "app.novo-processo.recebimento-peticao-fisica",
+        "urlPrefix": "/novo-processo/recebimento",
+        "src": "recebimento/peticoes-fisicas"
+    },
+    
+    {
+        "id": "preautuar-remessa",
+        "stateName": "app.novo-processo.recebimento-preautuacao",
+        "urlPrefix": "/novo-processo/preautacao",
+        "src": "recebimento/preautuacao"
+    },
+    
+    {
+        "id": "preautuar-recursal",
+        "stateName": "app.novo-processo.recebimento-preautuacao-recursal",
+        "urlPrefix": "/novo-processo/preautacao-recursal",
+        "src": "recebimento/preautuacao-recursal"
+    },
+    
+    {
+        "id": "preparar-oficio-devolucao",
+        "stateName": "app.novo-processo.recebimento-preparar-oficio-devolucao",
+        "urlPrefix": "/novo-processo/preparar-oficio-devolucao",
+        "src": "recebimento/preparar-oficio-devolucao"
+    }
+]

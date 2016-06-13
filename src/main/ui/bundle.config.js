@@ -102,9 +102,9 @@ module.exports = {
               }
           }
         },
-        'devolucao': {
-            scripts: [path.join(conf.paths.app, 'devolucao.ts'),
-                      path.join(conf.paths.app, 'devolucao/**/*.ts'), libraryTypeScript],
+        'preparar-oficio-devolucao': {
+            scripts: [path.join(conf.paths.app, 'preparar-oficio-devolucao.ts'),
+                      path.join(conf.paths.app, 'preparar-oficio-devolucao/**/*.ts'), libraryTypeScript],
             options: {
           	  rev: false,
           	  transforms: {

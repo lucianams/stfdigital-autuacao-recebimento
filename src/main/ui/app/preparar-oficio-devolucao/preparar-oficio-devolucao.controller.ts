@@ -1,12 +1,12 @@
 import IStateService = angular.ui.IStateService;
 import IPromise = angular.IPromise;
-import {DevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./devolucao.service";
+import {PrepararOficioDevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparar-oficio-devolucao.service";
 import {Documento} from "./documento";
-import devolucao from "./devolucao.module";
+import prepararOficioDevolucao from "./preparar-oficio-devolucao.module";
 
-export class DevolucaoController {
+export class PrepararOficioDevolucaoController {
 	
-    static $inject = ['$state', 'app.novo-processo.devolucao.DevolucaoService', 'motivosDevolucao', 'protocolo', 'app.messaging.MessagesService'];
+    static $inject = ['$state', 'app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'app.messaging.MessagesService'];
     
     public modelos: Modelo[];
     
@@ -29,7 +29,7 @@ export class DevolucaoController {
     
     public modelosSendoCarregados: boolean = false;
 
-    constructor(private $state: IStateService, private devolucaoService: DevolucaoService,
+    constructor(private $state: IStateService, private devolucaoService: PrepararOficioDevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private MessagesService) {
     	
     }
@@ -107,5 +107,5 @@ export class DevolucaoController {
     
 }
 
-devolucao.controller('app.novo-processo.devolucao.DevolucaoController', DevolucaoController);
-export default devolucao;
+prepararOficioDevolucao.controller('app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoController', PrepararOficioDevolucaoController);
+export default prepararOficioDevolucao;

@@ -1,24 +1,24 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
-import {DevolucaoService} from "./devolucao.service";
+import {PrepararOficioDevolucaoService} from "./preparar-oficio-devolucao.service";
 import {Remessa} from "./../services/model";
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
 
-    $stateProvider.state('app.novo-processo.recebimento-devolucao', {
+    $stateProvider.state('app.novo-processo.recebimento-preparar-oficio-devolucao', {
         url : '/devolucao',
         views : {
             'content@app.autenticado' : {
-                templateUrl : './devolucao.tpl.html',
-                controller : 'app.novo-processo.devolucao.DevolucaoController',
+                templateUrl : './preparar-oficio-devolucao.tpl.html',
+                controller : 'app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoController',
                 controllerAs: 'vm'
             }
         },
         resolve : {
-            motivosDevolucao : ['app.novo-processo.devolucao.DevolucaoService', (devolucaoService: DevolucaoService) => {
-                return devolucaoService.listarMotivosDevolucao();
+            motivosDevolucao : ['app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoService', (prepararOficioDevolucaoService: PrepararOficioDevolucaoService) => {
+                return prepararOficioDevolucaoService.listarMotivosDevolucao();
             }],
             protocolo: () => {
             	return new Promise<number>((resolve, reject) => {
@@ -37,6 +37,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
 }
 
-let devolucao: IModule = angular.module('app.novo-processo.devolucao', ['app.novo-processo', 'app.constants', 'app.messaging']);
-devolucao.config(config).run(run);
-export default devolucao;
+let prepararOficioDevolucao: IModule = angular.module('app.novo-processo.preparar-oficio-devolucao', ['app.novo-processo', 'app.constants', 'app.support']);
+prepararOficioDevolucao.config(config).run(run);
+export default prepararOficioDevolucao;

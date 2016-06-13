@@ -122,7 +122,30 @@ module.exports = {
                     	})
                 }
             }
-          }
+          },
+          'devolucao-assinatura': {
+              scripts: [path.join(conf.paths.app, 'devolucao-assinatura.ts'),
+                        path.join(conf.paths.app, 'devolucao-assinatura/**/*.ts'),
+                        path.join(conf.paths.app, 'services.ts'),
+                        path.join(conf.paths.app, 'services/**/*.ts'), libraryTypeScript],
+              options: {
+            	  rev: false,
+            	  transforms: {
+                      scripts: lazypipe()
+                      	.pipe(typescript, createTsProject())
+                      	.pipe(moduleNameInjector, {rootDir: 'src/main/ui/app/', prefix: 'recebimento/'})
+                      	.pipe(ngAnnotate)
+                      	.pipe(embedTemplates, {
+                      		skipErrors: true, 
+                      		minimize: {
+                      			empty : true,
+                      			spare : true,
+                      			quotes: true
+                      		}
+                      	})
+                  }
+              }
+            }
   },
   copy: [{
 	  src : path.join(conf.paths.app, '**/*.json'),

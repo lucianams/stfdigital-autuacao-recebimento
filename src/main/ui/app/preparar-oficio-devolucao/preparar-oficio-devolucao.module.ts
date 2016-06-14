@@ -8,7 +8,7 @@ import {Remessa} from "./../services/model";
 function config($stateProvider: IStateProvider, properties: any) {
 
     $stateProvider.state('app.novo-processo.recebimento-preparar-oficio-devolucao', {
-        url : '/devolucao',
+        url : '/preparar-oficio-devolucao',
         views : {
             'content@app.autenticado' : {
                 templateUrl : './preparar-oficio-devolucao.tpl.html',

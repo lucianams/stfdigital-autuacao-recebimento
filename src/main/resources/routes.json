@@ -9,14 +9,14 @@
     {
         "id": "preautuar-remessa",
         "stateName": "app.novo-processo.recebimento-preautuacao",
-        "urlPrefix": "/novo-processo/preautacao",
+        "urlPrefix": "/novo-processo/preautuacao/originario",
         "src": "recebimento/preautuacao"
     },
     
     {
         "id": "preautuar-recursal",
         "stateName": "app.novo-processo.recebimento-preautuacao-recursal",
-        "urlPrefix": "/novo-processo/preautacao-recursal",
+        "urlPrefix": "/novo-processo/preautuacao/recursal",
         "src": "recebimento/preautuacao-recursal"
     },
     

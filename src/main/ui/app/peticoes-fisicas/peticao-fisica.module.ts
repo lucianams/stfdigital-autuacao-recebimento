@@ -31,6 +31,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 }
 
-let recebimento: IModule = angular.module('app.novo-processo.peticoes-fisicas', ['app.novo-processo', 'app.constants']);
+let recebimento: IModule = angular.module('app.novo-processo.peticoes-fisicas', ['app.novo-processo', 'app.constants', 'app.support']);
 recebimento.config(config).run(run);
 export default recebimento;

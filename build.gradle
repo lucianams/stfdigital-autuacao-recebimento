@@ -125,5 +125,6 @@ ext.dockerImageTag = project.hasProperty('dockerImageTag') ? project.getProperty
 docker {
     name jar.baseName + (dockerImageTag ? ':' + dockerImageTag : '')
     dockerfile 'src/main/docker/Dockerfile'
+    files 'truststores/truststore.jks'
     dependsOn tasks.jar, tasks.bootRepackage, tasks.build
 }

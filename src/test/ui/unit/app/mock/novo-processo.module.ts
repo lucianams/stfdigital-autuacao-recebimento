@@ -40,7 +40,7 @@ namespace app.documentos {
         .config(config);
 }
 
-namespace app.messaging {
+namespace app.support {
 	'use strict';
 	
     /** @ngInject * */
@@ -48,8 +48,16 @@ namespace app.messaging {
 
         
     }
+    
+    angular
+		.module('app.support.command', [])
+		.config(config);
+
+	angular
+	    .module('app.support.messaging', [])
+	    .config(config);
 
     angular
-        .module('app.messaging', [])
-        .config(config);
+    	.module('app.support', ['app.support.command', 'app.support.messaging'])
+    	.config(config);
 }

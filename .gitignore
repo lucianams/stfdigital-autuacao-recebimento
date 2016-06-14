@@ -33,6 +33,7 @@ src/test/ui/unit/results
 .settings/
 .classpath
 .project
+.springBeans
 
 # Gradle
 .gradle

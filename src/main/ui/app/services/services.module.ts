@@ -2,5 +2,5 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 
-let preautuacaoServices: IModule = angular.module("app.recebimento.preautuacao-services", ["app.constants"]);
+let preautuacaoServices: IModule = angular.module("app.recebimento.preautuacao-services", ["app.support"]);
 export default preautuacaoServices;

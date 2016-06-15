@@ -12,20 +12,6 @@ namespace app.novoProcesso {
         .config(config);
 }
 
-namespace app.constants {
-	'use strict';
-
-	let url = 'docker';
-	let port = "8765";
-
-	angular.module('app.constants', []).constant("properties", {
-	    "url": url,
-	    "port": port,
-	    "apiUrl": url + ":" + port,
-	    "development": true
-	});
-}
-
 namespace app.documentos {
 	'use strict';
 	
@@ -44,10 +30,17 @@ namespace app.support {
 	'use strict';
 	
     /** @ngInject * */
-    function config() {
+    function config() { }
+    
+	let url = 'docker';
+	let port = "8765";
 
-        
-    }
+	angular.module('app.support.constants', []).constant("properties", {
+	    "url": url,
+	    "port": port,
+	    "apiUrl": url + ":" + port,
+	    "development": true
+	});
     
     angular
 		.module('app.support.command', [])
@@ -58,6 +51,6 @@ namespace app.support {
 	    .config(config);
 
     angular
-    	.module('app.support', ['app.support.command', 'app.support.messaging'])
+    	.module('app.support', ['app.support.command', 'app.support.messaging', 'app.support.constants'])
     	.config(config);
 }

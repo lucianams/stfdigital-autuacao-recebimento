@@ -37,6 +37,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
 }
 
-let prepararOficioDevolucao: IModule = angular.module('app.recebimento.preparar-oficio-devolucao', ['app.novo-processo', 'app.constants', 'app.support']);
+let prepararOficioDevolucao: IModule = angular.module('app.recebimento.preparar-oficio-devolucao', ['app.novo-processo', 'app.support', 'app.support']);
 prepararOficioDevolucao.config(config).run(run);
 export default prepararOficioDevolucao;

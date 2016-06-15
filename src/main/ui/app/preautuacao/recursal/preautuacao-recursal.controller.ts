@@ -19,7 +19,7 @@ export class PreautuacaoRecursalController {
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 	
-	static $inject = ["$state", "app.novo-processo.preautuacao-services.PreautuacaoService"];
+	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
 	
 	/** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
@@ -58,5 +58,5 @@ export class PreautuacaoRecursalController {
 	}
 }
 
-preautuacaoRecursal.controller("app.novo-processo.preautuacao-recursal.PreautuacaoRecursalController", PreautuacaoRecursalController);
+preautuacaoRecursal.controller("app.recebimento.preautuacao-recursal.PreautuacaoRecursalController", PreautuacaoRecursalController);
 export default preautuacaoRecursal;

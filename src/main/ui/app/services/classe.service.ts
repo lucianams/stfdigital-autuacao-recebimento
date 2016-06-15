@@ -20,5 +20,5 @@ export class ClasseService {
     }
 }
 
-preautuacaoServices.service("app.novo-processo.preautuacao-services.ClasseService", ClasseService);
+preautuacaoServices.service("app.recebimento.preautuacao-services.ClasseService", ClasseService);
 export default preautuacaoServices;

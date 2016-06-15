@@ -6,7 +6,7 @@ var conf = require('./conf');
 
 var $ = require('gulp-load-plugins')();
 
-gulp.task('scripts', ['ts-lint'], function() {
+gulp.task('scripts', ['ts-lint', 'clean'], function() {
     return gulp.src(path.join(conf.paths.src, 'bundle.config.js'))
     	.pipe($.bundleAssets())
     	.pipe($.size())

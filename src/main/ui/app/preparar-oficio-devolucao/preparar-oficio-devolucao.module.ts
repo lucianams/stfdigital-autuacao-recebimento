@@ -12,12 +12,12 @@ function config($stateProvider: IStateProvider, properties: any) {
         views : {
             'content@app.autenticado' : {
                 templateUrl : './preparar-oficio-devolucao.tpl.html',
-                controller : 'app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoController',
+                controller : 'app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoController',
                 controllerAs: 'vm'
             }
         },
         resolve : {
-            motivosDevolucao : ['app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoService', (prepararOficioDevolucaoService: PrepararOficioDevolucaoService) => {
+            motivosDevolucao : ['app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', (prepararOficioDevolucaoService: PrepararOficioDevolucaoService) => {
                 return prepararOficioDevolucaoService.listarMotivosDevolucao();
             }],
             protocolo: () => {
@@ -37,6 +37,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
 }
 
-let prepararOficioDevolucao: IModule = angular.module('app.novo-processo.preparar-oficio-devolucao', ['app.novo-processo', 'app.constants', 'app.support']);
+let prepararOficioDevolucao: IModule = angular.module('app.recebimento.preparar-oficio-devolucao', ['app.novo-processo', 'app.constants', 'app.support']);
 prepararOficioDevolucao.config(config).run(run);
 export default prepararOficioDevolucao;

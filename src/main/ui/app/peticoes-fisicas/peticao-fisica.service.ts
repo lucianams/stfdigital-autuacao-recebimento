@@ -37,5 +37,5 @@ export class PeticaoFisicaService {
     }
 }
 
-recebimento.service('app.novo-processo.peticoes-fisicas.PeticaoFisicaService', PeticaoFisicaService);
+recebimento.service('app.recebimento.peticoes-fisicas.PeticaoFisicaService', PeticaoFisicaService);
 export default recebimento;

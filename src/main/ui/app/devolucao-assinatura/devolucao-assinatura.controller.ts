@@ -5,7 +5,7 @@ import {Remessa} from "./../services/model";
 
 export class DevolucaoAssinaturaController {
 	
-    static $inject = ['$state', 'app.novo-processo.devolucao-assinatura.DevolucaoAssinaturaService', 'remessas'];
+    static $inject = ['$state', 'app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', 'remessas'];
 
     constructor(private $state: IStateService, private devolucaoAssinaturaService: DevolucaoAssinaturaService,
                 public remessas: Remessa[]) {
@@ -14,5 +14,5 @@ export class DevolucaoAssinaturaController {
     
 }
 
-devolucaoAssinatura.controller('app.novo-processo.devolucao-assinatura.DevolucaoAssinaturaController', DevolucaoAssinaturaController);
+devolucaoAssinatura.controller('app.recebimento.devolucao-assinatura.DevolucaoAssinaturaController', DevolucaoAssinaturaController);
 export default devolucaoAssinatura;

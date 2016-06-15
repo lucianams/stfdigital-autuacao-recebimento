@@ -12,12 +12,12 @@ function config($stateProvider: IStateProvider,
         views : {
             'content@app.autenticado' : {
                 templateUrl : './peticao-fisica.tpl.html',
-                controller : 'app.novo-processo.peticoes-fisicas.PeticaoFisicaController',
+                controller : 'app.recebimento.peticoes-fisicas.PeticaoFisicaController',
                 controllerAs: 'registro'
             }
         },
         resolve : {
-            formasRecebimento : ['app.novo-processo.peticoes-fisicas.PeticaoFisicaService', (peticaoFisicaService: PeticaoFisicaService) => {
+            formasRecebimento : ['app.recebimento.peticoes-fisicas.PeticaoFisicaService', (peticaoFisicaService: PeticaoFisicaService) => {
                 return peticaoFisicaService.consultarFormasRecebimento();
             }]
         }
@@ -31,6 +31,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 }
 
-let recebimento: IModule = angular.module('app.novo-processo.peticoes-fisicas', ['app.novo-processo', 'app.constants', 'app.support']);
+let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.novo-processo', 'app.constants', 'app.support']);
 recebimento.config(config).run(run);
 export default recebimento;

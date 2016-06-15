@@ -13,7 +13,7 @@ export class PeticaoFisicaController {
     public tiposProcessos : Object[] = PeticaoFisicaController.mockTiposProcessos();
     public tipoProcesso : string = "";
 
-    static $inject = ['$state', 'app.novo-processo.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
+    static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
     
     constructor(private $state: IStateService,
                 private peticaoFisicaService: PeticaoFisicaService,
@@ -35,5 +35,5 @@ export class PeticaoFisicaController {
     }
 }
 
-recebimento.controller('app.novo-processo.peticoes-fisicas.PeticaoFisicaController', PeticaoFisicaController);
+recebimento.controller('app.recebimento.peticoes-fisicas.PeticaoFisicaController', PeticaoFisicaController);
 export default recebimento;

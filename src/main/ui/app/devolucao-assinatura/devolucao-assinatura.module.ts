@@ -11,7 +11,7 @@ function config($stateProvider: IStateProvider, properties: any) {
         views : {
             'content@app.autenticado' : {
                 templateUrl : './devolucao-assinatura.tpl.html',
-                controller : 'app.novo-processo.devolucao-assinatura.DevolucaoAssinaturaController',
+                controller : 'app.recebimento.devolucao-assinatura.DevolucaoAssinaturaController',
                 controllerAs: 'vm'
             }
         },
@@ -28,6 +28,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao-assinatura');
 }
 
-let devolucaoAssinatura: IModule = angular.module('app.novo-processo.devolucao-assinatura', ['app.novo-processo.preautuacao-services', 'app.novo-processo', 'app.constants', 'app.support']);
+let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.constants', 'app.support']);
 devolucaoAssinatura.config(config).run(run);
 export default devolucaoAssinatura;

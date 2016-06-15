@@ -11,7 +11,7 @@ function config($stateProvider: IStateProvider,
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao-recursal.tpl.html",
-                controller : "app.novo-processo.preautuacao-recursal.PreautuacaoRecursalController",
+                controller : "app.recebimento.preautuacao-recursal.PreautuacaoRecursalController",
                 controllerAs: "vm"
             }
         }
@@ -25,6 +25,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/recursal");
 }
 
-let preautuacaoRecursal: IModule = angular.module("app.novo-processo.preautuacao-recursal", ["app.novo-processo.preautuacao-services", "app.novo-processo", "app.constants"]);
+let preautuacaoRecursal: IModule = angular.module("app.recebimento.preautuacao-recursal", ["app.recebimento.preautuacao-services", "app.novo-processo", "app.constants"]);
 preautuacaoRecursal.config(config).run(run);
 export default preautuacaoRecursal;

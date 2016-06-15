@@ -83,5 +83,5 @@ export class PrepararOficioDevolucaoService {
     }
 }
 
-devolucao.service('app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoService', PrepararOficioDevolucaoService);
+devolucao.service('app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', PrepararOficioDevolucaoService);
 export default devolucao;

@@ -22,5 +22,5 @@ export class DevolucaoAssinaturaService {
     }
 }
 
-devolucaoAssinatura.service('app.novo-processo.devolucao-assinatura.DevolucaoAssinaturaService', DevolucaoAssinaturaService);
+devolucaoAssinatura.service('app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', DevolucaoAssinaturaService);
 export default devolucaoAssinatura;

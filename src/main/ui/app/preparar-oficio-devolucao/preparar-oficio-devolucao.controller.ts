@@ -6,7 +6,7 @@ import prepararOficioDevolucao from "./preparar-oficio-devolucao.module";
 
 export class PrepararOficioDevolucaoController {
 	
-    static $inject = ['$state', 'app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'app.support.messaging.MessagesService'];
+    static $inject = ['$state', 'app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'app.support.messaging.MessagesService'];
     
     public modelos: Modelo[];
     
@@ -107,5 +107,5 @@ export class PrepararOficioDevolucaoController {
     
 }
 
-prepararOficioDevolucao.controller('app.novo-processo.preparar-oficio-devolucao.PrepararOficioDevolucaoController', PrepararOficioDevolucaoController);
+prepararOficioDevolucao.controller('app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoController', PrepararOficioDevolucaoController);
 export default prepararOficioDevolucao;

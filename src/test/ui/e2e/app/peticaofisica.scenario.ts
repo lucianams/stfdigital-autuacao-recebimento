@@ -2,7 +2,7 @@ import {LoginPage} from "./pages/login.page";
 import {PrincipalPage}  from "./pages/principal.page";
 import {RecebimentoPage} from "./pages/recebimento.page";
 
-describe('Autuação de Petições Físicas Originárias', () => {	
+describe('Recebimento de Petições Físicas Originárias', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();
@@ -10,12 +10,13 @@ describe('Autuação de Petições Físicas Originárias', () => {
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();
-        loginPage.login('aaa', '123');
+        loginPage.login('recebedor', 'recebedor-123');
     });
     
-    it ('Deveria acessar a pagina de peticao física', () => {
+    it ('Deveria acessar a pagina de petição física', () => {
         principalPage.iniciarProcesso();
-        principalPage.iniciarPeticaoFisica();
+        principalPage.escolherProcesso('app.novo-processo.recebimento-peticao-fisica');
+        principalPage.aguardarUrl('/novo-processo/recebimento');
     });
     
     it('Deveria preencher as informações da petição física', () => {
@@ -24,6 +25,7 @@ describe('Autuação de Petições Físicas Originárias', () => {
     	recebimentoPage.selecionarFormaRecebimento();
     	recebimentoPage.selecionarTipoRecebimento();
     	recebimentoPage.registrarPeticao();
+    	principalPage.aguardarUrl('/tarefas/minhas-tarefas');
     });
     
 });

@@ -5,18 +5,14 @@ var gulp = require('gulp');
 var conf = require('./conf');
 
 var karma = require('karma');
+var runSequence = require('run-sequence');
 
 function runTests(singleRun, done)
 {
-    var reporters = ['progress'];
-    var preprocessors = {};
-    
     var localConfig = {
         configFile   : path.resolve(path.join(conf.paths.test, '/karma.conf.js')),
         singleRun    : singleRun,
-        autoWatch    : !singleRun/*,*/
-        //reporters    : reporters,
-//        preprocessors: preprocessors
+        autoWatch    : !singleRun
     };
 
     var server = new karma.Server(localConfig, function (failCount)
@@ -26,12 +22,20 @@ function runTests(singleRun, done)
     server.start();
 }
 
-gulp.task('test:unit', ['scripts', 'compile-ts:unit'], function (done)
+gulp.task('test:unit', ['compile-ts:unit', 'scripts'], function (done)
 {
     runTests(true, done);
 });
 
-gulp.task('tdd', ['watch'], function (done)
+gulp.task('tdd', ['clean-and-watch-tests', 'watch'], function (done)
 {
     runTests(false, done);
+});
+
+gulp.task('clean-and-watch-tests', function(done) {
+	runSequence('clean-ts:unit', 'watch-unit', done);
+});
+
+gulp.task('watch-unit', ['compile-ts:unit'], function() {
+    gulp.watch(path.join(conf.paths.unit, 'app/**/*.ts'), ['compile-ts:unit']);
 });

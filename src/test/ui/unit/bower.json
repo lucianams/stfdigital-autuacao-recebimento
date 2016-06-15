@@ -1,5 +1,5 @@
 {
-  "name": "stfdigital/plataforma-documents-ui",
+  "name": "stfdigital.autuacao.recebimento.ui.unit-tests",
   "version": "1.0.0",
   "dependencies": {
     "angular": "~1.5.3",

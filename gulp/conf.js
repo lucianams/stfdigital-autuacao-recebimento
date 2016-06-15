@@ -8,6 +8,7 @@
 
 var gutil = require('gulp-util');
 var path = require('path');
+var custom = require('./custom');
 
 /**
  *  The main paths of your project handle these with care
@@ -17,9 +18,8 @@ exports.paths = {
     src : './src/main/ui',
     app : './src/main/ui/app',
     dist: './src/main/resources/public',
-    tmp : './build/tmp',
-    e2e : './src/test/ui/e2e',
     test: './src/test/ui',
+    e2e : './src/test/ui/e2e',
     unit: './src/test/ui/unit'
 };
 

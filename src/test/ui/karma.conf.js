@@ -7,7 +7,6 @@ var _ = require('lodash');
 var wiredep = require('wiredep');
 
 function listIncludeFiles() {
-  console.log(path.resolve(conf.paths.unit));
 	var wiredepOptions = _.extend({}, conf.wiredep, {
 	    dependencies: true,
 	    devDependencies: true
@@ -23,15 +22,25 @@ function listIncludeFiles() {
 function listFiles() {
   var patterns = listIncludeFiles();
   
-  patterns.push('src/main/resources/public/**/*.js');
-  
   var files = patterns.map(function(pattern) {
     return {
       pattern: pattern,
       included: false
     };
   });
-  files.push(path.join(conf.paths.test, 'unit/build/**/*.js'));
+  
+  files.push({
+    pattern: 'src/main/resources/public/**/*.js',
+    included: false,
+    watched: true
+  });
+  
+  files.push({
+    pattern: path.join(conf.paths.unit, 'build/**/*.js'),
+    included: true,
+    watched: true
+  });
+  
   return files;
 }
 module.exports = function(config) {
@@ -43,6 +52,8 @@ module.exports = function(config) {
     basePath: '../../..',
 
     autoWatch: false,
+    
+    autoWatchBatchDelay: 2000,
 
     logLevel: 'info',
 

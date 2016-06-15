@@ -1,12 +1,14 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 var del = require('del');
+var runSequence = require('run-sequence');
 
-gulp.task('clean', ['clean-ts'], function() {
-    return del([conf.paths.dist, conf.paths.tmp]);
+gulp.task('clean', function() {
+    return del(conf.paths.dist);
 });
 
-gulp.task('build', ['scripts']);
+gulp.task('build', function(done) {
+	runSequence('clean', 'scripts', done);
+});

@@ -3,7 +3,6 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
-var path = require('path');
 var conf = require('./conf');
 
 gulp.task('bower:install:unit', function() {

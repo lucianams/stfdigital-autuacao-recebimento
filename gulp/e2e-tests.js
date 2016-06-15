@@ -3,8 +3,9 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var argv = require('yargs').argv;
 
-var browserSync = require('browser-sync');
+var protractorConfig = require(path.join('..', conf.paths.test, 'protractor.conf'));
 
 var $ = require('gulp-load-plugins')();
 
@@ -13,23 +14,44 @@ gulp.task('webdriver-update', $.protractor.webdriver_update);
 
 gulp.task('webdriver-standalone', $.protractor.webdriver_standalone);
 
+var replacePattern = function(source) {
+	var pattern = "*"; // Pattern padrão
+	if (argv.pattern) {
+		pattern = argv.pattern;
+	}
+	return source.map(function(val) {
+		return val.replace("{pattern}", pattern);
+	});
+};
+
 function runProtractor(done)
 {
-    var params = process.argv;
-    var args = params.length > 3 ? [params[3], params[4]] : [];
-
-    gulp.src(path.join(conf.paths.e2e, '/**/*.js'))
-        .pipe($.protractor.protractor({
-            configFile: path.join(conf.paths.test, '/protractor.conf.js'),
-            args      : args
-        }))
+	protractorConfig.config.specs = replacePattern(protractorConfig.config.specs);
+	
+	var protractorConfigObject = {
+        configFile: path.join(conf.paths.test, '/protractor.conf.js'),
+        args      : []
+    };
+	if (argv.e2eBaseUrl) {
+		protractorConfigObject.args.push('--baseUrl');
+		protractorConfigObject.args.push(argv.e2eBaseUrl);
+	}
+	if (argv.e2eSeleniumAddress) {
+		protractorConfigObject.args.push('--seleniumAddress');
+		protractorConfigObject.args.push(argv.e2eSeleniumAddress);
+	}
+	if (argv.e2eFilesDirPath) {
+		protractorConfigObject.args.push('--params.filesDirPath');
+		protractorConfigObject.args.push(argv.e2eFilesDirPath);
+	}
+	
+    gulp.src(protractorConfig.config.specs)
+        .pipe($.protractor.protractor(protractorConfigObject))
         .on('error', function (err) {
             // Make sure failed tests cause gulp to exit non-zero
             throw err;
         })
         .on('end', function () {
-            // Close browser sync server
-            browserSync.exit();
             done();
         });
 }

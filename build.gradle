@@ -92,7 +92,7 @@ dependencies {
     
     testCompile("com.jayway.jsonpath:json-path")
     
-    compile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 node {

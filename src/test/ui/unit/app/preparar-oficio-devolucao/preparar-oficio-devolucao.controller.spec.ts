@@ -1,4 +1,3 @@
-import "recebimento/preparar-oficio-devolucao";
 import {PrepararOficioDevolucaoController} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.controller";
 
 describe('Devolução Controller', () => {
@@ -10,7 +9,7 @@ describe('Devolução Controller', () => {
 	beforeEach(inject(($rootScope, $httpBackend: angular.IHttpBackendService, $controller: angular.IControllerService) => {
 		var scope = $rootScope.$new();
 		
-		//let ctrl = new PrepararOficioDevolucaoController(null, null, null, null, null);
+		let ctrl = new PrepararOficioDevolucaoController(null, null, null, null, null);
 		/*
 		controller = <DevolucaoController>$controller('app.novo-processo.devolucao.DevolucaoController', {
 			$scope : scope,

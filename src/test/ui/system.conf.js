@@ -6,7 +6,6 @@ System.config({
 		'system-polyfills': './node_modules/systemjs/dist/system-polyfills.src.js'
 	},
 	bundles: {
-		'recebimento/preparar-oficio-devolucao': ['recebimento/preparar-oficio-devolucao/*']
-	},
-	strictImportSequence: true
+		'recebimento/bundle': ['recebimento/preparar-oficio-devolucao/*', 'recebimento/devolucao-assinatura/*']
+	}
 });

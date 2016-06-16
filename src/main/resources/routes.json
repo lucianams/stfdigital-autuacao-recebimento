@@ -25,5 +25,12 @@
         "stateName": "app.novo-processo.recebimento-preparar-oficio-devolucao",
         "urlPrefix": "/novo-processo/preparar-oficio-devolucao",
         "src": "recebimento/preparar-oficio-devolucao"
+    },
+    
+    {
+        "id": "assinar-oficio-devolucao",
+        "stateName": "app.novo-processo.recebimento-devolucao-assinatura",
+        "urlPrefix": "/novo-processo/devolucao-assinatura",
+        "src": "recebimento/devolucao-assinatura"
     }
 ]

@@ -11,19 +11,24 @@ services:
     image: discovery
     ports:
      - "8761:8761"
+     - "47961:47961"
+    environment:
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47961,suspend=n
   gateway:
     container_name: gateway
     image: gateway
     ports:
      - "8765:8765"
-  servicos:
+  services:
     container_name: services
     image: services
     ports:
      - "8081:8081"
      - "8181:8181"
+     - "47981:47981"
     environment:
      - spring.profiles.active=development
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47981,suspend=n
   ui:
     container_name: ui
     image: plataforma-ui
@@ -37,8 +42,11 @@ services:
   documents:
     container_name: documents
     image: documents
+    command: --onlyoffice.documentserver.host=digital.stf.jus.br --onlyoffice.documentserver.protocol=https
     ports:
      - "8094:8094"
      - "8194:8194"
+     - "47994:47994"
     environment:
      - spring.profiles.active=development
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47994,suspend=n

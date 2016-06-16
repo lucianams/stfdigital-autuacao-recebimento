@@ -2,11 +2,13 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {Remessa} from "./../services/model";
+import {PreautuacaoService} from "./../services/preautuacao.service";
+import "./../services/preautuacao.service";
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
 
-    $stateProvider.state('app.novo-processo.devolucao-assinatura', {
+    $stateProvider.state('app.novo-processo.recebimento-devolucao-assinatura', {
         url : '/devolucao-assinatura',
         views : {
             'content@app.autenticado' : {

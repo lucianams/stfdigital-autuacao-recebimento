@@ -34,6 +34,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.TextoId;
+import br.jus.stf.core.shared.preferencia.PreferenciaId;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Numero;
@@ -196,6 +197,11 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 
 	public String numeroSedex() {
 		return numeroSedex;
+	}
+	
+	public Boolean isCriminalEleitoral() {
+		// TODO: Verificar uma forma melhor de implementar essa verificação
+		return preferencias.contains(new PreferenciaId(2L)) || preferencias.contains(new PreferenciaId(3L));
 	}
     
 }

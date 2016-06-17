@@ -19,6 +19,9 @@ services:
     image: gateway
     ports:
      - "8765:8765"
+     - "47965:47965"
+    environment:
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47965,suspend=n
   services:
     container_name: services
     image: services
@@ -29,11 +32,6 @@ services:
     environment:
      - spring.profiles.active=development
      - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47981,suspend=n
-  ui:
-    container_name: ui
-    image: plataforma-ui
-    ports:
-     - "8443:8443"
   mongo:
     container_name: mongo
     image: mongo:3
@@ -50,3 +48,8 @@ services:
     environment:
      - spring.profiles.active=development
      - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47994,suspend=n
+  ui:
+    container_name: ui
+    image: plataforma-ui
+    ports:
+     - "8443:8443"

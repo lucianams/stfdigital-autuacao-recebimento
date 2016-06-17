@@ -18,9 +18,12 @@ function config($stateProvider: IStateProvider, properties: any) {
             }
         },
         resolve : {
-            remessas: () => {
-            	return [new Remessa('a', 1, 2, 'b', 'c'), new Remessa('b', 1, 2, 'b', 'c')];
-            },
+            remessas: ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService: PreautuacaoService) => {
+            	let protocolo: number = 9002;
+                return preautuacaoService.consultarRemessa(protocolo).then((remessa) => {
+                    return [remessa];
+                });
+            }],
         }
     });
 }
@@ -30,6 +33,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao-assinatura');
 }
 
-let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support', 'app.support']);
+let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support']);
 devolucaoAssinatura.config(config).run(run);
 export default devolucaoAssinatura;

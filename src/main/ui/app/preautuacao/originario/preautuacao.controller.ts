@@ -16,10 +16,10 @@ export class PreautuacaoController {
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 
-	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
+	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService", "classes"];
 	
     /** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[]){
+	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes){
 
 	}
     

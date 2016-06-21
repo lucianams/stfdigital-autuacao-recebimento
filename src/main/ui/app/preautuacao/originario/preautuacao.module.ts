@@ -18,7 +18,7 @@ function config($stateProvider: IStateProvider,
             }
         },
     	resolve : {
-    		classes : ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService ) => {
+    		classes : ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService : PreautuacaoService ) => {
     			return preautuacaoService.listarClassesPorTipoRemessa("ORIGINARIO");
     		}]
     	}

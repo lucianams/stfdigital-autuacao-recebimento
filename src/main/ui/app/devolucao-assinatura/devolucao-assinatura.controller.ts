@@ -9,7 +9,7 @@ export class DevolucaoAssinaturaController {
 
     constructor(private $state: IStateService, private devolucaoAssinaturaService: DevolucaoAssinaturaService,
                 public remessas: Remessa[]) {
-    	
+    	console.log(remessas);
     }
     
 }

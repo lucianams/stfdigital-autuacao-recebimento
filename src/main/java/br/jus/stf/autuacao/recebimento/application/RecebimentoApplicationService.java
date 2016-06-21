@@ -109,7 +109,7 @@ public class RecebimentoApplicationService {
             
         remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
-        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString()));
+        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
     @Command(description = "Preautuação de recursais")

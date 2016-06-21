@@ -12,7 +12,6 @@ export class PreautuacaoController {
 	public protocoloId: number;
 	public remessa: Remessa;
 	public classe : Classe;
-	public classes: Array<Classe>;
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
@@ -20,20 +19,8 @@ export class PreautuacaoController {
 	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
 	
     /** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
-				
-		/* Substituir pelo nº do protocolo passado como parâmetro. */
-		preautuacaoService.gerarRemessa("ORIGINARIO").then((protocoloId: number) => {
-			this.protocoloId = protocoloId;
-			
-			preautuacaoService.consultarRemessa(this.protocoloId).then((remessa: Remessa) => {
-				this.remessa = remessa;
-			});		
-		});
+	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[]){
 
-		preautuacaoService.listarClassesPorTipoRemessa("ORIGINARIO").then((classes: Classe[]) => {
-			this.classes = classes;
-		});
 	}
     
     /*

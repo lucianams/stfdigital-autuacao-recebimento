@@ -5,7 +5,7 @@ import recebimento from "./peticao-fisica.module";
 
 export class FormaRecebimento {
     
-    constructor(public descricao: string, public exigeNumero: boolean ) {}
+    constructor(public sigla : string, public descricao: string, public exigeNumero: boolean ) {}
 }
 
 export class PeticaoFisicaCommand {

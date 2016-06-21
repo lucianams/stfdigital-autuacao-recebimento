@@ -25,12 +25,14 @@ import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
-import br.jus.stf.autuacao.recebimento.infra.RemessaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDto;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDtoAssembler;
+import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
@@ -66,6 +68,9 @@ public class RemessaRestResource {
 	
 	@Autowired
 	private PreferenciaRepository preferenciaRepository;
+	
+	@Autowired
+	private DevolucaoDtoAssembler devolucaoDtoAssembler;
     
     @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
     public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
@@ -153,6 +158,11 @@ public class RemessaRestResource {
     			.map(preferencia -> preferenciaDtoAssembler.toDto(preferencia)).collect(Collectors.toList());
     }
 
+    @RequestMapping(value="/{protocoloId}/devolucao", method = RequestMethod.GET)
+    public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
+    	return  devolucaoDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
+    }
+	
 	private String message(BindingResult binding) {
 		return String.format(REMESSA_INVALIDA_PATTERN, binding.getAllErrors());
 	}

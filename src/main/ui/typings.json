@@ -6,6 +6,13 @@
     "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
     "angular-translate": "github:DefinitelyTyped/DefinitelyTyped/angular-translate/angular-translate.d.ts#275c2052a4d955b33d9fa72186f81a8328377974",
     "angular-material": "github:DefinitelyTyped/DefinitelyTyped/angular-material/angular-material.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
-    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#e12c8e3bcdd77fb05d498ec61525be6ad112dfd6"
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#e12c8e3bcdd77fb05d498ec61525be6ad112dfd6",
+    
+    "crypto.service": "github:supremotribunalfederal/stfdigital-plataforma-ui/definitions/certification/crypto.service.d.ts",
+    "signature.service": "github:supremotribunalfederal/stfdigital-plataforma-ui/definitions/certification/signature.service.d.ts",
+    "signer": "github:supremotribunalfederal/stfdigital-plataforma-ui/definitions/certification/signer.d.ts",
+    "signing-manager": "github:supremotribunalfederal/stfdigital-plataforma-ui/definitions/certification/signing-manager.d.ts",
+
+    "messages.service": "github:supremotribunalfederal/stfdigital-plataforma-ui/definitions/support/messaging/messages.service.d.ts"
   }
 }

@@ -198,6 +198,10 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 	public String numeroSedex() {
 		return numeroSedex;
 	}
+
+	public Devolucao devolucao() {
+		return devolucao;
+	}
 	
 	public Boolean isCriminalEleitoral() {
 		// TODO: Verificar uma forma melhor de implementar essa verificação

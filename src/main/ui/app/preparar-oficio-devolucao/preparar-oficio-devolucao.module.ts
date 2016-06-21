@@ -22,10 +22,10 @@ function config($stateProvider: IStateProvider, properties: any) {
             }],
             protocolo: () => {
             	return new Promise<number>((resolve, reject) => {
-            		let protocoloIdString : string = prompt("Digite o protocolo.", "2");
-            		let protocoloId : number = parseInt(protocoloIdString);
-            		resolve(protocoloId);
-            		//resolve(2);
+            		//let protocoloIdString : string = prompt("Digite o protocolo.", "2");
+            		//let protocoloId : number = parseInt(protocoloIdString);
+            		//resolve(protocoloId);
+            		resolve(9002);
             	});
             }
         }
@@ -34,9 +34,9 @@ function config($stateProvider: IStateProvider, properties: any) {
 
 /** @ngInject **/
 function run($translatePartialLoader: ITranslatePartialLoaderService, properties: any) {
-	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao');
+	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/preparar-oficio-devolucao');
 }
 
-let prepararOficioDevolucao: IModule = angular.module('app.recebimento.preparar-oficio-devolucao', ['app.novo-processo', 'app.support', 'app.support']);
+let prepararOficioDevolucao: IModule = angular.module('app.recebimento.preparar-oficio-devolucao', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support', 'app.support']);
 prepararOficioDevolucao.config(config).run(run);
 export default prepararOficioDevolucao;

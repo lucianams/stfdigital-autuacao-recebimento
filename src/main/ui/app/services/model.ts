@@ -55,3 +55,14 @@ export class TipoProcesso {
         this.nome = nome;
     }
 }
+
+export class TipoDocumento {
+	constructor(public id: number, public descricao: string) {}
+}
+
+export interface Modelo {
+	id: number;
+	tipoDocumento: TipoDocumento;
+	nome: string;
+	documento: number;
+}

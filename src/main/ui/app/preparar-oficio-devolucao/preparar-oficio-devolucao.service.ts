@@ -2,20 +2,10 @@ import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
 import devolucao from "./preparar-oficio-devolucao.module";
+import {Modelo} from "../services/model";
 
 export class MotivoDevolucao {
 	constructor(public id : number, public descricao: string, public tiposDocumento: number[]) {}
-}
-
-export class TipoDocumento {
-	constructor(public id: number, public descricao: string) {}
-}
-
-export interface Modelo {
-	id: number;
-	tipoDocumento: TipoDocumento;
-	nome: string;
-	documento: number;
 }
 
 export interface Tag {

@@ -15,6 +15,7 @@ import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCom
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
+import br.jus.stf.autuacao.recebimento.domain.DocumentoAdapter;
 import br.jus.stf.autuacao.recebimento.domain.ProtocoloAdapter;
 import br.jus.stf.autuacao.recebimento.domain.RemessaFactory;
 import br.jus.stf.autuacao.recebimento.domain.StatusAdapter;
@@ -78,6 +79,9 @@ public class RecebimentoApplicationService {
 
     @Autowired
     private StatusAdapter statusAdapter;
+    
+    @Autowired
+    private DocumentoAdapter documentoAdapter;
      
     @Command(description = "Nova petição física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
@@ -104,7 +108,7 @@ public class RecebimentoApplicationService {
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
-						.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
+						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
 				.get();
             
         remessa.preautuar(classe, preferencias, sigilo, status);
@@ -137,6 +141,9 @@ public class RecebimentoApplicationService {
         ModeloDevolucao modelo = modeloDevolucaoRepository.findOne(new ModeloDocumentoId(command.getModeloId()));
         
         remessa.elaborarDevolucao(motivo, modelo, new TextoId(command.getTextoId()), status);
+        
+        documentoAdapter.concluirTexto(remessa.devolucao().texto());
+        
         remessaRepository.save(remessa);
     }
 

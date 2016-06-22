@@ -1,6 +1,6 @@
 import {PreautuacaoController} from "recebimento/preautuacao/originario/preautuacao.controller";
-import {PreautuacaoService, DevolverRemessaCommand} from "recebimento/services/preautuacao.service";
-import {Classe} from 'recebimento/services/model';
+import {PreautuacaoService, DevolverRemessaCommand} from "recebimento/preautuacao/originario/preautuacao.service";
+import {Classe, Remessa} from 'recebimento/services/model';
 
 
 describe('Teste do controlador preautuacao.controller', () => {
@@ -10,6 +10,8 @@ describe('Teste do controlador preautuacao.controller', () => {
 	let $rootScope : ng.IRootScopeService;
 	let mockState;
 	let mockPreautuacaoService;
+
+	let protocoloId: number;
 	
 	beforeEach(inject((_$q_, _$rootScope_) => {
         $q = _$q_;
@@ -23,14 +25,14 @@ describe('Teste do controlador preautuacao.controller', () => {
 		mockPreautuacaoService = {
 			devolver : () =>{},
 			preautuarProcesso : () =>{}
-		}
-	    controller = new PreautuacaoController(mockState, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])]);
+		};
+		protocoloId = 123;
+		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null);
+	    controller = new PreautuacaoController(mockState, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa);
 	});
 	
 	it('Deveria devolver a remessa', () => {
-		let protocoloId = 123;
 		let motivoDevolucao = 'Motivo para devolução';
-		controller.protocoloId = protocoloId;
 		controller.motivo = motivoDevolucao;
 		
 		spyOn(mockPreautuacaoService, 'devolver').and.callFake(() => $q.when());

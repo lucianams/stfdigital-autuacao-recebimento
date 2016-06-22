@@ -1,7 +1,7 @@
 import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
-import preautuacaoServices from "./services.module";
+import services from "./services.module";
 import {Classe, Preferencia} from "./model";
 
 export class ClasseService {
@@ -20,5 +20,5 @@ export class ClasseService {
     }
 }
 
-preautuacaoServices.service("app.recebimento.preautuacao-services.ClasseService", ClasseService);
-export default preautuacaoServices;
+services.service("app.recebimento.services.ClasseService", ClasseService);
+export default services;

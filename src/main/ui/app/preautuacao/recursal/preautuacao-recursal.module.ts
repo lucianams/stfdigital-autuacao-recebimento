@@ -1,6 +1,7 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
+import {PreautuacaoService} from './../../services/preautuacao.service';
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider,
@@ -12,9 +13,14 @@ function config($stateProvider: IStateProvider,
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao-recursal.tpl.html",
                 controller : "app.recebimento.preautuacao-recursal.PreautuacaoRecursalController",
-                controllerAs: "vm"
+                controllerAs: "preautuacao"
             }
-        }
+        },
+    	resolve : {
+    		classes : ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService : PreautuacaoService ) => {
+    			return preautuacaoService.listarClassesPorTipoRemessa("RECURSAL");
+    		}]
+    	}
     });
 }
 

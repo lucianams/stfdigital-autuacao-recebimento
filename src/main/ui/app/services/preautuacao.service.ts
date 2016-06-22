@@ -21,7 +21,8 @@ export class PreautuarRecursalCommand {
     constructor(public protocoloId: number, 
                 public classeId: string,
                 public sigilo: string,
-                public preferencias: Array<number>) {}    
+                public preferencias: Array<number>,
+                public motivo : string) {}    
 }
 
 export class RegistrarRecebimentoCommand {
@@ -122,8 +123,8 @@ export class PreautuacaoService {
      * @param sigilo Sigilo do processo.
      * @param preferencias Preferências processuais.
      */
-    public preautuarRecursal(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>): IPromise<any> {
-        let cmd: PreautuarRecursalCommand = new PreautuarRecursalCommand(protocoloId, classeId, sigilo, preferencias);
+    public preautuarRecursal(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>, motivo : string): IPromise<any> {
+        let cmd: PreautuarRecursalCommand = new PreautuarRecursalCommand(protocoloId, classeId, sigilo, preferencias, motivo);
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
             PreautuacaoService.urlServicoPreautuacao + '/preautuacao-recursal', cmd);        
     }

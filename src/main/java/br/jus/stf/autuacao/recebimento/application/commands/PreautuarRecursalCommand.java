@@ -22,6 +22,8 @@ public class PreautuarRecursalCommand {
 	private String sigilo;
 	
     private Set<Long> preferencias;
+    
+    private String motivo;
 	
 	public Long getProtocoloId() {
 		return protocoloId;
@@ -38,5 +40,8 @@ public class PreautuarRecursalCommand {
 	public String getSigilo() {
 		return sigilo;
 	}
-	
+
+	public String getMotivo() {
+		return motivo;
+	}
 }

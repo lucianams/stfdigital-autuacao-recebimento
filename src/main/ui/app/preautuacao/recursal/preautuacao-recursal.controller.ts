@@ -14,15 +14,14 @@ export class PreautuacaoRecursalController {
 	public protocoloId: number;
 	public remessa: Remessa;
 	public classe : Classe;
-	public classes: Array<Classe>;
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 	
-	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
+	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService", "classes"];
 	
 	/** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
+	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes){
 				
 		/* Substituir pelo nº do protocolo passado como parâmetro. */
 		preautuacaoService.gerarRemessa("RECURSAL").then((protocoloId: number) => {
@@ -31,10 +30,6 @@ export class PreautuacaoRecursalController {
 			preautuacaoService.consultarRemessa(this.protocoloId).then((remessa: Remessa) => {
 				this.remessa = remessa;
 			});		
-		});
-
-		preautuacaoService.listarClassesPorTipoRemessa("RECURSAL").then((classes: Classe[]) => {
-			this.classes = classes;
 		});
 	}
 	
@@ -51,7 +46,7 @@ export class PreautuacaoRecursalController {
 	 */
 	
 	public preautuarProcessoRecursal(): void {
-		this.preautuacaoService.preautuarRecursal(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+		this.preautuacaoService.preautuarRecursal(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas, motivo)
 	        .then(() => {
 	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
 	    	});

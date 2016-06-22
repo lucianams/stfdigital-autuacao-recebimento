@@ -52,5 +52,5 @@ export class PreautuacaoController {
 	}
 }
 
-preautuacao.controller("app.recebimento.preautuacao.PreautuacaoController", PreautuacaoController);
+preautuacao.controller("app.recebimento.preautuacao-originario.PreautuacaoController", PreautuacaoController);
 export default preautuacao;

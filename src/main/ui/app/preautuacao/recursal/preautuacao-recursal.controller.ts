@@ -38,7 +38,7 @@ export class PreautuacaoRecursalController {
 	
 	public preautuarProcessoRecursal(): void {
 
-		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas, this.motivo)
 	        .then(() => {
 	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
 	    	});

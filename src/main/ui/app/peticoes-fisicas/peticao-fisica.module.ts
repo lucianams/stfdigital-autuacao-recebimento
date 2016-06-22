@@ -29,10 +29,10 @@ function config($stateProvider: IStateProvider,
 function run($translatePartialLoader: ITranslatePartialLoaderService,
 			 properties: any, commandService : cmd.CommandService ) {
 	
-	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
+/*	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 	let handlers: cmd.ConditionHandler<any>[] = [];
 	handlers.push(ValidaPeticaoFisica);
-	commandService.addHandlers('registrar-remessa', handlers);
+	commandService.addHandlers('registrar-remessa', handlers); */
 }
 
 let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.novo-processo', 'app.support']);

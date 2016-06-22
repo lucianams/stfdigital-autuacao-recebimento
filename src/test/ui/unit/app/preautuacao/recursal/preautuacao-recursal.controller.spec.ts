@@ -1,6 +1,6 @@
 import {PreautuacaoRecursalController} from "recebimento/preautuacao/recursal/preautuacao-recursal.controller";
-import {PreautuacaoService, PreautuarRecursalCommand} from "recebimento/services/preautuacao.service";
-import {Classe} from 'recebimento/services/model';
+import {PreautuacaoRecursalService, PreautuarRecursalCommand} from "recebimento/preautuacao/recursal/preautuacao-recursal.service";
+import {Classe, Remessa, Preferencia} from 'recebimento/services/model';
 
 
 describe('Teste do controlador preautuacao-recursal.controller', () => {
@@ -23,18 +23,21 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		mockPreautuacaoRecursalService = {
 			preautuarRecursal : () =>{}
 		}
-	    controller = new PreautuacaoRecursalController(mockState, mockPreautuacaoRecursalService, [new Classe('HC', 'Habeas Corpus', [])]);
+		let protocoloId = 123;
+		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null);
+	    controller = new PreautuacaoRecursalController(mockState, mockPreautuacaoRecursalService, [new Classe('HC', 'Habeas Corpus', [new Preferencia(1,'Criminal')])], remessa);
 	});
 	
 	it('Deveria preautuar a remessa recursal', () => {
 		let protocoloId = 123;
-		let classe = 'RE';
+		let classe = 'HC';
 		let sigiloProcesso = 'PUBLICO';
-		let preferencias : Array<number> = [1,2,3];
-		
-		controller.protocoloId = protocoloId;
-		controller.classe.id = classe;
-		controller.preferenciasSelecionadas = preferencias;
+		let preferencias : Array<number> = [1];
+		let motivo = 'Teste do motivo';
+		controller.classe = controller.classes[0];
+		controller.carregarPreferencias();
+		controller.preferenciasSelecionadas = [controller.preferencias[0].id];
+		controller.motivo = motivo;
 		
 		spyOn(mockPreautuacaoRecursalService, 'preautuarRecursal').and.callFake(() => $q.when());
 		
@@ -44,7 +47,7 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		
 		$rootScope.$apply();
 		
-		expect(mockPreautuacaoRecursalService.preautuarRecursal).toHaveBeenCalledWith(new PreautuarRecursalCommand(protocoloId, classe, sigiloProcesso, preferencias));
+		expect(mockPreautuacaoRecursalService.preautuarRecursal).toHaveBeenCalledWith(protocoloId, classe, sigiloProcesso, preferencias, motivo);
 		
 		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
 	});

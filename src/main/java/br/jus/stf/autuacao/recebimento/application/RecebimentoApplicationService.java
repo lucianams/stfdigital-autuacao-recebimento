@@ -5,14 +5,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.DocumentoAdapter;
@@ -119,9 +118,9 @@ public class RecebimentoApplicationService {
     @Command(description = "Preautuação de recursais")
     public void handle(PreautuarRecursalCommand command) {
     	//TODO: A implementação da preautuação de recursal está incompleta, assim estamos reaproveitando a remessa
-    	PreautuarRemessaCommand preautuarRemessaCommand = new PreautuarRemessaCommand();
-    	BeanUtils.copyProperties(command, preautuarRemessaCommand);
-    	handle(preautuarRemessaCommand);
+    	PreautuarRemessaCommand preautuarOriginarioCommand = new PreautuarRemessaCommand(command.getProtocoloId(), command.getClasseId(), command.getSigilo(), command.getPreferencias());
+    	
+    	handle(preautuarOriginarioCommand);
     }
     
     @Command(description = "Devolução")

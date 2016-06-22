@@ -1,7 +1,6 @@
 package br.jus.stf.autuacao.recebimento.domain.model;
 
 import java.util.List;
-import java.util.Set;
 
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
@@ -17,8 +16,6 @@ public interface RemessaRepository {
 	Remessa findOne(ProtocoloId id);
 	
 	<R extends Remessa> R save(R remessa);
-	
-	Set<FormaRecebimento> findAllFormaRecebimento();
 	
 	MotivoDevolucao findOneMotivoDevolucao(Long id);
 	

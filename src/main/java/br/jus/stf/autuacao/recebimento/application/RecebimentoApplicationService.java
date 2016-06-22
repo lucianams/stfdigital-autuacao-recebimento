@@ -108,7 +108,7 @@ public class RecebimentoApplicationService {
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
-						.collect(Collectors.toCollection(() -> new HashSet<Preferencia>())))
+						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
 				.get();
             
         remessa.preautuar(classe, preferencias, sigilo, status);

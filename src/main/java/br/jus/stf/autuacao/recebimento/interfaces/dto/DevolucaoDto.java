@@ -2,6 +2,8 @@ package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
 public class DevolucaoDto {
 
+	private Long remessaProtocoloId;
+	
 	private Long remessaNumero;
 	private Integer remessaAno;
 
@@ -9,11 +11,20 @@ public class DevolucaoDto {
 
 	private Long textoId;
 
-	public DevolucaoDto(Long remessaNumero, Integer remessaAno, ModeloDevolucaoDto modeloDevolucao, Long textoId) {
+	public DevolucaoDto(Long remessaProtocoloId, Long remessaNumero, Integer remessaAno, ModeloDevolucaoDto modeloDevolucao, Long textoId) {
+		this.remessaProtocoloId = remessaProtocoloId;
 		this.remessaNumero = remessaNumero;
 		this.remessaAno = remessaAno;
 		this.modeloDevolucao = modeloDevolucao;
 		this.textoId = textoId;
+	}
+	
+	public Long getRemessaProtocoloId() {
+		return remessaProtocoloId;
+	}
+
+	public void setRemessaProtocoloId(Long remessaProtocoloId) {
+		this.remessaProtocoloId = remessaProtocoloId;
 	}
 
 	public Long getRemessaNumero() {

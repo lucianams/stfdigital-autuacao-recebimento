@@ -27,6 +27,7 @@ var allTypeScriptUnit = path.join(conf.paths.unit, 'app/**/*.ts');
 var libraryTypeScriptUnit = path.join(conf.paths.unit, 'typings/main/**/*.d.ts');
 var tsOutputPathUnit = path.join(conf.paths.unit, 'build');
 var tsDefOutputPath = path.join(conf.paths.unit, 'node_modules', custom.project);
+var tsTypingsOutputPath = path.join(conf.paths.unit, 'typings');
 
 /**
  * Install all typings files
@@ -50,6 +51,10 @@ gulp.task('install-typings:e2e', function() {
 gulp.task('install-typings:unit', ['generate-definitions'], function() {
     return gulp.src('typings.json', {cwd : conf.paths.unit})
         .pipe($.typings());
+});
+
+gulp.task('clean-typings:unit', function() {
+    return $.del(tsTypingsOutputPath);
 });
 
 /**

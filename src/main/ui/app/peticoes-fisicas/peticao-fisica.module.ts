@@ -1,7 +1,7 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
-import {PeticaoFisicaService, ValidaPeticaoFisica, PeticaoFisicaCommand} from "./peticao-fisica.service";
+import {PeticaoFisicaService, ValidadorRemessa, PeticaoFisicaCommand} from "./peticao-fisica.service";
 import cmd = app.support.command; 
 
 /** @ngInject **/
@@ -29,10 +29,8 @@ function config($stateProvider: IStateProvider,
 function run($translatePartialLoader: ITranslatePartialLoaderService,
 			 properties: any, commandService : cmd.CommandService ) {
 	
-/*	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
-	let handlers: cmd.ConditionHandler<any>[] = [];
-	handlers.push(ValidaPeticaoFisica);
-	commandService.addHandlers('registrar-remessa', handlers); */
+	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
+	commandService.setValidator('registrar-remessa', new ValidadorRemessa());
 }
 
 let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.novo-processo', 'app.support']);

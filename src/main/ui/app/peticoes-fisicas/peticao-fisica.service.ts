@@ -10,15 +10,14 @@ export class FormaRecebimento {
     constructor(public sigla : string, public descricao: string, public exigeNumero: boolean ) {}
 }
 
-export class PeticaoFisicaCommand implements cmd.CommandTarget<PeticaoFisicaCommand> {
+export class PeticaoFisicaCommand implements cmd.Command {
     
     constructor(public formaRecebimento: string, 
                 public volumes: number,
                 public apensos: number,
                 public numeroSedex: string,
                 public tipoProcesso: string,
-                public sigilo: string = 'PUBLICO',
-                public type: string = 'PeticaoFisica') { }
+                public sigilo: string = 'PUBLICO') { }
 }
 
 export class PeticaoFisicaService {
@@ -40,12 +39,11 @@ export class PeticaoFisicaService {
     }
 }
 
-export class ValidaPeticaoFisica implements cmd.ConditionHandler<PeticaoFisicaCommand> {
+export class ValidadorRemessa implements cmd.CommandValidator {
 	
 	constructor() {}
 	
-	public match(targets: PeticaoFisicaCommand[]): boolean {
-		let command: PeticaoFisicaCommand = targets[0];
+	public isValid(command: PeticaoFisicaCommand): boolean {
 		return command.numeroSedex != "";
 	}
 }

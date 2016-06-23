@@ -2,7 +2,7 @@
 	"REMESSA": {
 		"DEVOLUCAO-ASSINATURA": {
 			"TITULO": "Assinatura do Ofício de Devolução",
-			"DESCRICAO": "Selecione as petições cujos ofícios de devolução serão assinados"
+			"DESCRICAO": "Selecione as remessas cujos ofícios de devolução serão assinados"
 		}
 	}
 }

@@ -160,7 +160,7 @@ public class RemessaRestResource {
 
     @RequestMapping(value="/{protocoloId}/devolucao", method = RequestMethod.GET)
     public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
-    	return  devolucaoDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
+    	return devolucaoDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
     }
 	
 	private String message(BindingResult binding) {

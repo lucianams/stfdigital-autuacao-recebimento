@@ -31,7 +31,7 @@ export class PrepararOficioDevolucaoController {
     public modelosSendoCarregados: boolean = false;
 
     constructor(private $state: IStateService, private devolucaoService: PrepararOficioDevolucaoService,
-                public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private MessagesService) {
+                public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private messagesService: app.support.messaging.MessagesService) {
     	
     }
     
@@ -46,7 +46,7 @@ export class PrepararOficioDevolucaoController {
     			this.modelos = modelos;
     		},
     		() => {
-    			this.MessagesService.error("Erro ao carregar os modelos.");
+    			this.messagesService.error("Erro ao carregar os modelos.");
     		}
     	).finally(() => {
     		this.modelosSendoCarregados = false;
@@ -62,7 +62,7 @@ export class PrepararOficioDevolucaoController {
     			});
     		},
     		() => {
-    			this.MessagesService.error("Erro ao carregar as tags.");
+    			this.messagesService.error("Erro ao carregar as tags.");
     		}
     	).finally(() => {
     		this.tagsSendoCarregadas = false;
@@ -82,9 +82,9 @@ export class PrepararOficioDevolucaoController {
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
 			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
-			this.MessagesService.success("Documento de devolução elaborado com sucesso!");
+			this.messagesService.success("Documento de devolução elaborado com sucesso!");
 		}, () => {
-			this.MessagesService.error("Erro ao concluir a elaboração do texto!");
+			this.messagesService.error("Erro ao concluir a elaboração do texto!");
 		});
 	}
     
@@ -98,7 +98,7 @@ export class PrepararOficioDevolucaoController {
 				};
 				this.showEditor = true;
     		}, () => {
-    			this.MessagesService.error("Erro ao gerar o texto.");
+    			this.messagesService.error("Erro ao gerar o texto.");
     		});
     }
     

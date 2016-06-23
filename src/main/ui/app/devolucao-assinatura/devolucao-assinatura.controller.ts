@@ -1,9 +1,10 @@
 import IStateService = angular.ui.IStateService;
-import {DevolucaoAssinaturaService, AssinarOficioParaDevolucaoCommand, Devolucao} from "./devolucao-assinatura.service";
+import {DevolucaoAssinaturaService, AssinarOficioParaDevolucaoCommand, Devolucao, Documento} from "./devolucao-assinatura.service";
 import devolucaoAssinatura from "./devolucao-assinatura.module";
 
 class DevolucaoEmAssinatura extends Devolucao {
-    public progressTracker: app.certification.ProgressTracker;
+    public calcularProgresso: () => number;
+    public teminou: () => boolean;
 }
 
 export class DevolucaoAssinaturaController {
@@ -12,6 +13,8 @@ export class DevolucaoAssinaturaController {
         'app.support.messaging.MessagesService'];
 
     public devolucoesParaAssinar: DevolucaoEmAssinatura[] = [];
+    private devolucoesAssinadas: Devolucao[] = [];
+    private devolucoesComErroDuranteAssinatura: Devolucao[] = [];
 
     constructor(private $state: IStateService, private devolucaoAssinaturaService: DevolucaoAssinaturaService,
                 public devolucoes: Devolucao[], private signatureService: app.certification.SignatureService,
@@ -47,18 +50,50 @@ export class DevolucaoAssinaturaController {
         let signingManager: app.certification.SigningManager = this.signatureService.signingManager();
         for (let devolucao of this.devolucoesParaAssinar) {
             let signer: app.certification.Signer = signingManager.createSigner();
-            let documentoId: number = 5;
-            devolucao.progressTracker = signer.getProgressTracker();
+            let lastStepFinished = false;
+            devolucao.calcularProgresso = () => {
+                if (lastStepFinished) {
+                    return 100;
+                } else {
+                    return signer.getProgressTracker().currentProgressOfTotal(90);
+                }
+            };
+            devolucao.teminou = () => {
+                return lastStepFinished;
+            };
             signer.onSignerReady((signerDto: app.certification.SignerDto) => {
-                
+                this.devolucaoAssinaturaService.consultarDocumentoFinalDoTexto(devolucao.textoId).then((documento: Documento) => {
+                    signer.provideExistingDocument(documento.documentoId);
+                });
             });
             signer.onSigningCompleted(() => {
-
+                console.log('onSigningCompleted');
+                signer.saveSignedDocument().then((savedSignedDocument: app.certification.SignedDocumentDto) => {
+                    let command = new AssinarOficioParaDevolucaoCommand(devolucao.remessaProtocoloId);
+                    this.devolucaoAssinaturaService.assinarOficioDevolucao(command).then(() => {
+                        console.log('done');
+                    });
+                });
             });
             signer.onErrorCallback((signingError: any) => {
-
+                this.messagesService.error('Erro ao assinar documento de devolução da Remessa ' + devolucao.remessaNumero + '/' + devolucao.remessaAno + '. ' + signingError);
+                this.devolucoesComErroDuranteAssinatura.push(devolucao);
+                this.checarTerminoAssinatura();
             });
             signer.start();
+        }
+    }
+
+    private checarTerminoAssinatura() {
+        if (this.devolucoesAssinadas.length + this.devolucoesComErroDuranteAssinatura.length == this.devolucoesParaAssinar.length) {
+            this.completar();
+        }
+    }
+
+    private completar() {
+        this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+        if (this.devolucoesAssinadas.length > 0) {
+            this.messagesService.success(this.devolucoesAssinadas.length + ' documento(s) de devolução assinados com sucesso.');
         }
     }
 

@@ -27,10 +27,10 @@ function config($stateProvider: IStateProvider,
 
 /** @ngInject **/
 function run($translatePartialLoader: ITranslatePartialLoaderService,
-			 properties: any, commandService : cmd.CommandService ) {
+			 properties: any/*, commandService : cmd.CommandService*/ ) {
 	
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
-	commandService.setValidator('registrar-remessa', new ValidadorRemessa());
+	//commandService.setValidator('registrar-remessa', new ValidadorRemessa());
 }
 
 let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.novo-processo', 'app.support']);

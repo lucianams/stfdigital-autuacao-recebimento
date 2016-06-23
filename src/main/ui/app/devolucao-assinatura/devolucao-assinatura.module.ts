@@ -32,6 +32,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao-assinatura');
 }
 
-let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support', 'app.certification', 'checklist-model']);
+let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.services', 'app.novo-processo', 'app.support', 'app.certification', 'checklist-model']);
 devolucaoAssinatura.config(config).run(run);
 export default devolucaoAssinatura;

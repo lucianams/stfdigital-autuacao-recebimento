@@ -10,19 +10,27 @@ export class AssinarOficioParaDevolucaoCommand {
 }
 
 export class Devolucao {
-    public remessaNumero: number;
-    public remessaAno: number;
+	remessaProtocoloId: number;
 
-    public modeloDevolucao: Modelo;
+    remessaNumero: number;
+    remessaAno: number;
 
-    public textoId: number;
+    modeloDevolucao: Modelo;
 
+    textoId: number;
+
+}
+
+export interface Documento {
+	documentoId: number;
+	tamanho: number;
+	quantidadePaginas: number;
 }
 
 export class DevolucaoAssinaturaService {
 
     private static apiRemessa: string = '/recebimento/api/remessas';
-    private static apiTexto: string = '/documents/api/textos'
+    private static apiTexto: string = '/documents/api/textos';
 
 	static $inject = ['$http', 'properties', 'app.recebimento.services.RemessaService'];
 
@@ -42,6 +50,13 @@ export class DevolucaoAssinaturaService {
 	public consultarDevolucao(protocoloId: number): IPromise<Devolucao> {
 		return this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa + "/" + protocoloId + '/devolucao')
 			.then((response: IHttpPromiseCallbackArg<Devolucao>) => {
+				return response.data;
+			});
+	}
+
+	public consultarDocumentoFinalDoTexto(textoId: number): IPromise<Documento> {
+		return this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + "/" + textoId + "/documento-final")
+			.then((response: IHttpPromiseCallbackArg<Documento>) => {
 				return response.data;
 			});
 	}

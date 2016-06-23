@@ -12,7 +12,8 @@ public class DevolucaoDtoAssembler {
 	private ModeloDtoAssembler modeloDtoAssembler;
 	
 	public DevolucaoDto toDto(Remessa remessa) {
-		return new DevolucaoDto(remessa.numero().numero(),
+		return new DevolucaoDto(remessa.identity().toLong(),
+			remessa.numero().numero(),
 			remessa.numero().ano(),
 			modeloDtoAssembler.toDto(remessa.devolucao().modelo()),
 			remessa.devolucao().texto().toLong());

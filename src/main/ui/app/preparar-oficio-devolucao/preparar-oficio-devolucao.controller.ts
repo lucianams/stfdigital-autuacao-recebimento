@@ -30,7 +30,7 @@ export class PrepararOficioDevolucaoController {
     
     public modelosSendoCarregados: boolean = false;
 
-    constructor(private $state: IStateService, private devolucaoService: PrepararOficioDevolucaoService,
+    constructor(private $state: IStateService, private prepararOficioDevolucaoService: PrepararOficioDevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private messagesService: app.support.messaging.MessagesService) {
     	
     }
@@ -41,7 +41,7 @@ export class PrepararOficioDevolucaoController {
     
     public carregarModelos(): void {
     	this.modelosSendoCarregados = true;
-    	this.devolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
+    	this.prepararOficioDevolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
     		(modelos: Modelo[]) => {
     			this.modelos = modelos;
     		},
@@ -55,7 +55,7 @@ export class PrepararOficioDevolucaoController {
 	
     public extrairTags(): void {
     	this.tagsSendoCarregadas = true;
-    	this.devolucaoService.extrairTags(this.modelo.documento).then(
+    	this.prepararOficioDevolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
     			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
     				return new SubstituicaoTag(tag.nome, "");
@@ -78,7 +78,7 @@ export class PrepararOficioDevolucaoController {
     }
     
 	concluiuEdicao() {
-		this.devolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
+		this.prepararOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
 			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
@@ -89,7 +89,7 @@ export class PrepararOficioDevolucaoController {
 	}
     
     public gerarTexto(): void {
-    	this.devolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
+    	this.prepararOficioDevolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
     		.then((texto: Texto) => {
     			this.texto = texto;
     			this.documento = {

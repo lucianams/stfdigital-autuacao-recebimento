@@ -14,6 +14,7 @@ export class PreautuacaoController {
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 
+
 	static $inject = ["$state", "app.recebimento.preautuacao.PreautuacaoService", "classes", "remessa"];
 	
     /** @ngInject **/
@@ -51,5 +52,5 @@ export class PreautuacaoController {
 	}
 }
 
-preautuacao.controller("app.recebimento.preautuacao.PreautuacaoController", PreautuacaoController);
+preautuacao.controller("app.recebimento.preautuacao-originario.PreautuacaoController", PreautuacaoController);
 export default preautuacao;

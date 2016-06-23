@@ -13,7 +13,7 @@ function config($stateProvider: IStateProvider,
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao-recursal.tpl.html",
                 controller : "app.recebimento.preautuacao-recursal.PreautuacaoRecursalController",
-                controllerAs: "vm"
+                controllerAs: "preautuacao"
             }
         },
         resolve: {

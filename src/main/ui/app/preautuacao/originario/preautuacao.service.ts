@@ -39,5 +39,5 @@ export class PreautuacaoService {
 
 }
 
-preautuacao.service("app.recebimento.preautuacao.PreautuacaoService", PreautuacaoService);
+preautuacao.service("app.recebimento.preautuacao-originario.PreautuacaoService", PreautuacaoService);
 export default preautuacao;

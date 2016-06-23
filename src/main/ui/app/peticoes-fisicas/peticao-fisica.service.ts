@@ -2,20 +2,23 @@ import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
 import recebimento from "./peticao-fisica.module";
+import cmd = app.support.command;
+
 
 export class FormaRecebimento {
     
     constructor(public sigla : string, public descricao: string, public exigeNumero: boolean ) {}
 }
 
-export class PeticaoFisicaCommand {
+export class PeticaoFisicaCommand implements cmd.CommandTarget<PeticaoFisicaCommand> {
     
     constructor(public formaRecebimento: string, 
                 public volumes: number,
                 public apensos: number,
                 public numeroSedex: string,
                 public tipoProcesso: string,
-                public sigilo: string = 'PUBLICO') { }
+                public sigilo: string = 'PUBLICO',
+                public type: string = 'PeticaoFisica') { }
 }
 
 export class PeticaoFisicaService {
@@ -35,6 +38,16 @@ export class PeticaoFisicaService {
                     return response.data; 
                 });
     }
+}
+
+export class ValidaPeticaoFisica implements cmd.ConditionHandler<PeticaoFisicaCommand> {
+	
+	constructor() {}
+	
+	public match(targets: PeticaoFisicaCommand[]): boolean {
+		let command: PeticaoFisicaCommand = targets[0];
+		return command.numeroSedex != "";
+	}
 }
 
 recebimento.service('app.recebimento.peticoes-fisicas.PeticaoFisicaService', PeticaoFisicaService);

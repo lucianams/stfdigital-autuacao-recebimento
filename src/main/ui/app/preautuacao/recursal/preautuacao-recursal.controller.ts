@@ -16,7 +16,7 @@ export class PreautuacaoRecursalController {
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
-	
+
 	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa"];
 	
 	/** @ngInject **/
@@ -37,7 +37,8 @@ export class PreautuacaoRecursalController {
 	 */
 	
 	public preautuarProcessoRecursal(): void {
-		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+
+		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas, this.motivo)
 	        .then(() => {
 	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
 	    	});

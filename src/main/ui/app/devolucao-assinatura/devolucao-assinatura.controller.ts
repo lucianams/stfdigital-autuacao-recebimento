@@ -2,7 +2,7 @@ import IStateService = angular.ui.IStateService;
 import {DevolucaoAssinaturaService, AssinarOficioParaDevolucaoCommand, Devolucao, Documento} from "./devolucao-assinatura.service";
 import devolucaoAssinatura from "./devolucao-assinatura.module";
 
-class DevolucaoEmAssinatura extends Devolucao {
+export class DevolucaoEmAssinatura extends Devolucao {
     public calcularProgresso: () => number;
     public teminou: () => boolean;
 }

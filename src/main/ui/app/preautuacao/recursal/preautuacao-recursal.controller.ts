@@ -1,7 +1,8 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacaoRecursal from "./preautuacao-recursal.module";
-import {PreautuacaoService} from "../../services/preautuacao.service";
+import {PreautuacaoRecursalService} from "./preautuacao-recursal.service";
+import "./preautuacao-recursal.service";
 
 /**
  * Controlador responsável por mediar as interações entre o front-end e o back-end.
@@ -11,31 +12,16 @@ import {PreautuacaoService} from "../../services/preautuacao.service";
 
 export class PreautuacaoRecursalController {
 	public basicForm: Object = {};
-	public protocoloId: number;
-	public remessa: Remessa;
 	public classe : Classe;
-	public classes: Array<Classe>;
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
-	
-	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
+
+	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa"];
 	
 	/** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService){
-				
-		/* Substituir pelo nº do protocolo passado como parâmetro. */
-		preautuacaoService.gerarRemessa("RECURSAL").then((protocoloId: number) => {
-			this.protocoloId = protocoloId;
-			
-			preautuacaoService.consultarRemessa(this.protocoloId).then((remessa: Remessa) => {
-				this.remessa = remessa;
-			});		
-		});
+	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa){
 
-		preautuacaoService.listarClassesPorTipoRemessa("RECURSAL").then((classes: Classe[]) => {
-			this.classes = classes;
-		});
 	}
 	
 	/*
@@ -51,7 +37,8 @@ export class PreautuacaoRecursalController {
 	 */
 	
 	public preautuarProcessoRecursal(): void {
-		this.preautuacaoService.preautuarRecursal(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+
+		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas, this.motivo)
 	        .then(() => {
 	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
 	    	});

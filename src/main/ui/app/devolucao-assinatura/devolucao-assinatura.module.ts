@@ -2,8 +2,7 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {Remessa} from "./../services/model";
-import {PreautuacaoService} from "./../services/preautuacao.service";
-import "./../services/preautuacao.service";
+import {DevolucaoAssinaturaService, Devolucao} from "./devolucao-assinatura.service";
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
@@ -18,12 +17,12 @@ function config($stateProvider: IStateProvider, properties: any) {
             }
         },
         resolve : {
-            remessas: ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService: PreautuacaoService) => {
+            devolucoes: ['app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', (devolucaoAssinaturaService: DevolucaoAssinaturaService) => {
             	let protocolo: number = 9002;
-                return preautuacaoService.consultarRemessa(protocolo).then((remessa) => {
-                    return [remessa];
+                return devolucaoAssinaturaService.consultarDevolucao(protocolo).then((devolucao: Devolucao) => {
+                    return [devolucao, <Devolucao>{remessaNumero: 456, remessaAno: 2016, textoId: devolucao.textoId, modeloDevolucao: devolucao.modeloDevolucao}];
                 });
-            }],
+            }]
         }
     });
 }
@@ -33,6 +32,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/devolucao-assinatura');
 }
 
-let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support']);
+let devolucaoAssinatura: IModule = angular.module('app.recebimento.devolucao-assinatura', ['app.recebimento.preautuacao-services', 'app.novo-processo', 'app.support', 'app.certification', 'checklist-model']);
 devolucaoAssinatura.config(config).run(run);
 export default devolucaoAssinatura;

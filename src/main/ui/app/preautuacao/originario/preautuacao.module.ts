@@ -1,7 +1,7 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
-import {PreautuacaoService} from './../../services/preautuacao.service';
+import {RemessaService} from './../../services/remessa.service';
 
 
 /** @ngInject **/
@@ -18,9 +18,13 @@ function config($stateProvider: IStateProvider,
             }
         },
     	resolve : {
-    		classes : ['app.recebimento.preautuacao-services.PreautuacaoService', (preautuacaoService ) => {
-    			return preautuacaoService.listarClassesPorTipoRemessa("ORIGINARIO");
-    		}]
+    		classes : ['app.recebimento.services.RemessaService', (remessaService ) => {
+    			return remessaService.listarClassesPorTipoRemessa("ORIGINARIO");
+    		}],
+            remessa: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
+                let protocoloId = 9000;
+                return remessaService.consultarRemessa(protocoloId);
+            }]
     	}
     });
 }
@@ -32,6 +36,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/originario");
 }
 
-let preautuacao: IModule = angular.module("app.recebimento.preautuacao-originario", ["app.recebimento.preautuacao-services", "app.novo-processo", "app.support"]);
+let preautuacao: IModule = angular.module("app.recebimento.preautuacao-originario", ["app.recebimento.services", "app.novo-processo", "app.support"]);
 preautuacao.config(config).run(run);
 export default preautuacao;

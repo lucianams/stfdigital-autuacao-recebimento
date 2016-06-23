@@ -21,18 +21,20 @@ export class Classe {
 }
 
 export class Remessa {
+    public protocolo: number;
 	public classe: string;
     public qtdVolumes: number;
     public qtdApensos: number;
     public formaRecebimento: string;
     public numeroSedex: string;
     
-    constructor (classe: string, qtdVolumes: number, qtdApensos: number, formaRecebimento: string, numeroSedex: string){
+    constructor (protocolo: number, classe: string, qtdVolumes: number, qtdApensos: number, formaRecebimento: string, numeroSedex: string){
         this.classe = classe;
         this.qtdVolumes = qtdVolumes;
         this.qtdApensos = qtdApensos;
         this.formaRecebimento = formaRecebimento;
         this.numeroSedex = numeroSedex;
+        this.protocolo = protocolo;
     }
 }
 
@@ -54,4 +56,15 @@ export class TipoProcesso {
         this.id = id;
         this.nome = nome;
     }
+}
+
+export class TipoDocumento {
+	constructor(public id: number, public descricao: string) {}
+}
+
+export interface Modelo {
+	id: number;
+	tipoDocumento: TipoDocumento;
+	nome: string;
+	documento: number;
 }

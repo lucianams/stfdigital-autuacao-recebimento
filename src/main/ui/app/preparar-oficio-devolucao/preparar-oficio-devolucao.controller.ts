@@ -1,6 +1,7 @@
 import IStateService = angular.ui.IStateService;
 import IPromise = angular.IPromise;
-import {PrepararOficioDevolucaoService, MotivoDevolucao, Modelo, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparar-oficio-devolucao.service";
+import {PrepararOficioDevolucaoService, MotivoDevolucao, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparar-oficio-devolucao.service";
+import {Modelo} from "./../services/model";
 import {Documento} from "./documento";
 import prepararOficioDevolucao from "./preparar-oficio-devolucao.module";
 

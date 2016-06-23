@@ -1,7 +1,7 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacao from "./preautuacao.module";
-import {PreautuacaoService, DevolverRemessaCommand} from "../../services/preautuacao.service";
+import {PreautuacaoService, DevolverRemessaCommand} from "./preautuacao.service";
 
 /**
  * @author Viniciusk
@@ -9,17 +9,16 @@ import {PreautuacaoService, DevolverRemessaCommand} from "../../services/preautu
 
 export class PreautuacaoController {
 	public basicForm: Object = {};
-	public protocoloId: number;
-	public remessa: Remessa;
 	public classe : Classe;
 	public preferencias : Array<Preferencia>;
 	public preferenciasSelecionadas : Array<number>;
 	public motivo : string;
 
-	static $inject = ["$state", "app.recebimento.preautuacao-services.PreautuacaoService"];
+
+	static $inject = ["$state", "app.recebimento.preautuacao.PreautuacaoService", "classes", "remessa"];
 	
     /** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[]){
+	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
 
 	}
     
@@ -39,19 +38,19 @@ export class PreautuacaoController {
 	}
 	
 	private commandDevolucao(): DevolverRemessaCommand {
-		return new DevolverRemessaCommand(this.protocoloId, this.motivo);
+		return new DevolverRemessaCommand(this.remessa.protocolo, this.motivo);
 	}
 	
 	/*
 	 * Realiza a préautuação do processo recursal.
 	 */
 	public preautuarProcessoOriginario(): void {
-		this.preautuacaoService.preautuarProcesso(this.protocoloId, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+		this.preautuacaoService.preautuarProcesso(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
 	        .then(() => {
 	            this.$state.go("app.tarefas.minhas-tarefas", {}, { reload: true	});
 		});
 	}
 }
 
-preautuacao.controller("app.recebimento.preautuacao.PreautuacaoController", PreautuacaoController);
+preautuacao.controller("app.recebimento.preautuacao-originario.PreautuacaoController", PreautuacaoController);
 export default preautuacao;

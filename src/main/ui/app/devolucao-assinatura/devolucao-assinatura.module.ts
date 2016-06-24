@@ -18,10 +18,8 @@ function config($stateProvider: IStateProvider, properties: any) {
         },
         resolve : {
             devolucoes: ['app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', (devolucaoAssinaturaService: DevolucaoAssinaturaService) => {
-            	let protocolo: number = 9002;
-                return devolucaoAssinaturaService.consultarDevolucao(protocolo).then((devolucao: Devolucao) => {
-                    return [devolucao, <Devolucao>{remessaNumero: 456, remessaAno: 2016, textoId: devolucao.textoId, modeloDevolucao: devolucao.modeloDevolucao}];
-                });
+            	let protocolos: number[] = [9002];
+                return devolucaoAssinaturaService.consultarDevolucoes(protocolos);
             }]
         }
     });

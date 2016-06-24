@@ -43,7 +43,7 @@
                         <td>{{devolucao.remessaNumero}}/{{devolucao.remessaAno}}</td>
                         <td>{{devolucao.modeloDevolucao.nome}}</td>
                         <td><a ng-href="{{vm.urlConteudo(devolucao)}}" target="_blank">Visualizar</a></td>
-                        <td>Progresso</td>
+                        <td><md-progress-linear ng-show="devolucao.progresso" md-mode="determinate" value="{{devolucao.progresso()}}"></md-progress-linear></td>
                     </tr>
                 </tbody>
             </table>

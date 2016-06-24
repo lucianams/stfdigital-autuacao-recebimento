@@ -13,7 +13,7 @@ function config($stateProvider: IStateProvider,
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao.tpl.html",
-                controller : "app.recebimento.preautuacao.PreautuacaoController",
+                controller : "app.recebimento.preautuacao-originario.PreautuacaoController",
                 controllerAs: "preautuacao"
             }
         },

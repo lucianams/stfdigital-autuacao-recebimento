@@ -14,7 +14,7 @@ import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCom
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
-import br.jus.stf.autuacao.recebimento.domain.DocumentoAdapter;
+import br.jus.stf.autuacao.recebimento.domain.DevolucaoAdapter;
 import br.jus.stf.autuacao.recebimento.domain.ProtocoloAdapter;
 import br.jus.stf.autuacao.recebimento.domain.RemessaFactory;
 import br.jus.stf.autuacao.recebimento.domain.StatusAdapter;
@@ -81,7 +81,7 @@ public class RecebimentoApplicationService {
     private StatusAdapter statusAdapter;
     
     @Autowired
-    private DocumentoAdapter documentoAdapter;
+    private DevolucaoAdapter devolucaoAdapter;
      
     @Command(description = "Nova petição física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
@@ -150,7 +150,7 @@ public class RecebimentoApplicationService {
         
         remessa.elaborarDevolucao(motivo, modelo, new TextoId(command.getTextoId()), status);
         
-        documentoAdapter.concluirTexto(remessa.devolucao().texto());
+        devolucaoAdapter.concluirTexto(remessa.devolucao().texto());
         
         remessaRepository.save(remessa);
     }
@@ -159,6 +159,8 @@ public class RecebimentoApplicationService {
     public void handle(AssinarOficioParaDevolucaoCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());
+        
+        devolucaoAdapter.assinarTexto(remessa.devolucao().texto(), command.getDocumentoTemporarioId());
         
         remessa.devolver(status);
         remessaRepository.save(remessa);

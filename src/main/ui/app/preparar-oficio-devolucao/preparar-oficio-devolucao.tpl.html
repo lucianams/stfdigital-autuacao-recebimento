@@ -14,7 +14,7 @@
                     <div layout="column" layout-gt-xs="row">
                         <md-input-container flex>
                             <label>Motivo da Devolução</label>
-                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao" ng-change="vm.carregarModelos()" required>
+                            <md-select ng-model="vm.motivoDevolucao" id="motivoDevolucao" ng-change="vm.carregarModelos()" ng-required>
                                 <md-option></md-option>
                                 <md-option ng-repeat="motivoDevolucao in vm.motivosDevolucao" ng-value="motivoDevolucao">
                                     {{motivoDevolucao.descricao}}
@@ -23,7 +23,7 @@
                         </md-input-container>
                         <md-input-container flex>
                             <label>Modelo</label>
-                            <md-select ng-model="vm.modelo" id="modeloTexto" ng-change="vm.extrairTags()" required>
+                            <md-select ng-model="vm.modelo" id="modeloTexto" ng-change="vm.extrairTags()" ng-required>
                                 <md-option></md-option>
                                 <md-option ng-repeat="modelo in vm.modelos" ng-value="modelo">
                                     {{modelo.nome}}

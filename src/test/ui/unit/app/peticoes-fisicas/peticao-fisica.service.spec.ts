@@ -1,6 +1,8 @@
 import {PeticaoFisicaService, PeticaoFisicaCommand} from "recebimento/peticoes-fisicas/peticao-fisica.service";
 import "recebimento/peticoes-fisicas/peticao-fisica.service";
 import 'recebimento/peticoes-fisicas/peticao-fisica.module';
+import Properties = app.support.constants.Properties;
+import cmd = app.support.command;
 
 describe("Teste do serviço de petição física", () => {
 
@@ -11,7 +13,7 @@ describe("Teste do serviço de petição física", () => {
 
     beforeEach(angular.mock.module('app.recebimento.services', 'app.recebimento.peticoes-fisicas'));
 
-    beforeEach(inject(['$httpBackend', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'properties', (_$httpBackend_ : ng.IHttpBackendService, _peticaoFisicaService_ : PeticaoFisicaService, _properties_) => {
+    beforeEach(inject(['$httpBackend', 'commandService', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'properties', (_$httpBackend_ : ng.IHttpBackendService, commandService : cmd.CommandService, _peticaoFisicaService_ : PeticaoFisicaService, _properties_: Properties) => {
         $httpBackend = _$httpBackend_;
         peticaoService =  _peticaoFisicaService_;
        	properties = _properties_;
@@ -27,8 +29,12 @@ describe("Teste do serviço de petição física", () => {
     });
 
     it("deveria chamar o serviço rest registro da remessa", () => {
-        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/recebimento', new PeticaoFisicaCommand('BALCAO', 2, 3, null, 'ORIGINARIO', 'PUBLICO', 'PeticaoFisica')).respond(200,"");
-        peticaoService.registrar(new PeticaoFisicaCommand('BALCAO', 2, 3, null, 'ORIGINARIO', 'PUBLICO', 'PeticaoFisica')).then(handler.success, handler.error);
+    	
+    	//'BALCAO', 2, 3, null, 'ORIGINARIO', 'PUBLICO', 'PeticaoFisica'
+    	//'BALCAO', 2, 3, null, 'ORIGINARIO', 'PUBLICO', 'PeticaoFisica'
+    	
+        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/recebimento', new PeticaoFisicaCommand()).respond(200,"");
+        peticaoService.registrar(new PeticaoFisicaCommand()).then(handler.success, handler.error);
         $httpBackend.flush();
         expect(handler.success).toHaveBeenCalled();
         expect(handler.error).not.toHaveBeenCalled();

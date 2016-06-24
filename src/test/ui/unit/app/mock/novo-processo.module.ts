@@ -46,6 +46,14 @@ namespace app.support {
 		.module('app.support.command', [])
 		.config(config);
 
+    class CommandServiceMock {
+    	setValidator(){}
+    }
+    
+    angular
+		.module('app.support.command')
+		.service('commandService', CommandServiceMock);
+    
 	angular
 	    .module('app.support.messaging', [])
 	    .config(config);

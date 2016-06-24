@@ -32,20 +32,21 @@ describe('Teste do controlador peticao-fisica.controller', () => {
 		let numeroSedex : string;
 		let tipoProcesso = 'ORIGINARIO';
 		
-		controller.formaRecebimento = formaRecebimento;
-		controller.qtdApensos = qtdApensos;
-		controller.qtdVolumes = qtdVolumes;
-		controller.tipoProcesso = tipoProcesso;
+		controller.cmd.formaRecebimento = formaRecebimento;
+		controller.cmd.apensos = qtdApensos;
+		controller.cmd.volumes = qtdVolumes;
+		controller.cmd.tipoProcesso = tipoProcesso;
+		controller.cmd.sigilo = 'PUBLICO';
 		
 		spyOn(mockPeticaoFisicaService, 'registrar').and.callFake(() => $q.when());
 		
 		spyOn(mockState, 'go').and.callThrough();
 		
-		controller.registrarPeticao();
+		controller.registrarRemessa();
 		
 		$rootScope.$apply();
 		
-		expect(mockPeticaoFisicaService.registrar).toHaveBeenCalledWith(new PeticaoFisicaCommand(formaRecebimento, qtdVolumes, qtdApensos, numeroSedex, tipoProcesso));
+		expect(mockPeticaoFisicaService.registrar).toHaveBeenCalledWith(controller.cmd);
 		
 		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
 	});

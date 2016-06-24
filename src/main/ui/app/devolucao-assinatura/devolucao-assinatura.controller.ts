@@ -10,7 +10,7 @@ export class DevolucaoEmAssinatura extends Devolucao {
 export class DevolucaoAssinaturaController {
 	
     static $inject = ['$state', 'app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', 'devolucoes', 'app.certification.SignatureService',
-        'app.support.messaging.MessagesService'];
+        'messagesService'];
 
     public devolucoesParaAssinar: DevolucaoEmAssinatura[] = [];
     private devolucoesAssinadas: Devolucao[] = [];
@@ -46,7 +46,7 @@ export class DevolucaoAssinaturaController {
             this.messagesService.error('É necessário selecionar pelo menos uma remessa para assinar.')
         }
         console.log(this.devolucoesParaAssinar);
-        let signingManager: app.certification.SigningManager = this.signatureService.signingManager();
+        let signingManager: app.certification.SigningManager = this.signatureService.signingManager(1);
         for (let devolucao of this.devolucoesParaAssinar) {
             let signer: app.certification.Signer = signingManager.createSigner();
             let lastStepFinished = false;

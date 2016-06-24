@@ -22,7 +22,7 @@ export class PeticaoFisicaController {
     public registrarRemessa(): void {
         this.peticaoFisicaService.registrar(this.cmd)
             .then(() => {
-                this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+                this.$state.go('app.tarefas.minhas-tarefas');
         });
     }
     

@@ -18,7 +18,7 @@ function config($stateProvider: IStateProvider, properties: any) {
         },
         resolve : {
             devolucoes: ['app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', (devolucaoAssinaturaService: DevolucaoAssinaturaService) => {
-            	let protocolos: number[] = [9002];
+            	let protocolos: number[] = [9003, 9004, 9005, 9006];
                 return devolucaoAssinaturaService.consultarDevolucoes(protocolos);
             }]
         }

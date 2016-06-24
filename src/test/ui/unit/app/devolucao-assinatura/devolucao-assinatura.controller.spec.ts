@@ -1,8 +1,14 @@
 import {DevolucaoAssinaturaController} from "recebimento/devolucao-assinatura/devolucao-assinatura.controller";
 
-describe('Devolução Assinatura Controller', () => {
+describe('Teste do controlador devolucao-assinatura.controller', () => {
 
-    let controller: DevolucaoAssinaturaController;
+	let $rootScope: ng.IRootScopeService;
+	let $q: ng.IQService;
+
+	let controller: DevolucaoAssinaturaController;
+	let mockState;
+	let mockPrepararOficioDevolucaoService;
+	let mockMessagesService;
 
     describe('No módulo', () => {
         inject(($rootScope, $httpBackend: angular.IHttpBackendService) => {

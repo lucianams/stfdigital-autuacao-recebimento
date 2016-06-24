@@ -10,7 +10,7 @@ export class DevolucaoEmAssinatura extends Devolucao {
 export class DevolucaoAssinaturaController {
 	
     static $inject = ['$state', 'app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', 'devolucoes', 'app.certification.SignatureService',
-        'app.support.messaging.MessagesService'];
+        'messagesService'];
 
     public devolucoesParaAssinar: DevolucaoEmAssinatura[] = [];
     private devolucoesAssinadas: Devolucao[] = [];

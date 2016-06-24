@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.DocumentoAdapter;
@@ -22,6 +22,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
 import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
@@ -117,10 +118,18 @@ public class RecebimentoApplicationService {
     
     @Command(description = "Preautuação de recursais")
     public void handle(PreautuarRecursalCommand command) {
-    	//TODO: A implementação da preautuação de recursal está incompleta, assim estamos reaproveitando a remessa
-    	PreautuarRemessaCommand preautuarOriginarioCommand = new PreautuarRemessaCommand(command.getProtocoloId(), command.getClasseId(), command.getSigilo(), command.getPreferencias());
-    	
-    	handle(preautuarOriginarioCommand);
+    	RemessaRecursal remessa = (RemessaRecursal) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
+        Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
+        Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
+        ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
+		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
+				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
+						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
+				.get();
+            
+        remessa.preautuar(classe, preferencias, sigilo, command.getNumeroProcessoOrigem(), command.getNumeroUnicoProcesso(), status);
+        remessaRepository.save(remessa);
+        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
     @Command(description = "Devolução")

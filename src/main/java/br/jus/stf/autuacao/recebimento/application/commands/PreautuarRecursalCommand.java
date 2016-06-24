@@ -21,9 +21,13 @@ public class PreautuarRecursalCommand {
 	@NotBlank
 	private String sigilo;
 	
-    private Set<Long> preferencias;
+	private Set<Long> preferencias;
     
-    private String motivo;
+    @NotBlank
+	private String numeroProcessoOrigem;
+	
+	@NotBlank
+	private String numeroUnicoProcesso;
 	
     public PreautuarRecursalCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias) {
 		this.protocoloId = protocoloId;
@@ -48,7 +52,12 @@ public class PreautuarRecursalCommand {
 		return sigilo;
 	}
 
-	public String getMotivo() {
-		return motivo;
+	public String getNumeroProcessoOrigem() {
+		return numeroProcessoOrigem;
 	}
+	
+	public String getNumeroUnicoProcesso() {
+		return numeroUnicoProcesso;
+	}
+	
 }

@@ -15,7 +15,7 @@ export class PreautuacaoController {
 	public motivo : string;
 
 
-	static $inject = ["$state", "app.recebimento.preautuacao.PreautuacaoService", "classes", "remessa"];
+	static $inject = ["$state", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
 	
     /** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){

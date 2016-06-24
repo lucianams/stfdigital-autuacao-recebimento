@@ -48,7 +48,7 @@ describe('Teste do controlador peticao-fisica.controller', () => {
 		
 		expect(mockPeticaoFisicaService.registrar).toHaveBeenCalledWith(controller.cmd);
 		
-		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
+		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
 	});
 	
 });

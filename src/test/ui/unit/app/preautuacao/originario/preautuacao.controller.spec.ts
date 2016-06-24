@@ -45,7 +45,7 @@ describe('Teste do controlador preautuacao.controller', () => {
 		
 		expect(mockPreautuacaoService.devolver).toHaveBeenCalledWith(new DevolverRemessaCommand(protocoloId, motivoDevolucao));
 		
-		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
+		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
 	});
 	
 });

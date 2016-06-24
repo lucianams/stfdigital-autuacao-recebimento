@@ -33,7 +33,7 @@ export class PreautuacaoController {
 	public devolver(): void {
 		this.preautuacaoService.devolver(this.commandDevolucao())
 			.then(() => {
-			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+			this.$state.go('app.tarefas.minhas-tarefas');
 		});
 	}
 	
@@ -47,7 +47,7 @@ export class PreautuacaoController {
 	public preautuarProcessoOriginario(): void {
 		this.preautuacaoService.preautuarProcesso(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
 	        .then(() => {
-	            this.$state.go("app.tarefas.minhas-tarefas", {}, { reload: true	});
+	            this.$state.go("app.tarefas.minhas-tarefas");
 		});
 	}
 }

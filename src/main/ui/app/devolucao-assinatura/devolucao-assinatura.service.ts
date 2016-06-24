@@ -6,7 +6,7 @@ import {RemessaService} from "./../services/remessa.service";
 import {Modelo} from "./../services/model";
 
 export class AssinarOficioParaDevolucaoCommand {
-	constructor(public protocoloId: number) {}
+	constructor(public protocoloId: number, public documentoTemporarioId) {}
 }
 
 export class Devolucao {

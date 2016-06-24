@@ -69,7 +69,7 @@ export class DevolucaoAssinaturaController {
             signer.onSigningCompleted(() => {
                 console.log('onSigningCompleted');
                 signer.saveSignedDocument().then((savedSignedDocument: app.certification.SignedDocumentDto) => {
-                    let command = new AssinarOficioParaDevolucaoCommand(devolucao.remessaProtocoloId);
+                    let command = new AssinarOficioParaDevolucaoCommand(devolucao.remessaProtocoloId, savedSignedDocument.documentId);
                     this.devolucaoAssinaturaService.assinarOficioDevolucao(command).then(() => {
                         console.log('done');
                     });

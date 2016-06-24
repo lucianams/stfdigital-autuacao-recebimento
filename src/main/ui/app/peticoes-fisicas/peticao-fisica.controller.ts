@@ -5,33 +5,37 @@ import recebimento from "./peticao-fisica.module";
 
 export class PeticaoFisicaController {
 
-    public basicForm: Object = {};
-	public qtdVolumes : number;
-	public qtdApensos : number;
-	public numeroSedex : string;
-    public formaRecebimento: string = "";
     public tiposProcessos : Object[] = PeticaoFisicaController.mockTiposProcessos();
-    public tipoProcesso : string = "";
+	public cmd: PeticaoFisicaCommand = new PeticaoFisicaCommand();
+	public path = [{translation:'Iniciar Processo', uisref: 'app.novo-processo'},
+	               {translation:'Recebimento', uisref: 'app.novo-processo.recebimento-peticao-fisica'}]
 
     static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
     
     constructor(private $state: IStateService,
                 private peticaoFisicaService: PeticaoFisicaService,
-                public formasRecebimento) { }
+                public formasRecebimento) {
 
-    public registrarPeticao(): void {
-        this.peticaoFisicaService.registrar(this.commandPeticaoFisica())
+    	this.cmd.sigilo = 'PUBLICO';
+    }
+    
+    public registrarRemessa(): void {
+        this.peticaoFisicaService.registrar(this.cmd)
             .then(() => {
                 this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
         });
     }
-
-    private commandPeticaoFisica(): PeticaoFisicaCommand {
-        return new PeticaoFisicaCommand(this.formaRecebimento.toUpperCase(), this.qtdVolumes, this.qtdApensos, this.numeroSedex, this.tipoProcesso.toUpperCase());
+    
+    public showSedex(): boolean {
+    	if (this.cmd.formaRecebimento && this.cmd.formaRecebimento === "SEDEX") {
+    		return true;
+    	}
+    	this.cmd.numeroSedex = "";
+    	return false;
     }
     
     private static mockTiposProcessos() : Object[]{
-        return [{ id : 'ORIGINARIO', nome : "Originário" }, { id : 'RECURSAL', nome : "Recursal" } ];
+        return [{ id : 'ORIGINARIO', nome : "Originário" }, { id : 'RECURSAL', nome : "Recursal" }];
     }
 }
 

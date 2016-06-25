@@ -43,9 +43,9 @@ export class DevolucaoAssinaturaController {
 
     public assinar(): void {
         if (this.devolucoesParaAssinar.length == 0) {
-            this.messagesService.error('É necessário selecionar pelo menos uma remessa para assinar.')
+            this.messagesService.error('É necessário selecionar pelo menos uma remessa para assinar.');
+            return;
         }
-        console.log(this.devolucoesParaAssinar);
         let signingManager: app.certification.SigningManager = this.signatureService.signingManager(1);
         for (let devolucao of this.devolucoesParaAssinar) {
             let signer: app.certification.Signer = signingManager.createSigner();
@@ -67,7 +67,6 @@ export class DevolucaoAssinaturaController {
                 });
             });
             signer.onSigningCompleted(() => {
-                console.log('onSigningCompleted');
                 signer.saveSignedDocument().then((savedSignedDocument: app.certification.SignedDocumentDto) => {
                     let command = new AssinarOficioParaDevolucaoCommand(devolucao.remessaProtocoloId, savedSignedDocument.documentId);
                     this.devolucaoAssinaturaService.assinarOficioDevolucao(command).then(() => {

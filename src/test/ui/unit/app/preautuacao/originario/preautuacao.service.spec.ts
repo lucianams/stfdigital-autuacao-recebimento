@@ -27,16 +27,21 @@ describe("Teste do serviço de preautuação", () => {
     });
 
     it("deveria chamar o serviço rest de preautuação", () => {
-        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/preautuacao', new PreautuarRemessaCommand(123, 'HC', 'PUBLICO',[1])).respond(200,"");
-		preautuacao.preautuarProcesso(123, 'HC', 'PUBLICO',[1]).then(handler.success, handler.error);
+    	let cmdPreautuar : PreautuarRemessaCommand = new PreautuarRemessaCommand();
+    	cmdPreautuar.classeId = 'HC';
+    	cmdPreautuar.preferencias = [1];
+        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/preautuacao', cmdPreautuar).respond(200,"");
+		preautuacao.preautuarProcesso(cmdPreautuar).then(handler.success, handler.error);
         $httpBackend.flush();
         expect(handler.success).toHaveBeenCalled();
         expect(handler.error).not.toHaveBeenCalled();
     });
     
     it("deveria chamar o serviço rest de devolução", () => {
-        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/devolucao', new DevolverRemessaCommand(123, 'Devolução por falta da classe do processo')).respond(200,"");
-		preautuacao.devolver(new DevolverRemessaCommand(123, 'Devolução por falta da classe do processo'));
+    	let cmdDevolver : DevolverRemessaCommand = new DevolverRemessaCommand();
+    	cmdDevolver.motivo  = 'Devolução por falta da classe do processo';
+        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/devolucao', cmdDevolver).respond(200,"");
+		preautuacao.devolver(cmdDevolver);
         $httpBackend.flush();
     });
     

@@ -37,8 +37,8 @@
 
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
                     	<md-input-container flex>
-                            <label>Classificação</label>
-                            <md-select ng-model="preautuacao.classe" id="classes" ng-change="preautuacao.carregarPreferencias()">
+                            <label>Classificação *</label>
+                            <md-select ng-model="preautuacao.cmdRemessa.classe" id="classes" ng-change="preautuacao.carregarPreferencias()" ng-required="true">
                                 <md-option></md-option>
                                 <md-option ng-repeat="classe in preautuacao.classes" ng-value="classe">
                                     {{classe.nome}}
@@ -46,8 +46,8 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container flex>
-                            <label>Preferências</label>
-                            <md-select multiple ng-model="preautuacao.preferenciasSelecionadas" id="preferencias">
+                            <label>Preferências *</label>
+                            <md-select multiple ng-model="preautuacao.cmdRemessa.preferenciasSelecionadas" id="preferencias" ng-required="true">
                                 <md-option ng-repeat="preferencia in preautuacao.preferencias" value="{{preferencia.id}}">
                                     {{preferencia.nome}}
                                 </md-option>
@@ -57,15 +57,15 @@
                     <div>
 						<md-input-container class="md-block">
           					<label>Informe se a petição está correta ou indevida</label>
-          					<textarea ng-model="preautuacao.motivo" md-maxlength="150" rows="5" md-select-on-focus id="motivo"></textarea>
+          					<textarea ng-model="preautuacao.cmdRemessa.motivo" md-maxlength="150" rows="5" md-select-on-focus id="motivo"></textarea>
         				</md-input-container>
                     </div>
-                    <md-button type="button" class="md-raised md-accent" id="btnRegistrarpreautuacao" 
-                    	ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click ="preautuacao.preautuarProcessoOriginario()" >
+                    <md-button type="button" class="md-raised md-accent" id="preautuar-remessa" 
+                    	 ng-click ="preautuacao.preautuarProcessoOriginario()" command="registro.cmdPreautuar">
                         	Preautuar
                     </md-button>
-                    <md-button type="button" class="md-raised md-accent" id="btnDevolverRemessa" 
-                        ng-disabled="basicForm.$invalid || basicForm.$pristine" ng-click ="preautuacao.devolver()">
+                    <md-button type="button" class="md-raised md-accent" id="devolver-remessa" 
+                        ng-click ="preautuacao.devolver()">
                         Devolver
                     </md-button>
                 </form>

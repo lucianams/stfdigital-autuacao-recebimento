@@ -23,17 +23,17 @@ describe('Teste do controlador preautuacao.controller', () => {
 			go : () => {}
 		};
 		mockPreautuacaoService = {
-			devolver : () =>{},
+			devolver : () => {},
 			preautuarProcesso : () =>{}
 		};
-		protocoloId = 123;
-		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null);
+		let remessa: Remessa = new Remessa(123, 'HC', 4, 7, 'BALCAO', null);
 	    controller = new PreautuacaoController(mockState, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa);
 	});
 	
 	it('Deveria devolver a remessa', () => {
 		let motivoDevolucao = 'Motivo para devolução';
-		controller.motivo = motivoDevolucao;
+		controller.cmdDevolucao.motivo = motivoDevolucao;
+		//controller.cmdDevolucao.protocoloId = 123;
 		
 		spyOn(mockPreautuacaoService, 'devolver').and.callFake(() => $q.when());
 		
@@ -43,9 +43,9 @@ describe('Teste do controlador preautuacao.controller', () => {
 		
 		$rootScope.$apply();
 		
-		expect(mockPreautuacaoService.devolver).toHaveBeenCalledWith(new DevolverRemessaCommand(protocoloId, motivoDevolucao));
+		expect(mockPreautuacaoService.devolver).toHaveBeenCalledWith(controller.cmdDevolucao);
 		
-		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
+		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
 	});
 	
 });

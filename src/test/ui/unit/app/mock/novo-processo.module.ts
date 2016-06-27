@@ -58,6 +58,12 @@ namespace app.support {
 	    .module('app.support.messaging', [])
 	    .config(config);
 
+	angular
+	    .module('app.certification', []);
+
+	angular
+	    .module('checklist-model', []);
+
     angular
     	.module('app.support', ['app.support.command', 'app.support.messaging', 'app.support.constants'])
     	.config(config);

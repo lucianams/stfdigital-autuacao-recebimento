@@ -6,7 +6,7 @@ import devolucaoAssinatura from "./devolucao-assinatura.module";
 import {Modelo} from "./../services/model";
 
 export class AssinarOficioParaDevolucaoCommand {
-	constructor(public protocoloId: number, public documentoTemporarioId) {}
+	constructor(public protocoloId: number, public documentoTemporarioId: string) {}
 }
 
 export class Devolucao {

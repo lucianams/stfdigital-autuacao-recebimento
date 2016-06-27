@@ -2,7 +2,7 @@ import {DevolucaoAssinaturaController, DevolucaoEmAssinatura} from "recebimento/
 import {Devolucao, Documento, AssinarOficioParaDevolucaoCommand} from "recebimento/devolucao-assinatura/devolucao-assinatura.service";
 import {Modelo, TipoDocumento} from "recebimento/services/model";
 
-describe('Controlador devolucao-assinatura.controller', () => {
+describe('Teste do controlador devolucao-assinatura.controller', () => {
 
 	let $rootScope: ng.IRootScopeService;
 	let $q: ng.IQService;

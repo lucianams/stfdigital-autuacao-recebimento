@@ -29,6 +29,10 @@ public class PreautuarRecursalCommand {
 	@NotBlank
 	private String numeroUnicoProcesso;
 	
+	public PreautuarRecursalCommand() {
+		
+	}
+	
     public PreautuarRecursalCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias) {
 		this.protocoloId = protocoloId;
 		this.classeId = classeId;

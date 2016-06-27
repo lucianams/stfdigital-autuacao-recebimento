@@ -7,3 +7,4 @@ install:
   - cd stfdigital-plataforma-core
   - gradle install
   - cd -
+script: gradle docker && gradle gulp_test

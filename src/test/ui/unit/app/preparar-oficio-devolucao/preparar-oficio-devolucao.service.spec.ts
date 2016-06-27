@@ -1,4 +1,4 @@
-import {PrepararOficioDevolucaoService, MotivoDevolucao} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
+import {PrepararOficioDevolucaoService, MotivoDevolucao, Tag, GerarTextoCommand, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
 import {Modelo, TipoDocumento} from "recebimento/services/model";
 import "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
 import 'recebimento/services/services.module';
@@ -53,16 +53,42 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
         expect(handler.error).not.toHaveBeenCalled();
     });
 
-   it("TODO Deveria chamar o serviço rest de extração de tags", () => {
-		expect(true).toEqual(true);
+    it("Deveria chamar o serviço rest de extração de tags", () => {
+		let documentoId: number = 77;
+        let tags: Tag[] = [<Tag>{nome: "Destinatário"}, <Tag>{nome: "Vocativo"}];
+        $httpBackend.expectGET(properties.apiUrl + '/documents/api/documentos/77/tags').respond(200, tags);
+
+        prepararOficioDevolucaoService.extrairTags(documentoId).then(handler.success, handler.error);
+
+        $httpBackend.flush();
+
+        expect(handler.success).toHaveBeenCalledWith(tags);
+        expect(handler.error).not.toHaveBeenCalled();
     });
 
-   it("TODO Deveria chamar o serviço rest de geração de texto com os valores das tags", () => {
-		expect(true).toEqual(true);
+    it("Deveria chamar o serviço rest de geração de texto com os valores das tags", () => {
+        let command: GerarTextoCommand = new GerarTextoCommand(3, [new SubstituicaoTag('Destinatário', 'Fulano'), new SubstituicaoTag('Vocativo', 'Senhor Secretário')]);
+        let texto: Texto = <Texto>{id: 123, documentoId: 87};
+        $httpBackend.expectPOST(properties.apiUrl + '/documents/api/textos/gerar-texto', command).respond(200, texto);
+
+        prepararOficioDevolucaoService.gerarTextoComTags(command).then(handler.success, handler.error);
+
+        $httpBackend.flush();
+
+        expect(handler.success).toHaveBeenCalledWith(texto);
+        expect(handler.error).not.toHaveBeenCalled();
     });
 
-   it("TODO Deveria chamar o serviço rest de finalizar o ofício de devolução", () => {
-		expect(true).toEqual(true);
+   it("Deveria chamar o serviço rest de finalizar o ofício de devolução", () => {
+		let command: PrepararOficioParaDevolucaoCommand = new PrepararOficioParaDevolucaoCommand(123, 3, 7, 8);
+        $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/devolucao-oficio', command).respond(200, '');
+
+        prepararOficioDevolucaoService.finalizarDevolucao(command).then(handler.success, handler.error);
+
+        $httpBackend.flush();
+
+        expect(handler.success).toHaveBeenCalled();
+        expect(handler.error).not.toHaveBeenCalled();
     });
 
 });

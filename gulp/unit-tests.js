@@ -27,8 +27,6 @@ function runTests(singleRun, done)
     server.start();
 }
 
-gulp.task('test', ['test:unit']);
-
 gulp.task('test:unit', function (done)
 {
     runSequence(['bower:install:unit', 'clean-typings:unit'], ['compile-ts:unit', 'scripts'], function() {

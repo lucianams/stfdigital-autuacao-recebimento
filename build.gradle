@@ -116,10 +116,14 @@ node {
 // --cache local para permitir executar npm install em paralelo
 // Permitindo parametrizar o registro npm com o objetivo de poder usar um proxy local para melhorar o tempo de construção
 npmInstall {
-    args = ['--cache', 'node_cache', '--loglevel', 'info']
+    args = ['--cache', 'node_cache']
     if (project.hasProperty('npmRegistry')) {
         args += ['--registry', project.getProperty('npmRegistry')]
     }
+}
+
+task gulpTestUnit(type: GulpTask) {
+    args = ['test:unit']
 }
 
 npmInstall.dependsOn npm_prune

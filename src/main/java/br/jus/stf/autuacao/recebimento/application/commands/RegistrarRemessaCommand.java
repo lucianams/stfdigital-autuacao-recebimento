@@ -31,6 +31,10 @@ public class RegistrarRemessaCommand {
     @NotBlank
     private String sigilo;
     
+    public RegistrarRemessaCommand() {
+    	
+    }
+    
     public String getFormaRecebimento() {
         return formaRecebimento;
     }

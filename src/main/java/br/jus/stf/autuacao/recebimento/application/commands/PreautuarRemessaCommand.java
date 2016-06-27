@@ -27,6 +27,10 @@ public class PreautuarRemessaCommand {
 	private String sigilo;
 	
     private Set<Long> preferencias;
+    
+    public PreautuarRemessaCommand() {
+    	
+    }
 	
 	public PreautuarRemessaCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias) {
 		this.protocoloId = protocoloId;

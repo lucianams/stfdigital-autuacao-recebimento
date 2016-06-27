@@ -1,7 +1,9 @@
+sudo: required
 language: java
 jdk:
   - oraclejdk8
-
+services:
+- docker
 install:
   - git clone https://github.com/supremotribunalfederal/stfdigital-plataforma-core
   - cd stfdigital-plataforma-core

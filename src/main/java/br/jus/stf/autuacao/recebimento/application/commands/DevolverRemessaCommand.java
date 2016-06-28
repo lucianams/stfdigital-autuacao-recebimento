@@ -20,6 +20,10 @@ public class DevolverRemessaCommand {
 	@NotBlank
 	private String motivo;
 	
+	public DevolverRemessaCommand() {
+		
+	}
+	
 	public Long getProtocoloId() {
 		return protocoloId;
 	}

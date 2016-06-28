@@ -23,6 +23,10 @@ public class PrepararOficioParaDevolucaoCommand {
     @NotNull
     private Long textoId;
     
+    public PrepararOficioParaDevolucaoCommand() {
+    	
+    }
+    
     public Long getProtocoloId() {
         return protocoloId;
     }

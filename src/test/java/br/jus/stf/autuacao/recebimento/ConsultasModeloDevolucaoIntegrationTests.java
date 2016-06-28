@@ -12,23 +12,21 @@ import org.springframework.test.web.servlet.ResultActions;
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 
 /**
- * Valida a API de consulta de remessas
+ * Valida a API de consulta do modelo de devolução
  * 
  * @author tomas.godoi
  *
  */
 @SpringApplicationConfiguration(ApplicationContextInitializer.class)
-public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
-	
+public class ConsultasModeloDevolucaoIntegrationTests extends IntegrationTestsSupport {
+
 	@Test
-    public void consultarDevolucaoDeUmaRemessa() throws Exception {
-		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
-		
-		String protocoloId = "9003";
-		
-		ResultActions result = mockMvc.perform(get("/api/remessas/" + protocoloId + "/devolucao"));
+    public void consultarModelosPorMotivo() throws Exception {
+		String motivoDevolucaoId = "2";
+		ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
         
-        result.andExpect(status().isOk()).andExpect(jsonPath("$.modeloDevolucao.id", equalTo(1)));
+        result.andExpect(status().isOk()).andExpect(jsonPath("$[0].id", equalTo(1)))
+        	.andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));
     }
 	
 }

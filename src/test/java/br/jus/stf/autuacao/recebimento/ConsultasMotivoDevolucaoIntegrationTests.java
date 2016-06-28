@@ -1,6 +1,6 @@
 package br.jus.stf.autuacao.recebimento;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -12,23 +12,19 @@ import org.springframework.test.web.servlet.ResultActions;
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 
 /**
- * Valida a API de consulta de remessas
+ * Valida a API de consulta de motivo de devolução
  * 
  * @author tomas.godoi
  *
  */
 @SpringApplicationConfiguration(ApplicationContextInitializer.class)
-public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
-	
+public class ConsultasMotivoDevolucaoIntegrationTests extends IntegrationTestsSupport {
+
 	@Test
-    public void consultarDevolucaoDeUmaRemessa() throws Exception {
-		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
-		
-		String protocoloId = "9003";
-		
-		ResultActions result = mockMvc.perform(get("/api/remessas/" + protocoloId + "/devolucao"));
+    public void listarMotivosDevolucao() throws Exception {
+		ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao"));
         
-        result.andExpect(status().isOk()).andExpect(jsonPath("$.modeloDevolucao.id", equalTo(1)));
+        result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)));
     }
 	
 }

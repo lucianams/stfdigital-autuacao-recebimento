@@ -1,7 +1,7 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacaoRecursal from "./preautuacao-recursal.module";
-import {PreautuacaoRecursalService} from "./preautuacao-recursal.service";
+import {PreautuacaoRecursalService, PreautuarRecursalCommand} from "./preautuacao-recursal.service";
 import "./preautuacao-recursal.service";
 
 /**
@@ -14,14 +14,15 @@ export class PreautuacaoRecursalController {
 	public basicForm: Object = {};
 	public classe : Classe;
 	public preferencias : Array<Preferencia>;
-	public preferenciasSelecionadas : Array<number>;
-	public motivo : string;
 
+	public cmdPreautuar: PreautuarRecursalCommand = new PreautuarRecursalCommand();
+	
 	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa"];
 	
 	/** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa){
-
+		this.cmdPreautuar.sigilo = 'PUBLICO';
+		this.cmdPreautuar.protocoloId = 123;
 	}
 	
 	/*
@@ -29,6 +30,7 @@ export class PreautuacaoRecursalController {
 	 * @return Array de objetos Preferencia.
 	 */
 	public carregarPreferencias(): void {
+		 this.cmdPreautuar.classeId = this.classe.id;
 		 this.preferencias = this.classe.preferencias;
 	}
 	
@@ -38,7 +40,7 @@ export class PreautuacaoRecursalController {
 	
 	public preautuarProcessoRecursal(): void {
 
-		this.preautuacaoRecursalService.preautuarRecursal(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas, this.motivo)
+		this.preautuacaoRecursalService.preautuarRecursal(this.cmdPreautuar)
 	        .then(() => {
 	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
 	    	});

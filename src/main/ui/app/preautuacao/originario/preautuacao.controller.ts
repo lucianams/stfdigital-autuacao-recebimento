@@ -10,7 +10,7 @@ import {PreautuacaoService, DevolverRemessaCommand, PreautuarRemessaCommand} fro
 export class PreautuacaoController {
 	public basicForm: Object = {};
 	public classe : Classe;
-	public preferencias : Array<Preferencia>;
+	public preferencias : Array<Preferencia> = [];
 
 	public cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
 	public cmdDevolucao : DevolverRemessaCommand = new DevolverRemessaCommand();
@@ -29,6 +29,7 @@ export class PreautuacaoController {
 	 * @return Array de objetos Preferencia.
 	 */
 	public carregarPreferencias(): void {
+		 this.cmdPreautuar.classeId = this.classe.id;
 		 this.preferencias = this.classe.preferencias;
 	}
 	

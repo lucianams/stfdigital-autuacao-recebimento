@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.web.servlet.ResultActions;
 
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
@@ -18,6 +19,7 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
  *
  */
 @SpringApplicationConfiguration(ApplicationContextInitializer.class)
+@WebIntegrationTest({"server.port:0", "eureka.client.enabled:false"})
 public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test

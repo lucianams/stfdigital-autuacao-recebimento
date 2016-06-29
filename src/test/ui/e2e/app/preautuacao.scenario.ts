@@ -10,12 +10,11 @@ describe('Preautuação de Petições Físicas Originárias', () => {
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();
-        loginPage.login('aaa', '123');
+        loginPage.login('preautuador', '123');
     });
     
     it ('Deveria acessar a pagina de preautuacao', () => {
-        principalPage.iniciarProcesso();
-        principalPage.iniciarPreautuacao();
+        preautuacaoPage.open();
     });
     
     it('Deveria selecionar a classe', () => {

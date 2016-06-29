@@ -28,7 +28,7 @@ describe('Assinatura do Ofício de Devolução', () => {
 	it('Deveria selecionar as devoluções para assinatura', () => {
 		devolucaoAssinaturaPage.selecionarDevolucoes();
 		devolucaoAssinaturaPage.assinar();
-		principalPage.aguardarMensagemSucesso();
+		principalPage.aguardarMensagemSucesso(10000);
 	});
 
 });

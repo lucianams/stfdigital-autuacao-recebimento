@@ -20,8 +20,8 @@ export class PreautuacaoController {
     /** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
 		this.cmdPreautuar.sigilo = 'PUBLICO';
-		this.cmdPreautuar.protocoloId = 123;
-		this.cmdDevolucao.protocoloId = 123;
+		this.cmdPreautuar.protocoloId = remessa.protocolo;
+		this.cmdDevolucao.protocoloId = remessa.protocolo;
 	}
     
     /*

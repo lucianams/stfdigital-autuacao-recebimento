@@ -21,13 +21,14 @@ var tsProjectE2E = $.typescript.createProject(path.join(conf.paths.e2e, 'tsconfi
 var allTypeScriptE2E = path.join(conf.paths.e2e, 'app/**/*.ts');
 var libraryTypeScriptE2E = path.join(conf.paths.e2e, 'typings/main/**/*.d.ts');
 var tsOutputPathE2E = path.join(conf.paths.e2e, 'build');
+var tsTypingsOutputPathE2E = path.join(conf.paths.e2e, 'typings');
 
 var tsProjectUnit = $.typescript.createProject(path.join(conf.paths.unit, 'tsconfig.json'));
 var allTypeScriptUnit = path.join(conf.paths.unit, 'app/**/*.ts');
 var libraryTypeScriptUnit = path.join(conf.paths.unit, 'typings/main/**/*.d.ts');
 var tsOutputPathUnit = path.join(conf.paths.unit, 'build');
 var tsDefOutputPath = path.join(conf.paths.unit, 'node_modules', custom.project);
-var tsTypingsOutputPath = path.join(conf.paths.unit, 'typings');
+var tsTypingsOutputPathUnit = path.join(conf.paths.unit, 'typings');
 
 /**
  * Install all typings files
@@ -45,6 +46,10 @@ gulp.task('install-typings:e2e', function() {
         .pipe($.typings());
 });
 
+gulp.task('clean-typings:e2e', function() {
+    return $.del(tsTypingsOutputPathE2E);
+});
+
 /**
  * Install all unit typings files
  */
@@ -54,7 +59,7 @@ gulp.task('install-typings:unit', ['generate-definitions'], function() {
 });
 
 gulp.task('clean-typings:unit', function() {
-    return $.del(tsTypingsOutputPath);
+    return $.del(tsTypingsOutputPathUnit);
 });
 
 /**

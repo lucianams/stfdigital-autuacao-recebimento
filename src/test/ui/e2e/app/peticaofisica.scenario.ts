@@ -25,7 +25,7 @@ describe('Recebimento de Petições Físicas Originárias', () => {
     	recebimentoPage.selecionarFormaRecebimento();
     	recebimentoPage.selecionarTipoRecebimento();
     	recebimentoPage.registrarPeticao();
-    	principalPage.aguardarUrl('/tarefas/minhas-tarefas');
+    	principalPage.aguardarMensagemSucesso();
     });
     
 });

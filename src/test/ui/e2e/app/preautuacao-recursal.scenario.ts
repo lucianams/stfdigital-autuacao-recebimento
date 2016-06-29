@@ -14,8 +14,7 @@ describe('Preautuação de processo recursal', () => {
     });
     
     it ('Deveria acessar a pagina de peticao física', () => {
-        principalPage.iniciarProcesso();
-        principalPage.iniciarPeticaoFisica();
+        preautuacaoRecursalPage.open();
     });
     
     it('Deveria preencher as informações da preautuação', () => {

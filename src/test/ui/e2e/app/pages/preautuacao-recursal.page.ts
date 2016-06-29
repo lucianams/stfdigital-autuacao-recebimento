@@ -2,6 +2,10 @@ import ElementFinder = protractor.ElementFinder;
 
 export class PreautuacaoRecursalPage {
 
+    public open(): void {
+        browser.get('/novo-processo/preautuacao/recursal');
+    }
+
 	public selecionarClasse(nome: string) : void {
 		let select = element(by.id("classes"));
         select.click();

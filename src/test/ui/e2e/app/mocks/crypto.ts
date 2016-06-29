@@ -1,3 +1,5 @@
+declare var angular;
+
 function mockCryptoModuleDefineFunction() {
 	class ConverterService {
 
@@ -57,7 +59,7 @@ function mockCryptoModuleDefineFunction() {
 
 	class JsCrypto {
 
-		constructor(private $q: ng.IQService, private converterService: ConverterService, private privateKey, private certificate) {
+		constructor(private $q, private converterService: ConverterService, private privateKey, private certificate) {
 
 		}
 
@@ -90,7 +92,7 @@ function mockCryptoModuleDefineFunction() {
 
 		static $inject = ['$q', 'e2e.mocks.crypto.ConverterService'];
 
-		constructor(private $q: ng.IQService, private converterService: ConverterService) {
+		constructor(private $q, private converterService: ConverterService) {
 
 		}
 
@@ -109,11 +111,11 @@ function mockCryptoModuleDefineFunction() {
 	}
 
 	let mockCryptoModule = angular.module('e2e.mocks.crypto', ['app.certification']);
+
 	mockCryptoModule.service('e2e.mocks.crypto.ConverterService', ConverterService);
 	mockCryptoModule.service('e2e.mocks.crypto.JsCryptoFactory', JsCryptoFactory);
-	//alert('mockkk');
-	let mockCrypto = ['$delegate', '$q', 'e2e.mocks.crypto.JsCryptoFactory', ($delegate: app.certification.CryptoService, $q: ng.IQService, jsCryptoFactory: app.certification.JsCryptoFactory) => {
-		console.warn('mockkk:mockCrypto');
+
+	let mockCrypto = ['$delegate', '$q', 'e2e.mocks.crypto.JsCryptoFactory', ($delegate, $q, jsCryptoFactory) => {
 		let privateKey =  
 			'MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDZd17Xkk1nm9Q2' +
 			'EJUwS8TiKGO+zZh2pL+qBOQcu7acjHopeZN3Yjur8n1zQIpcLz/m5K0dsNhBsaL8' +
@@ -176,10 +178,12 @@ function mockCryptoModuleDefineFunction() {
 		return $delegate;
 	}];
 
-	mockCryptoModule.config(['$provide', ($provide: ng.auto.IProvideService) => {
-		console.warn('mockkk:$provide');
-		console.warn(mockCrypto);
+	mockCryptoModule.config(['$provide', ($provide) => {
 		$provide.decorator('app.certification.CryptoService', mockCrypto);
+	}]);
+
+	mockCryptoModule.run(['app.certification.CryptoService', (cryptoService) => {
+		// É necessário injetar esse serviço para que o decorator acima seja executado corretamente.
 	}]);
 }
 

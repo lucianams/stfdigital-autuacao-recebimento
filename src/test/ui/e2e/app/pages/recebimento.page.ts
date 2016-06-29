@@ -25,7 +25,7 @@ export class RecebimentoPage {
 	};
 	
 	public registrarPeticao() : void {
-		element(by.id('btnRegistrarPeticao')).click();
+		element(by.id('registrar-remessa')).click();
 	};
 	
 }

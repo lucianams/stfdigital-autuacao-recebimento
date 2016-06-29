@@ -42,6 +42,10 @@ exports.config = {
   
   onPrepare: function() {
 	  browser.driver.manage().window().maximize();
+    
+    var prepare = require('./e2e/build/prepare/main');
+    prepare.default();
+
 	  return browser.getCapabilities().then(function() {
 		  jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: 'all'}));
 		  jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({

@@ -1,5 +1,7 @@
 import ElementFinder = protractor.ElementFinder;
 
+import helpers = require('protractor-helpers');
+
 export class LoginPage {
     
     private usernameInput: ElementFinder = element(by.model('vm.form.usuario'));
@@ -18,5 +20,6 @@ export class LoginPage {
         this.usernameInput.sendKeys(username);
         this.passwordInput.sendKeys(password);
         this.submitButton.click();
+        helpers.waitForElementToDisappear(this.submitButton);
     }
 }

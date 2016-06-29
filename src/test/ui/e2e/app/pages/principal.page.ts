@@ -2,6 +2,8 @@ import ElementFinder = protractor.ElementFinder;
 
 import waitHelpers from '../helpers/wait';
 
+import helpers = require('protractor-helpers');
+
 export class PrincipalPage {
     
     private linkIniciarProcesso: ElementFinder = element.all(by.css('a[ui-sref="app.novo-processo"]')).get(0);
@@ -29,5 +31,9 @@ export class PrincipalPage {
     public iniciarDevolucao(): void {
     	this.linkDevolucao.click();
     	browser.sleep(2000);
+    }
+
+    public aguardarMensagemSucesso(): void {
+        helpers.waitForElement(element(by.css('[md-theme="success-toast"]')));
     }
 }

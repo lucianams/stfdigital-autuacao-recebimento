@@ -9,6 +9,7 @@ describe('Teste do controlador peticao-fisica.controller', () => {
 	let $rootScope : ng.IRootScopeService;
 	let mockState;
 	let mockPeticaoFisicaService;
+	let mockMessagesService;
 	
 	beforeEach(inject((_$q_, _$rootScope_) => {
         $q = _$q_;
@@ -21,8 +22,11 @@ describe('Teste do controlador peticao-fisica.controller', () => {
 		};
 		mockPeticaoFisicaService = {
 			registrar : () =>{}
-		}
-	    controller = new PeticaoFisicaController(mockState, mockPeticaoFisicaService, [new FormaRecebimento('MALOTE', 'Malote', false)]);
+		};
+		mockMessagesService = {
+			success: () => {}
+		};
+	    controller = new PeticaoFisicaController(mockState, mockPeticaoFisicaService, [new FormaRecebimento('MALOTE', 'Malote', false)], mockMessagesService);
 	});
 	
 	it('Deveria registrar o recebimento da petição física', () => {

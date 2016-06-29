@@ -1,7 +1,7 @@
 import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia} from "../../services/model";
 import preautuacao from "./preautuacao.module";
-import {PreautuacaoService, DevolverRemessaCommand} from "./preautuacao.service";
+import {PreautuacaoService, DevolverRemessaCommand, PreautuarRemessaCommand} from "./preautuacao.service";
 
 /**
  * @author Viniciusk
@@ -10,16 +10,18 @@ import {PreautuacaoService, DevolverRemessaCommand} from "./preautuacao.service"
 export class PreautuacaoController {
 	public basicForm: Object = {};
 	public classe : Classe;
-	public preferencias : Array<Preferencia>;
-	public preferenciasSelecionadas : Array<number>;
-	public motivo : string;
+	public preferencias : Array<Preferencia> = [];
 
+	public cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
+	public cmdDevolucao : DevolverRemessaCommand = new DevolverRemessaCommand();
 
 	static $inject = ["$state", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
 	
     /** @ngInject **/
 	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
-
+		this.cmdPreautuar.sigilo = 'PUBLICO';
+		this.cmdPreautuar.protocoloId = 123;
+		this.cmdDevolucao.protocoloId = 123;
 	}
     
     /*
@@ -27,25 +29,22 @@ export class PreautuacaoController {
 	 * @return Array de objetos Preferencia.
 	 */
 	public carregarPreferencias(): void {
+		 this.cmdPreautuar.classeId = this.classe.id;
 		 this.preferencias = this.classe.preferencias;
 	}
 	
 	public devolver(): void {
-		this.preautuacaoService.devolver(this.commandDevolucao())
+		this.preautuacaoService.devolver(this.cmdDevolucao)
 			.then(() => {
 			this.$state.go('app.tarefas.minhas-tarefas');
 		});
-	}
-	
-	private commandDevolucao(): DevolverRemessaCommand {
-		return new DevolverRemessaCommand(this.remessa.protocolo, this.motivo);
-	}
+	}	
 	
 	/*
-	 * Realiza a préautuação do processo recursal.
+	 * Realiza a preautuação do processo recursal.
 	 */
 	public preautuarProcessoOriginario(): void {
-		this.preautuacaoService.preautuarProcesso(this.remessa.protocolo, this.classe.id, "PUBLICO", this.preferenciasSelecionadas)
+		this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
 	        .then(() => {
 	            this.$state.go("app.tarefas.minhas-tarefas");
 		});

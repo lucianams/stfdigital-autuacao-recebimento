@@ -1,16 +1,23 @@
 import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import preautuacao from "./preautuacao.module";
+import cmd = app.support.command;
+import Properties = app.support.constants.Properties;
 
-export class PreautuarRemessaCommand {
-    constructor(public protocoloId: number, 
-                public classeId: string,
-                public sigilo: string,
-                public preferencias: Array<number>) {}    
+export class PreautuarRemessaCommand implements cmd.Command{
+    public protocoloId: number; 
+	public classeId: string;
+	public sigilo: string;
+	public preferencias: Array<number>;    
+	
+    constructor() {};
 }
 
-export class DevolverRemessaCommand {
-	constructor(public protocoloId: number, public motivo: string) {}
+export class DevolverRemessaCommand implements cmd.Command {
+	public protocoloId: number;
+	public motivo: string;
+
+	constructor() {};
 }
 
 export class PreautuacaoService {
@@ -18,7 +25,9 @@ export class PreautuacaoService {
     private static urlServicoPreautuacao: string = '/recebimento/api/remessas';
     
     /** @ngInject **/
-    constructor(private $http: IHttpService, private properties) { }
+    constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
+    	commandService.setValidator('preautuar-remessa', new ValidadorPreautuacao());
+    }
 
     /*
      * Envia os dados da préautuação para o serviço de recebimento (back-end).
@@ -27,14 +36,30 @@ export class PreautuacaoService {
      * @param sigilo Sigilo do processo.
      * @param preferencias Preferências processuais.
      */
-    public preautuarProcesso(protocoloId: number, classeId: string, sigilo: string, preferencias: Array<number>): IPromise<any> {
-        let cmd: PreautuarRemessaCommand = new PreautuarRemessaCommand(protocoloId, classeId, sigilo, preferencias);
+    public preautuarProcesso(cmdPreautuar : PreautuarRemessaCommand): IPromise<any> {
+    	//TODO o procotolo será recuperado quando o usuário clicar na tarefa via controller
+    	//cmdPreautuar.protocoloId = 123;
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
-            PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmd);        
+            PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmdPreautuar);        
     }
 
-	public devolver(command: DevolverRemessaCommand): IPromise<any> {
-		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao + '/devolucao', command);
+	public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<any> {
+		//TODO o procotolo será recuperado quando o usuário clicar na tarefa via controller
+		cmdDevolver.protocoloId = 123;
+		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao + '/devolucao', cmdDevolver);
+	}
+}
+
+class ValidadorPreautuacao implements cmd.CommandValidator {
+	
+	constructor() {}
+	
+	public isValid(command: PreautuarRemessaCommand): boolean {
+		if (angular.isString(command.classeId) &&
+			command.preferencias.length > 0) {
+			return true;
+		}
+		return false;
 	}
 
 }

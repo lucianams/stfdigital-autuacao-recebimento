@@ -34,10 +34,13 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		let sigiloProcesso = 'PUBLICO';
 		let preferencias : Array<number> = [1];
 		let motivo = 'Teste do motivo';
+		
+		controller.cmdPreautuar.motivo = motivo;
 		controller.classe = controller.classes[0];
 		controller.carregarPreferencias();
-		controller.preferenciasSelecionadas = [controller.preferencias[0].id];
-		controller.motivo = motivo;
+		controller.cmdPreautuar.preferencias = [controller.classe.preferencias[0].id];
+		controller.cmdPreautuar.classeId = classe;
+		controller.cmdPreautuar.motivo = motivo;
 		
 		spyOn(mockPreautuacaoRecursalService, 'preautuarRecursal').and.callFake(() => $q.when());
 		
@@ -47,7 +50,7 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		
 		$rootScope.$apply();
 		
-		expect(mockPreautuacaoRecursalService.preautuarRecursal).toHaveBeenCalledWith(protocoloId, classe, sigiloProcesso, preferencias, motivo);
+		expect(mockPreautuacaoRecursalService.preautuarRecursal).toHaveBeenCalledWith(controller.cmdPreautuar);
 		
 		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
 	});

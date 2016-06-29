@@ -2,6 +2,8 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {RemessaService} from './../../services/remessa.service';
+import Properties = app.support.constants.Properties;
+import cmd = app.support.command; 
 
 
 /** @ngInject **/
@@ -31,7 +33,7 @@ function config($stateProvider: IStateProvider,
 
 /** @ngInject **/
 function run($translatePartialLoader: ITranslatePartialLoaderService,
-			 properties: any) {
+			 properties: Properties) {
 	
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/originario");
 }

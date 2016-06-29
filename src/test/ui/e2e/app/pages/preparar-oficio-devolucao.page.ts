@@ -1,6 +1,6 @@
 import ElementFinder = protractor.ElementFinder;
 
-export class DevolucaoPage {
+export class PrepararOficioDevolucaoPage {
 	
 	public selecionarMotivo(): void {
 		element(by.id('motivoDevolucao')).click();

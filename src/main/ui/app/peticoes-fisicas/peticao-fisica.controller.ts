@@ -10,11 +10,12 @@ export class PeticaoFisicaController {
 	public path = [{translation:'Iniciar Processo', uisref: 'app.novo-processo'},
 	               {translation:'Recebimento', uisref: 'app.novo-processo.recebimento-peticao-fisica'}]
 
-    static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento'];
+    static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento', 'messagesService'];
     
     constructor(private $state: IStateService,
                 private peticaoFisicaService: PeticaoFisicaService,
-                public formasRecebimento) {
+                public formasRecebimento,
+                private messagesService: app.support.messaging.MessagesService) {
 
     	this.cmd.sigilo = 'PUBLICO';
     }
@@ -23,6 +24,7 @@ export class PeticaoFisicaController {
         this.peticaoFisicaService.registrar(this.cmd)
             .then(() => {
                 this.$state.go('app.tarefas.minhas-tarefas');
+                this.messagesService.success('Remessa registrada com sucesso!');
         });
     }
     

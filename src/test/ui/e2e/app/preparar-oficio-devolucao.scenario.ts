@@ -1,14 +1,14 @@
 import {LoginPage} from "./pages/login.page";
 import {PrincipalPage}  from "./pages/principal.page";
 import {PreautuacaoPage} from "./pages/preautuacao.page";
-import {DevolucaoPage} from "./pages/devolucao.page";
+import {PrepararOficioDevolucaoPage} from "./pages/preparar-oficio-devolucao.page";
 
 describe('Devolucação de Petições Físicas Originárias', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();
 	var preautuacaoPage : PreautuacaoPage = new PreautuacaoPage();
-	let devolucaoPage: DevolucaoPage = new DevolucaoPage();
+	let devolucaoPage: PrepararOficioDevolucaoPage = new PrepararOficioDevolucaoPage();
 
     it ('Deveria logar na tela', () => {
         loginPage.open();

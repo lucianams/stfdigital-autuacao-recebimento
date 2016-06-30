@@ -29,7 +29,7 @@ function runTests(singleRun, done)
 
 gulp.task('test:unit', function (done)
 {
-    runSequence(['bower:install:unit', 'clean-typings:unit'], ['compile-ts:unit', 'scripts'], function() {
+    runSequence(['bower:install:unit', 'clean-typings:unit'], ['compile-ts:unit', 'scripts:dev'], function() {
         runTests(true, done)
     });
 });

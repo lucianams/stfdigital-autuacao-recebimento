@@ -4,7 +4,9 @@
         "module": "system",
         "moduleResolution": "node",
         "sourceMap": false,
-        "removeComments": false
+        "removeComments": false,
+        "out": "bundle.js",
+        "noEmitHelpers": true
     },
     "exclude": [
       "typings/browser",

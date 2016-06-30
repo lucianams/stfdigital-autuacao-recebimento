@@ -10,6 +10,6 @@ services:
     environment:
      - spring.profiles.active=development
      - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47991,suspend=n
-#    depends_on:
-#     - rabbit
-#     - discovery
+    depends_on:
+     - rabbit
+     - discovery

@@ -162,6 +162,8 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     }
 
     public void devolver(Status status) {
+    	Validate.notNull(status, "Status requerido.");
+    	
         this.status = status;
     }
     

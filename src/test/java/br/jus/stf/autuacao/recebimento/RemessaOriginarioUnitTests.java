@@ -48,14 +48,14 @@ public class RemessaOriginarioUnitTests {
 		RemessaOriginaria remessa = remessaOriginariaValida();
 		Preferencia medidaLiminar = new Preferencia(new PreferenciaId(8L), "Medida Liminar");
 		Preferencia reuPreso = new Preferencia(new PreferenciaId(12L), "Réu Preso");
-		Set<Preferencia> preferenciasClasse = new HashSet<>(0);
+		Set<Preferencia> preferenciasClasse = new HashSet<>(2);
 		
 		preferenciasClasse.add(medidaLiminar);
 		preferenciasClasse.add(reuPreso);
 		
 		ClassePeticionavel classe = new ClassePeticionavel(new ClasseId("ADI"), "Ação Direta de Inconstitucionalidade",
 				TipoProcesso.ORIGINARIO, preferenciasClasse);
-		Set<Preferencia> preferenciasRemessa = new HashSet<>(0);
+		Set<Preferencia> preferenciasRemessa = new HashSet<>(1);
 
 		preferenciasRemessa.add(medidaLiminar);
 		remessa.preautuar(classe, preferenciasRemessa, Sigilo.PUBLICO, Status.RECEBIDA);
@@ -79,7 +79,7 @@ public class RemessaOriginarioUnitTests {
 		Preferencia medidaLiminar = new Preferencia(new PreferenciaId(8L), "Medida Liminar");
 		ClassePeticionavel classe = new ClassePeticionavel(new ClasseId("ADI"), "Ação Direta de Inconstitucionalidade",
 				TipoProcesso.ORIGINARIO, null);
-		Set<Preferencia> preferenciasRemessa = new HashSet<>(0);
+		Set<Preferencia> preferenciasRemessa = new HashSet<>(1);
 
 		preferenciasRemessa.add(medidaLiminar);
 		remessa.preautuar(classe, preferenciasRemessa, Sigilo.PUBLICO, Status.RECEBIDA);

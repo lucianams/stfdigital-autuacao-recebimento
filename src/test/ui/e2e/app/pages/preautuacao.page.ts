@@ -1,7 +1,13 @@
 import ElementFinder = protractor.ElementFinder;
 
+import helpers = require('protractor-helpers');
+
 export class PreautuacaoPage {
-		
+	
+	public open(): void {
+		browser.get('/novo-processo/preautuacao/originario');
+	}
+
 	public selecionarClasse() : void {
 		element(by.id('classes')).click();
 		element.all(by.repeater('classe in preautuacao.classes')).get(2).click();
@@ -16,10 +22,10 @@ export class PreautuacaoPage {
 	};
 	
 	public registrarPreautuacao() : void {
-		element(by.id('btnRegistrarpreautuacao')).click();
+		element(by.id('preautuar-remessa')).click();
 	};
 	
 	public devolver() : void {
-		element(by.id('btnDevolverRemessa')).click();
+		element(by.id('devolver-remessa')).click();
 	};
 }

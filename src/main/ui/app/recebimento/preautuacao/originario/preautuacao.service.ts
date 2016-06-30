@@ -56,7 +56,7 @@ class ValidadorPreautuacao implements cmd.CommandValidator {
 	
 	public isValid(command: PreautuarRemessaCommand): boolean {
 		if (angular.isString(command.classeId) &&
-			command.preferencias.length > 0) {
+			command.preferencias && command.preferencias.length > 0) {
 			return true;
 		}
 		return false;

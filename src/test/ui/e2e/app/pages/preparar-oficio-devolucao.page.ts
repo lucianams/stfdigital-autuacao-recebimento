@@ -2,6 +2,10 @@ import ElementFinder = protractor.ElementFinder;
 
 export class PrepararOficioDevolucaoPage {
 	
+	public open(): void {
+		browser.get('/novo-processo/preparar-oficio-devolucao');
+	}
+
 	public selecionarMotivo(): void {
 		element(by.id('motivoDevolucao')).click();
 		element.all(by.repeater('motivoDevolucao in vm.motivosDevolucao')).get(1).click();

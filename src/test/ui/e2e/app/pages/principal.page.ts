@@ -33,7 +33,12 @@ export class PrincipalPage {
     	browser.sleep(2000);
     }
 
-    public aguardarMensagemSucesso(): void {
-        helpers.waitForElement(element(by.css('[md-theme="success-toast"]')));
+    public aguardarMensagemSucesso(timeout?: number): void {
+        let mensagemElement: ElementFinder = element(by.css('[md-theme="success-toast"]'));
+        if (timeout) {
+            helpers.waitForElement(mensagemElement, timeout);
+        } else {
+            helpers.waitForElement(mensagemElement);
+        }
     }
 }

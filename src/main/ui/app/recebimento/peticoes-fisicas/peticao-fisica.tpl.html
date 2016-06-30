@@ -29,8 +29,7 @@
                         
                         <md-input-container flex="50">
                             <label for="formaRecimento">Forma de Envio *</label>
-                            <md-select ng-model="registro.cmd.formaRecebimento" name="formaRecimento" id="formaRecimento" ng-required="true">
-                            	<md-option></md-option>
+                            <md-select ng-model="registro.cmd.formaRecebimento" name="formaRecimento" id="formaRecimento">
                                 <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.sigla}}">
                                     {{forma.descricao}}
                                 </md-option>
@@ -44,8 +43,7 @@
                     <div layout="row" layout-gt-xs="row">
                         <md-input-container flex="50">
                             <label for="tipoProcesso">Tipo de Processo *</label>
-                            <md-select ng-model="registro.cmd.tipoProcesso" id="tipoProcesso" ng-required="true">
-                            	<md-option></md-option>
+                            <md-select ng-model="registro.cmd.tipoProcesso" id="tipoProcesso">
                                 <md-option ng-repeat="tipo in registro.tiposProcessos" value="{{tipo.id}}">
                                     {{tipo.nome}}
                                 </md-option>

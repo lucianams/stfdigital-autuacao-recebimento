@@ -10,7 +10,7 @@ describe('Recebimento de Petições Físicas Originárias', () => {
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();
-        loginPage.login('recebedor', 'recebedor-123');
+        loginPage.login('recebedor', '123');
     });
     
     it ('Deveria acessar a pagina de petição física', () => {

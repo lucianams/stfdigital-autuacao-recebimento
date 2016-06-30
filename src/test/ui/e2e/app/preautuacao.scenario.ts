@@ -2,7 +2,7 @@ import {LoginPage} from "./pages/login.page";
 import {PrincipalPage}  from "./pages/principal.page";
 import {PreautuacaoPage} from "./pages/preautuacao.page";
 
-describe('Preautuação de Petições Físicas Originárias', () => {	
+describe('Preautuação de Remessa Originária', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();
@@ -10,12 +10,11 @@ describe('Preautuação de Petições Físicas Originárias', () => {
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();
-        loginPage.login('aaa', '123');
+        loginPage.login('preautuador', '123');
     });
     
     it ('Deveria acessar a pagina de preautuacao', () => {
-        principalPage.iniciarProcesso();
-        principalPage.iniciarPreautuacao();
+        preautuacaoPage.open();
     });
     
     it('Deveria selecionar a classe', () => {

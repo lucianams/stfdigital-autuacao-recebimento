@@ -1,44 +1,36 @@
 <div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
-
     <!-- CONTENT -->
     <div class="content" layout="column">
-
-        <div class="md-title mt-10">Preautuação</div>
+        <div class="md-title mt-10">Preautuação de Processos Recursais</div>
         <div class="pb-16">Informe a preferência e a motição da petição</div>
-
         <div layout="row">
-
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
-
                 <form name="basicForm" class="md-inline-form">
-                
                 	<div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
 	                    <md-input-container flex>
 	                        <label>Quantidade de volumes</label>
-	                        <input ng-model="preautuacao.remessa.qtdVolumes" id="qtdVolumes" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                        <input ng-model="preautuacao.remessa.qtdVolumes" id="txtQtdVolumes">
 	                    </md-input-container>
 	                    <md-input-container flex>
 	                        <label>Quantidade de apensos</label>
-	                        <input ng-model="preautuacao.remessa.qtdApensos" id="qtdApensos" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                        <input ng-model="preautuacao.remessa.qtdApensos" id="txtQtdApensos">
 	                    </md-input-container>
                     </div>
-                    
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
 	                    <md-input-container flex>
-	                        <label>Tipo de Recebimento </label>
-	                        <input ng-model="preautuacao.remessa.formaRecebimento" id="formaRecebimento" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                        <label>Forma de Recebimento </label>
+	                        <input ng-model="preautuacao.remessa.formaRecebimento" id="txtFormaRecebimento" ng-disabled="true">
 	                    </md-input-container>
 	                    <md-input-container flex>
 	                        <label>Número de Sedex</label>
-	                        <input ng-model="preautuacao.remessa.numeroSedex" id="numeroSedex" class="ng-pristine ng-valid md-input ng-empty" disabled="true">
+	                        <input ng-model="preautuacao.remessa.numeroSedex" id="txtNumeroSedex" ng-disabled="true">
 	                    </md-input-container>
                     </div>
-
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
                     	<md-input-container flex>
                             <label>Classificação *</label>
-                            <md-select ng-model="preautuacao.classe" id="classes" ng-change="preautuacao.carregarPreferencias()" ng-required="true">
+                            <md-select ng-model="preautuacao.classe" id="cboClasses" ng-change="preautuacao.carregarPreferencias()">
                                 <md-option ng-repeat="classe in preautuacao.classes" ng-value="classe">
                                     {{classe.nome}}
                                 </md-option>
@@ -46,7 +38,7 @@
                         </md-input-container>
                         <md-input-container flex>
                             <label>Preferências *</label>
-                            <md-select multiple ng-model="preautuacao.cmdPreautuar.preferencias" id="preferencias" ng-required="true">
+                            <md-select multiple ng-model="preautuacao.cmdPreautuar.preferencias" id="cboPreferencias">
                                 <md-option ng-repeat="preferencia in preautuacao.preferencias" value="{{preferencia.id}}">
                                     {{preferencia.nome}}
                                 </md-option>
@@ -56,25 +48,15 @@
                     <div>
 						<md-input-container class="md-block">
           					<label>Informe se a petição está correta ou indevida</label>
-          					<textarea ng-model="preautuacao.cmdPreautuar.motivo" md-maxlength="150" rows="5" md-select-on-focus id="motivo"></textarea>
+          					<textarea ng-model="preautuacao.cmdPreautuar.motivo" md-maxlength="150" rows="5" md-select-on-focus id="txtMotivo"></textarea>
         				</md-input-container>
                     </div>
-                    <md-button type="button" class="md-raised md-accent" id="preautuar-remessa" 
-                    	 ng-click ="preautuacao.preautuarProcessoOriginario()" command="preautuacao.cmdPreautuar">
+                    <md-button type="button" class="md-raised md-accent" id="preautuar-recursal" ng-click ="preautuacao.preautuarProcessoRecursal()"
+                    	command="preautuacao.cmdPreautuar">
                         	Preautuar
                     </md-button>
-                    <md-button type="button" class="md-raised md-accent" id="devolver-remessa" 
-                        ng-click ="preautuacao.devolver()">
-                        Devolver
-                    </md-button>
                 </form>
-
             </div>
-            <!-- / BASIC FORM -->
-
         </div>
-
     </div>
-    <!-- / CONTENT -->
-
 </div>

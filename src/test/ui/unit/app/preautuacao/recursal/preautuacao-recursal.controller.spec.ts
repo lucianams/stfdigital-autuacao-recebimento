@@ -10,6 +10,7 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 	let $rootScope : ng.IRootScopeService;
 	let mockState;
 	let mockPreautuacaoRecursalService;
+	let mockMessagesService;
 	
 	beforeEach(inject((_$q_, _$rootScope_) => {
         $q = _$q_;
@@ -22,10 +23,13 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		};
 		mockPreautuacaoRecursalService = {
 			preautuarRecursal : () =>{}
-		}
+		};
+		mockMessagesService = {
+			success: () => {}
+		};
 		let protocoloId = 123;
 		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null);
-	    controller = new PreautuacaoRecursalController(mockState, mockPreautuacaoRecursalService, [new Classe('HC', 'Habeas Corpus', [new Preferencia(1,'Criminal')])], remessa);
+	    controller = new PreautuacaoRecursalController(mockState, mockPreautuacaoRecursalService, [new Classe('HC', 'Habeas Corpus', [new Preferencia(1,'Criminal')])], remessa, mockMessagesService);
 	});
 	
 	it('Deveria preautuar a remessa recursal', () => {
@@ -52,7 +56,7 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 		
 		expect(mockPreautuacaoRecursalService.preautuarRecursal).toHaveBeenCalledWith(controller.cmdPreautuar);
 		
-		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas", {}, { reload: true	});
+		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
 	});
 	
 });

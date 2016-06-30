@@ -1,5 +1,7 @@
 import ElementFinder = protractor.ElementFinder;
 
+import helpers = require('protractor-helpers');
+
 export class RecebimentoPage {
 	
 	public preencherQtdVolumes(quantidade : number) : void {
@@ -21,6 +23,7 @@ export class RecebimentoPage {
 	
 	public selecionarTipoRecebimento() : void {
 		element(by.id('tipoProcesso')).click();
+		browser.driver.sleep(500);
 		element.all(by.repeater('tipo in registro.tiposProcessos')).get(0).click();
 	};
 	

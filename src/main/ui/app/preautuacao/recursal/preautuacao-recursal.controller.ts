@@ -17,12 +17,14 @@ export class PreautuacaoRecursalController {
 
 	public cmdPreautuar: PreautuarRecursalCommand = new PreautuarRecursalCommand();
 	
-	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa"];
-	
-	/** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa){
+	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa", "messagesService"];
+
+	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa,
+		private messagesService: app.support.messaging.MessagesService){
 		this.cmdPreautuar.sigilo = 'PUBLICO';
-		this.cmdPreautuar.protocoloId = 123;
+		this.cmdPreautuar.numeroProcessoOrigem = '123456';
+		this.cmdPreautuar.numeroUnicoProcesso = '7890123456';
+		this.cmdPreautuar.protocoloId = remessa.protocolo;
 	}
 	
 	/*
@@ -42,8 +44,11 @@ export class PreautuacaoRecursalController {
 
 		this.preautuacaoRecursalService.preautuarRecursal(this.cmdPreautuar)
 	        .then(() => {
-	            this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true	});
-	    	});
+	            this.$state.go('app.tarefas.minhas-tarefas');
+				this.messagesService.success('Remessa recursal preautuada com sucesso.');
+	    	}, () => {
+				this.messagesService.error('Erro ao preautuar remessa recursal.');
+			});
 	}
 }
 

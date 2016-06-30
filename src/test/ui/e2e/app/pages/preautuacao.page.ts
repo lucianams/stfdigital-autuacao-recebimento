@@ -16,7 +16,7 @@ export class PreautuacaoPage {
 	public selecionarPreferencia() : void {
 		element(by.id('preferencias')).click();
 		element.all(by.repeater('preferencia in preautuacao.preferencias')).get(1).click();
-		browser.driver.sleep(200);
+		browser.driver.sleep(500);
 		browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 		element(by.id('motivo')).click();
 	};

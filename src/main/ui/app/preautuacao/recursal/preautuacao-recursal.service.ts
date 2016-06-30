@@ -10,6 +10,8 @@ export class PreautuarRecursalCommand {
     public sigilo: string
     public preferencias: Array<number> = [];
     public motivo : string;
+    public numeroProcessoOrigem: string;
+    public numeroUnicoProcesso: string;
     
     constructor () {};
 }

@@ -23,7 +23,7 @@ function config($stateProvider: IStateProvider,
                 return remessaService.listarClassesPorTipoRemessa("RECURSAL")
             }],
             remessa: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
-                let protocoloId = 1;
+                let protocoloId = 9007;
                 return remessaService.consultarRemessa(protocoloId);
             }]
         }

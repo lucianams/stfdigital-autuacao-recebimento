@@ -7,8 +7,9 @@ export class PreautuacaoRecursalPage {
     }
 
 	public selecionarClasse(nome: string) : void {
-		let select = element(by.id("classes"));
+		let select = element(by.id("cboClasses"));
         select.click();
+        /*
         select.all(by.tagName('option')).filter(function(elem, index) {
             return elem.getText().then(function(text) {
                 return text === nome;
@@ -16,22 +17,23 @@ export class PreautuacaoRecursalPage {
         }).then(function(filteredElements){
             filteredElements[0].click();
         });
-        /*
-        element(by.id('classes')).click();
-		element.all(by.repeater('classe in preautuacao.classes')).get(2).click();
         */
+        
+        //element(by.id('cboClasses')).click();
+        browser.driver.sleep(500);
+		element.all(by.repeater('classe in preautuacao.classes')).get(2).click();
 	};
 	
 	public selecionarPreferencia() : void {
-		element(by.id('preferencias')).click();
+		element(by.id('cboPreferencias')).click();
 		element.all(by.repeater('preferencia in preautuacao.preferencias')).get(1).click();
-		browser.driver.sleep(200);
+		browser.driver.sleep(500);
 		browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-		element(by.id('motivo')).click();
+		element(by.id('txtMotivo')).click();
 	};
 	
 	public registrarPreautuacao() : void {
-		element(by.id('btnPreautuarRecursal')).click();
+		element(by.id('preautuar-recursal')).click();
 	};
 	
     /*

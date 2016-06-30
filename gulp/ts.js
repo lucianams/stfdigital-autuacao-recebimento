@@ -11,8 +11,7 @@ var $ = require('gulp-load-plugins')({
 
 var createTsProjectForDefinition = function() {
     return $.typescript.createProject(path.join(conf.paths.src, 'tsconfig.json'), {
-    	declaration: true,
-    	out: undefined
+    	declaration: true
     });
 };
 var allTypeScript = path.join(conf.paths.app, '**/*.ts');

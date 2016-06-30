@@ -6,7 +6,7 @@ var conf = require('./conf');
 
 var $ = require('gulp-load-plugins')();
 
-var tsProject = $.typescript.createProject(path.join(conf.paths.src, 'tsconfig.json'));
+var tsProject = $.typescript.createProject(path.join(conf.paths.src, 'tsconfig.json'), {out: 'bundle.js'});
 
 var processTS = function() {
 	return gulp.src([path.join(conf.paths.app, '**/*.ts'), 

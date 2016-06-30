@@ -132,7 +132,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     
     public abstract TipoProcesso tipoProcesso();
     
-    public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
+    protected void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
 		Validate.notNull(classe, "Classe requerida.");
 		Validate.notNull(sigilo, "Sigilo requerido.");
 		Validate.notNull(status, "Status requerido.");

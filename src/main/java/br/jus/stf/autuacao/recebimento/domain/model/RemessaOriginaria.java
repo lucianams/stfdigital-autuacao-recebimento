@@ -1,8 +1,12 @@
 package br.jus.stf.autuacao.recebimento.domain.model;
 
+import java.util.Set;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
+import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;
@@ -23,6 +27,11 @@ public class RemessaOriginaria extends Remessa {
     
     public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
+    }
+    
+    @Override
+    public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
+		super.preautuar(classe, preferencias, sigilo, status);
     }
     
     public TipoProcesso tipoProcesso() {

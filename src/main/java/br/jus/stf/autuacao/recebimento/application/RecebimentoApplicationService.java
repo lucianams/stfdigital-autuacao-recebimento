@@ -22,6 +22,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
@@ -102,7 +103,7 @@ public class RecebimentoApplicationService {
 
     @Command(description = "Preautuação")
     public void handle(PreautuarRemessaCommand command) {
-        Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
+        RemessaOriginaria remessa = (RemessaOriginaria) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
         Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));

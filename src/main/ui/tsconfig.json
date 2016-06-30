@@ -5,8 +5,7 @@
         "moduleResolution": "node",
         "sourceMap": false,
         "removeComments": false,
-        "out": "bundle.js",
-        "noEmitHelpers": true
+        "out": "bundle.js"
     },
     "exclude": [
       "typings/browser",

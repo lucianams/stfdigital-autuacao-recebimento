@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var custom = require('./custom');
 
 var $ = require('gulp-load-plugins')();
 
@@ -40,7 +41,7 @@ var scripts = function(js) {
 
 gulp.task('json', function() {
     
-    return gulp.src(path.join(conf.paths.app, 'recebimento/**/*.json'))
+    return gulp.src(path.join(conf.paths.app, custom.project, '**/*.json'))
         .pipe($.destClean(conf.paths.dist))
         .pipe(gulp.dest(conf.paths.dist));
 });

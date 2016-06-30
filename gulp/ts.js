@@ -115,7 +115,7 @@ gulp.task('clean-ts:unit', function() {
  * Compile TypeScript and include references to library and app .d.ts files.
  */
 gulp.task('compile-ts:unit', ['ts-lint:unit'], function() {
-    return gulp.src([allTypeScriptUnit, libraryTypeScriptUnit, path.join(conf.paths.unit, 'node_modules/recebimento')])
+    return gulp.src([allTypeScriptUnit, libraryTypeScriptUnit])
         .pipe($.sourcemaps.init())
         .pipe($.typescript(tsProjectUnit))
         .pipe($.ngAnnotate())

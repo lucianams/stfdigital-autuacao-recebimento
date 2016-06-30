@@ -10,7 +10,7 @@ describe('Preautuação de processo recursal', () => {
                 
     it ('Deveria logar na tela', () => {
         loginPage.open();
-        loginPage.login('sayajin', '123');
+        loginPage.login('preautuador-recursal', '123');
     });
     
     it ('Deveria acessar a pagina de peticao física', () => {

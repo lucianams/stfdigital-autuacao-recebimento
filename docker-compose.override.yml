@@ -4,3 +4,38 @@ services:
     ports:
      - "5672:5672"
      - "15672:15672"
+  discovery:
+    ports:
+     - "8761:8761"
+     - "47961:47961"
+    environment:
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47961,suspend=n
+  gateway:
+    ports:
+     - "8765:8765"
+     - "47965:47965"
+    environment:
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47965,suspend=n
+  services:
+    ports:
+     - "8081:8081"
+     - "8181:8181"
+     - "47981:47981"
+    environment:
+     - spring.profiles.active=development
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47981,suspend=n
+  mongo:
+    ports:
+     - "27017:27017"
+  documents:
+    command: --onlyoffice.documentserver.host=eti078143 --onlyoffice.documentserver.protocol=https
+    ports:
+     - "8094:8094"
+     - "8194:8194"
+     - "47994:47994"
+    environment:
+     - spring.profiles.active=development
+     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47994,suspend=n
+  ui:
+    ports:
+     - "8443:8443"

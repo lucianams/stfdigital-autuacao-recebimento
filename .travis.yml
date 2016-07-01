@@ -4,6 +4,10 @@ jdk:
   - oraclejdk8
 services:
   - docker
+addons:
+  hosts:
+    - docker
+    - eti078082
 before_install: ./upgrade-docker.sh
 install:
   - git clone https://github.com/supremotribunalfederal/stfdigital-plataforma-core

@@ -138,9 +138,14 @@ task gulpTestUnit(type: GulpTask) {
     args = ['test:unit']
 }
 
+task gulpTestE2E(type: GulpTask) {
+    args = ['test:e2e', '--e2eBaseUrl', 'https://docker:8443', '--pattern', 'peticaofisica', '--e2eSeleniumAddress', 'http://docker:4444/wd/hub']
+}
+
 task gulpBuildDist(type: GulpTask) {
     args = ['build:dist']
 }
+
 npmInstall.dependsOn npm_prune
 gulpBuildDist.dependsOn tasks.npmInstall
 processResources.dependsOn tasks.gulpBuildDist

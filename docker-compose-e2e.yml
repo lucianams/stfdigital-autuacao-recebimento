@@ -1,15 +1,20 @@
 version: '2'
 services:
+  gateway:
+    ports:
+     - "8765:8765"
+  documents:
+    command: --onlyoffice.documentserver.host=eti078082 --onlyoffice.documentserver.protocol=https
+    environment:
+     - spring.profiles.active=development
+  ui:
+    ports:
+     - "8443:8443"
   recebimento:
     container_name: recebimento
     image: recebimento
-    ports:
-     - "8091:8091"
-     - "8191:8191"
-     - "47991:47991"
     environment:
-     - spring.profiles.active=development
-     - JAVA_OPTS=-Xdebug, -Xrunjdwp:server=y,transport=dt_socket,address=47991,suspend=n
+     - spring.profiles.active=development,e2e
     depends_on:
      - rabbit
      - discovery

@@ -11,6 +11,6 @@ docker-compose $COMPOSE_FILES_PARAMS up -d
 
 gradle gulpTestE2E
 
-docker-compose $COMPOSE_FILES_PARAMS down
-docker stop selenium
-docker rm selenium
+#docker-compose $COMPOSE_FILES_PARAMS down
+#docker stop selenium
+#docker rm selenium

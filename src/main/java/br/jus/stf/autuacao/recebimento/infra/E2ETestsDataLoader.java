@@ -32,7 +32,7 @@ public class E2ETestsDataLoader {
 				"prepararOficioDevolucaoRemessaOriginario.sql");
 	}
 
-	protected void loadDataTests(String... scriptsSql) throws SQLException {
+	private void loadDataTests(String... scriptsSql) throws SQLException {
 		Connection connection = null;
 		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 

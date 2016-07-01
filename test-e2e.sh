@@ -9,7 +9,6 @@ docker run -d --name=selenium --net host -p 4444:4444 selenium/standalone-chrome
 docker-compose $COMPOSE_FILES_PARAMS up -d
 ./wait-up.sh "https://docker:8765/recebimento/info" 600
 ./wait-up.sh "https://docker:8765/documents/info" 30
-./wait-up.sh "https://docker/OnlineEditorsExample/" 30
 
 gradle gulpTestE2E
 

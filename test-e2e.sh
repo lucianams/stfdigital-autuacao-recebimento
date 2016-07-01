@@ -10,6 +10,9 @@ docker-compose $COMPOSE_FILES_PARAMS up -d
 ./wait-up.sh "https://docker:8765/recebimento/info" 600
 ./wait-up.sh "https://docker:8765/documents/info" 30
 
+free -m
+df -h
+
 gradle gulpTestE2E
 
 docker-compose $COMPOSE_FILES_PARAMS down

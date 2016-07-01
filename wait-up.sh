@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 if [ $# -lt 1 ]; then
     printf 'First parameter URL required.'

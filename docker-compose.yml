@@ -3,9 +3,6 @@ services:
   rabbit:
     container_name: rabbit
     image: rabbitmq:management
-    ports:
-     - "5672:5672"
-     - "15672:15672"
   discovery:
     container_name: discovery
     image: supremotribunalfederal/stfdigital-plataforma-discovery

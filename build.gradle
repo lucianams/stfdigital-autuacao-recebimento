@@ -139,7 +139,7 @@ task gulpTestUnit(type: GulpTask) {
 }
 
 task gulpTestE2E(type: GulpTask) {
-    args = ['test:e2e', '--e2eBaseUrl', 'https://docker:8443', '--pattern', 'peticaofisica', '--e2eSeleniumAddress', 'http://docker:4444/wd/hub']
+    args = ['test:e2e', '--e2eBaseUrl', 'https://docker:8443', '--e2eSeleniumAddress', 'http://docker:4444/wd/hub']
 }
 
 task gulpBuildDist(type: GulpTask) {

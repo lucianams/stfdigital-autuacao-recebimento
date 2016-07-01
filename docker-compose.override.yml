@@ -39,3 +39,10 @@ services:
   ui:
     ports:
      - "8443:8443"
+  onlyoffice:
+    container_name: onlyoffice-ambassador
+    image: svendowideit/ambassador
+    ports:
+     - "443:443"
+    environment:
+     - ONLYOFFICE_PORT_443_TCP=tcp://10.112.20.123:443

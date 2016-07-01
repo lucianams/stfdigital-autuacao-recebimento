@@ -4,7 +4,7 @@ services:
     ports:
      - "8765:8765"
   documents:
-    command: --onlyoffice.documentserver.host=eti078082 --onlyoffice.documentserver.protocol=https
+    command: --onlyoffice.documentserver.host=docker --onlyoffice.documentserver.protocol=https
     environment:
      - spring.profiles.active=development
   ui:
@@ -18,3 +18,13 @@ services:
     depends_on:
      - rabbit
      - discovery
+  onlyoffice:
+    container_name: onlyoffice
+    image: stf/onlyofficeds-runner
+    ports:
+     - "443:443"
+    stdin_open: true
+    environment:
+     - SSL_CERTIFICATE_PATH=/certs/docker/onlyoffice.crt
+     - SSL_KEY_PATH=/certs/docker/onlyoffice.key
+     - SSL_DHPARAM_PATH=/certs/docker/dhparam.pem

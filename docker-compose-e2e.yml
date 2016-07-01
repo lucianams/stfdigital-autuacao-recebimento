@@ -20,7 +20,7 @@ services:
      - discovery
   onlyoffice:
     container_name: onlyoffice
-    image: stf/onlyofficeds-runner
+    image: supremotribunalfederal/onlyofficeds
     ports:
      - "443:443"
     stdin_open: true

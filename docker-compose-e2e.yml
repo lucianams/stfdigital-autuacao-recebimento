@@ -1,5 +1,33 @@
 version: '2'
 services:
+  discovery:
+    environment:
+     - JAVA_OPTS=-Xmx512m, -Xms512m
+  gateway:
+    ports:
+     - "8765:8765"
+  services:
+    environment:
+     - JAVA_OPTS=-Xmx512m, -Xms512m
+  documents:
+    command: --onlyoffice.documentserver.host=docker --onlyoffice.documentserver.protocol=https
+    environment:
+     - JAVA_OPTS=-Xmx512m, -Xms512m
+    environment:
+     - spring.profiles.active=development
+  ui:
+    ports:
+     - "8443:8443"
+  recebimento:
+    container_name: recebimento
+    image: recebimento
+    environment:
+     - JAVA_OPTS=-Xmx512m, -Xms512m
+    environment:
+     - spring.profiles.active=development,e2e
+    depends_on:
+     - rabbit
+     - discovery
   onlyoffice:
     container_name: onlyoffice
     image: supremotribunalfederal/onlyofficeds
@@ -7,8 +35,6 @@ services:
      - "443:443"
     stdin_open: true
     mem_limit: 2000000000
-    environment:
-     - JAVA_OPTS=-Xmx512m
     environment:
      - SSL_CERTIFICATE_PATH=/certs/docker/onlyoffice.crt
      - SSL_KEY_PATH=/certs/docker/onlyoffice.key

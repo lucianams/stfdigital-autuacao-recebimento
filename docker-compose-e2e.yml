@@ -1,18 +1,20 @@
 version: '2'
 services:
   discovery:
+    ports:
+     - "8761:8761"
     environment:
-     - JAVA_OPTS=-Xmx512m, -Xms512m
+     - JAVA_OPTS=-Xmx512m -Xms512m
   gateway:
     ports:
      - "8765:8765"
   services:
     environment:
-     - JAVA_OPTS=-Xmx512m, -Xms512m
+     - JAVA_OPTS=-Xmx512m -Xms512m
   documents:
     command: --onlyoffice.documentserver.host=docker --onlyoffice.documentserver.protocol=https
     environment:
-     - JAVA_OPTS=-Xmx512m, -Xms512m
+     - JAVA_OPTS=-Xmx512m -Xms512m
     environment:
      - spring.profiles.active=development
   ui:
@@ -22,7 +24,7 @@ services:
     container_name: recebimento
     image: recebimento
     environment:
-     - JAVA_OPTS=-Xmx512m, -Xms512m
+     - JAVA_OPTS=-Xmx512m -Xms512m
     environment:
      - spring.profiles.active=development,e2e
     depends_on:

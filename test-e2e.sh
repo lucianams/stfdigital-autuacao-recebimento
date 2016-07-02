@@ -13,6 +13,7 @@ docker-compose $COMPOSE_FILES_PARAMS up -d
 
 free -m
 df -h
+docker stats --no-stream
 
 gradle gulpTestE2E
 

@@ -1,10 +1,15 @@
 version: '2'
 services:
+  discovery:
+    mem_limit: 500000000
   gateway:
     ports:
      - "8765:8765"
+  services:
+    mem_limit: 500000000
   documents:
     command: --onlyoffice.documentserver.host=docker --onlyoffice.documentserver.protocol=https
+    mem_limit: 500000000
     environment:
      - spring.profiles.active=development
   ui:
@@ -13,6 +18,7 @@ services:
   recebimento:
     container_name: recebimento
     image: recebimento
+    mem_limit: 500000000
     environment:
      - spring.profiles.active=development,e2e
     depends_on:
@@ -24,6 +30,7 @@ services:
     ports:
      - "443:443"
     stdin_open: true
+    mem_limit: 2000000000
     environment:
      - SSL_CERTIFICATE_PATH=/certs/docker/onlyoffice.crt
      - SSL_KEY_PATH=/certs/docker/onlyoffice.key

@@ -85,7 +85,7 @@ dependencies {
         
     compile("com.mangofactory:swagger-springmvc:$swaggerVersion")
     
-    compile("br.jus.stf.digital:core:0.0.1-SNAPSHOT")
+    compile("br.jus.stf.digital:core:0.0.1-SNAPSHOT") { changing = true }
     
     compile("com.h2database:h2")
     

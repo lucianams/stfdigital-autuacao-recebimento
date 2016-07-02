@@ -17,12 +17,6 @@ until $(curl --insecure --output /dev/null --silent --fail $URL) || [ $COUNTER -
     printf '.'
     sleep $STEP_SIZE
     COUNTER=$(($COUNTER + 1))
-    docker logs discovery
-    docker logs gateway
-    docker logs services
-    docker logs documents
-    docker logs recebimento
-    docker logs onlyoffice
 done
 if [ $COUNTER -eq $MAX_RETRIES ]; then
     printf "\nTimeout after "$(( $COUNTER * $STEP_SIZE))" second(s)."

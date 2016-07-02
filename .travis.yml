@@ -7,12 +7,6 @@ services:
 addons:
   hosts:
     - docker
-    - eti078082
 before_install: ./upgrade-docker.sh
-install:
-  - free -m
-  - git clone https://github.com/supremotribunalfederal/stfdigital-plataforma-core
-  - cd stfdigital-plataforma-core
-  - gradle install
-  - cd -
+install: true
 script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh

@@ -10,13 +10,16 @@ services:
      - "8765:8765"
   services:
     environment:
+     - spring.profiles.active=development
      - JAVA_OPTS=-Xmx512m -Xms512m
   documents:
-    command: --onlyoffice.documentserver.host=docker --onlyoffice.documentserver.protocol=https
     environment:
      - JAVA_OPTS=-Xmx512m -Xms512m
-    environment:
      - spring.profiles.active=development
+     - onlyoffice.documentserver.host=gateway
+     - onlyoffice.server.address=https://docker:443
+    links:
+     - onlyoffice:docker
   ui:
     ports:
      - "8443:8443"

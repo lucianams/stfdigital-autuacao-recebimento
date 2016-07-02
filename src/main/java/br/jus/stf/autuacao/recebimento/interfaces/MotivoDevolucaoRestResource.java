@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wordnik.swagger.annotations.ApiOperation;
 
-import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.MotivoDevolucaoDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.MotivoDevolucaoDtoAssembler;

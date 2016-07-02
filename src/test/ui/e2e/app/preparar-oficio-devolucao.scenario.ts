@@ -2,7 +2,7 @@ import {LoginPage} from "./pages/login.page";
 import {PrincipalPage}  from "./pages/principal.page";
 import {PrepararOficioDevolucaoPage} from "./pages/preparar-oficio-devolucao.page";
 
-xdescribe('Preparação do Ofício de Devolução', () => {	
+describe('Preparação do Ofício de Devolução', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();

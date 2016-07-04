@@ -6,18 +6,21 @@ services:
      - "5672:5672"
      - "15672:15672"
   discovery:
+    image: discovery
     ports:
      - "8761:8761"
      - "47961:8000"
     environment:
      - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}
   gateway:
+    image: gateway
     ports:
      - "8765:8765"
      - "47965:${JAVA_DEBUG_PORT}"
     environment:
      - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}     
   services:
+    image: services
     ports:
      - "8081:8081"
      - "8181:8181"
@@ -29,6 +32,7 @@ services:
     ports:
      - "27017:27017"
   documents:
+    image: documents
     ports:
      - "8094:8094"
      - "8194:8194"
@@ -41,15 +45,17 @@ services:
     links:
      - onlyoffice:docker
   ui:
+    image: plataforma-ui
     ports:
      - "8443:8443"
   userauthentication:
+    image: userauthentication
     ports:
      - "8095:8095"
      - "8195:8195"
      - "47995:${JAVA_DEBUG_PORT}"
     environment:
-     - spring.profiles.active=development
+     - spring.profiles.active=${JAVA_SERVICE_SPRING_PROFILES}
      - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}
   onlyoffice:
     image: svendowideit/ambassador

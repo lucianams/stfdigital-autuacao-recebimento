@@ -1,4 +1,5 @@
-# Define a configuração dos serviços para rodar localmente.
+# Define a configuração padrão complementar dos serviços
+# As variáveis utilizadas neste arquivo estão definidas no arquivo .env
 version: '2'
 services:
   rabbit:

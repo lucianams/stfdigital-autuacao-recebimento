@@ -1,3 +1,5 @@
+# Define a configuração para rodar os testes e2e
+# As variáveis utilizadas neste arquivo estão definidas no arquivo .env
 version: '2'
 services:
   discovery:

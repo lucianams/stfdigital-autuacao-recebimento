@@ -1,7 +1,12 @@
 package br.jus.stf.autuacao.recebimento.interfaces.tarefas;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.activiti.engine.impl.persistence.entity.TaskEntity;
+import org.activiti.engine.task.DelegationState;
+import org.activiti.engine.task.Task;
 
 /**
  * @author Rodrigo Barreiros
@@ -15,11 +20,11 @@ public class TarefaDto {
     
     private String title;
     
-    private String notes;
+    private String state;
     
     private Date startDate;
 
-    private String dueDate;
+    private Date dueDate;
 
     private boolean completed;
     
@@ -27,18 +32,20 @@ public class TarefaDto {
 
     private boolean important;
     
-    private boolean deleted;
+    private String notes;
     
-    private List<RotuloDto> tags;
+    private List<RotuloDto> tags = new LinkedList<RotuloDto>();
 
-	public TarefaDto(String id, String title, Date startDate, boolean completed, boolean starred, boolean important, List<RotuloDto> tags) {
+	public TarefaDto(String id, TaskEntity task) {
 		this.id = id;
-		this.title = title;
-		this.startDate = startDate;
-		this.completed = completed;
-		this.starred = starred;
-		this.important = important;
-		this.tags = tags;
+		this.title = task.getName() + " : " + id;
+		this.state = task.getTaskDefinitionKey();
+		this.startDate = task.getCreateTime();
+		this.dueDate = task.getDueDate();
+		this.completed = DelegationState.RESOLVED.equals(task.getDelegationState()) || task.isDeleted();
+		this.starred = Boolean.TRUE.equals(task.getTaskLocalVariables().get("starred"));
+		this.important = task.getPriority() > Task.DEFAULT_PRIORITY;
+		this.notes = (String) task.getTaskLocalVariables().get("notes");
 	}
 	
 	public String getId() {
@@ -49,15 +56,15 @@ public class TarefaDto {
 		return title;
 	}
 	
-	public String getNotes() {
-		return notes;
+	public String getState() {
+		return state;
 	}
 	
 	public Date getStartDate() {
 		return startDate;
 	}
 	
-	public String getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 	
@@ -73,8 +80,8 @@ public class TarefaDto {
 		return important;
 	}
 	
-	public boolean isDeleted() {
-		return deleted;
+	public String getNotes() {
+		return notes;
 	}
 	
 	public List<RotuloDto> getTags() {

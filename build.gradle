@@ -140,8 +140,11 @@ task gulpTestUnit(type: GulpTask) {
     args = ['test:unit']
 }
 
+ext.e2eBaseUrl = project.hasProperty('e2eBaseUrl') ? project.getProperty('e2eBaseUrl') : 'https://docker:8443'
+ext.e2eSeleniumAddress = project.hasProperty('e2eSeleniumAddress') ? project.getProperty('e2eSeleniumAddress') : 'http://docker:4444/wd/hub'
+
 task gulpTestE2E(type: GulpTask) {
-    args = ['test:e2e', '--e2eBaseUrl', 'https://docker:8443', '--e2eSeleniumAddress', 'http://docker:4444/wd/hub']
+    args = ['test:e2e', '--e2eBaseUrl', e2eBaseUrl, '--e2eSeleniumAddress', e2eSeleniumAddress]
 }
 
 task gulpBuildDist(type: GulpTask) {

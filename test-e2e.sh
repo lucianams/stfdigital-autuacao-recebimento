@@ -15,4 +15,3 @@ docker stats --no-stream
 gradle gulpTestE2E
 
 docker-compose $COMPOSE_FILES_PARAMS down
-docker stop selenium && docker rm selenium

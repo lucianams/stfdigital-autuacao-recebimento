@@ -17,6 +17,7 @@ cache:
     - node_modules
     - $HOME/docker_cache
 before_install:
+  - docker-compose -f docker-compose.yml -f docker-compose-e2e.yml&
   - ./upgrade-docker.sh
   - mkdir -p $HOME/docker_cache
 install: docker load -i $HOME/docker_cache/docker.tar || true

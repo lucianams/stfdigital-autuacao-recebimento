@@ -17,8 +17,8 @@ cache:
     - node_modules
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y gzip gzcat
+  - sudo apt-get install -y gzip tar
   - ./upgrade-docker.sh
-install: gzcat $HOME/docker.tar | docker load -i || true
+install: tar -xzf $HOME/docker.tar | docker load -i || true
 #script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
 script: gradle docker && gradle gulpTestUnit

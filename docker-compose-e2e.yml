@@ -44,3 +44,12 @@ services:
      - SSL_CERTIFICATE_PATH=/certs/docker/onlyoffice.crt
      - SSL_KEY_PATH=/certs/docker/onlyoffice.key
      - SSL_DHPARAM_PATH=/certs/docker/dhparam.pem
+  selenium:
+    container_name: selenium
+    image: selenium/standalone-chrome:2.53.0
+    ports:
+     - "4444:4444"
+    depends_on:
+     - ui
+    links:
+     - ui:docker

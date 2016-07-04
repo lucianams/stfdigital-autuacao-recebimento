@@ -20,8 +20,4 @@ before_install:
   - ./upgrade-docker.sh
   - mkdir -p $HOME/docker_cache
 install: docker load -i $HOME/docker_cache/docker.tar || true
-script:
-# Utilizando (test $? -eq 0) apenas para permitir separar os blocos de construção.
-  - gradle docker
-  - (test $? -eq 0) && gradle gulpTestUnit
-  - (test $? -eq 0) && ./test-e2e.sh
+script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh

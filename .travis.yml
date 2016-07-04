@@ -9,7 +9,7 @@ addons:
     - docker
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  - docker save recebimento $(docker history -q recebimento | tail -n +2 | grep -v \<missing\> | tr '\n' ' ') | gzip > $HOME/docker_cache/docker.tar.gz
+  - docker save stfdigital-autuacao-recebimento $(docker history -q stfdigital-autuacao-recebimento | tail -n +2 | grep -v \<missing\> | tr '\n' ' ') -o $HOME/docker_cache/docker.tar
 cache:
   directories:
     - $HOME/.gradle/caches/
@@ -19,7 +19,5 @@ cache:
 before_install:
   - ./upgrade-docker.sh
   - mkdir -p $HOME/docker_cache
-install: zcat $HOME/docker_cache/docker.tar.gz | docker load || true
-#script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
-script: gradle docker && gradle gulpTestUnit
-#
+install: docker load -i $HOME/docker_cache/docker.tar || true
+script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh

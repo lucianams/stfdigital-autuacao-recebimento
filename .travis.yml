@@ -9,7 +9,7 @@ addons:
     - docker
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
-  - docker save recebimento $(docker history -q recebimento | tail -n +2 | grep -v \<missing\> | tr '\n' ' ') | gzip > $$HOME/docker_cache/docker.tar.gz
+  - docker save recebimento $(docker history -q recebimento | tail -n +2 | grep -v \<missing\> | tr '\n' ' ') | gzip > $HOME/docker_cache/docker.tar.gz
 cache:
   directories:
     - $HOME/.gradle/caches/

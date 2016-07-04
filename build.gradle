@@ -10,6 +10,7 @@ buildscript {
         swaggerVersion = '1.0.2'
         guavaVersion = '19.0'
         flywayVersion = '4.0'
+        stfdigitalCoreVersion = '0.0.1-SNAPSHOT'
     }
     repositories {
         mavenLocal()
@@ -83,9 +84,9 @@ dependencies {
         
     compile("org.codehaus.jackson:jackson-mapper-asl:${jacksonMapperVersion}")
         
-    compile("com.mangofactory:swagger-springmvc:$swaggerVersion")
+    compile("com.mangofactory:swagger-springmvc:${swaggerVersion}")
     
-    compile("br.jus.stf.digital:core:0.0.1-SNAPSHOT") { changing = true }
+    compile("br.jus.stf.digital:core:${stfdigitalCoreVersion}")
     
     compile("com.h2database:h2")
     
@@ -93,7 +94,7 @@ dependencies {
     
     testCompile("com.jayway.jsonpath:json-path")
     
-    testCompile("org.springframework.boot:spring-boot-starter-test")
+    compile("org.springframework.boot:spring-boot-starter-test")
 }
 
 import org.gradle.plugins.ide.eclipse.model.SourceFolder 
@@ -129,7 +130,7 @@ node {
 // --cache local para permitir executar npm install em paralelo
 // Permitindo parametrizar o registro npm com o objetivo de poder usar um proxy local para melhorar o tempo de construção
 npmInstall {
-    args = ['--cache', 'node_cache']
+    args = ['--cache', 'node_cache', '--loglevel', 'info']
     if (project.hasProperty('npmRegistry')) {
         args += ['--registry', project.getProperty('npmRegistry')]
     }
@@ -152,6 +153,42 @@ gulpBuildDist.dependsOn tasks.npmInstall
 processResources.dependsOn tasks.gulpBuildDist
 
 ext.dockerImageTag = project.hasProperty('dockerImageTag') ? project.getProperty('dockerImageTag') : ''
+
+// Diretório do contexto Docker
+ext.dockerDir = "${project.buildDir}" + '/docker'
+// Caminho do arquivo Jar no contexto do Docker
+ext.dockerAppJarFile = dockerDir + '/' + jar.baseName + '.jar'
+// Essas bibliotecas estarão em uma layer adicional do Docker, de modo a otimizar seu mecanismo de cache
+ext.additionalDockerLayerLibs = ['lib/core-' + ext.stfdigitalCoreVersion + '.jar']
+
+// Extendendo a task dockerPrepare para explodir o Jar e permitir criar layers dockers para cada categoria de libs
+dockerPrepare {
+    doLast {
+        // Layer Docker com as libs externas, atualizadas com menos frequência e por isso estarão em uma layer abaixo das outras
+        copy {
+            from(zipTree(file(dockerAppJarFile))) {
+                include 'lib/**'
+                exclude additionalDockerLayerLibs
+            }
+            into dockerDir + '/app-lib-layer'
+        }
+        // Layer Docker adicional para as libs do stfdigital, são atualizadas com maior frequência que as libs externas
+        copy {
+            from(zipTree(file(dockerAppJarFile))) {
+                include additionalDockerLayerLibs
+            }
+            into dockerDir + '/app-additional-layer'
+        }
+        // Layer Docker da aplicação em si, conterá um Jar pequeno, o que permite otimizar o pull da imagem do registro.
+        copy {
+            from(zipTree(file(dockerAppJarFile))) {
+                exclude 'lib/**'
+            }
+            into dockerDir + '/app-layer'
+        }
+        delete dockerAppJarFile
+    }
+}
 
 docker {
     name jar.baseName + (dockerImageTag ? ':' + dockerImageTag : '')

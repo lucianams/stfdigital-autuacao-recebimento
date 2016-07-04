@@ -9,13 +9,16 @@ addons:
     - docker
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - docker save | gzip > $HOME/docker.tar recebimento
 cache:
   directories:
     - $HOME/.gradle/caches/
     - node_cache
     - node_modules
-before_install: ./upgrade-docker.sh
-install: true
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y gzip gzcat
+  - ./upgrade-docker.sh
+install: gzcat $HOME/docker.tar | docker load -i || true
 #script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
 script: gradle docker && gradle gulpTestUnit
-#

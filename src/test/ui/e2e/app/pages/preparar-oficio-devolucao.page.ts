@@ -1,5 +1,7 @@
 import ElementFinder = protractor.ElementFinder;
 
+import helpers = require('protractor-helpers');
+
 export class PrepararOficioDevolucaoPage {
 	
 	public open(): void {
@@ -30,12 +32,7 @@ export class PrepararOficioDevolucaoPage {
 	}
 	
 	public aguardarTextoCarregado(): void {
-		browser.wait(() => {
-			var els = element.all(by.css('.editor-directive.edicao-iniciada'));
-			return els.count().then(function(size) {
-				return size > 0;
-			});
-		}, 10000);
+		helpers.waitForElement(element(by.css('.editor-directive.edicao-iniciada')), 20000);
 	}
 	
 	public finalizarElaboracao(): void {

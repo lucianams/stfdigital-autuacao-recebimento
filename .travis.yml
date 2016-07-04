@@ -19,7 +19,7 @@ cache:
 before_install:
   - ./upgrade-docker.sh
   - mkdir -p $HOME/docker_cache
-install: tar -xzf $HOME/docker_cache/docker.tar.gz | docker load -i || true
+install: zcat $HOME/docker_cache/docker.tar.gz | docker load || true
 #script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
 script: gradle docker && gradle gulpTestUnit
 #

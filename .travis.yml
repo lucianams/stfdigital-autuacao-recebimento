@@ -22,3 +22,4 @@ before_install:
 install: tar -xzf $HOME/docker_cache/docker.tar.gz | docker load -i || true
 #script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
 script: gradle docker && gradle gulpTestUnit
+#

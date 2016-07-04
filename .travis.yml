@@ -18,3 +18,4 @@ before_install: ./upgrade-docker.sh
 install: true
 #script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
 script: gradle docker && gradle gulpTestUnit
+#

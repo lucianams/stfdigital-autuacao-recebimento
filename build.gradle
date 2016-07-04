@@ -191,7 +191,7 @@ dockerPrepare {
 }
 
 docker {
-    name jar.baseName + (dockerImageTag ? ':' + dockerImageTag : '')
+    name dockerImageName + (dockerImageTag ? ':' + dockerImageTag : '')
     dockerfile 'src/main/docker/Dockerfile'
     files 'src/main/docker/docker-entrypoint.sh', 'truststores/truststore.jks'
     dependsOn tasks.jar, tasks.bootRepackage, tasks.build

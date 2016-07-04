@@ -17,7 +17,7 @@ cache:
     - node_modules
     - $HOME/docker_cache
 before_install:
-  - ./upgrade-docker.sh
+  - ./scripts/upgrade-docker.sh
   - mkdir -p $HOME/docker_cache
 install: docker load -i $HOME/docker_cache/docker.tar || true
-script: gradle docker && gradle gulpTestUnit && ./test-e2e.sh
+script: gradle docker && gradle gulpTestUnit && ./scripts/test-e2e.sh

@@ -20,6 +20,6 @@ export class LoginPage {
         this.usernameInput.sendKeys(username);
         this.passwordInput.sendKeys(password);
         this.submitButton.click();
-        helpers.waitForElementToDisappear(this.submitButton, 5000);
+        helpers.waitForElementToDisappear(this.submitButton);
     }
 }

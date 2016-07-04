@@ -18,8 +18,6 @@ services:
      - spring.profiles.active=development
      - onlyoffice.documentserver.host=gateway
      - onlyoffice.server.address=https://docker:443
-    links:
-     - onlyoffice:docker
   ui:
     ports:
      - "8443:8443"
@@ -50,6 +48,15 @@ services:
     ports:
      - "4444:4444"
     depends_on:
+     - docker
+  docker:
+    container_name: docker-ambassador
+    image: svendowideit/ambassador
+    environment:
+     - UI_PORT_8443_TCP=tcp://ui:8443
+     - GATEWAY_PORT_8765_TCP=tcp://gateway:8765
+     - ONLYOFFICE_PORT_443=tcp://onlyoffice:443
+    depends_on:
      - ui
-    links:
-     - ui:docker
+     - gateway
+     - onlyoffice

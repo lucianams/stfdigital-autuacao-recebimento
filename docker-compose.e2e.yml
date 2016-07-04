@@ -4,40 +4,35 @@ services:
     ports:
      - "8761:8761"
     environment:
-     - JAVA_OPTS=-Xmx512m -Xms512m
+     - JAVA_OPTS=${JAVA_SERVICE_OPTS}
   gateway:
     ports:
      - "8765:8765"
   services:
     environment:
-     - spring.profiles.active=development
-     - JAVA_OPTS=-Xmx512m -Xms512m
+     - spring.profiles.active=${JAVA_SERVICE_SPRING_PROFILES}
+     - JAVA_OPTS=${JAVA_SERVICE_OPTS}
   documents:
     environment:
-     - JAVA_OPTS=-Xmx512m -Xms512m
-     - spring.profiles.active=development
+     - JAVA_OPTS=${JAVA_SERVICE_OPTS}
+     - spring.profiles.active=${JAVA_SERVICE_SPRING_PROFILES}
      - onlyoffice.documentserver.host=gateway
      - onlyoffice.server.address=https://docker:443
-  ui:
-    ports:
-     - "8443:8443"
   recebimento:
     container_name: recebimento
     image: stfdigital-autuacao-recebimento
     environment:
-     - JAVA_OPTS=-Xmx512m -Xms512m
-    environment:
-     - spring.profiles.active=development,e2e
+     - JAVA_OPTS=${JAVA_SERVICE_OPTS}
+     - spring.profiles.active=${JAVA_SERVICE_SPRING_PROFILES},e2e
     depends_on:
      - rabbit
      - discovery
   onlyoffice:
-    container_name: onlyoffice
     image: supremotribunalfederal/onlyofficeds
-    ports:
-     - "443:443"
     stdin_open: true
     mem_limit: 2000000000
+    ports:
+     - "443:443"
     environment:
      - SSL_CERTIFICATE_PATH=/certs/docker/onlyoffice.crt
      - SSL_KEY_PATH=/certs/docker/onlyoffice.key

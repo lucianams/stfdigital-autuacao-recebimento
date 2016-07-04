@@ -1,3 +1,4 @@
+# Define a configuração padrão dos serviços e suas dependências. 
 version: '2'
 services:
   rabbit:
@@ -10,13 +11,13 @@ services:
     container_name: gateway
     image: supremotribunalfederal/stfdigital-plataforma-gateway
     depends_on:
-     - discovery     
+     - discovery
   services:
     container_name: services
     image: supremotribunalfederal/stfdigital-plataforma-services
     depends_on:
      - rabbit
-     - discovery     
+     - discovery
   mongo:
     container_name: mongo
     image: mongo:3
@@ -26,8 +27,16 @@ services:
     depends_on:
      - mongo
      - discovery
+     - onlyoffice
   ui:
     container_name: ui
     image: supremotribunalfederal/stfdigital-plataforma-ui
     depends_on:
+     - gateway
+  userauthentication:
+    container_name: userauthentication
+    image: supremotribunalfederal/stfdigital-plataforma-userauthentication
+    depends_on:
      - discovery
+  onlyoffice:
+    container_name: onlyoffice

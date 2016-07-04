@@ -84,7 +84,7 @@ public class RecebimentoApplicationService {
     @Autowired
     private DevolucaoAdapter devolucaoAdapter;
      
-    @Command(description = "Nova petição física", startProcess = true, listable = false)
+    @Command(description = "Nova Petição Física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
     	Protocolo protocolo = protocoloAdapter.novoProtocolo();
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
@@ -117,7 +117,7 @@ public class RecebimentoApplicationService {
         publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
-    @Command(description = "Preautuação de recursais")
+    @Command(description = "Preautuação de Recursais")
     public void handle(PreautuarRecursalCommand command) {
     	RemessaRecursal remessa = (RemessaRecursal) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");

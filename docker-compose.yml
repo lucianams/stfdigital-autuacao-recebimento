@@ -1,4 +1,4 @@
-# Define a configuração padrão dos serviços e suas dependências. 
+# Define a configuração padrão dos serviços e suas dependências.
 version: '2'
 services:
   rabbit:

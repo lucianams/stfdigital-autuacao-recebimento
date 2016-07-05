@@ -29,6 +29,9 @@ services:
     depends_on:
      - rabbit
      - discovery
+  userauthentication:
+    environment:
+     - spring.profiles.active=${JAVA_SERVICE_SPRING_PROFILES}
   onlyoffice:
     image: supremotribunalfederal/onlyofficeds
     stdin_open: true

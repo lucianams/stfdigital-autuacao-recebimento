@@ -9,7 +9,7 @@ services:
   discovery:
     ports:
      - "8761:8761"
-     - "47961:8000"
+     - "47961:${JAVA_DEBUG_PORT}"
     environment:
      - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}
   gateway:
@@ -17,7 +17,7 @@ services:
      - "8765:8765"
      - "47965:${JAVA_DEBUG_PORT}"
     environment:
-     - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}     
+     - JAVA_OPTS=${JAVA_DEBUG_OPTS} ${JAVA_SERVICE_OPTS}
   services:
     ports:
      - "8081:8081"

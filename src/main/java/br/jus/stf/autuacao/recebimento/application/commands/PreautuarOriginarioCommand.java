@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * @version 1.0.0
  * @since 15.09.2015
  */
-public class PreautuarRemessaCommand {
+public class PreautuarOriginarioCommand {
 
 	@NotNull
 	private Long protocoloId;
@@ -28,11 +28,11 @@ public class PreautuarRemessaCommand {
 	
     private Set<Long> preferencias;
     
-    public PreautuarRemessaCommand() {
+    public PreautuarOriginarioCommand() {
     	
     }
 	
-	public PreautuarRemessaCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias) {
+	public PreautuarOriginarioCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias) {
 		this.protocoloId = protocoloId;
 		this.classeId = classeId;
 		this.sigilo = sigilo;

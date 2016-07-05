@@ -20,7 +20,7 @@ public class TarefaDto {
     
     private String title;
     
-    private String state;
+    private String command;
     
     private Date startDate;
 
@@ -38,8 +38,8 @@ public class TarefaDto {
 
 	public TarefaDto(String id, TaskEntity task) {
 		this.id = id;
-		this.title = task.getName() + " : " + id;
-		this.state = task.getTaskDefinitionKey();
+		this.title = task.getName();
+		this.command = task.getTaskDefinitionKey();
 		this.startDate = task.getCreateTime();
 		this.dueDate = task.getDueDate();
 		this.completed = DelegationState.RESOLVED.equals(task.getDelegationState()) || task.isDeleted();
@@ -56,8 +56,8 @@ public class TarefaDto {
 		return title;
 	}
 	
-	public String getState() {
-		return state;
+	public String getCommand() {
+		return command;
 	}
 	
 	public Date getStartDate() {

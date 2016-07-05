@@ -26,7 +26,7 @@ export class PreautuacaoService {
     
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
-    	commandService.setValidator('preautuar-remessa', new ValidadorPreautuacao());
+    	commandService.setValidator('preautuar-originario', new ValidadorPreautuacao());
     }
 
     /*
@@ -55,8 +55,7 @@ class ValidadorPreautuacao implements cmd.CommandValidator {
 	constructor() {}
 	
 	public isValid(command: PreautuarRemessaCommand): boolean {
-		if (angular.isString(command.classeId) &&
-			command.preferencias && command.preferencias.length > 0) {
+		if (angular.isString(command.classeId)) {
 			return true;
 		}
 		return false;

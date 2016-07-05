@@ -13,7 +13,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
-import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
 import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
@@ -97,7 +97,7 @@ public class DevolucaoUnitTests {
 	private Remessa remessaValida() {
 		// Apenas para utilizar os dois tipos de remessa (Originária e Recursal)
 		Remessa remessa = (new Random().nextInt() % 2 == 0)
-				? new RemessaOriginaria(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
+				? new RemessaOriginario(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
 						FormaRecebimento.BALCAO, null, Sigilo.PUBLICO, new Recebedor("recebedor", new PessoaId(1L)),
 						Status.PREAUTUACAO)
 				: new RemessaRecursal(new Protocolo(new ProtocoloId(2L), new Numero(2L, 2016)), 1, 0,

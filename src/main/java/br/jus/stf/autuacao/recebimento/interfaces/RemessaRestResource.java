@@ -18,7 +18,7 @@ import br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarOriginarioCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
@@ -88,7 +88,7 @@ public class RemessaRestResource {
     
 
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
-    public void preautuar(@RequestBody @Valid PreautuarRemessaCommand command, BindingResult binding) {
+    public void preautuar(@RequestBody @Valid PreautuarOriginarioCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }

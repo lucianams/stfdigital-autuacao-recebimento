@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRemessaCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarOriginarioCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.DevolucaoAdapter;
@@ -22,7 +22,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
-import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
@@ -84,7 +84,7 @@ public class RecebimentoApplicationService {
     @Autowired
     private DevolucaoAdapter devolucaoAdapter;
      
-    @Command(description = "Nova petição física", startProcess = true, listable = false)
+    @Command(description = "Nova Petição Física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
     	Protocolo protocolo = protocoloAdapter.novoProtocolo();
     	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
@@ -101,9 +101,9 @@ public class RecebimentoApplicationService {
         remessa.identity().toLong();
     }
 
-    @Command(description = "Preautuação")
-    public void handle(PreautuarRemessaCommand command) {
-        RemessaOriginaria remessa = (RemessaOriginaria) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
+    @Command(description = "Preautuação de Originário")
+    public void handle(PreautuarOriginarioCommand command) {
+        RemessaOriginario remessa = (RemessaOriginario) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
         Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
@@ -117,7 +117,7 @@ public class RecebimentoApplicationService {
         publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
-    @Command(description = "Preautuação de recursais")
+    @Command(description = "Preautuação de Recursais")
     public void handle(PreautuarRecursalCommand command) {
     	RemessaRecursal remessa = (RemessaRecursal) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");

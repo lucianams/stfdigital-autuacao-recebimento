@@ -7,7 +7,7 @@
     },
     
     {
-        "id": "preautuar-remessa",
+        "id": "preautuar-originario",
         "stateName": "app.novo-processo.recebimento-preautuacao",
         "urlPrefix": "/novo-processo/preautuacao/originario",
         "src": "recebimento/preautuacao"

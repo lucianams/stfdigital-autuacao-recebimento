@@ -19,13 +19,13 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
  */
 @Entity
 @DiscriminatorValue("ORIGINARIO")
-public class RemessaOriginaria extends Remessa {
+public class RemessaOriginario extends Remessa {
 
-    public RemessaOriginaria() {
+    public RemessaOriginario() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public RemessaOriginaria(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
+    public RemessaOriginario(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
     }
     

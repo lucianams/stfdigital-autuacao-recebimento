@@ -1,6 +1,7 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
+import IStateParams = angular.ui.IStateParamsService;
 import {RemessaService} from './../../services/remessa.service';
 import Properties = app.support.constants.Properties;
 import cmd = app.support.command; 
@@ -8,10 +9,10 @@ import cmd = app.support.command;
 
 /** @ngInject **/
 function config($stateProvider: IStateProvider,
-                properties: any) {
+                properties: Properties) {
 
     $stateProvider.state('app.novo-processo.recebimento-preautuacao', {
-        url : "/preautuacao/originario",
+        url : "/preautuacao/originario/{informationId:int}",
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao.tpl.html",
@@ -20,13 +21,16 @@ function config($stateProvider: IStateProvider,
             }
         },
     	resolve : {
-    		classes : ['app.recebimento.services.RemessaService', (remessaService ) => {
+    		classes : ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
     			return remessaService.listarClassesPorTipoRemessa("ORIGINARIO");
     		}],
-            remessa: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
-                let protocoloId = 9000;
+            remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams: IStateParams) => {
+                let protocoloId = $stateParams['informationId'];
                 return remessaService.consultarRemessa(protocoloId);
             }]
+    	},
+    	params : {
+    		resource: undefined
     	}
     });
 }
@@ -34,7 +38,6 @@ function config($stateProvider: IStateProvider,
 /** @ngInject **/
 function run($translatePartialLoader: ITranslatePartialLoaderService,
 			 properties: Properties) {
-	
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/originario");
 }
 

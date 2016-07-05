@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
-import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
 import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
@@ -35,7 +35,7 @@ public class RemessaOriginarioUnitTests {
 	
 	@Test
 	public void registraRemessaOriginariaValida() {
-		RemessaOriginaria remessa = remessaOriginariaValida();
+		RemessaOriginario remessa = remessaOriginariaValida();
 		
 		assertNotNull("Remessa não pode ser nula.", remessa);
 		assertEquals("Tipo da remessa deve ser ORIGINARIO.", TipoProcesso.ORIGINARIO, remessa.tipoProcesso());
@@ -45,7 +45,7 @@ public class RemessaOriginarioUnitTests {
 	
 	@Test
 	public void preAutuaRemessaOriginaria() {
-		RemessaOriginaria remessa = remessaOriginariaValida();
+		RemessaOriginario remessa = remessaOriginariaValida();
 		Preferencia medidaLiminar = new Preferencia(new PreferenciaId(8L), "Medida Liminar");
 		Preferencia reuPreso = new Preferencia(new PreferenciaId(12L), "Réu Preso");
 		Set<Preferencia> preferenciasClasse = new HashSet<>(2);
@@ -66,7 +66,7 @@ public class RemessaOriginarioUnitTests {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void naoDevePreAutuarRemessaOriginariaComTipoProcessoIncompativel() {
-		RemessaOriginaria remessa = remessaOriginariaValida();
+		RemessaOriginario remessa = remessaOriginariaValida();
 		ClassePeticionavel classe = new ClassePeticionavel(new ClasseId("RE"), "Recurso Extraordinário",
 				TipoProcesso.RECURSAL, null);
 		
@@ -75,7 +75,7 @@ public class RemessaOriginarioUnitTests {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void naoDevePreAutuarRemessaOriginariaComPreferenciaIncompativel() {
-		RemessaOriginaria remessa = remessaOriginariaValida();
+		RemessaOriginario remessa = remessaOriginariaValida();
 		Preferencia medidaLiminar = new Preferencia(new PreferenciaId(8L), "Medida Liminar");
 		ClassePeticionavel classe = new ClassePeticionavel(new ClasseId("ADI"), "Ação Direta de Inconstitucionalidade",
 				TipoProcesso.ORIGINARIO, null);
@@ -87,27 +87,27 @@ public class RemessaOriginarioUnitTests {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void naoDeveCriarRemessaOriginariaComVolumeMenorQue1() {
-		new RemessaOriginaria(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 0, 0,
+		new RemessaOriginario(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 0, 0,
 				FormaRecebimento.BALCAO, null, Sigilo.PUBLICO, new Recebedor("recebedor", new PessoaId(1L)),
 				Status.PREAUTUACAO);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void naoDeveCriarRemessaOriginariaComApensoMenorQue0() {
-		new RemessaOriginaria(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, -1,
+		new RemessaOriginario(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, -1,
 				FormaRecebimento.BALCAO, null, Sigilo.PUBLICO, new Recebedor("recebedor", new PessoaId(1L)),
 				Status.PREAUTUACAO);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void naoDeveCriarRemessaOriginariaParaSedexSemNumero() {
-		new RemessaOriginaria(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
+		new RemessaOriginario(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
 				FormaRecebimento.SEDEX, null, Sigilo.PUBLICO, new Recebedor("recebedor", new PessoaId(1L)),
 				Status.PREAUTUACAO);
 	}
 	
-	private RemessaOriginaria remessaOriginariaValida() {
-		return new RemessaOriginaria(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
+	private RemessaOriginario remessaOriginariaValida() {
+		return new RemessaOriginario(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
 				FormaRecebimento.BALCAO, null, Sigilo.PUBLICO, new Recebedor("recebedor", new PessoaId(1L)),
 				Status.PREAUTUACAO);
 	}

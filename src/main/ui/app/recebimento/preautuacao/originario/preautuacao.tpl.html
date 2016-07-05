@@ -13,7 +13,7 @@
 
                 <form name="basicForm" class="md-inline-form">
                 
-                	<div layout="column" layout-gt-xs="row">
+                	<div layout="row" layout-gt-xs="row">
 	                    <md-input-container flex>
 	                        <label>Quantidade de volumes</label>
 	                        <input ng-model="preautuacao.remessa.qtdVolumes" id="qtdVolumes" ng-disabled="true">
@@ -24,18 +24,18 @@
 	                    </md-input-container>
                     </div>
                     
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
-	                    <md-input-container flex>
+                    <div layout="row" layout-gt-xs="row">
+	                    <md-input-container flex="50">
 	                        <label>Tipo de Recebimento </label>
 	                        <input ng-model="preautuacao.remessa.formaRecebimento" id="formaRecebimento" ng-disabled="true">
 	                    </md-input-container>
-	                    <md-input-container flex>
+	                    <md-input-container flex ng-if="preautuacao.remessa.formaRecebimento === 'SEDEX'">
 	                        <label>Número de Sedex</label>
 	                        <input ng-model="preautuacao.remessa.numeroSedex" id="numeroSedex" ng-disabled="true">
 	                    </md-input-container>
                     </div>
 
-                    <div layout="column" layout-gt-xs="row">
+                    <div layout="row" layout-gt-xs="row">
                     	<md-input-container flex>
                             <label for="classes">Classificação *</label>
                             <md-select ng-model="preautuacao.classe" id="classes" ng-change="preautuacao.carregarPreferencias()">
@@ -45,7 +45,7 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container flex>
-                            <label>Preferências *</label>
+                            <label>Preferências</label>
                             <md-select multiple ng-model="preautuacao.cmdPreautuar.preferencias" id="preferencias">
                                 <md-option ng-repeat="preferencia in preautuacao.preferencias" value="{{preferencia.id}}">
                                     {{preferencia.nome}}
@@ -59,7 +59,7 @@
           					<textarea ng-model="preautuacao.cmdPreautuar.motivo" md-maxlength="150" rows="5" md-select-on-focus id="motivo"></textarea>
         				</md-input-container>
                     </div>
-                    <md-button type="button" class="md-raised md-accent" id="preautuar-remessa" 
+                    <md-button type="button" class="md-raised md-accent" id="preautuar-originario" 
                     	 ng-click ="preautuacao.preautuarProcessoOriginario()" command="preautuacao.cmdPreautuar">
                         	Preautuar
                     </md-button>

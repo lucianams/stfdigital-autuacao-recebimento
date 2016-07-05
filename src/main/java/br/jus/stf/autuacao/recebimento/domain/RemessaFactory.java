@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
-import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginaria;
+import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
 import br.jus.stf.core.shared.processo.Sigilo;
@@ -27,7 +27,7 @@ public class RemessaFactory {
         
 		switch (tipoProcesso) {
 		case ORIGINARIO:
-			remessa = new RemessaOriginaria(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
+			remessa = new RemessaOriginario(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
 			break;
 		case RECURSAL:
 			remessa = new RemessaRecursal(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);

@@ -1,0 +1,4 @@
+image: benediktg/gitlab-ci-java8
+
+build:
+  script: "gradle docker"

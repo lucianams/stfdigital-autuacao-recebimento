@@ -7,13 +7,27 @@ var argv = require('yargs').argv;
 
 var karma = require('karma');
 var runSequence = require('run-sequence');
+var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 
-function runTests(singleRun, done)
+var pathSrcJs = [
+    path.join(conf.paths.dist, '**/*.js')
+];
+
+function runTests(singleRun, done, reportCoverage)
 {
+    var preprocessors = {};
+    if (singleRun) {
+        pathSrcJs.forEach(function (path)
+        {
+            preprocessors[path] = ['coverage'];
+        });
+    }
+
     var localConfig = {
         configFile   : path.resolve(path.join(conf.paths.test, '/karma.conf.js')),
         singleRun    : singleRun,
-        autoWatch    : !singleRun
+        autoWatch    : !singleRun,
+        preprocessors: preprocessors
     };
 
     if (argv.browsers) {
@@ -47,4 +61,14 @@ gulp.task('clean-and-watch-tests', function(done) {
 
 gulp.task('watch-unit', ['compile-ts:unit'], function() {
     gulp.watch(path.join(conf.paths.unit, 'app/**/*.ts'), ['compile-ts:unit']);
+});
+
+gulp.task('remap-istanbul', function () {
+    return gulp.src(path.join(conf.paths.unit, 'coverage/js/coverage.json'))
+        .pipe(remapIstanbul({
+            reports: {
+                'json': path.join(conf.paths.unit, 'coverage/ts/coverage.json'),
+                'html': path.join(conf.paths.unit, 'coverage/ts/html')
+            }
+        }));
 });

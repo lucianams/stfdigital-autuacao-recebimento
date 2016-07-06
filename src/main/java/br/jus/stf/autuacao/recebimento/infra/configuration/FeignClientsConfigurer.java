@@ -1,14 +1,13 @@
 package br.jus.stf.autuacao.recebimento.infra.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
+
+import feign.RequestInterceptor;
 
 /**
  * @author Rodrigo Barreiros
@@ -16,26 +15,13 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
  * @since 1.0.0
  * @since 30.06.2016
  */
+@EnableOAuth2Client
 @Configuration
 public class FeignClientsConfigurer {
 
-	@Autowired
-	private ResourceServerProperties sso;
-	
 	@Bean
-	@ConfigurationProperties(prefix = "security.oauth2.client")
-	public ClientCredentialsResourceDetails clientCredentialsResourceDetails() {
-		return new ClientCredentialsResourceDetails();
-	}
-
-	@Bean
-	public ResourceServerTokenServices tokenServices() {
-		return new UserInfoTokenServices(sso.getUserInfoUri(), sso.getClientId());
-	}
-
-	@Bean
-	public OAuth2RestTemplate clientCredentialsRestTemplate() {
-		return new OAuth2RestTemplate(clientCredentialsResourceDetails());
+	public RequestInterceptor feignRequestInterceptor(OAuth2ClientContext oAuth2ClientContext) {
+		return new OAuth2FeignRequestInterceptor(oAuth2ClientContext, new ClientCredentialsResourceDetails());
 	}
 
 }

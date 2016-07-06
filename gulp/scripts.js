@@ -26,7 +26,7 @@ var processTS = function() {
 
 var scriptsDev = function(js) {
 	return js.pipe($.ngAnnotate())
-			 .pipe($.sourcemaps.write("maps", {sourceRoot: 'source'}))
+			 .pipe($.sourcemaps.write("maps", {sourceRoot: 'source'})) // sourceRoot com caminho relativo para funcionar com o remap-istanbul
 			 .pipe($.size())
 			 .pipe(gulp.dest(conf.paths.dist));
 };
@@ -34,7 +34,7 @@ var scriptsDev = function(js) {
 var scripts = function(js) {
 	return js.pipe($.ngAnnotate())
 			 .pipe($.uglify())
-			 .pipe($.sourcemaps.write("maps", {sourceRoot: 'source'}))
+			 .pipe($.sourcemaps.write("maps", {sourceRoot: 'source'})) // sourceRoot com caminho relativo para funcionar com o remap-istanbul
 			 .pipe($.size())
 			 .pipe(gulp.dest(conf.paths.dist));
 };

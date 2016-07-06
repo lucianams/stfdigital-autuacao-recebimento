@@ -15,7 +15,10 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/bundle.js*").permitAll().anyRequest().authenticated();
+		http.authorizeRequests()
+			.antMatchers("/info").anonymous()
+			.antMatchers("/bundle.js*", "/maps/bundle.js.map*").permitAll()
+			.anyRequest().authenticated();
 	}
 	
 }

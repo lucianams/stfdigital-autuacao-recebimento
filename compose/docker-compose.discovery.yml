@@ -1,0 +1,7 @@
+# Configuração para rodar o onlyoffice localmente
+version: '2'
+services:
+  discovery:
+    image: svendowideit/ambassador
+    environment:
+     - DISCOVERY_PORT_8761_TCP=tcp://10.112.20.50:8761

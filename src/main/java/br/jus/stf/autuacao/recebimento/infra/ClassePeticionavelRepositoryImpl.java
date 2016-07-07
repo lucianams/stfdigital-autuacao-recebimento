@@ -25,6 +25,9 @@ public class ClassePeticionavelRepositoryImpl extends SimpleJpaRepository<Classe
 	
 	private EntityManager entityManager;
 
+	/**
+	 * @param entityManager
+	 */
 	@Autowired
     public ClassePeticionavelRepositoryImpl(EntityManager entityManager) {
         super(ClassePeticionavel.class, entityManager);
@@ -33,9 +36,10 @@ public class ClassePeticionavelRepositoryImpl extends SimpleJpaRepository<Classe
 
 	@Override
 	public List<ClassePeticionavel> findByTipo(TipoProcesso tipo) {
-		TypedQuery<ClassePeticionavel> query = entityManager.createQuery("SELECT classe FROM ClassePeticionavel classe WHERE classe.tipo = :tipo", ClassePeticionavel.class);
+		TypedQuery<ClassePeticionavel> query = entityManager.createQuery("FROM ClassePeticionavel classe WHERE classe.tipo = :tipo", ClassePeticionavel.class);
 		
 		query.setParameter("tipo", tipo);
+		
 		return query.getResultList();
 	}
     

@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarOriginarioCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.DevolucaoAdapter;
 import br.jus.stf.autuacao.recebimento.domain.ProtocoloAdapter;
+import br.jus.stf.autuacao.recebimento.domain.RecebedorAdapter;
 import br.jus.stf.autuacao.recebimento.domain.RemessaFactory;
 import br.jus.stf.autuacao.recebimento.domain.StatusAdapter;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
@@ -40,7 +41,6 @@ import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.documento.TextoId;
 import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
-import br.jus.stf.core.shared.identidade.PessoaId;
 import br.jus.stf.core.shared.preferencia.PreferenciaId;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
@@ -83,24 +83,31 @@ public class RecebimentoApplicationService {
     
     @Autowired
     private DevolucaoAdapter devolucaoAdapter;
+    
+    @Autowired
+    private RecebedorAdapter recebedorAdapter;
      
+    /**
+     * @param command
+     */
     @Command(description = "Nova Petição Física", startProcess = true, listable = false)
     public void handle(RegistrarRemessaCommand command) {
-    	Protocolo protocolo = protocoloAdapter.novoProtocolo();
-    	Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
-    	TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
-    	FormaRecebimento formaRecebimento = FormaRecebimento.valueOf(command.getFormaRecebimento());
-    	Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
-    	//TODO: Alterar para pegar dados do recebedor pelo usuário da sessão.
-    	Recebedor recebedor = new Recebedor("USUARIO_FALSO", new PessoaId(1L));
-    	Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
+		Protocolo protocolo = protocoloAdapter.novoProtocolo();
+		Status status = statusAdapter.nextStatus(protocolo.identity(), command.getTipoProcesso());
+		TipoProcesso tipoProcesso = TipoProcesso.valueOf(command.getTipoProcesso());
+		FormaRecebimento formaRecebimento = FormaRecebimento.valueOf(command.getFormaRecebimento());
+		Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
+		Recebedor recebedor = recebedorAdapter.recebedor();
+		Remessa remessa = remessaFactory.novaRemessa(protocolo, command.getVolumes(), command.getApensos(),
 				formaRecebimento, command.getNumeroSedex(), sigilo, tipoProcesso, recebedor, status);
         
         remessaRepository.save(remessa);
         publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
-        remessa.identity().toLong();
     }
 
+    /**
+     * @param command
+     */
     @Command(description = "Preautuação de Originário")
     public void handle(PreautuarOriginarioCommand command) {
         RemessaOriginario remessa = (RemessaOriginario) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
@@ -117,6 +124,9 @@ public class RecebimentoApplicationService {
         publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
+    /**
+     * @param command
+     */
     @Command(description = "Preautuação de Recursais")
     public void handle(PreautuarRecursalCommand command) {
     	RemessaRecursal remessa = (RemessaRecursal) remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
@@ -133,6 +143,9 @@ public class RecebimentoApplicationService {
         publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
+    /**
+     * @param command
+     */
     @Command(description = "Devolução")
     public void handle(DevolverRemessaCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
@@ -142,6 +155,9 @@ public class RecebimentoApplicationService {
         remessaRepository.save(remessa);
     }
 
+    /**
+     * @param command
+     */
     @Command(description = "Preparar Ofício para Devolução", value = "preparar-oficio-devolucao")
     public void handle(PrepararOficioParaDevolucaoCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
@@ -150,19 +166,19 @@ public class RecebimentoApplicationService {
         ModeloDevolucao modelo = modeloDevolucaoRepository.findOne(new ModeloDocumentoId(command.getModeloId()));
         
         remessa.elaborarDevolucao(motivo, modelo, new TextoId(command.getTextoId()), status);
-        
         devolucaoAdapter.concluirTexto(remessa.devolucao().texto());
-        
         remessaRepository.save(remessa);
     }
 
+    /**
+     * @param command
+     */
     @Command(description = "Assinar Ofício para Devolução", value = "assinar-oficio-devolucao")
     public void handle(AssinarOficioParaDevolucaoCommand command) {
         Remessa remessa = remessaRepository.findOne(new ProtocoloId(command.getProtocoloId()));
         Status status = statusAdapter.nextStatus(remessa.identity());
         
         devolucaoAdapter.assinarTexto(remessa.devolucao().texto(), command.getDocumentoTemporarioId());
-        
         remessa.devolver(status);
         remessaRepository.save(remessa);
     }

@@ -25,6 +25,16 @@ public class RemessaOriginario extends Remessa {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
+    /**
+     * @param protocolo
+     * @param volumes
+     * @param apensos
+     * @param formaRecebimento
+     * @param numeroSedex
+     * @param sigilo
+     * @param recebedor
+     * @param status
+     */
     public RemessaOriginario(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
     }
@@ -34,6 +44,7 @@ public class RemessaOriginario extends Remessa {
 		super.preautuar(classe, preferencias, sigilo, status);
     }
     
+    @Override
     public TipoProcesso tipoProcesso() {
     	return TipoProcesso.ORIGINARIO;
     }

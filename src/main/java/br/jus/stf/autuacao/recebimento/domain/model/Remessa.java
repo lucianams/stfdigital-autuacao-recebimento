@@ -108,7 +108,18 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
-    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
+    /**
+     * @param protocolo
+     * @param volumes
+     * @param apensos
+     * @param formaRecebimento
+     * @param numeroSedex
+     * @param sigilo
+     * @param recebedor
+     * @param status
+     */
+	public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento,
+			String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		Validate.notNull(protocolo, "Protocolo requerido.");
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
@@ -130,6 +141,9 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.status = status;
     }
     
+    /**
+     * @return
+     */
     public abstract TipoProcesso tipoProcesso();
     
     protected void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
@@ -146,6 +160,10 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	this.status = status;
     }
     
+    /**
+     * @param motivacao
+     * @param status
+     */
     public void iniciarDevolucao(String motivacao, Status status) {
     	Validate.notNull(status, "Status requerido.");
     	
@@ -153,6 +171,12 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.status = status;
     }
 
+    /**
+     * @param motivo
+     * @param modelo
+     * @param texto
+     * @param status
+     */
     public void elaborarDevolucao(MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto, Status status) {
     	Validate.notNull(devolucao, "O processo de devolução não está iniciado.");
     	Validate.notNull(status, "Status requerido.");
@@ -161,16 +185,25 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.status = status;
     }
 
+    /**
+     * @param status
+     */
     public void devolver(Status status) {
     	Validate.notNull(status, "Status requerido.");
     	
         this.status = status;
     }
     
+    /**
+     * @return
+     */
     public Numero numero() {
     	return numero;
     }
     
+    /**
+     * @return
+     */
     public Sigilo sigilo() {
     	return sigilo;
     }
@@ -180,26 +213,44 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         return protocoloId;
     }
 
+	/**
+	 * @return
+	 */
 	public ClassePeticionavel classe() {
 		return classe;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer volumes() {
 		return volumes;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer apensos() {
 		return apensos;
 	}
 
+	/**
+	 * @return
+	 */
 	public FormaRecebimento formaRecebimento() {
 		return formaRecebimento;
 	}
 
+	/**
+	 * @return
+	 */
 	public String numeroSedex() {
 		return numeroSedex;
 	}
 
+	/**
+	 * @return
+	 */
 	public Devolucao devolucao() {
 		return devolucao;
 	}

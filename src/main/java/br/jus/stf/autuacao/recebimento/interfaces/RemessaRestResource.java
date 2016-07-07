@@ -72,6 +72,10 @@ public class RemessaRestResource {
 	@Autowired
 	private DevolucaoDtoAssembler devolucaoDtoAssembler;
     
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
     public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -81,12 +85,20 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
     
+    /**
+     * @param id
+     * @return
+     */
     @RequestMapping(value="/{protocoloId}", method = RequestMethod.GET)
     public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id){
     	return  remessaDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
     }
     
 
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
     public void preautuar(@RequestBody @Valid PreautuarOriginarioCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -96,6 +108,10 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
     
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/preautuacao-recursal", method = RequestMethod.POST)
     public void preautuarRecursal(@RequestBody @Valid PreautuarRecursalCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -105,6 +121,10 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
     
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/devolucao", method = RequestMethod.POST)
     public void devolver(@RequestBody @Valid DevolverRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -114,6 +134,10 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
 
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/devolucao-oficio", method = RequestMethod.POST)
     public void prepararOficio(@RequestBody @Valid PrepararOficioParaDevolucaoCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -123,6 +147,10 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
 
+    /**
+     * @param command
+     * @param binding
+     */
     @RequestMapping(value = "/devolucao-assinatura", method = RequestMethod.POST)
     public void assinarOficio(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -132,6 +160,9 @@ public class RemessaRestResource {
         recebimentoApplicationService.handle(command);
     }
 	
+	/**
+	 * @return
+	 */
 	@RequestMapping(value="/formas-recebimento", method = RequestMethod.GET)
     public List<FormaRecebimentoDto> consultarFormasRecebimento(){
     	return Arrays.asList(FormaRecebimento.values()).stream()
@@ -139,25 +170,40 @@ public class RemessaRestResource {
     			.collect(Collectors.toList());
     }
 	
+	/**
+	 * @return
+	 */
 	@RequestMapping(value="/classes", method = RequestMethod.GET)
     public List<ClasseDto> listarClasses(){
-    	return classePeticionavelRepository.findAll().stream()
-    			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
+		return classePeticionavelRepository.findAll().stream().map(classeDtoAssembler::toDto)
+				.collect(Collectors.toList());
     }
 	
+	/**
+	 * @param tipoRemessa
+	 * @return
+	 */
 	@RequestMapping(value="/classes/tipos-remessa/{tipoRemessa}", method = RequestMethod.GET)
     public List<ClasseDto> consultarClassesPorTipoRemessa(@PathVariable("tipoRemessa") String tipoRemessa){
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(tipoRemessa); 
-		return classePeticionavelRepository.findByTipo(tipoProcesso).stream()
-    			.map(classe -> classeDtoAssembler.toDto(classe)).collect(Collectors.toList());
+		
+    	return classePeticionavelRepository.findByTipo(tipoProcesso).stream().map(classeDtoAssembler::toDto)
+				.collect(Collectors.toList());
     }
 	
+	/**
+	 * @return
+	 */
 	@RequestMapping(value="/preferencia", method = RequestMethod.GET)
     public List<PreferenciaDto> listarPrefencias(){
-    	return preferenciaRepository.findAll().stream()
-    			.map(preferencia -> preferenciaDtoAssembler.toDto(preferencia)).collect(Collectors.toList());
+		return preferenciaRepository.findAll().stream().map(preferenciaDtoAssembler::toDto)
+				.collect(Collectors.toList());
     }
 
+    /**
+     * @param id
+     * @return
+     */
     @RequestMapping(value="/{protocoloId}/devolucao", method = RequestMethod.GET)
     public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
     	return devolucaoDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));

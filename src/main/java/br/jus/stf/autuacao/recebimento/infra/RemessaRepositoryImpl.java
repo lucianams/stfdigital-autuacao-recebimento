@@ -26,6 +26,9 @@ public class RemessaRepositoryImpl extends SimpleJpaRepository<Remessa, Protocol
 	
 	private EntityManager entityManager;
 
+	/**
+	 * @param entityManager
+	 */
 	@Autowired
     public RemessaRepositoryImpl(EntityManager entityManager) {
         super(Remessa.class, entityManager);
@@ -37,16 +40,17 @@ public class RemessaRepositoryImpl extends SimpleJpaRepository<Remessa, Protocol
 	@Override
 	public MotivoDevolucao findOneMotivoDevolucao(Long id) {
 		TypedQuery<MotivoDevolucao> query = entityManager
-				.createQuery("SELECT motivo FROM MotivoDevolucao motivo WHERE motivo.id = :id", MotivoDevolucao.class);
+				.createQuery("FROM MotivoDevolucao motivo WHERE motivo.id = :id", MotivoDevolucao.class);
 
 		query.setParameter("id", id);
+		
 		return query.getSingleResult();
 	}
 	
 	@Override
 	public List<MotivoDevolucao> findAllMotivoDevolucao() {
 		TypedQuery<MotivoDevolucao> query = entityManager
-				.createQuery("SELECT motivo FROM MotivoDevolucao motivo ORDER BY motivo.descricao", MotivoDevolucao.class);
+				.createQuery("FROM MotivoDevolucao motivo ORDER BY motivo.descricao", MotivoDevolucao.class);
 
 		return query.getResultList();
 	}

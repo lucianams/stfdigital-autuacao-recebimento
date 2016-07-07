@@ -34,11 +34,29 @@ public class RemessaRecursal extends Remessa {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     
+	/**
+	 * @param protocolo
+	 * @param volumes
+	 * @param apensos
+	 * @param formaRecebimento
+	 * @param numeroSedex
+	 * @param sigilo
+	 * @param recebedor
+	 * @param status
+	 */
 	public RemessaRecursal(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento,
 			String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
 		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
     }
 	
+	/**
+	 * @param classe
+	 * @param preferencias
+	 * @param sigilo
+	 * @param numeroProcessoOrigem
+	 * @param numeroUnicoProcesso
+	 * @param status
+	 */
 	public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo,
 			String numeroProcessoOrigem, String numeroUnicoProcesso, Status status) {
 		super.preautuar(classe, preferencias, sigilo, status);
@@ -50,7 +68,8 @@ public class RemessaRecursal extends Remessa {
 		this.numeroUnicoProcesso = numeroUnicoProcesso;
     }
     
-    public TipoProcesso tipoProcesso() {
+    @Override
+	public TipoProcesso tipoProcesso() {
     	return TipoProcesso.RECURSAL;
     }
     

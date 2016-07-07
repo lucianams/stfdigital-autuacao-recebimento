@@ -25,6 +25,9 @@ public class ModeloDevolucaoRepositoryImpl extends SimpleJpaRepository<ModeloDev
 
 	private EntityManager entityManager;
 	
+	/**
+	 * @param entityManager
+	 */
 	@Autowired
     public ModeloDevolucaoRepositoryImpl(EntityManager entityManager) {
         super(ModeloDevolucao.class, entityManager);
@@ -34,10 +37,10 @@ public class ModeloDevolucaoRepositoryImpl extends SimpleJpaRepository<ModeloDev
 	@Override
 	public List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo) {
 		TypedQuery<ModeloDevolucao> query = entityManager.createQuery(
-				"SELECT modelo FROM ModeloDevolucao modelo WHERE modelo.tipo IN :tipos ORDER BY modelo.nome",
-				ModeloDevolucao.class);
+				"FROM ModeloDevolucao modelo WHERE modelo.tipo IN :tipos ORDER BY modelo.nome", ModeloDevolucao.class);
 
 		query.setParameter("tipos", motivo.tiposDocumento());
+		
 		return query.getResultList();
 	}
     

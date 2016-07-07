@@ -10,6 +10,7 @@ buildscript {
         swaggerVersion = '1.0.2'
         guavaVersion = '19.0'
         flywayVersion = '4.0.3'
+        jnaVersion = '4.1.0'
         stfdigitalCoreVersion = '0.0.1-SNAPSHOT'
     }
     repositories {
@@ -89,6 +90,11 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-amqp")
                 
     compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+    
+    // Remover essa dependência quando o elasticsearch tiver com essa dependência como não opcional.
+    // Monitorar issue https://github.com/elastic/elasticsearch/issues/13245
+    // Parece que na próxima versão já vai estar como não opcional.
+    compile("net.java.dev.jna:jna:${jnaVersion}")
     
     compile("org.springframework.cloud:spring-cloud-starter-eureka")
         

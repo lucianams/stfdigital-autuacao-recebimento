@@ -189,7 +189,7 @@ ext.dockerDir = "${project.buildDir}" + '/docker'
 // Caminho do arquivo Jar no contexto do Docker
 ext.dockerAppJarFile = dockerDir + '/' + jar.baseName + '.jar'
 // Essas bibliotecas estarão em uma layer adicional do Docker, de modo a otimizar seu mecanismo de cache
-ext.additionalDockerLayerLibs = ['lib/core-' + ext.stfdigitalCoreVersion + '.jar']
+ext.additionalDockerLayerLibs = ['BOOT-INF/lib/core-' + ext.stfdigitalCoreVersion + '.jar']
 
 // Extendendo a task dockerPrepare para explodir o Jar e permitir criar layers dockers para cada categoria de libs
 dockerPrepare {
@@ -197,7 +197,8 @@ dockerPrepare {
         // Layer Docker com as libs externas, atualizadas com menos frequência e por isso estarão em uma layer abaixo das outras
         copy {
             from(zipTree(file(dockerAppJarFile))) {
-                include 'lib/**'
+                include 'BOOT-INF/lib/**'
+                include 'org/**'
                 exclude additionalDockerLayerLibs
             }
             into dockerDir + '/app-lib-layer'
@@ -212,7 +213,8 @@ dockerPrepare {
         // Layer Docker da aplicação em si, conterá um Jar pequeno, o que permite otimizar o pull da imagem do registro.
         copy {
             from(zipTree(file(dockerAppJarFile))) {
-                exclude 'lib/**'
+                exclude 'BOOT-INF/lib/**'
+                exclude 'org/**'
             }
             into dockerDir + '/app-layer'
         }

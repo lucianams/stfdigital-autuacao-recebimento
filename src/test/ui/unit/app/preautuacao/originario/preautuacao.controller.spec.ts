@@ -10,6 +10,7 @@ describe('Teste do controlador preautuacao.controller', () => {
 	let $rootScope : ng.IRootScopeService;
 	let mockState;
 	let mockPreautuacaoService;
+	let mockMessagesService;
 
 	let protocoloId: number;
 	
@@ -26,8 +27,11 @@ describe('Teste do controlador preautuacao.controller', () => {
 			devolver : () => {},
 			preautuarProcesso : () =>{}
 		};
+		mockMessagesService = {
+			success: () => {}
+		};
 		let remessa: Remessa = new Remessa(123, 'HC', 4, 7, 'BALCAO', null);
-	    controller = new PreautuacaoController(mockState, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa);
+	    controller = new PreautuacaoController(mockState, mockMessagesService, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa);
 	});
 	
 	it('Deveria devolver a remessa', () => {

@@ -2,7 +2,7 @@ import {LoginPage} from "./pages/login.page";
 import {PrincipalPage}  from "./pages/principal.page";
 import {PreautuacaoRecursalPage} from "./pages/preautuacao-recursal.page";
 
-describe('Preautuação de Remessa Recursal', () => {	
+xdescribe('Preautuação de Remessa Recursal', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();

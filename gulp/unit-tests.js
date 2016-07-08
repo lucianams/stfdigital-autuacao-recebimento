@@ -48,6 +48,10 @@ gulp.task('test:unit', function (done)
     });
 });
 
+gulp.task('test:unit:coverage', function(done) {
+    return runSequence('test:unit', 'remap-istanbul', done);
+});
+
 gulp.task('tdd', function (done)
 {
     runSequence(['bower:install:unit', 'clean-typings:unit'], ['clean-and-watch-tests', 'watch'], function() {

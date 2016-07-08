@@ -9,8 +9,8 @@ services:
     container_name: rabbit
     image: rabbitmq:management
     ports:
-     - "5672:5672"
-     - "${RABBIT_PORT}:15672"
+     - "${RABBIT_OUT_NODE_PORT}:5672"
+     - "${RABBIT_OUT_DIST_PORT}:15672"
   mongo:
     container_name: mongo
     image: mongo:3

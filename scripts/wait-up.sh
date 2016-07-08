@@ -18,6 +18,9 @@ printf "Waiting URL: "$URL"\n"
 until $(curl --insecure --output /dev/null --silent --fail $URL) || [ $COUNTER -eq $MAX_RETRIES ]; do
     printf '.'
     sleep $STEP_SIZE
+    docker logs discovery
+    docker logs gateway
+    docker logs recebimento
     COUNTER=$(($COUNTER + 1))
 done
 if [ $COUNTER -eq $MAX_RETRIES ]; then

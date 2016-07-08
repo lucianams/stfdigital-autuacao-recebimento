@@ -1,0 +1,10 @@
+# Define a configuração para rodar esse contexto construído localmente
+version: '2'
+services:
+  recebimento:
+    extends:
+      file: compose/shared/common.yml
+      service: recebimento
+    depends_on:
+     - rabbit
+     - discovery

@@ -18,13 +18,18 @@ printf "Waiting URL: "$URL"\n"
 until $(curl --insecure --output /dev/null --silent --fail $URL) || [ $COUNTER -eq $MAX_RETRIES ]; do
     printf '.'
     sleep $STEP_SIZE
-    docker logs discovery
-    docker logs gateway
-    docker logs recebimento
     COUNTER=$(($COUNTER + 1))
 done
 if [ $COUNTER -eq $MAX_RETRIES ]; then
     printf "\nTimeout after "$(( $COUNTER * $STEP_SIZE))" second(s).\n"
+    echo "########discovery\n"
+    docker logs discovery
+    echo "########gateway\n"
+    docker logs gateway
+    echo "########userauthentication\n"
+    docker logs userauthentication
+    echo "########recebimento\n"
+    docker logs recebimento
     exit 2
 else
     printf "\nUp successfully after "$(( $COUNTER * $STEP_SIZE))" second(s).\n"

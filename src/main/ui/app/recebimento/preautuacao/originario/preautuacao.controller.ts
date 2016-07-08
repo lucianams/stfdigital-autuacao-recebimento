@@ -15,10 +15,11 @@ export class PreautuacaoController {
 	public cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
 	public cmdDevolucao : DevolverRemessaCommand = new DevolverRemessaCommand();
 
-	static $inject = ["$state", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
+	static $inject = ["$state", "messagesService", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
 	
     /** @ngInject **/
-	constructor(private $state: IStateService, private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
+	constructor(private $state: IStateService, private messagesService: app.support.messaging.MessagesService, 
+			private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
 		this.cmdPreautuar.sigilo = 'PUBLICO';
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
 		this.cmdDevolucao.protocoloId = remessa.protocolo;
@@ -35,8 +36,11 @@ export class PreautuacaoController {
 	
 	public devolver(): void {
 		this.preautuacaoService.devolver(this.cmdDevolucao)
-			.then(() => {
-			this.$state.go('app.tarefas.minhas-tarefas');
+		.then(() => {
+            this.$state.go('app.tarefas.minhas-tarefas');
+			this.messagesService.success('Remessa devolvida com sucesso.');
+    	}, () => {
+			this.messagesService.error('Erro ao devolver remessa.');
 		});
 	}	
 	
@@ -45,8 +49,11 @@ export class PreautuacaoController {
 	 */
 	public preautuarProcessoOriginario(): void {
 		this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
-	        .then(() => {
-	            this.$state.go("app.tarefas.minhas-tarefas");
+		.then(() => {
+            this.$state.go('app.tarefas.minhas-tarefas');
+			this.messagesService.success('Remessa preautuada com sucesso.');
+    	}, () => {
+			this.messagesService.error('Erro ao preautuar remessa.');
 		});
 	}
 }

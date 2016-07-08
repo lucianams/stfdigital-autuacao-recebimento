@@ -22,8 +22,6 @@ export class PreautuacaoRecursalController {
 	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa,
 		private messagesService: app.support.messaging.MessagesService){
 		this.cmdPreautuar.sigilo = 'PUBLICO';
-		this.cmdPreautuar.numeroProcessoOrigem = '123456';
-		this.cmdPreautuar.numeroUnicoProcesso = '7890123456';
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
 	}
 	

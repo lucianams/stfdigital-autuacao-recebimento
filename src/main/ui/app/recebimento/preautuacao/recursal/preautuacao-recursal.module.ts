@@ -1,5 +1,6 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
+import IStateParams = angular.ui.IStateParamsService;
 import IModule = angular.IModule;
 import {RemessaService} from '../../services/remessa.service';
 import Properties = app.support.constants.Properties;
@@ -9,8 +10,8 @@ import cmd = app.support.command;
 function config($stateProvider: IStateProvider,
                 properties: Properties) {
 
-    $stateProvider.state("app.novo-processo.preautuacao-recursal", {
-        url : "/preautuacao/recursal",
+    $stateProvider.state("app.novo-processo.recebimento-preautuacao-recursal", {
+        url : "/preautuacao/recursal/{informationId:int}",
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao-recursal.tpl.html",
@@ -22,8 +23,8 @@ function config($stateProvider: IStateProvider,
             classes: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
                 return remessaService.listarClassesPorTipoRemessa("RECURSAL")
             }],
-            remessa: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
-                let protocoloId = 9007;
+            remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams : IStateParams) => {
+                let protocoloId = $stateParams['informationId'];
                 return remessaService.consultarRemessa(protocoloId);
             }]
         }

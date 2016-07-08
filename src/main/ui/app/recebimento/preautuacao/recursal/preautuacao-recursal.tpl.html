@@ -19,6 +19,16 @@
                     </div>
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
 	                    <md-input-container flex>
+	                        <label>Número Origem</label>
+	                        <input ng-model="preautuacao.cmdPreautuar.numeroProcessoOrigem" id="txtNumeroProcessoOrigem">
+	                    </md-input-container>
+	                    <md-input-container flex>
+	                        <label>Número Único</label>
+	                        <input ng-model="preautuacao.cmdPreautuar.numeroUnicoProcesso" id="txtNumeroUnico">
+	                    </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+	                    <md-input-container flex>
 	                        <label>Forma de Recebimento </label>
 	                        <input ng-model="preautuacao.remessa.formaRecebimento" id="txtFormaRecebimento" ng-disabled="true">
 	                    </md-input-container>
@@ -41,6 +51,16 @@
                             <md-select multiple ng-model="preautuacao.cmdPreautuar.preferencias" id="cboPreferencias">
                                 <md-option ng-repeat="preferencia in preautuacao.preferencias" value="{{preferencia.id}}">
                                     {{preferencia.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                    	<md-input-container flex>
+                            <label>Sigilio *</label>
+                            <md-select ng-model="preautuacao.classe" id="cboClasses" ng-change="preautuacao.carregarPreferencias()">
+                                <md-option ng-repeat="classe in preautuacao.classes" ng-value="classe">
+                                    {{classe.nome}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

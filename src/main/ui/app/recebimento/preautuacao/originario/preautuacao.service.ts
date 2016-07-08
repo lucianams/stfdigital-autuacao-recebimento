@@ -37,15 +37,11 @@ export class PreautuacaoService {
      * @param preferencias Preferências processuais.
      */
     public preautuarProcesso(cmdPreautuar : PreautuarRemessaCommand): IPromise<any> {
-    	//TODO o procotolo será recuperado quando o usuário clicar na tarefa via controller
-    	//cmdPreautuar.protocoloId = 123;
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
             PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmdPreautuar);        
     }
 
 	public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<any> {
-		//TODO o procotolo será recuperado quando o usuário clicar na tarefa via controller
-		cmdDevolver.protocoloId = 123;
 		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao + '/devolucao', cmdDevolver);
 	}
 }

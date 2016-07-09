@@ -28,6 +28,8 @@ after_success:
 - export REPO=supremotribunalfederal/stfdigital-autuacao-recebimento
 - docker tag stfdigital-autuacao-recebimento $REPO:latest
 - docker push $REPO:latest
+after_failure:
+- docker-compose logs
 notifications:
   slack:
     secure: rdElzj/a+Hwo36g3VVJGVlc3LC07kGIyTAh+TbXT+7rEgEcuwLY+/epjvqv8YpyceEUin1XWsXMPqyCYCzA/cLgvynos48xDfFIkIL/dFcOwSwLqsZF5jpyNCEzkd0jajERP8iDC8Z7K/EossNqu4xq1Q74o+ONG90xI0henegHHACuIqSl2W7EtIfK6t8GeBKHcH0yzDIKzE8W+F88UWOZfIMu2eLHI4dZAtxsMvxaAuaJnnMNFxUBFObw9bTim+GwQXUq/ZAWVNnWyMFcyrHMCoXbHxtIWqfrnPxAmrfaT1t9zTPju+mU2AJmht5m7lRQMEAo1DH7aWh17tMRPOAPaYTVmS/oy8+YPsP4Db+iTQ493SAIaa0WCEWOLgmawLmSE6FJOy2yQ16f0zsUxy4rQsdZ4V/C/2ow+gDJiRYTvjK6pzJVL6qXa09dIAU1Bh2aACTwGrNHnJ/13oIMUUZKTYoQSTrcsC9UQaZ+STbTBl/EC6D9zJHFINkcSZuzFEyIUrA+YDZeRcSOlPVcSJGq9L4usJRd5imMORJhuXZC8T8+ULstrOPvZMhvjgDlG1eHMmVZrr9SLNkAMA3B1PC79S3EUiS/Yt/eQ4PFxPeU7/99Bf/P5SRHJ0ua8FEvE3tc/80uBIy1x8KVUDFWgyE6JDVRoC+v3kU2APOb0s7E=

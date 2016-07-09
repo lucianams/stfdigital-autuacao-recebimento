@@ -5,6 +5,7 @@ services:
     extends:
       file: compose/shared/common.yml
       service: recebimento
+    image: stfdigital-autuacao-recebimento
     depends_on:
      - rabbit
      - discovery

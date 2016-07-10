@@ -22,7 +22,7 @@ var allTypeScriptE2E = path.join(conf.paths.e2e, 'app/**/*.ts');
 var libraryTypeScriptE2E = path.join(conf.paths.e2e, 'typings/main/**/*.d.ts');
 var tsOutputPathE2E = path.join(conf.paths.e2e, 'build');
 var tsTypingsOutputPathE2E = path.join(conf.paths.e2e, 'typings');
-var sharedOutputPathE2E = path.join(conf.paths.e2e, 'shared');
+var sharedOutputPathE2E = path.join(conf.paths.e2e, 'app/shared');
 
 var tsProjectUnit = $.typescript.createProject(path.join(conf.paths.unit, 'tsconfig.json'));
 var allTypeScriptUnit = path.join(conf.paths.unit, 'app/**/*.ts');

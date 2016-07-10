@@ -1,36 +1,21 @@
-# Define a configuração para rodar os testes e2e
+# Extende a configuração para rodar os testes e2e.
+# Deve ser rodado em combinação com shared/compose/docker-compose.e2e.base.yml
 version: '2'
 services:
-  docker: # Provê a conectividade para o container selenium via host docker
-    container_name: docker-ambassador
-    image: svendowideit/ambassador
+  docker:
     environment:
-     - UI_PORT_8443_TCP=tcp://ui:8443
-     - GATEWAY_PORT_8765_TCP=tcp://gateway:8765
      - ONLYOFFICE_PORT_443_TCP=tcp://onlyoffice:443
     depends_on:
-     - ui
-     - gateway
      - onlyoffice
-  selenium:
-    container_name: selenium
-    image: selenium/standalone-chrome:2.53.0
-    ports:
-     - "4444:4444"
-    depends_on:
-     - docker
-  rabbit: # Necessário criar sem expor as portas para rodar no travis-ci
-    container_name: rabbit
-    image: rabbitmq:management
+  onlyoffice:
+    extends:
+      file: shared/compose/common.yml
+      service: onlyoffice
   recebimento:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: recebimento
     image: stfdigital-autuacao-recebimento
     depends_on:
      - rabbit
      - discovery
-  onlyoffice:
-    extends:
-      file: compose/shared/common.yml
-      service: onlyoffice

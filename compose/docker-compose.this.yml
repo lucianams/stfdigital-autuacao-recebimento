@@ -3,7 +3,7 @@ version: '2'
 services:
   recebimento:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: recebimento
     image: stfdigital-autuacao-recebimento
     depends_on:

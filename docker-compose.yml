@@ -3,48 +3,48 @@ version: '2'
 services:
   rabbit:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: rabbit
   discovery:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: discovery
   gateway:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: gateway
     depends_on:
      - discovery
   services:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: services
     depends_on:
      - rabbit
      - discovery
   ui:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: ui
     depends_on:
      - gateway
   userauthentication:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: userauthentication
     depends_on:
      - discovery
   mongo:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: mongo
   onlyoffice:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: onlyoffice_ambassador
   documents:
     extends:
-      file: compose/shared/common.yml
+      file: shared/compose/common.yml
       service: documents
     links:
      - onlyoffice:docker # documents precisa acessar o onlyoffice pelo host docker para não dar erro de certificado

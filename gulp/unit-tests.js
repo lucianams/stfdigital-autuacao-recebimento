@@ -9,6 +9,8 @@ var karma = require('karma');
 var runSequence = require('run-sequence');
 var remapIstanbul = require('remap-istanbul/lib/gulpRemapIstanbul');
 
+var $ = require('gulp-load-plugins')();
+
 var pathSrcJs = [
     path.join(conf.paths.dist, '**/*.js')
 ];
@@ -72,7 +74,14 @@ gulp.task('remap-istanbul', function () {
         .pipe(remapIstanbul({
             reports: {
                 'json': path.join(conf.paths.unit, 'coverage/ts/coverage.json'),
-                'html': path.join(conf.paths.unit, 'coverage/ts/html')
-            }
+                'html': path.join(conf.paths.unit, 'coverage/ts/html'),
+                'lcovonly': path.join(conf.paths.unit, 'coverage/ts/lcov.info')
+            },
+            exclude: 'src/main/ui/app/bundle.js'
         }));
+});
+
+gulp.task('publish-unit-coverage', function() {
+    return gulp.src(path.join(conf.paths.unit, 'coverage/ts/lcov.info'))
+        .pipe($.coveralls());
 });

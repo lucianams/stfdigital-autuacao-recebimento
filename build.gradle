@@ -167,6 +167,10 @@ task gulpTestUnit(type: GulpTask) {
     args = ['test:unit:coverage']
 }
 
+task gulpPublishUnitCoverage(type: GulpTask) {
+    args = ['publish-unit-coverage']
+}
+
 ext.e2eBaseUrl = project.hasProperty('e2eBaseUrl') ? project.getProperty('e2eBaseUrl') : 'https://docker:8443'
 ext.e2eSeleniumAddress = project.hasProperty('e2eSeleniumAddress') ? project.getProperty('e2eSeleniumAddress') : 'http://docker:4444/wd/hub'
 

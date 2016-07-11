@@ -1,10 +1,32 @@
 'use strict';
 
 var path = require('path');
+var fs = require('fs');
 var conf = require('./../../../gulp/conf');
 
 var _ = require('lodash');
 var wiredep = require('wiredep');
+
+// List all subdirectories in a directory in Node.js recursively in a synchronous fashion, excluding a folder
+function subdirs(dir, exclude, dirList) {
+	var files = fs.readdirSync(dir);
+	var dirList = dirList || [];
+	files.forEach(function(file) {
+    if (fs.statSync(dir + '/' + file).isDirectory()) {
+      if (file != exclude) {
+        dirList.unshift(dir + '/' + file);
+      }
+      dirList = subdirs(dir + '/' + file, exclude, dirList);
+    }
+	});
+	return dirList;
+}
+
+function bundleDirPatterns() {
+  return subdirs(conf.paths.app, 'i18n').map(function(dir) {
+	  return path.relative(conf.paths.app, dir).replace(/\\/g,"/") + '/*';
+  });
+}
 
 function listIncludeFiles() {
 	var wiredepOptions = _.extend({}, conf.wiredep, {
@@ -30,7 +52,7 @@ function listFiles() {
   });
   
   files.push({
-    pattern: 'src/main/resources/public/**/*.js',
+    pattern: path.join(conf.paths.dist, '**/*.js'),
     included: false,
     watched: true
   });
@@ -91,13 +113,18 @@ module.exports = function(config) {
     
     systemjs: {
     	configFile:  path.join(conf.paths.test, 'system.conf.js'),
-    	serveFiles: ['src/main/resources/public/**/*.js', 'src/main/resources/public/maps/**/*.js.map',
+    	serveFiles: [path.join(conf.paths.dist, '**/*.js'), path.join(conf.paths.dist, 'maps/**/*.js.map'),
                   path.join(conf.paths.unit, 'build/**/*.js.map'), 'node_modules/systemjs/**/*.js', 'node_modules/systemjs/**/*.js.map'],
-    	includeFiles: listIncludeFiles()
+    	includeFiles: listIncludeFiles(),
+      config: {
+        bundles: {
+          'public/bundle': bundleDirPatterns()
+        }
+      }
     },
 
     proxies: {
-      '/base/recebimento/': '/base/src/main/resources/public/'
+      '/base/public/': '/base/src/main/resources/public/'
     }
   };
 

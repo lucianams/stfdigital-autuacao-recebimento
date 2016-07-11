@@ -1,5 +1,5 @@
-import {LoginPage} from "./pages/login.page";
-import {PrincipalPage}  from "./pages/principal.page";
+import {LoginPage} from "./shared/pages/login.page";
+import {PrincipalPage}  from "./shared/pages/principal.page";
 import {PreautuacaoPage} from "./pages/preautuacao.page";
 
 xdescribe('Preautuação de Remessa Originária', () => {	

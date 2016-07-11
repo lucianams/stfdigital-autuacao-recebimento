@@ -1,5 +1,5 @@
-import {LoginPage} from "./pages/login.page";
-import {PrincipalPage}  from "./pages/principal.page";
+import {LoginPage} from "./shared/pages/login.page";
+import {PrincipalPage}  from "./shared/pages/principal.page";
 import {PrepararOficioDevolucaoPage} from "./pages/preparar-oficio-devolucao.page";
 
 xdescribe('Preparação do Ofício de Devolução', () => {	

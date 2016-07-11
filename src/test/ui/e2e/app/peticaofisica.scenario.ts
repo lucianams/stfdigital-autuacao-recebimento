@@ -1,5 +1,5 @@
-import {LoginPage} from "./pages/login.page";
-import {PrincipalPage}  from "./pages/principal.page";
+import {LoginPage} from "./shared/pages/login.page";
+import {PrincipalPage}  from "./shared/pages/principal.page";
 import {RecebimentoPage} from "./pages/recebimento.page";
 
 describe('Recebimento de Petições Físicas Originárias', () => {	
@@ -13,7 +13,7 @@ describe('Recebimento de Petições Físicas Originárias', () => {
         loginPage.login('recebedor', '123');
     });
     
-    it ('Deveria acessar a pagina de petição física', () => {
+    it ('Deveria acessar a página de petição física', () => {
         principalPage.iniciarProcesso();
         principalPage.escolherProcesso('app.novo-processo.recebimento-peticao-fisica');
         principalPage.aguardarUrl('/novo-processo/recebimento');

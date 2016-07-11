@@ -1,8 +1,8 @@
-import {LoginPage} from './pages/login.page';
-import {PrincipalPage} from './pages/principal.page';
+import {LoginPage} from './shared/pages/login.page';
+import {PrincipalPage} from './shared/pages/principal.page';
 import {DevolucaoAssinaturaPage} from './pages/devolucao-assinatura.page';
 
-import mockCryptoModule from './mocks/crypto';
+import mockCryptoModule from './shared/mocks/crypto';
 
 import util = require('util');
 

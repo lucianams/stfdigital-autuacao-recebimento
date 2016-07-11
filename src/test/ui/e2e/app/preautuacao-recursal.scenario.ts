@@ -1,5 +1,5 @@
-import {LoginPage} from "./pages/login.page";
-import {PrincipalPage}  from "./pages/principal.page";
+import {LoginPage} from "./shared/pages/login.page";
+import {PrincipalPage}  from "./shared/pages/principal.page";
 import {PreautuacaoRecursalPage} from "./pages/preautuacao-recursal.page";
 
 xdescribe('Preautuação de Remessa Recursal', () => {	

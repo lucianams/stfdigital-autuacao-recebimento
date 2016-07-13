@@ -81,8 +81,6 @@ dependencies {
     
     compile("org.springframework.boot:spring-boot-starter-security")
     
-    compile("org.springframework.security.oauth:spring-security-oauth2")
-    
     compile("org.springframework.cloud:spring-cloud-starter-feign")
     
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -116,7 +114,7 @@ dependencies {
     
     testCompile("com.jayway.jsonpath:json-path")
     
-    compile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
 import org.gradle.plugins.ide.eclipse.model.SourceFolder 

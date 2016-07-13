@@ -10,8 +10,8 @@ import cmd = app.support.command;
 function config($stateProvider: IStateProvider,
                 properties: Properties) {
 
-    $stateProvider.state("app.novo-processo.recebimento-preautuacao-recursal", {
-        url : "/preautuacao/recursal/{informationId:int}",
+    $stateProvider.state("app.tarefas.recebimento-preautuacao-recursal", {
+        url : "/preautuacao/recursal/:informationId",
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao-recursal.tpl.html",

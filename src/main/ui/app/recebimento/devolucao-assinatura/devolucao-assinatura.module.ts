@@ -7,7 +7,7 @@ import {DevolucaoAssinaturaService, Devolucao} from "./devolucao-assinatura.serv
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
 
-    $stateProvider.state('app.novo-processo.recebimento-devolucao-assinatura', {
+    $stateProvider.state('app.tarefas.recebimento-devolucao-assinatura', {
         url : '/devolucao-assinatura',
         views : {
             'content@app.autenticado' : {

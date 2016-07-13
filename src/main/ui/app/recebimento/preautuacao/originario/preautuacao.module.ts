@@ -11,8 +11,8 @@ import cmd = app.support.command;
 function config($stateProvider: IStateProvider,
                 properties: Properties) {
 
-    $stateProvider.state('app.novo-processo.recebimento-preautuacao', {
-        url : "/preautuacao/originario/{informationId:int}",
+    $stateProvider.state('app.tarefas.recebimento-preautuacao', {
+        url : "/preautuacao/originario/:informationId",
         views : {
             "content@app.autenticado" : {
                 templateUrl : "./preautuacao.tpl.html",

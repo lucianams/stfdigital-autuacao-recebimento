@@ -1,5 +1,6 @@
 import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
 import IStateProvider = angular.ui.IStateProvider;
+import IStateParamsService = angular.ui.IStateParamsService;
 import IModule = angular.IModule;
 import {PrepararOficioDevolucaoService} from "./preparar-oficio-devolucao.service";
 import {Remessa} from "./../services/model";
@@ -7,8 +8,8 @@ import {Remessa} from "./../services/model";
 /** @ngInject **/
 function config($stateProvider: IStateProvider, properties: any) {
 
-    $stateProvider.state('app.novo-processo.recebimento-preparar-oficio-devolucao', {
-        url : '/preparar-oficio-devolucao',
+    $stateProvider.state('app.tarefas.recebimento-preparar-oficio-devolucao', {
+        url : '/preparar-oficio-devolucao/:informationId',
         views : {
             'content@app.autenticado' : {
                 templateUrl : './preparar-oficio-devolucao.tpl.html',
@@ -20,14 +21,10 @@ function config($stateProvider: IStateProvider, properties: any) {
             motivosDevolucao : ['app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', (prepararOficioDevolucaoService: PrepararOficioDevolucaoService) => {
                 return prepararOficioDevolucaoService.listarMotivosDevolucao();
             }],
-            protocolo: () => {
-            	return new Promise<number>((resolve, reject) => {
-            		//let protocoloIdString : string = prompt("Digite o protocolo.", "2");
-            		//let protocoloId : number = parseInt(protocoloIdString);
-            		//resolve(protocoloId);
-            		resolve(9002);
-            	});
-            }
+            protocolo: ['$stateParams', ($stateParams: IStateParamsService) => new Promise<number>(resolve => resolve($stateParams['informationId']))]
+        },
+        params : {
+        	informationId: undefined
         }
     });
 }

@@ -8,29 +8,29 @@
     
     {
         "id": "preautuar-originario",
-        "stateName": "app.novo-processo.recebimento-preautuacao",
-        "urlPrefix": "/novo-processo/preautuacao/originario",
+        "stateName": "app.tarefas.recebimento-preautuacao",
+        "urlPrefix": "/tarefas/preautuacao/originario",
         "src": "recebimento/preautuacao"
     },
     
     {
         "id": "preautuar-recursal",
-        "stateName": "app.novo-processo.recebimento-preautuacao-recursal",
-        "urlPrefix": "/novo-processo/preautuacao/recursal",
+        "stateName": "app.tarefas.recebimento-preautuacao-recursal",
+        "urlPrefix": "/tarefas/preautuacao/recursal",
         "src": "recebimento/preautuacao-recursal"
     },
     
     {
         "id": "preparar-oficio-devolucao",
-        "stateName": "app.novo-processo.recebimento-preparar-oficio-devolucao",
-        "urlPrefix": "/novo-processo/preparar-oficio-devolucao",
+        "stateName": "app.tarefas.recebimento-preparar-oficio-devolucao",
+        "urlPrefix": "/tarefas/preparar-oficio-devolucao",
         "src": "recebimento/preparar-oficio-devolucao"
     },
     
     {
         "id": "assinar-oficio-devolucao",
-        "stateName": "app.novo-processo.recebimento-devolucao-assinatura",
-        "urlPrefix": "/novo-processo/devolucao-assinatura",
+        "stateName": "app.tarefas.recebimento-devolucao-assinatura",
+        "urlPrefix": "/tarefas/devolucao-assinatura",
         "src": "recebimento/devolucao-assinatura"
     }
 ]

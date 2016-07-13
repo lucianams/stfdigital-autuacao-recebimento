@@ -7,7 +7,7 @@
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
                 <form name="basicForm" class="md-inline-form">
-                	<div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                	<div layout="column" layout-gt-xs="row">
 	                    <md-input-container flex>
 	                        <label>Quantidade de volumes</label>
 	                        <input ng-model="preautuacao.remessa.qtdVolumes" id="txtQtdVolumes">
@@ -17,17 +17,7 @@
 	                        <input ng-model="preautuacao.remessa.qtdApensos" id="txtQtdApensos">
 	                    </md-input-container>
                     </div>
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
-	                    <md-input-container flex>
-	                        <label>Número Origem</label>
-	                        <input ng-model="preautuacao.cmdPreautuar.numeroProcessoOrigem" id="txtNumeroProcessoOrigem">
-	                    </md-input-container>
-	                    <md-input-container flex>
-	                        <label>Número Único</label>
-	                        <input ng-model="preautuacao.cmdPreautuar.numeroUnicoProcesso" id="txtNumeroUnico">
-	                    </md-input-container>
-                    </div>
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                    <div layout="column" layout-gt-xs="row">
 	                    <md-input-container flex>
 	                        <label>Forma de Recebimento </label>
 	                        <input ng-model="preautuacao.remessa.formaRecebimento" id="txtFormaRecebimento" ng-disabled="true">
@@ -37,7 +27,17 @@
 	                        <input ng-model="preautuacao.remessa.numeroSedex" id="txtNumeroSedex" ng-disabled="true">
 	                    </md-input-container>
                     </div>
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                    <div layout="column" layout-gt-xs="row">
+	                    <md-input-container flex>
+	                        <label>Número Origem</label>
+	                        <input ng-model="preautuacao.cmdPreautuar.numeroProcessoOrigem" id="txtNumeroProcessoOrigem" ng-required="true">
+	                    </md-input-container>
+	                    <md-input-container flex>
+	                        <label>Número Único</label>
+	                        <input ng-model="preautuacao.cmdPreautuar.numeroUnicoProcesso" id="txtNumeroUnico" ng-required="true">
+	                    </md-input-container>
+                    </div>                    
+                    <div layout="column" layout-gt-xs="row">
                     	<md-input-container flex>
                             <label>Classificação *</label>
                             <md-select ng-model="preautuacao.classe" id="cboClasses" ng-change="preautuacao.carregarPreferencias()">
@@ -55,7 +55,7 @@
                             </md-select>
                         </md-input-container>
                     </div>
-                    <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
+                    <div layout="column" layout-gt-xs="row">
                     	<md-input-container flex>
                             <label>Sigilio *</label>
                             <md-select ng-model="preautuacao.classe" id="cboClasses" ng-change="preautuacao.carregarPreferencias()">

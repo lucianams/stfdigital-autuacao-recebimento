@@ -1,0 +1,17 @@
+[
+	{
+		"id": "recebimento",
+		"nome": "Recebimento",
+		"dashletsIds": [
+			"minhas-remessas"
+		]
+	},
+	{
+		"id": "gestao-recebimento",
+		"nome": "Gestão de Recebimento",
+		"dashletsIds": [
+			"minhas-remessas",
+			"grafico-remessas"
+		]
+	}
+]

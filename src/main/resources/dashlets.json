@@ -1,0 +1,12 @@
+[
+	{
+		"id": "minhas-remessas",
+		"nome": "RECEBIMENTO.DASHLETS.MINHAS-REMESSAS.NOME",
+		"src": "recebimento/dashlets"
+	},
+	{
+		"id": "grafico-remessas",
+		"nome": "RECEBIMENTO.DASHLETS.GRAFICO-REMESSAS.NOME",
+		"src": "recebimento/dashlets"
+	}
+]

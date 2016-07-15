@@ -1,0 +1,9 @@
+<div class="p-8" layout="row" layout-align="space-between center"
+	ng-repeat="remessa in vm.remessas">
+	<div>
+		<div class="h3">{{remessa.identificacao}}</div>
+		<div>
+			<span class="secondary-text">{{remessa.dataCadastramento | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+		</div>
+	</div>
+</div>

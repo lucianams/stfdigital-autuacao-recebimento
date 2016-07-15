@@ -26,6 +26,9 @@ function config($stateProvider: IStateProvider,
             remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams : IStateParams) => {
                 let protocoloId = $stateParams['informationId'];
                 return remessaService.consultarRemessa(protocoloId);
+            }],
+            sigilos: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
+                return remessaService.listarSigilo();
             }]
         }
     });

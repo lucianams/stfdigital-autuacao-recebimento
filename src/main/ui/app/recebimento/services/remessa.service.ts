@@ -2,7 +2,7 @@ import IHttpService = angular.IHttpService;
 import IPromise = angular.IPromise;
 import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
 import services from "./services.module";
-import {TipoProcesso, Classe, Remessa} from "./model";
+import {TipoProcesso, Classe, Remessa, Sigilo} from "./model";
 
 /**
  * Serviço usado para retornar os tipos de processos.
@@ -26,6 +26,14 @@ export class RemessaService {
         tiposProcesso.push(new TipoProcesso("ORIGINARIO", "Originário"));
         tiposProcesso.push(new TipoProcesso("RECURSAL", "RECURSAL"));
         return tiposProcesso;
+    }
+    
+    public listarSigilo() : IPromise<Sigilo[]> {
+    	return this.$http.get(this.properties.url + ":" + this.properties.port 
+                + RemessaService.urlServicoRemessa + "/sigilos" )
+                    .then((response: IHttpPromiseCallbackArg<Sigilo[]>) => { 
+                        return response.data; 
+                    });
     }
     
     /* 

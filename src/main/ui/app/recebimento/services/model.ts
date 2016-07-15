@@ -48,6 +48,16 @@ export class Processo {
     }
 }
 
+export class Sigilo {
+	public nome : string;
+	public descricao : string;
+    
+	constructor (nome: string, descricao: string){
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+}
+
 export class TipoProcesso {
     public id: string;
     public nome: string;

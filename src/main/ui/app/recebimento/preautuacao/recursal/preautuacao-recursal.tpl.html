@@ -58,9 +58,9 @@
                     <div layout="column" layout-gt-xs="row">
                     	<md-input-container flex>
                             <label>Sigilio *</label>
-                            <md-select ng-model="preautuacao.classe" id="cboClasses" ng-change="preautuacao.carregarPreferencias()">
-                                <md-option ng-repeat="classe in preautuacao.classes" ng-value="classe">
-                                    {{classe.nome}}
+                            <md-select ng-model="preautuacao.cmdPreautuar.sigilo" id="cboSigilo"">
+                                <md-option ng-repeat="sigilo in preautuacao.sigilos" ng-value="sigilo.nome">
+                                    {{sigilo.descricao}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

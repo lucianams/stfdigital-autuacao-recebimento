@@ -1,5 +1,5 @@
 import IStateService = angular.ui.IStateService;
-import {Classe, Remessa, Preferencia} from "../../services/model";
+import {Classe, Remessa, Preferencia, Sigilo} from "../../services/model";
 import preautuacaoRecursal from "./preautuacao-recursal.module";
 import {PreautuacaoRecursalService, PreautuarRecursalCommand} from "./preautuacao-recursal.service";
 import "./preautuacao-recursal.service";
@@ -17,11 +17,10 @@ export class PreautuacaoRecursalController {
 
 	public cmdPreautuar: PreautuarRecursalCommand = new PreautuarRecursalCommand();
 	
-	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa", "messagesService"];
+	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa", "sigilos", "messagesService"];
 
 	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa,
-		private messagesService: app.support.messaging.MessagesService){
-		this.cmdPreautuar.sigilo = 'PUBLICO';
+		public sigilos: Sigilo[], private messagesService: app.support.messaging.MessagesService){
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
 	}
 	

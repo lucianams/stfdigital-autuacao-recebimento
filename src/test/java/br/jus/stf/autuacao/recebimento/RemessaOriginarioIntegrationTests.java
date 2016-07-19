@@ -38,9 +38,8 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 1.0.0
  * @since 18.12.2015
  */
-@Ignore
 @RunWith(SpringRunner.class)
-@SpringBootTest({"server.port:0", "eureka.client.enabled:false"})
+@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = {ApplicationContextInitializer.class})
 @AutoConfigureMockMvc
 public class RemessaOriginarioIntegrationTests {
 

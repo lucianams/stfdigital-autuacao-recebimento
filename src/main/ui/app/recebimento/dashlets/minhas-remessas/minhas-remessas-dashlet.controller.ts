@@ -2,7 +2,7 @@ import dashlets from "../dashlets.module";
 
 let controllerName: string = "app.recebimento.dashlets.MinhasRemessasDashletController";
 
-interface Remessa {
+export interface Remessa {
 	identificacao: string;
 	dataCadastramento: Date;
 }
@@ -12,12 +12,12 @@ export class MinhasRemessasDashletController {
 	public remessas: Remessa[];
 	
 	constructor() {
-		this.remessas = [<Remessa>{identificacao: "1/2016", dataCadastramento: new Date()},
-		                 <Remessa>{identificacao: "2/2016", dataCadastramento: new Date()},
-		                 <Remessa>{identificacao: "3/2016", dataCadastramento: new Date()},
-		                 <Remessa>{identificacao: "4/2016", dataCadastramento: new Date()},
-		                 <Remessa>{identificacao: "5/2016", dataCadastramento: new Date()},
-		                 <Remessa>{identificacao: "6/2016", dataCadastramento: new Date()}];
+		this.remessas = [{identificacao: "1/2016", dataCadastramento: new Date()},
+		                 {identificacao: "2/2016", dataCadastramento: new Date()},
+		                 {identificacao: "3/2016", dataCadastramento: new Date()},
+		                 {identificacao: "4/2016", dataCadastramento: new Date()},
+		                 {identificacao: "5/2016", dataCadastramento: new Date()},
+		                 {identificacao: "6/2016", dataCadastramento: new Date()}];
 	}
 	
 }

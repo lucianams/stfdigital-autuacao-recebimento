@@ -1,5 +1,6 @@
 package br.jus.stf.autuacao.recebimento;
 
+import static br.jus.stf.core.framework.testing.Oauth2TestHelpers.oauthAuthentication;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -9,22 +10,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.infra.DevolucaoRestAdapter;
 import br.jus.stf.autuacao.recebimento.infra.ProtocoloRestAdapter;
-import br.jus.stf.autuacao.recebimento.infra.RecebedorOauth2Adapter;
+import br.jus.stf.autuacao.recebimento.infra.RabbitConfiguration;
+import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 import br.jus.stf.core.shared.documento.TextoId;
-import br.jus.stf.core.shared.identidade.PessoaId;
+import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.protocolo.Numero;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
@@ -38,10 +37,8 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 1.0.0
  * @since 18.12.2015
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = {ApplicationContextInitializer.class})
-@AutoConfigureMockMvc
-public class RemessaOriginarioIntegrationTests {
+@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
+public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 
 	@MockBean
 	private DevolucaoRestAdapter devolucaoAdapter;
@@ -50,7 +47,7 @@ public class RemessaOriginarioIntegrationTests {
     private ProtocoloRestAdapter protocoloAdapter;
 	
 	@MockBean
-    private RecebedorOauth2Adapter recebedorAdapter;
+	private RabbitTemplate rabbitTemplate;
 	
 	@Autowired
 	private MockMvc mockMvc;
@@ -60,17 +57,20 @@ public class RemessaOriginarioIntegrationTests {
 		MockitoAnnotations.initMocks(this);
 		
 		given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
-		given(recebedorAdapter.recebedor()).willReturn(new Recebedor("recebedor", new PessoaId(1L)));
+		willDoNothing().given(rabbitTemplate).convertAndSend(RabbitConfiguration.REMESSA_REGISTRADA_QUEUE, RemessaRegistrada.class);
 		willDoNothing().given(devolucaoAdapter).assinarTexto(new TextoId(9000L), "_DocTemp_12345");
 	}
 	
 	@Test
     public void registrarUmaRemessa() throws Exception {
 		String remessaValida = "{\"formaRecebimento\":\"SEDEX\", \"volumes\":1, \"tipoProcesso\":\"ORIGINARIO\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\", \"sigilo\":\"PUBLICO\"}";
-		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaValida));
+		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
+				.with(oauthAuthentication("recebedor"))
+				.contentType(APPLICATION_JSON).content(remessaValida));
         
         result.andExpect(status().isOk());
     }
+	
 	@Ignore
 	@Test
     public void preautarUmaRemessa() throws Exception {

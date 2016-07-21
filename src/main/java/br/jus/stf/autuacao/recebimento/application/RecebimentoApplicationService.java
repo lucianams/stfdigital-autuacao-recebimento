@@ -33,9 +33,9 @@ import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucaoRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
-import br.jus.stf.autuacao.recebimento.infra.RabbitEventPublisher;
 import br.jus.stf.core.framework.component.command.Command;
 import br.jus.stf.core.framework.domaindrivendesign.ApplicationService;
+import br.jus.stf.core.framework.domaindrivendesign.DomainEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.documento.TextoId;
@@ -58,7 +58,7 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 public class RecebimentoApplicationService {
 
     @Autowired
-    private RabbitEventPublisher publisher;
+    private DomainEventPublisher publisher;
     
     @Autowired
     private RemessaRepository remessaRepository;

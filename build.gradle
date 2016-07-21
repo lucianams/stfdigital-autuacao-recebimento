@@ -1,9 +1,14 @@
 buildscript {
     ext {
         springBootVersion = '1.4.0.RC1'
-        springPlatformVersion = '2.0.5.RELEASE'
-        dependencyManagementPlugin = '0.6.0.RELEASE'
-        springCloudVersion = '1.1.0.RELEASE'
+        
+        dependencyManagementPluginVersion = '0.6.0.RELEASE'
+        gradleDockerPluginVersion = '0.8.0'
+        gradleNodePluginVersion = '0.12'
+        gradleGulpPluginVersion = '0.12'
+        sonarqubeGradlePluginVersion = '2.0.1'
+        
+        springCloudReleaseTrainVersion = 'Brixton.SR3'
         apacheCommonsVersion = '3.3.2'
         jacksonVersion = '2.7.2'
         jacksonMapperVersion = '1.9.13'
@@ -12,6 +17,7 @@ buildscript {
         flywayVersion = '4.0.3'
         jnaVersion = '4.1.0'
         stfdigitalCoreVersion = '0.0.1-SNAPSHOT'
+        stfdigitalTestVersion = '0.0.1-SNAPSHOT'
     }
     repositories {
         mavenLocal()
@@ -22,11 +28,11 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPlugin}")
-        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.8.0")
-        classpath("com.moowork.gradle:gradle-node-plugin:0.12")
-        classpath("com.moowork.gradle:gradle-gulp-plugin:0.12")
-        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPluginVersion}")
+        classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${gradleDockerPluginVersion}")
+        classpath("com.moowork.gradle:gradle-node-plugin:${gradleNodePluginVersion}")
+        classpath("com.moowork.gradle:gradle-gulp-plugin:${gradleGulpPluginVersion}")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:${sonarqubeGradlePluginVersion}")
     }
 }
 
@@ -59,9 +65,7 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-netflix:${springCloudVersion}")
-        mavenBom("org.springframework.cloud:spring-cloud-starter-parent:Brixton.RELEASE")
-        mavenBom("io.spring.platform:platform-bom:${springPlatformVersion}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${springCloudReleaseTrainVersion}")
         mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 }
@@ -115,6 +119,10 @@ dependencies {
     testCompile("com.jayway.jsonpath:json-path")
     
     testCompile("org.springframework.boot:spring-boot-starter-test")
+    
+    testCompile("org.springframework.security:spring-security-test")
+    
+    testCompile("br.jus.stf.digital:test:${stfdigitalTestVersion}")
 }
 
 import org.gradle.plugins.ide.eclipse.model.SourceFolder 

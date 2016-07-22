@@ -1,6 +1,9 @@
 package br.jus.stf.autuacao.recebimento;
 
 import static br.jus.stf.core.framework.testing.Oauth2TestHelpers.oauthAuthentication;
+import static com.github.jsonj.tools.JsonBuilder.array;
+import static com.github.jsonj.tools.JsonBuilder.field;
+import static com.github.jsonj.tools.JsonBuilder.object;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -17,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import com.github.jsonj.JsonObject;
 
 import br.jus.stf.autuacao.recebimento.infra.DevolucaoRestAdapter;
 import br.jus.stf.autuacao.recebimento.infra.ProtocoloRestAdapter;
@@ -63,10 +68,17 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
     public void registrarUmaRemessa() throws Exception {
-		String remessaValida = "{\"formaRecebimento\":\"SEDEX\", \"volumes\":1, \"tipoProcesso\":\"ORIGINARIO\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\", \"sigilo\":\"PUBLICO\"}";
+		JsonObject remessaValida = object(
+			field("formaRecebimento", "SEDEX"),
+			field("volumes", 1),
+			field("tipoProcesso", "ORIGINARIO"),
+			field("apensos", 1),
+			field("numeroSedex", "SR123456789BR"),
+			field("sigilo", "PUBLICO")
+		);
 		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
 				.with(oauthAuthentication("recebedor"))
-				.contentType(APPLICATION_JSON).content(remessaValida));
+				.contentType(APPLICATION_JSON).content(remessaValida.toString()));
         
         result.andExpect(status().isOk());
     }
@@ -76,9 +88,13 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     public void preautarUmaRemessa() throws Exception {
         //loadDataTests("preautarRemessaOriginario.sql");
         
-        String remessaParaPreautuar = "{\"protocoloId\":@protocoloId, \"classeId\":\"ADI\", \"preferencias\":[3,8], \"sigilo\":\"PUBLICO\"}";
-        String protocoloId = "9000";
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaParaPreautuar.replace("@protocoloId", protocoloId)));
+		JsonObject remessaParaPreautuar = object(
+			field("classedId", "ADI"),
+			field("preferencias", array(3, 8)),
+			field("sigilo", "PUBLICO")
+		);
+		remessaParaPreautuar.put("protocoloId", 9000);
+        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaParaPreautuar.toString()));
         
         result.andExpect(status().isOk());
     }

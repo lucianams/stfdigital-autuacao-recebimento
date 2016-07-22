@@ -1,6 +1,5 @@
 package br.jus.stf.autuacao.recebimento;
 
-import static br.jus.stf.core.framework.testing.Oauth2TestHelpers.oauthAuthentication;
 import static com.github.jsonj.tools.JsonBuilder.array;
 import static com.github.jsonj.tools.JsonBuilder.field;
 import static com.github.jsonj.tools.JsonBuilder.object;
@@ -27,6 +26,7 @@ import br.jus.stf.autuacao.recebimento.infra.DevolucaoRestAdapter;
 import br.jus.stf.autuacao.recebimento.infra.ProtocoloRestAdapter;
 import br.jus.stf.autuacao.recebimento.infra.RabbitConfiguration;
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
+import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
 import br.jus.stf.core.shared.documento.TextoId;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.protocolo.Numero;
@@ -43,6 +43,7 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 18.12.2015
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
+@WithMockOauth2User("recebedor")
 public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 
 	@MockBean
@@ -77,7 +78,6 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 			field("sigilo", "PUBLICO")
 		);
 		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
-				.with(oauthAuthentication("recebedor"))
 				.contentType(APPLICATION_JSON).content(remessaValida.toString()));
         
         result.andExpect(status().isOk());

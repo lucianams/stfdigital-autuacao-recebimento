@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.ResultActions;
 
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
+import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
 
 /**
  * Valida a API de consulta de remessas
@@ -18,6 +19,7 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
  *
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
+@WithMockOauth2User("recebedor")
 public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test

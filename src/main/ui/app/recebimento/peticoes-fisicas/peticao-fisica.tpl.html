@@ -28,8 +28,8 @@
                     <div layout="row" layout-gt-xs="row">
                         
                         <md-input-container flex="50">
-                            <label for="formaRecimento">Forma de Envio *</label>
-                            <md-select ng-model="registro.cmd.formaRecebimento" name="formaRecimento" id="formaRecimento">
+                            <label for="formaRecebimento">Forma de Envio *</label>
+                            <md-select ng-model="registro.cmd.formaRecebimento" name="formaRecebimento" id="formaRecebimento">
                                 <md-option ng-repeat="forma in registro.formasRecebimento" value="{{forma.sigla}}">
                                     {{forma.descricao}}
                                 </md-option>

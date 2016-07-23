@@ -2,30 +2,34 @@ import {LoginPage} from "./shared/pages/login.page";
 import {PrincipalPage}  from "./shared/pages/principal.page";
 import {RecebimentoPage} from "./pages/recebimento.page";
 
-describe('Recebimento de Petições Físicas Originárias', () => {	
+describe('Recebimento de Remessas de Processo do Tipo Originário', () => {	
 	
-    var loginPage: LoginPage = new LoginPage();
-    var principalPage: PrincipalPage = new PrincipalPage();
-	var recebimentoPage : RecebimentoPage = new RecebimentoPage();
+    let loginPage: LoginPage = new LoginPage();
+    let principalPage: PrincipalPage = new PrincipalPage();
+	let recebimentoPage : RecebimentoPage = new RecebimentoPage();
                 
-    it ('Deveria logar na tela', () => {
+    it ('Deveria logar no sistema', () => {
         loginPage.open();
         loginPage.login('recebedor', '123');
     });
     
-    it ('Deveria acessar a página de petição física', () => {
+    it ('Deveria acessar a página de recebimento', () => {
         principalPage.iniciarProcesso();
         principalPage.escolherProcesso('app.novo-processo.recebimento-peticao-fisica');
         principalPage.aguardarUrl('/novo-processo/recebimento');
     });
     
-    it('Deveria preencher as informações da petição física', () => {
+    it('Deveria preencher as informações da remessa', () => {
     	recebimentoPage.preencherQtdVolumes(2);
     	recebimentoPage.preencherQtdApensos(3);
-    	recebimentoPage.selecionarFormaRecebimento();
-    	recebimentoPage.selecionarTipoRecebimento();
+    	recebimentoPage.selecionarFormaRecebimento('Fax');
+    	recebimentoPage.selecionarTipoProcesso("Originário");
     	recebimentoPage.registrarPeticao();
     	principalPage.aguardarMensagemSucesso();
     });
     
+	it('Deveria fazer o logout do sistema', () => {
+		principalPage.logout();
+	});
+
 });

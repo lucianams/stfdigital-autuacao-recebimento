@@ -38,6 +38,7 @@ services:
       service: userauthentication
     image: stfdigital-plataforma-userauthentication
     depends_on:
+     - rabbit
      - discovery
   mongo:
     extends:
@@ -56,5 +57,6 @@ services:
      - onlyoffice:docker # documents precisa acessar o onlyoffice pelo host docker para não dar erro de certificado
     depends_on:
      - mongo
+     - rabbit
      - discovery
      - onlyoffice

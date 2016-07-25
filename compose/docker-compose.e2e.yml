@@ -16,6 +16,8 @@ services:
       file: shared/compose/common.yml
       service: recebimento
     image: stfdigital-autuacao-recebimento
+    environment:
+     - spring.profiles.active=development,e2e
     depends_on:
      - rabbit
      - discovery

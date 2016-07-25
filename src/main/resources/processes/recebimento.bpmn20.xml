@@ -27,7 +27,7 @@
             <documentation>RECEBIDA</documentation>
         </endEvent>    
         
-        <sequenceFlow id="devolucao-recursal" name="devolver" sourceRef="preautuar-recursal" targetRef="devolver-remessa">
+        <sequenceFlow id="devolucao-recursal" name="devolver" sourceRef="preautuar-recursal" targetRef="preparar-oficio-devolucao">
             <conditionExpression xsi:type="tFormalExpression">${transition == 'DEVOLVER'}</conditionExpression>
         </sequenceFlow>
         
@@ -50,23 +50,23 @@
 	        <terminateEventDefinition/>
         </endEvent>    
         
-        <sequenceFlow id="devolucao-originario" name="devolver" sourceRef="preautuar-originario" targetRef="devolver-remessa">
+        <sequenceFlow id="devolucao-originario" name="devolver" sourceRef="preautuar-originario" targetRef="preparar-oficio-devolucao">
             <conditionExpression xsi:type="tFormalExpression">${transition == 'DEVOLVER'}</conditionExpression>
         </sequenceFlow>
         
         <!-- Devolução -->
         
-		<userTask id="devolver-remessa" name="Elaborar Ofício para Devolução" activiti:candidateGroups="cartoraria">
+		<userTask id="preparar-oficio-devolucao" name="Elaborar Ofício para Devolução" activiti:candidateGroups="cartoraria">
 			<documentation>DEVOLUCAO</documentation>
 		</userTask>
 		
-		<sequenceFlow id="assinatura" sourceRef="devolver-remessa" targetRef="assinar" />
+		<sequenceFlow id="assinatura-oficio-devolucao" sourceRef="preparar-oficio-devolucao" targetRef="assinar-oficio-devolucao" />
 		
-		<userTask id="assinar" name="Assinar Ofício de Devolução" activiti:candidateUsers="gestor-recebimento">
+		<userTask id="assinar-oficio-devolucao" name="Assinar Ofício de Devolução" activiti:candidateUsers="gestor-recebimento">
             <documentation>ASSINATURA</documentation>
         </userTask>
 		
-		<sequenceFlow id="rejeição" sourceRef="assinar" targetRef="devolvido" />
+		<sequenceFlow id="rejeicao" sourceRef="assinar-oficio-devolucao" targetRef="devolvido" />
 		
 		<endEvent id="devolvido" name="Remessa Rejeitada">
 			<documentation>REJEITADA</documentation>

@@ -40,7 +40,7 @@ describe('Recebimento de Remessas de Processo do Tipo Originário', () => {
         expect(principalPage.mensagem()).toEqual('Remessa registrada com sucesso!');
     });
 
-    it('Deveria gerar a próxima tarefa', () => {
+    xit('Deveria gerar a próxima tarefa', () => {
         principalPage.atualizarTarefas();
         expect(principalPage.tarefaPresente('Pré-Autuar Remessa de Processo Originário', proximoProtocolo))
             .toBeTruthy('Tarefa com protocolo ' + proximoProtocolo + ' não encontrada.');

@@ -13,18 +13,17 @@ export class PreautuacaoController {
 	public preferencias : Array<Preferencia> = [];
 
 	public cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
-	public cmdDevolucao : DevolverRemessaCommand = new DevolverRemessaCommand();
+	public cmdDevolucao: DevolverRemessaCommand = new DevolverRemessaCommand();
 
 	static $inject = ["$state", "messagesService", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
-	
-    /** @ngInject **/
+
 	constructor(private $state: IStateService, private messagesService: app.support.messaging.MessagesService, 
 			private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
 		this.cmdPreautuar.sigilo = 'PUBLICO';
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
 		this.cmdDevolucao.protocoloId = remessa.protocolo;
 	}
-    
+
     /*
 	 * Carrega as preferências da classe selecionada.
 	 * @return Array de objetos Preferencia.

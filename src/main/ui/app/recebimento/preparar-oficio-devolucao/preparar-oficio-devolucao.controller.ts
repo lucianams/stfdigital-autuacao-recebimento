@@ -1,5 +1,3 @@
-import IStateService = angular.ui.IStateService;
-import IPromise = angular.IPromise;
 import {PrepararOficioDevolucaoService, MotivoDevolucao, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparar-oficio-devolucao.service";
 import {Modelo} from "./../services/model";
 import {Documento} from "./documento";
@@ -30,7 +28,7 @@ export class PrepararOficioDevolucaoController {
     
     public modelosSendoCarregados: boolean = false;
 
-    constructor(private $state: IStateService, private prepararOficioDevolucaoService: PrepararOficioDevolucaoService,
+    constructor(private $state: ng.ui.IStateService, private prepararOficioDevolucaoService: PrepararOficioDevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private messagesService: app.support.messaging.MessagesService) {
     	
     }
@@ -81,7 +79,7 @@ export class PrepararOficioDevolucaoController {
 		this.prepararOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
-			this.$state.go('app.tarefas.minhas-tarefas', {}, { reload: true });
+			this.$state.go('app.tarefas.minhas-tarefas');
 			this.messagesService.success("Documento de devolução elaborado com sucesso!");
 		}, () => {
 			this.messagesService.error("Erro ao concluir a elaboração do texto!");

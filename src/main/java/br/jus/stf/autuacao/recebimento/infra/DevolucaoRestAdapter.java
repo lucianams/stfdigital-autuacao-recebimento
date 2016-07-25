@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.ImmutableMap;
+
 import br.jus.stf.autuacao.recebimento.domain.DevolucaoAdapter;
 import br.jus.stf.autuacao.recebimento.infra.client.DocumentoRestClient;
 import br.jus.stf.core.shared.documento.TextoId;
@@ -23,7 +25,9 @@ public class DevolucaoRestAdapter implements DevolucaoAdapter {
 	
 	@Override
 	public void concluirTexto(TextoId textoId) {
-		documentoRestClient.concluirTexto(textoId);
+		Map<String, Object> concluirTextoCommand = ImmutableMap.of("textoId", textoId.toLong());
+		
+		documentoRestClient.concluirTexto(concluirTextoCommand);
 	}
 
 	@Override

@@ -12,10 +12,10 @@ INSERT INTO RECEBIMENTO.DEVOLUCAO(SEQ_PROTOCOLO, DSC_MOTIVACAO, SEQ_MOTIVO_DEVOL
 (9003, STRINGDECODE('Remessa inv\u00e1lida.'), 1, 1, 9000);        
 
 INSERT INTO PUBLIC.ACT_RU_EXECUTION(ID_, REV_, PROC_INST_ID_, BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, SUPER_EXEC_, ACT_ID_, IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, IS_EVENT_SCOPE_, SUSPENSION_STATE_, CACHED_ENT_STATE_, TENANT_ID_, NAME_, LOCK_TIME_) VALUES
-('-47', 3, '-47', 'RE:9003', NULL, @proc_def_id_, NULL, 'assinar', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
+('-47', 3, '-47', 'RE:9003', NULL, @proc_def_id_, NULL, 'assinar-oficio-devolucao', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
 
 INSERT INTO PUBLIC.ACT_RU_TASK(ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_) VALUES
-('-61', 1, '-47', '-47', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
+('-61', 1, '-47', '-47', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar-oficio-devolucao', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
 
 INSERT INTO PUBLIC.ACT_RU_IDENTITYLINK(ID_, REV_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) VALUES
 ('-62', 1, NULL, 'candidate', 'gestor-recebimento', '-61', NULL, NULL),
@@ -32,13 +32,13 @@ INSERT INTO PUBLIC.ACT_HI_ACTINST(ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID
 ('-48', @proc_def_id_, '-47', '-47', 'inicio', NULL, NULL, NULL, 'startEvent', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.226', 1, NULL),
 ('-53', @proc_def_id_, '-47', '-47', 'preautuacao-transicoes', NULL, NULL, NULL, 'exclusiveGateway', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.226', 0, NULL),
 ('-54', @proc_def_id_, '-47', '-47', 'preautuar-originario', '-55', NULL, STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.253', 27, NULL),
-('-60', @proc_def_id_, '-47', '-47', 'assinar', '-61', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
-('-57', @proc_def_id_, '-47', '-47', 'devolver-remessa', '-58', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
+('-60', @proc_def_id_, '-47', '-47', 'assinar-oficio-devolucao', '-61', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
+('-57', @proc_def_id_, '-47', '-47', 'preparar-oficio-devolucao', '-58', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
 
 INSERT INTO PUBLIC.ACT_HI_TASKINST(ID_, PROC_DEF_ID_, TASK_DEF_KEY_, PROC_INST_ID_, EXECUTION_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, OWNER_, ASSIGNEE_, START_TIME_, CLAIM_TIME_, END_TIME_, DURATION_, DELETE_REASON_, PRIORITY_, DUE_DATE_, FORM_KEY_, CATEGORY_, TENANT_ID_) VALUES
 ('-55', @proc_def_id_, 'preautuar-originario', '-47', '-47', STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), NULL, 'PREAUTUACAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', NULL, TIMESTAMP '2016-05-31 17:42:55.251', 25, 'completed', 50, NULL, NULL, NULL, NULL),
-('-61', @proc_def_id_, 'assinar', '-47', '-47', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
-('-58', @proc_def_id_, 'devolver-remessa', '-47', '-47', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
+('-61', @proc_def_id_, 'assinar-oficio-devolucao', '-47', '-47', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
+('-58', @proc_def_id_, 'preparar-oficio-devolucao', '-47', '-47', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
 
 INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, NAME_, VAR_TYPE_, REV_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_, CREATE_TIME_, LAST_UPDATED_TIME_) VALUES
 ('-49', '-47', '-47', NULL, 'transition', 'string', 2, NULL, NULL, NULL, '', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.273'),
@@ -62,10 +62,10 @@ INSERT INTO RECEBIMENTO.DEVOLUCAO(SEQ_PROTOCOLO, DSC_MOTIVACAO, SEQ_MOTIVO_DEVOL
 (9004, STRINGDECODE('Remessa inv\u00e1lida.'), 1, 1, 9001);        
 
 INSERT INTO PUBLIC.ACT_RU_EXECUTION(ID_, REV_, PROC_INST_ID_, BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, SUPER_EXEC_, ACT_ID_, IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, IS_EVENT_SCOPE_, SUSPENSION_STATE_, CACHED_ENT_STATE_, TENANT_ID_, NAME_, LOCK_TIME_) VALUES
-('-64', 3, '-64', 'RE:9004', NULL, @proc_def_id_, NULL, 'assinar', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
+('-64', 3, '-64', 'RE:9004', NULL, @proc_def_id_, NULL, 'assinar-oficio-devolucao', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
 
 INSERT INTO PUBLIC.ACT_RU_TASK(ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_) VALUES
-('-78', 1, '-64', '-64', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
+('-78', 1, '-64', '-64', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar-oficio-devolucao', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
 
 INSERT INTO PUBLIC.ACT_RU_IDENTITYLINK(ID_, REV_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) VALUES
 ('-79', 1, NULL, 'candidate', 'gestor-recebimento', '-78', NULL, NULL),
@@ -82,13 +82,13 @@ INSERT INTO PUBLIC.ACT_HI_ACTINST(ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID
 ('-65', @proc_def_id_, '-64', '-64', 'inicio', NULL, NULL, NULL, 'startEvent', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.226', 1, NULL),
 ('-70', @proc_def_id_, '-64', '-64', 'preautuacao-transicoes', NULL, NULL, NULL, 'exclusiveGateway', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.226', 0, NULL),
 ('-71', @proc_def_id_, '-64', '-64', 'preautuar-originario', '-72', NULL, STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.253', 27, NULL),
-('-77', @proc_def_id_, '-64', '-64', 'assinar', '-78', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
-('-74', @proc_def_id_, '-64', '-64', 'devolver-remessa', '-75', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
+('-77', @proc_def_id_, '-64', '-64', 'assinar-oficio-devolucao', '-78', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
+('-74', @proc_def_id_, '-64', '-64', 'preparar-oficio-devolucao', '-75', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
 
 INSERT INTO PUBLIC.ACT_HI_TASKINST(ID_, PROC_DEF_ID_, TASK_DEF_KEY_, PROC_INST_ID_, EXECUTION_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, OWNER_, ASSIGNEE_, START_TIME_, CLAIM_TIME_, END_TIME_, DURATION_, DELETE_REASON_, PRIORITY_, DUE_DATE_, FORM_KEY_, CATEGORY_, TENANT_ID_) VALUES
 ('-72', @proc_def_id_, 'preautuar-originario', '-64', '-64', STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), NULL, 'PREAUTUACAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', NULL, TIMESTAMP '2016-05-31 17:42:55.251', 25, 'completed', 50, NULL, NULL, NULL, NULL),
-('-78', @proc_def_id_, 'assinar', '-64', '-64', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
-('-75', @proc_def_id_, 'devolver-remessa', '-64', '-64', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
+('-78', @proc_def_id_, 'assinar-oficio-devolucao', '-64', '-64', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
+('-75', @proc_def_id_, 'preparar-oficio-devolucao', '-64', '-64', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
 
 INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, NAME_, VAR_TYPE_, REV_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_, CREATE_TIME_, LAST_UPDATED_TIME_) VALUES
 ('-66', '-64', '-64', NULL, 'transition', 'string', 2, NULL, NULL, NULL, '', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.273'),
@@ -112,10 +112,10 @@ INSERT INTO RECEBIMENTO.DEVOLUCAO(SEQ_PROTOCOLO, DSC_MOTIVACAO, SEQ_MOTIVO_DEVOL
 (9005, STRINGDECODE('Remessa inv\u00e1lida.'), 1, 1, 9002);        
 
 INSERT INTO PUBLIC.ACT_RU_EXECUTION(ID_, REV_, PROC_INST_ID_, BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, SUPER_EXEC_, ACT_ID_, IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, IS_EVENT_SCOPE_, SUSPENSION_STATE_, CACHED_ENT_STATE_, TENANT_ID_, NAME_, LOCK_TIME_) VALUES
-('-81', 3, '-81', 'RE:9005', NULL, @proc_def_id_, NULL, 'assinar', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
+('-81', 3, '-81', 'RE:9005', NULL, @proc_def_id_, NULL, 'assinar-oficio-devolucao', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
 
 INSERT INTO PUBLIC.ACT_RU_TASK(ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_) VALUES
-('-95', 1, '-81', '-81', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
+('-95', 1, '-81', '-81', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar-oficio-devolucao', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
 
 INSERT INTO PUBLIC.ACT_RU_IDENTITYLINK(ID_, REV_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) VALUES
 ('-96', 1, NULL, 'candidate', 'gestor-recebimento', '-95', NULL, NULL),
@@ -132,13 +132,13 @@ INSERT INTO PUBLIC.ACT_HI_ACTINST(ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID
 ('-82', @proc_def_id_, '-81', '-81', 'inicio', NULL, NULL, NULL, 'startEvent', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.226', 1, NULL),
 ('-87', @proc_def_id_, '-81', '-81', 'preautuacao-transicoes', NULL, NULL, NULL, 'exclusiveGateway', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.226', 0, NULL),
 ('-88', @proc_def_id_, '-81', '-81', 'preautuar-originario', '-89', NULL, STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.253', 27, NULL),
-('-94', @proc_def_id_, '-81', '-81', 'assinar', '-95', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
-('-91', @proc_def_id_, '-81', '-81', 'devolver-remessa', '-92', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
+('-94', @proc_def_id_, '-81', '-81', 'assinar-oficio-devolucao', '-95', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
+('-91', @proc_def_id_, '-81', '-81', 'preparar-oficio-devolucao', '-92', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
 
 INSERT INTO PUBLIC.ACT_HI_TASKINST(ID_, PROC_DEF_ID_, TASK_DEF_KEY_, PROC_INST_ID_, EXECUTION_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, OWNER_, ASSIGNEE_, START_TIME_, CLAIM_TIME_, END_TIME_, DURATION_, DELETE_REASON_, PRIORITY_, DUE_DATE_, FORM_KEY_, CATEGORY_, TENANT_ID_) VALUES
 ('-89', @proc_def_id_, 'preautuar-originario', '-81', '-81', STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), NULL, 'PREAUTUACAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', NULL, TIMESTAMP '2016-05-31 17:42:55.251', 25, 'completed', 50, NULL, NULL, NULL, NULL),
-('-95', @proc_def_id_, 'assinar', '-81', '-81', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
-('-92', @proc_def_id_, 'devolver-remessa', '-81', '-81', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
+('-95', @proc_def_id_, 'assinar-oficio-devolucao', '-81', '-81', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
+('-92', @proc_def_id_, 'preparar-oficio-devolucao', '-81', '-81', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
 
 INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, NAME_, VAR_TYPE_, REV_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_, CREATE_TIME_, LAST_UPDATED_TIME_) VALUES
 ('-83', '-81', '-81', NULL, 'transition', 'string', 2, NULL, NULL, NULL, '', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.273'),
@@ -162,10 +162,10 @@ INSERT INTO RECEBIMENTO.DEVOLUCAO(SEQ_PROTOCOLO, DSC_MOTIVACAO, SEQ_MOTIVO_DEVOL
 (9006, STRINGDECODE('Remessa inv\u00e1lida.'), 1, 1, 9003);        
 
 INSERT INTO PUBLIC.ACT_RU_EXECUTION(ID_, REV_, PROC_INST_ID_, BUSINESS_KEY_, PARENT_ID_, PROC_DEF_ID_, SUPER_EXEC_, ACT_ID_, IS_ACTIVE_, IS_CONCURRENT_, IS_SCOPE_, IS_EVENT_SCOPE_, SUSPENSION_STATE_, CACHED_ENT_STATE_, TENANT_ID_, NAME_, LOCK_TIME_) VALUES
-('-98', 3, '-98', 'RE:9006', NULL, @proc_def_id_, NULL, 'assinar', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
+('-98', 3, '-98', 'RE:9006', NULL, @proc_def_id_, NULL, 'assinar-oficio-devolucao', TRUE, FALSE, TRUE, FALSE, 1, 2, NULL, NULL, NULL);           
 
 INSERT INTO PUBLIC.ACT_RU_TASK(ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, TASK_DEF_KEY_, OWNER_, ASSIGNEE_, DELEGATION_, PRIORITY_, CREATE_TIME_, DUE_DATE_, CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_) VALUES
-('-112', 1, '-98', '-98', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
+('-112', 1, '-98', '-98', @proc_def_id_, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', 'assinar-oficio-devolucao', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, 1, NULL, NULL);        
 
 INSERT INTO PUBLIC.ACT_RU_IDENTITYLINK(ID_, REV_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) VALUES
 ('-113', 1, NULL, 'candidate', 'gestor-recebimento', '-112', NULL, NULL),
@@ -182,13 +182,13 @@ INSERT INTO PUBLIC.ACT_HI_ACTINST(ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID
 ('-99', @proc_def_id_, '-98', '-98', 'inicio', NULL, NULL, NULL, 'startEvent', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.226', 1, NULL),
 ('-104', @proc_def_id_, '-98', '-98', 'preautuacao-transicoes', NULL, NULL, NULL, 'exclusiveGateway', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.226', 0, NULL),
 ('-105', @proc_def_id_, '-98', '-98', 'preautuar-originario', '-106', NULL, STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.253', 27, NULL),
-('-111', @proc_def_id_, '-98', '-98', 'assinar', '-112', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
-('-108', @proc_def_id_, '-98', '-98', 'devolver-remessa', '-109', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
+('-111', @proc_def_id_, '-98', '-98', 'assinar-oficio-devolucao', '-112', NULL, STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL),
+('-108', @proc_def_id_, '-98', '-98', 'preparar-oficio-devolucao', '-109', NULL, STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), 'userTask', NULL, TIMESTAMP '2016-05-31 17:42:55.253', TIMESTAMP '2016-05-31 17:42:55.277', 24, NULL);              
 
 INSERT INTO PUBLIC.ACT_HI_TASKINST(ID_, PROC_DEF_ID_, TASK_DEF_KEY_, PROC_INST_ID_, EXECUTION_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, OWNER_, ASSIGNEE_, START_TIME_, CLAIM_TIME_, END_TIME_, DURATION_, DELETE_REASON_, PRIORITY_, DUE_DATE_, FORM_KEY_, CATEGORY_, TENANT_ID_) VALUES
 ('-106', @proc_def_id_, 'preautuar-originario', '-98', '-98', STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), NULL, 'PREAUTUACAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', NULL, TIMESTAMP '2016-05-31 17:42:55.251', 25, 'completed', 50, NULL, NULL, NULL, NULL),
-('-112', @proc_def_id_, 'assinar', '-98', '-98', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
-('-109', @proc_def_id_, 'devolver-remessa', '-98', '-98', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
+('-112', @proc_def_id_, 'assinar-oficio-devolucao', '-98', '-98', STRINGDECODE('Assinar Of\u00edcio de Devolu\u00e7\u00e3o'), NULL, 'ASSINATURA', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.277', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL),
+('-109', @proc_def_id_, 'preparar-oficio-devolucao', '-98', '-98', STRINGDECODE('Elaborar Of\u00edcio para Devolu\u00e7\u00e3o'), NULL, 'DEVOLUCAO', NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.253', NULL, TIMESTAMP '2016-05-31 17:42:55.274', 21, 'completed', 50, NULL, NULL, NULL, NULL);  
 
 INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, NAME_, VAR_TYPE_, REV_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_, CREATE_TIME_, LAST_UPDATED_TIME_) VALUES
 ('-100', '-98', '-98', NULL, 'transition', 'string', 2, NULL, NULL, NULL, '', NULL, TIMESTAMP '2016-05-31 17:42:55.225', TIMESTAMP '2016-05-31 17:42:55.273'),

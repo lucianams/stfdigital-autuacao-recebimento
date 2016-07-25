@@ -41,7 +41,7 @@ describe('Recebimento de Petições Físicas de Processo do Tipo Recursal', () =
         expect(principalPage.mensagem()).toEqual('Remessa registrada com sucesso!');
     });
 
-    it('Deveria gerar a próxima tarefa', () => {
+    xit('Deveria gerar a próxima tarefa', () => {
         principalPage.atualizarTarefas();
         expect(principalPage.tarefaPresente('Pré-Autuar Remessa de Processo Recursal', proximoProtocolo))
             .toBeTruthy('Tarefa com protocolo ' + proximoProtocolo + ' não encontrada.');

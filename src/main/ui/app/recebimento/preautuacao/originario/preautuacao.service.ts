@@ -8,7 +8,8 @@ export class PreautuarRemessaCommand implements cmd.Command{
     public protocoloId: number; 
 	public classeId: string;
 	public sigilo: string;
-	public preferencias: Array<number>;    
+	public preferencias: Array<number>;
+    public motivo: string;
 	
     constructor() {};
 }
@@ -27,6 +28,7 @@ export class PreautuacaoService {
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
     	commandService.setValidator('preautuar-originario', new ValidadorPreautuacao());
+        commandService.setValidator('devolver-remessa', new ValidadorDevolucao());
     }
 
     /*
@@ -52,6 +54,19 @@ class ValidadorPreautuacao implements cmd.CommandValidator {
 	
 	public isValid(command: PreautuarRemessaCommand): boolean {
 		if (angular.isString(command.classeId)) {
+			return true;
+		}
+		return false;
+	}
+
+}
+
+class ValidadorDevolucao implements cmd.CommandValidator {
+	
+	constructor() {}
+	
+	public isValid(command: DevolverRemessaCommand): boolean {
+		if (command.motivo && command.motivo.length > 0) {
 			return true;
 		}
 		return false;

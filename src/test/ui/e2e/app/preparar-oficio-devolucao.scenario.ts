@@ -2,24 +2,26 @@ import {LoginPage} from "./shared/pages/login.page";
 import {PrincipalPage}  from "./shared/pages/principal.page";
 import {PrepararOficioDevolucaoPage} from "./pages/preparar-oficio-devolucao.page";
 
-xdescribe('Preparação do Ofício de Devolução', () => {	
+describe('Preparação do Ofício de Devolução', () => {	
 	
     var loginPage: LoginPage = new LoginPage();
     var principalPage: PrincipalPage = new PrincipalPage();
 	let devolucaoPage: PrepararOficioDevolucaoPage = new PrepararOficioDevolucaoPage();
 
-    it ('Deveria logar na tela', () => {
+    let protocolo: number = 9002;
+
+    it ('Deveria logar no sistema', () => {
         loginPage.open();
-        loginPage.login('aaa', '123');
+        loginPage.login('cartoraria', '123');
     });
     
-    it ('Deveria acessar a pagina de devolução', () => {
-        devolucaoPage.open();
+    it ('Deveria acessar a tarefa de preparação do ofício de devolução', () => {
+        principalPage.acessarTarefa('Elaborar Ofício para Devolução', protocolo);
     });
-    
+
     it('Deveria preencher motivo e modelo', () => {
-	    devolucaoPage.selecionarMotivo();
-	    devolucaoPage.selecionarModelo();
+	    devolucaoPage.selecionarMotivo('Faltam Peças');
+	    devolucaoPage.selecionarModelo('Ofício de devolução de remessa');
 	    devolucaoPage.aguardarCarregamentoTags();
     });
     
@@ -30,5 +32,19 @@ xdescribe('Preparação do Ofício de Devolução', () => {
 	
 	it('Deveria finalizar elaboração do texto', () => {
 	    devolucaoPage.finalizarElaboracao();
+        principalPage.aguardarMensagem();
+        expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
+        expect(principalPage.mensagem()).toEqual('Documento de devolução elaborado com sucesso!');
     });
+
+    xit('Deveria gerar a próxima tarefa', () => {
+        principalPage.atualizarTarefas();
+        expect(principalPage.tarefaPresente('Assinar Ofício de Devolução', protocolo))
+            .toBeTruthy('Tarefa com protocolo ' + protocolo + ' não encontrada.');
+    });
+
+    it('Deveria fazer o logout do sistema', () => {
+		principalPage.logout();
+	});
+
 });

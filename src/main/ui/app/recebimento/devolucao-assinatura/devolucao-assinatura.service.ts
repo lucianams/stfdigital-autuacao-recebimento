@@ -1,7 +1,3 @@
-import IHttpService = angular.IHttpService;
-import IPromise = angular.IPromise;
-import IQService = angular.IQService;
-import IHttpPromiseCallbackArg = angular.IHttpPromiseCallbackArg;
 import devolucaoAssinatura from "./devolucao-assinatura.module";
 import {Modelo} from "./../services/model";
 
@@ -34,33 +30,33 @@ export class DevolucaoAssinaturaService {
 
 	static $inject = ['$http', 'properties', '$q'];
 
-    constructor(private $http: IHttpService, private properties: app.support.constants.Properties, private $q: IQService) { }
+    constructor(private $http: ng.IHttpService, private properties: app.support.constants.Properties, private $q: ng.IQService) { }
     
     public montarUrlConteudoTexto(textoId: number): string {
     	return this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + '/' + textoId + '/conteudo.pdf';
     }
     
-    public assinarOficioDevolucao(command: AssinarOficioParaDevolucaoCommand): IPromise<{}> {
+    public assinarOficioDevolucao(command: AssinarOficioParaDevolucaoCommand): ng.IPromise<{}> {
     	return this.$http.post(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa + '/devolucao-assinatura', command)
-    	   .then((response: IHttpPromiseCallbackArg<any>) => {
+    	   .then((response: ng.IHttpPromiseCallbackArg<any>) => {
     		   return response.data
     	   });
     }
 
-	public consultarDevolucoes(protocolos: number[]): IPromise<Devolucao[]> {
-		let promises: IPromise<Devolucao>[] = [];
+	public consultarDevolucoes(protocolos: number[]): ng.IPromise<Devolucao[]> {
+		let promises: ng.IPromise<Devolucao>[] = [];
 		for (let protocoloId of protocolos) {
 			promises.push(this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa + "/" + protocoloId + '/devolucao')
-				.then((response: IHttpPromiseCallbackArg<Devolucao>) => {
+				.then((response: ng.IHttpPromiseCallbackArg<Devolucao>) => {
 					return response.data;
 				}));
 		}
 		return this.$q.all(promises);
 	}
 
-	public consultarDocumentoFinalDoTexto(textoId: number): IPromise<Documento> {
+	public consultarDocumentoFinalDoTexto(textoId: number): ng.IPromise<Documento> {
 		return this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + "/" + textoId + "/documento-final")
-			.then((response: IHttpPromiseCallbackArg<Documento>) => {
+			.then((response: ng.IHttpPromiseCallbackArg<Documento>) => {
 				return response.data;
 			});
 	}

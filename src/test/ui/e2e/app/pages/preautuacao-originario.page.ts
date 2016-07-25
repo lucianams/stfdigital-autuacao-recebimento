@@ -16,7 +16,7 @@ export class PreautuacaoOriginarioPage {
 		element(by.id('preautuar-originario')).click();
 	}
 	
-	public informarMotivo(motivo: string): void {
+	public preencherMotivo(motivo: string): void {
 		element(by.id('motivo')).sendKeys(motivo);
 	}
 

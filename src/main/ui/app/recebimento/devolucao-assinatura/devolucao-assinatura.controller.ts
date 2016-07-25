@@ -1,4 +1,3 @@
-import IStateService = angular.ui.IStateService;
 import {DevolucaoAssinaturaService, AssinarOficioParaDevolucaoCommand, Devolucao, Documento} from "./devolucao-assinatura.service";
 import devolucaoAssinatura from "./devolucao-assinatura.module";
 
@@ -16,7 +15,7 @@ export class DevolucaoAssinaturaController {
     private devolucoesAssinadas: Devolucao[] = [];
     private devolucoesComErroDuranteAssinatura: Devolucao[] = [];
 
-    constructor(private $state: IStateService, private devolucaoAssinaturaService: DevolucaoAssinaturaService,
+    constructor(private $state: ng.ui.IStateService, private devolucaoAssinaturaService: DevolucaoAssinaturaService,
                 public devolucoes: Devolucao[], private signatureService: app.certification.SignatureService,
                 private messagesService: app.support.messaging.MessagesService) {
     }

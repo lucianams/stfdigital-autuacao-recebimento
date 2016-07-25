@@ -7,8 +7,6 @@ import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.jus.stf.core.shared.documento.TextoId;
-
 /**
  * @author Rafael Alencar
  * 
@@ -23,7 +21,7 @@ public interface DocumentoRestClient {
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/api/textos/concluir")
-	List<Map<String, Object>> concluirTexto(TextoId textoId);
+	List<Map<String, Object>> concluirTexto(Map<String, Object> command);
 	
 	/**
 	 * @param command

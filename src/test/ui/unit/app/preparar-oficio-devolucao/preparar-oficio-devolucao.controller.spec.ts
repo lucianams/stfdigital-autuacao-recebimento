@@ -172,7 +172,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 			protocolo, 123, 1, 13
 		));
 
-		expect(mockState.go).toHaveBeenCalledWith('app.tarefas.minhas-tarefas', {}, { reload: true });
+		expect(mockState.go).toHaveBeenCalledWith('app.tarefas.minhas-tarefas');
 		expect(mockMessagesService.success).toHaveBeenCalledWith("Documento de devolução elaborado com sucesso!");
 	});
 

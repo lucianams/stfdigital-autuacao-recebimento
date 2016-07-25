@@ -14,7 +14,7 @@ describe('Preautuação de Remessa Recursal', () => {
     });
     
     it ('Deveria acessar a tarefa de preautuação recursal', () => {
-        principalPage.acessarTarefa('Pré-Autuar Remessa de Processo Recursal', 56);
+        principalPage.acessarTarefa('Pré-Autuar Remessa de Processo Recursal', 9007);
     });
     
     it('Deveria preencher as informações da preautuação recursal', () => {

@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.preferencia;
+package br.jus.stf.autuacao.recebimento.domain.model.suportejudicial;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -20,6 +20,10 @@ import br.jus.stf.core.shared.preferencia.PreferenciaId;
 @Table(name = "PREFERENCIA", schema = "RECEBIMENTO")
 public class Preferencia extends EntitySupport<Preferencia, PreferenciaId> {
 	
+	public static final PreferenciaId PREFERENCIA_CRIMINAL = new PreferenciaId(2L);
+	
+	public static final PreferenciaId PREFERENCIA_ELEITORAL = new PreferenciaId(3L);
+	
 	@EmbeddedId
 	private PreferenciaId id;
 	
@@ -30,6 +34,10 @@ public class Preferencia extends EntitySupport<Preferencia, PreferenciaId> {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param id
+	 * @param nome
+	 */
 	public Preferencia(PreferenciaId id, String nome) {
 		Validate.notNull(id, "Id requerido");
 		Validate.notBlank(nome, "Nome requerido");
@@ -38,13 +46,16 @@ public class Preferencia extends EntitySupport<Preferencia, PreferenciaId> {
 		this.nome = nome;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String nome() {
 		return nome;
 	}
 	
 	public boolean isCriminalEleitoral() {
 		// TODO: Verificar uma forma melhor de implementar essa verificação
-		return id.toLong() == 2L || id.toLong() == 3L;
+		return PREFERENCIA_CRIMINAL.sameValueAs(id) || PREFERENCIA_ELEITORAL.sameValueAs(id);
 	}
 	
 	@Override

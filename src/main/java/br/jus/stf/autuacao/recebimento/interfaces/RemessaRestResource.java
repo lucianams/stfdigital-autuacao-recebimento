@@ -23,8 +23,8 @@ import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDe
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavelRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.PreferenciaRepository;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDto;

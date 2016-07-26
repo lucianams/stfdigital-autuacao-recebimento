@@ -1,21 +1,21 @@
-import {PrepararOficioDevolucaoService, MotivoDevolucao, Tag, GerarTextoCommand, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
+import {PreparacaoOficioDevolucaoService, MotivoDevolucao, Tag, GerarTextoCommand, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.service";
 import {Modelo, TipoDocumento} from "recebimento/services/model";
-import "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
+import "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.service";
 import 'recebimento/services/services.module';
 
-describe('Teste do serviço preparar-oficio-devolucao.service', () => {
+describe('Teste do serviço preparacao-oficio-devolucao.service', () => {
 
 	let $httpBackend: ng.IHttpBackendService;
-	let prepararOficioDevolucaoService: PrepararOficioDevolucaoService;
+	let preparacaoOficioDevolucaoService: PreparacaoOficioDevolucaoService;
 	let properties: app.support.constants.Properties;
 
 	let handler;
 
-	beforeEach(angular.mock.module('app.recebimento.services', 'app.recebimento.preparar-oficio-devolucao'));
+	beforeEach(angular.mock.module('app.recebimento.services', 'app.recebimento.preparacao-oficio-devolucao'));
 
-	beforeEach(inject(['$httpBackend', 'app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'properties', (_$httpBackend_ : ng.IHttpBackendService, _prepararOficioDevolucaoService_ : PrepararOficioDevolucaoService, _properties_: app.support.constants.Properties) => {
+	beforeEach(inject(['$httpBackend', 'app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoService', 'properties', (_$httpBackend_ : ng.IHttpBackendService, _preparacaoOficioDevolucaoService_ : PreparacaoOficioDevolucaoService, _properties_: app.support.constants.Properties) => {
         $httpBackend = _$httpBackend_;
-       	prepararOficioDevolucaoService =  _prepararOficioDevolucaoService_;
+       	preparacaoOficioDevolucaoService =  _preparacaoOficioDevolucaoService_;
        	properties = _properties_;
     }]));
 
@@ -32,7 +32,7 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
 		let motivosDevolucao: MotivoDevolucao[] = [new MotivoDevolucao(123, "Motivo 1", [3, 4]), new MotivoDevolucao(124, "Motivo 2", [5, 6])];
         $httpBackend.expectGET(properties.apiUrl + '/recebimento/api/devolucao/motivos-devolucao').respond(200, motivosDevolucao);
 		
-		prepararOficioDevolucaoService.listarMotivosDevolucao().then(handler.success, handler.error);
+		preparacaoOficioDevolucaoService.listarMotivosDevolucao().then(handler.success, handler.error);
         
 		$httpBackend.flush();
 
@@ -45,7 +45,7 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
 		let idMotivoDevolucao: number = 123;
         $httpBackend.expectGET(properties.apiUrl + '/recebimento/api/devolucao/motivos-devolucao/' + idMotivoDevolucao + '/modelos').respond(200, modelos);
 		
-		prepararOficioDevolucaoService.consultarModelosPorMotivo(idMotivoDevolucao).then(handler.success, handler.error);
+		preparacaoOficioDevolucaoService.consultarModelosPorMotivo(idMotivoDevolucao).then(handler.success, handler.error);
         
 		$httpBackend.flush();
 
@@ -58,7 +58,7 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
         let tags: Tag[] = [<Tag>{nome: "Destinatário"}, <Tag>{nome: "Vocativo"}];
         $httpBackend.expectGET(properties.apiUrl + '/documents/api/documentos/77/tags').respond(200, tags);
 
-        prepararOficioDevolucaoService.extrairTags(documentoId).then(handler.success, handler.error);
+        preparacaoOficioDevolucaoService.extrairTags(documentoId).then(handler.success, handler.error);
 
         $httpBackend.flush();
 
@@ -71,7 +71,7 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
         let texto: Texto = <Texto>{id: 123, documentoId: 87};
         $httpBackend.expectPOST(properties.apiUrl + '/documents/api/textos/gerar-texto', command).respond(200, texto);
 
-        prepararOficioDevolucaoService.gerarTextoComTags(command).then(handler.success, handler.error);
+        preparacaoOficioDevolucaoService.gerarTextoComTags(command).then(handler.success, handler.error);
 
         $httpBackend.flush();
 
@@ -83,7 +83,7 @@ describe('Teste do serviço preparar-oficio-devolucao.service', () => {
 		let command: PrepararOficioParaDevolucaoCommand = new PrepararOficioParaDevolucaoCommand(123, 3, 7, 8);
         $httpBackend.expectPOST(properties.apiUrl + '/recebimento/api/remessas/devolucao-oficio', command).respond(200, '');
 
-        prepararOficioDevolucaoService.finalizarDevolucao(command).then(handler.success, handler.error);
+        preparacaoOficioDevolucaoService.finalizarDevolucao(command).then(handler.success, handler.error);
 
         $httpBackend.flush();
 

@@ -1,16 +1,16 @@
-import {PrepararOficioDevolucaoController} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.controller";
-import {MotivoDevolucao, Tag, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparar-oficio-devolucao/preparar-oficio-devolucao.service";
+import {PreparacaoOficioDevolucaoController} from "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.controller";
+import {MotivoDevolucao, Tag, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.service";
 import {Modelo, TipoDocumento} from "recebimento/services/model";
-import {Documento} from "recebimento/preparar-oficio-devolucao/documento";
+import {Documento} from "recebimento/preparacao-oficio-devolucao/documento";
 
-describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
+describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
 
 	let $rootScope: ng.IRootScopeService;
 	let $q: ng.IQService;
 
-	let controller: PrepararOficioDevolucaoController;
+	let controller: PreparacaoOficioDevolucaoController;
 	let mockState;
-	let mockPrepararOficioDevolucaoService;
+	let mockPreparacaoOficioDevolucaoService;
 	let mockMessagesService;
 
 	let protocolo: number;
@@ -23,7 +23,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 			go : () => {}
 		};
 
-		mockPrepararOficioDevolucaoService = {
+		mockPreparacaoOficioDevolucaoService = {
 			consultarModelosPorMotivo: () => {},
 			extrairTags: () => {},
 			gerarTextoComTags: () => {},
@@ -37,14 +37,14 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		protocolo = 12345;
 
-		controller = new PrepararOficioDevolucaoController(mockState, mockPrepararOficioDevolucaoService,
+		controller = new PreparacaoOficioDevolucaoController(mockState, mockPreparacaoOficioDevolucaoService,
 			[new MotivoDevolucao(123, "AI Intempestivo", [1, 2, 3])],
 			protocolo, mockMessagesService);
 	}));
 	
 	it('Deveria carregar os modelos de acordo com o motivo de devolução', () => {
 		let modelos: Modelo[] = [<Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")}];
-		spyOn(mockPrepararOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.when(modelos));
+		spyOn(mockPreparacaoOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.when(modelos));
 		
 		// Escolhendo o motivo de devolução
 		controller.motivoDevolucao = controller.motivosDevolucao[0];
@@ -57,7 +57,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply(); // Resolvendo promises
 
-		expect(mockPrepararOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
+		expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
 
 		expect(controller.modelos).toEqual(modelos);
 
@@ -65,7 +65,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 	});
 
 	it('Deveria tratar o possível erro ao carregar os modelos de acordo com o motivo de devolução', () => {
-		spyOn(mockPrepararOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.reject());
+		spyOn(mockPreparacaoOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.reject());
 		spyOn(mockMessagesService, 'error').and.callThrough();
 
 		// Escolhendo o motivo de devolução
@@ -79,14 +79,14 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply(); // Resolvendo promises
 
-		expect(mockPrepararOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
+		expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
 
 		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar os modelos.");
 	});
 
 	it('Deveria extrair as tags do documento do modelo escolhido', () => {
 		let tags: Tag[] = [<Tag>{nome: 'Destinatário'}, <Tag>{nome: 'Vocativo'}];
-		spyOn(mockPrepararOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.when(tags));
+		spyOn(mockPreparacaoOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.when(tags));
 
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
 
@@ -98,7 +98,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply(); // Resolvendo promises
 
-		expect(mockPrepararOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+		expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
 
 		expect(controller.substituicoesTags).toEqual([new SubstituicaoTag('Destinatário', ''), new SubstituicaoTag('Vocativo', '')]);
 
@@ -106,7 +106,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 	});
 
 	it('Deveria tratar o possível erro ao extrair as tags do documento do modelo escolhido', () => {
-		spyOn(mockPrepararOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.reject());
+		spyOn(mockPreparacaoOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.reject());
 		spyOn(mockMessagesService, 'error').and.callThrough();
 
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
@@ -119,14 +119,14 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply(); // Resolvendo promises
 
-		expect(mockPrepararOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+		expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
 
 		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar as tags.");
 	});
 
 	it('Deveria gerar o texto a partir das tags preenchidas', () => {
 		let texto = <Texto>{id: 13, documentoId: 234};
-		spyOn(mockPrepararOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.when(texto));
+		spyOn(mockPreparacaoOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.when(texto));
 
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
 		controller.substituicoesTags = [new SubstituicaoTag('Destinatário', 'Fulano'), new SubstituicaoTag('Vocativo', 'Excelentíssimo')];
@@ -141,7 +141,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 	});
 
 	it('Deveria tratar o possível erro ao gerar o texto a partir das tags preenchidas', () => {
-		spyOn(mockPrepararOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.reject());
+		spyOn(mockPreparacaoOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.reject());
 		spyOn(mockMessagesService, 'error').and.callThrough();
 
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
@@ -155,7 +155,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 	});
 
 	it('Deveria finalizar a edição do documento de devolução quando o callback for chamado', () => {
-		spyOn(mockPrepararOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.when());
+		spyOn(mockPreparacaoOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.when());
 		spyOn(mockMessagesService, 'success').and.callThrough();
 		spyOn(mockState, 'go').and.callThrough();
 
@@ -168,7 +168,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply();
 
-		expect(mockPrepararOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
+		expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
 			protocolo, 123, 1, 13
 		));
 
@@ -177,7 +177,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 	});
 
 	it('Deveria tratar o possível erro ao finalizar a edição do documento de devolução quando o callback for chamado', () => {
-		spyOn(mockPrepararOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.reject());
+		spyOn(mockPreparacaoOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.reject());
 		spyOn(mockMessagesService, 'error').and.callThrough();
 		spyOn(mockState, 'go').and.callThrough();
 
@@ -190,7 +190,7 @@ describe('Teste do controlador preparar-oficio-devolucao.controller', () => {
 
 		$rootScope.$apply();
 
-		expect(mockPrepararOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
+		expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
 			protocolo, 123, 1, 13
 		));
 

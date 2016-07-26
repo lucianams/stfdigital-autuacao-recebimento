@@ -1,5 +1,6 @@
 import {PreautuacaoController} from "recebimento/preautuacao/originario/preautuacao.controller";
-import {PreautuacaoService, DevolverRemessaCommand} from "recebimento/preautuacao/originario/preautuacao.service";
+import {PreautuacaoService} from "recebimento/preautuacao/originario/preautuacao.service";
+import {DevolverRemessaCommand} from "recebimento/preautuacao/devolucao/devolucao.service";
 import {Classe, Remessa} from 'recebimento/services/model';
 
 
@@ -11,6 +12,7 @@ describe('Teste do controlador preautuacao.controller', () => {
 	let mockState;
 	let mockPreautuacaoService;
 	let mockMessagesService;
+	let mockDevolucaoService;
 
 	let protocoloId: number;
 	
@@ -24,22 +26,23 @@ describe('Teste do controlador preautuacao.controller', () => {
 			go : () => {}
 		};
 		mockPreautuacaoService = {
-			devolver : () => {},
 			preautuarProcesso : () =>{}
 		};
 		mockMessagesService = {
 			success: () => {}
 		};
+		mockDevolucaoService = {
+			devolver : () => {},
+		};
 		let remessa: Remessa = new Remessa(123, 'HC', 4, 7, 'BALCAO', null);
-	    controller = new PreautuacaoController(mockState, mockMessagesService, mockPreautuacaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa);
+	    controller = new PreautuacaoController(mockState, mockMessagesService, mockPreautuacaoService, mockDevolucaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa, [{nome: "PUBLICO", descricao: "Público"}, {nome: "SEGREDO_JUSTICA", descricao: "Segredo de Justiça"}]);
 	});
 	
 	it('Deveria devolver a remessa', () => {
 		let motivoDevolucao = 'Motivo para devolução';
 		controller.cmdDevolucao.motivo = motivoDevolucao;
-		//controller.cmdDevolucao.protocoloId = 123;
 		
-		spyOn(mockPreautuacaoService, 'devolver').and.callFake(() => $q.when());
+		spyOn(mockDevolucaoService, 'devolver').and.callFake(() => $q.when());
 		
 		spyOn(mockState, 'go').and.callThrough();
 		
@@ -47,7 +50,7 @@ describe('Teste do controlador preautuacao.controller', () => {
 		
 		$rootScope.$apply();
 		
-		expect(mockPreautuacaoService.devolver).toHaveBeenCalledWith(controller.cmdDevolucao);
+		expect(mockDevolucaoService.devolver).toHaveBeenCalledWith(controller.cmdDevolucao);
 		
 		expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
 	});

@@ -26,7 +26,7 @@ describe('Teste do controlador peticao-fisica.controller', () => {
 		mockMessagesService = {
 			success: () => {}
 		};
-	    controller = new PeticaoFisicaController(mockState, mockPeticaoFisicaService, [new FormaRecebimento('MALOTE', 'Malote', false)], mockMessagesService);
+	    controller = new PeticaoFisicaController(mockState, mockPeticaoFisicaService, [new FormaRecebimento('MALOTE', 'Malote', false)], mockMessagesService, [{nome: "PUBLICO", descricao: "Público"}, {nome: "SEGREDO_JUSTICA", descricao: "Segredo de Justiça"}]);
 	});
 	
 	it('Deveria registrar o recebimento da petição física', () => {

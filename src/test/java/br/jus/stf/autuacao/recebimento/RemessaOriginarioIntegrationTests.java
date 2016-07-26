@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -83,88 +82,106 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
         result.andExpect(status().isOk());
     }
 	
-	@Ignore
 	@Test
     public void preautarUmaRemessa() throws Exception {
-        //loadDataTests("preautarRemessaOriginario.sql");
+        loadDataTests("preautarRemessaOriginario.sql");
         
 		JsonObject remessaParaPreautuar = object(
-			field("classedId", "ADI"),
+			field("protocoloId", 9000),
+			field("classeId", "ADI"),
 			field("preferencias", array(3, 8)),
 			field("sigilo", "PUBLICO")
 		);
-		remessaParaPreautuar.put("protocoloId", 9000);
+
         ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaParaPreautuar.toString()));
         
         result.andExpect(status().isOk());
     }
-	@Ignore
+
 	@Test
     public void devolverUmaRemessa() throws Exception {
-		//loadDataTests("devolverRemessaOriginario.sql");
-		
-		String remessaParaDevolver = "{\"protocoloId\":@protocoloId, \"motivo\":\"Remessa inválida.\"}";
-        String protocoloId = "9001";
+		loadDataTests("devolverRemessaOriginario.sql");
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.replace("@protocoloId", protocoloId)));
+        JsonObject remessaParaDevolver = object(
+        	field("protocoloId", 9001),
+        	field("motivo", "Remessa inválida.")
+        );
+        
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
         
         result.andExpect(status().isOk());
     }
-	@Ignore
+
 	@Test
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
-        //loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
+        loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
 		
-		String remessaParaPrepararOficio = "{\"protocoloId\":@protocoloId, \"motivo\":1, \"modeloId\":1, \"textoId\":9000}";
-		String protocoloId = "9002";
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaParaPrepararOficio.replace("@protocoloId", protocoloId)));
+        JsonObject remessaParaPrepararOficio = object(
+        	field("protocoloId", 9002),
+        	field("motivo", 1),
+        	field("modeloId", 1),
+        	field("textoId", 9000)
+        );
+        
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaParaPrepararOficio.toString()));
         
         result.andExpect(status().isOk());
     }
-	@Ignore
+
 	@Test
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
-        //loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
+        loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
 		
-        String remessaParaAssinarOficio = "{\"protocoloId\":@protocoloId,\"documentoTemporarioId\":\"_DocTemp_12345\"}";
-		String protocoloId = "9003";
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaParaAssinarOficio.replace("@protocoloId", protocoloId)));
+        JsonObject remessaParaAssinarOficio = object(
+        	field("protocoloId", 9003),
+        	field("documentoTemporarioId", "_DocTemp_12345")
+        );
+        
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaParaAssinarOficio.toString()));
         
         result.andExpect(status().isOk());
     }
-	@Ignore
+	
 	@Test
     public void naoDeveRegistrarUmaRemessaInvalida() throws Exception {
-        String remessaInvalida = "{\"formaRecebimento\":\"SEDEX\", \"apensos\":1, \"numeroSedex\":\"SR123456789BR\"}";
+        JsonObject remessaInvalida = object(
+        	field("formaRecebimento", "SEDEX"),
+        	field("apensos", 1),
+        	field("numeroSedex", "SR123456789BR")
+        );
         
-        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
         
         result.andExpect(status().isBadRequest());
     }
-	@Ignore
+	
 	@Test
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
-        String remessaInvalida = "{\"protocoloId\":1, \"transicao\":\"devolver\", \"movito\":\"Remessa enviado ao STF antes de passar ao STJ\"}";
+        JsonObject remessaInvalida = object(
+        	field("protocoloId", 1),
+        	field("transicao", "devolver"),
+        	field("motivo", "Remessa enviado ao STF antes de passar ao STJ")
+        );
         
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaInvalida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
         
         result.andExpect(status().isBadRequest());
     }
-	@Ignore
+
 	@Test
     public void naoDeveElaborarOficioParaDevolucaoDaRemessaInvalida() throws Exception {
-        String remessaInvalida = "{}";
+		JsonObject remessaInvalida = object().get();
         
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaInvalida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
         
         result.andExpect(status().isBadRequest());
     }
-	@Ignore
+	
 	@Test
     public void naoDeveAssinarUmOficioDeDevolucao() throws Exception {
-        String remessaInvalida = "{}";
+        JsonObject remessaInvalida = object().get();
         
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaInvalida));
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
         
         result.andExpect(status().isBadRequest());
     }

@@ -19,7 +19,11 @@ export class PreautuacaoRecursalPage {
     public selecionarSigilo(sigilo: string): void {
         mdHelpers.selectOptionWithText(element(by.id('cboSigilo')), sigilo);
     }
-        
+
+	public preencherMotivo(motivo: string): void {
+		element(by.id('txtMotivo')).sendKeys(motivo);
+	}
+
     public selecionarPreferencia(...preferencias: string[]): void {
         mdHelpers.multipleSelectOptionsWithText(element(by.id('cboPreferencias')), preferencias);
     }

@@ -23,6 +23,7 @@ describe('Preautuação de Remessa Recursal', () => {
     	preautuacaoRecursalPage.selecionarClasse('RECURSO EXTRAORDINÁRIO');
         preautuacaoRecursalPage.selecionarPreferencia('Medida Liminar');
         preautuacaoRecursalPage.selecionarSigilo('Público');
+        preautuacaoRecursalPage.preencherMotivo('Petição Recursal OK.');
     });
     
     it('Deveria preautuar', () => {

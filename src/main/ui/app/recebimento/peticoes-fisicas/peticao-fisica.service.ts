@@ -18,7 +18,7 @@ export class PeticaoFisicaCommand implements cmd.Command {
     public apensos: number;
     public numeroSedex: string;
     public tipoProcesso: string;
-    public sigilo: string = 'PUBLICO';
+    public sigilo: string;
 
 	constructor() {}
 
@@ -53,7 +53,8 @@ class ValidadorRemessa implements cmd.CommandValidator {
 		if (angular.isNumber(command.apensos) &&
 			angular.isNumber(command.volumes) &&
 			this.validarTipoProcesso(command.tipoProcesso) &&
-			this.validarFormaRecebimento(command.formaRecebimento, command.numeroSedex)) {
+			this.validarFormaRecebimento(command.formaRecebimento, command.numeroSedex) &&
+			angular.isDefined(command.sigilo)) {
 			return true;
 		}
 		return false;

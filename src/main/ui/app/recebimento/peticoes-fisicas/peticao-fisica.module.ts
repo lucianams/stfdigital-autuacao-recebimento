@@ -2,6 +2,7 @@ import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoade
 import IStateProvider = angular.ui.IStateProvider;
 import IModule = angular.IModule;
 import {PeticaoFisicaService} from "./peticao-fisica.service";
+import {RemessaService} from './../services/remessa.service';
 import cmd = app.support.command; 
 import Properties = app.support.constants.Properties;
 
@@ -21,6 +22,9 @@ function config($stateProvider: IStateProvider,
         resolve : {
             formasRecebimento : ['app.recebimento.peticoes-fisicas.PeticaoFisicaService', (peticaoFisicaService: PeticaoFisicaService) => {
                 return peticaoFisicaService.consultarFormasRecebimento();
+            }],
+            sigilos: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
+                return remessaService.listarSigilo();
             }]
         }
     });
@@ -32,6 +36,6 @@ function run($translatePartialLoader: ITranslatePartialLoaderService, properties
 	$translatePartialLoader.addPart(properties.apiUrl + '/recebimento/peticoes-fisicas');
 }
 
-let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.novo-processo', 'app.support']);
+let recebimento: IModule = angular.module('app.recebimento.peticoes-fisicas', ['app.recebimento.services', 'app.novo-processo', 'app.support']);
 recebimento.config(config).run(run);
 export default recebimento;

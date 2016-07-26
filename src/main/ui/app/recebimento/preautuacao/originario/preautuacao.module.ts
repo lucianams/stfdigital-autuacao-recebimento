@@ -27,6 +27,9 @@ function config($stateProvider: IStateProvider,
             remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams: IStateParams) => {
                 let protocoloId = $stateParams['informationId'];
                 return remessaService.consultarRemessa(protocoloId);
+            }],
+            sigilos: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
+                return remessaService.listarSigilo();
             }]
     	},
     	params : {
@@ -41,6 +44,10 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/originario");
 }
 
-let preautuacao: IModule = angular.module("app.recebimento.preautuacao-originario", ["app.recebimento.services", "app.novo-processo", "app.support"]);
+let preautuacao: IModule = angular.module("app.recebimento.preautuacao-originario", [
+    "app.recebimento.services",
+    "app.recebimento.preautuacao-devolucao",
+    "app.novo-processo",
+    "app.support"]);
 preautuacao.config(config).run(run);
 export default preautuacao;

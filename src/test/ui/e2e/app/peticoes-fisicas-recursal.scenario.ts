@@ -33,6 +33,7 @@ describe('Recebimento de Petições Físicas de Processo do Tipo Recursal', () =
     	recebimentoPage.preencherQtdApensos(3);
     	recebimentoPage.selecionarFormaRecebimento('Malote');
     	recebimentoPage.selecionarTipoProcesso("Recursal");
+        recebimentoPage.selecionarSigilo("Público");
     });
 
     it('Deveria registrar a remessa', () => {

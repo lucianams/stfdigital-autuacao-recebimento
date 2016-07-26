@@ -20,7 +20,11 @@ export class RecebimentoPage {
 	public preencherNumSedex(quantidade : number) : void {
 		element(by.id('numeroSedex')).sendKeys(quantidade.toString());
 	}
-	
+
+    public selecionarSigilo(sigilo: string): void {
+        mdHelpers.selectOptionWithText(element(by.id('sigilo')), sigilo);
+    }
+
 	public selecionarTipoProcesso(tipoProcesso: string) : void {
 		mdHelpers.selectOptionWithText(element(by.id('tipoProcesso')), tipoProcesso);
 	}

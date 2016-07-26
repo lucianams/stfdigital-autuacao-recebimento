@@ -32,6 +32,7 @@ describe('Recebimento de Remessas de Processo do Tipo Originário', () => {
     	recebimentoPage.preencherQtdApensos(3);
     	recebimentoPage.selecionarFormaRecebimento('Fax');
     	recebimentoPage.selecionarTipoProcesso("Originário");
+        recebimentoPage.selecionarSigilo("Público");
     });
 
     it('Deveria registrar a remessa', () => {

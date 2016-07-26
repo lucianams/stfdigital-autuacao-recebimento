@@ -1,10 +1,12 @@
 <div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
 
+    <stf-header path="preautuacao.path"> </stf-header>
+
     <!-- CONTENT -->
     <div class="content" layout="column">
 
-        <div class="md-title mt-10">Preautuação</div>
-        <div class="pb-16">Informe a preferência e a motição da petição</div>
+        <div class="md-title mt-10">Preautuação de Originários</div>
+        <div class="pb-16">Informe a classificação, a preferência, o sigilo e se a petição está correta ou não</div>
 
         <div layout="row">
 
@@ -49,6 +51,16 @@
                             <md-select multiple ng-model="preautuacao.cmdPreautuar.preferencias" id="preferencias">
                                 <md-option ng-repeat="preferencia in preautuacao.preferencias" value="{{preferencia.id}}">
                                     {{preferencia.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout="row" layout-gt-xs="row">
+                    	<md-input-container flex="50">
+                            <label>Sigilio *</label>
+                            <md-select ng-model="preautuacao.cmdPreautuar.sigilo" id="sigilo"">
+                                <md-option ng-repeat="sigilo in preautuacao.sigilos" ng-value="sigilo.nome">
+                                    {{sigilo.descricao}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

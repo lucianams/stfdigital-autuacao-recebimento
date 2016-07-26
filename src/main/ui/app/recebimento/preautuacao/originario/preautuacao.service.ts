@@ -14,13 +14,6 @@ export class PreautuarRemessaCommand implements cmd.Command{
     constructor() {};
 }
 
-export class DevolverRemessaCommand implements cmd.Command {
-	public protocoloId: number;
-	public motivo: string;
-
-	constructor() {};
-}
-
 export class PreautuacaoService {
 
     private static urlServicoPreautuacao: string = '/recebimento/api/remessas';
@@ -28,7 +21,6 @@ export class PreautuacaoService {
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
     	commandService.setValidator('preautuar-originario', new ValidadorPreautuacao());
-        commandService.setValidator('devolver-remessa', new ValidadorDevolucao());
     }
 
     /*
@@ -42,10 +34,6 @@ export class PreautuacaoService {
         return this.$http.post(this.properties.url + ":" + this.properties.port + 
             PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmdPreautuar);        
     }
-
-	public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<any> {
-		return this.$http.post(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao + '/devolucao', cmdDevolver);
-	}
 }
 
 class ValidadorPreautuacao implements cmd.CommandValidator {
@@ -53,20 +41,8 @@ class ValidadorPreautuacao implements cmd.CommandValidator {
 	constructor() {}
 	
 	public isValid(command: PreautuarRemessaCommand): boolean {
-		if (angular.isString(command.classeId)) {
-			return true;
-		}
-		return false;
-	}
-
-}
-
-class ValidadorDevolucao implements cmd.CommandValidator {
-	
-	constructor() {}
-	
-	public isValid(command: DevolverRemessaCommand): boolean {
-		if (command.motivo && command.motivo.length > 0) {
+		if (angular.isString(command.classeId) &&
+			angular.isDefined(command.sigilo)) {
 			return true;
 		}
 		return false;

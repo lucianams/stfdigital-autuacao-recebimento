@@ -2,5 +2,6 @@ import preautuacaoRecursal from "./preautuacao/recursal/preautuacao-recursal.mod
 import "./preautuacao/recursal/preautuacao-recursal.controller";
 
 import "./services";
+import "./preautuacao-devolucao";
 
 export default preautuacaoRecursal;

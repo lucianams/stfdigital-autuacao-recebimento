@@ -6,7 +6,7 @@
     <div class="content" layout="column">
 
         <div class="md-title mt-10">Remessa</div>
-        <div class="pb-16">Informe a classe, as preferências, os envolvidos e os documentos para enviar a petição</div>
+        <div class="pb-16">Informe a quantidade de volumes, a quantidade de apensos, a forma de envio e o tipo de processo e o sigilo para enviar a remessa</div>
 
         <div layout="row">
 
@@ -46,6 +46,14 @@
                             <md-select ng-model="registro.cmd.tipoProcesso" id="tipoProcesso">
                                 <md-option ng-repeat="tipo in registro.tiposProcessos" value="{{tipo.id}}">
                                     {{tipo.nome}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    	<md-input-container flex="50">
+                            <label>Sigilio *</label>
+                            <md-select ng-model="registro.cmd.sigilo" id="sigilo"">
+                                <md-option ng-repeat="sigilo in registro.sigilos" ng-value="sigilo.nome">
+                                    {{sigilo.descricao}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

@@ -41,6 +41,10 @@ function run($translatePartialLoader: ITranslatePartialLoaderService,
 	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/recursal");
 }
 
-let preautuacaoRecursal: IModule = angular.module("app.recebimento.preautuacao-recursal", ["app.recebimento.services", "app.novo-processo", "app.support"]);
+let preautuacaoRecursal: IModule = angular.module("app.recebimento.preautuacao-recursal", [
+    "app.recebimento.services",
+    "app.recebimento.preautuacao-devolucao",
+    "app.novo-processo",
+    "app.support"]);
 preautuacaoRecursal.config(config).run(run);
 export default preautuacaoRecursal;

@@ -20,6 +20,7 @@ describe('Preautuação de Remessa de Processo Originário - Preautuar', () => {
     it('Deveria preencher as informações da preautuação originária', () => {
     	preautuacaoOriginarioPage.selecionarClasse('MANDADO DE SEGURANÇA');
         preautuacaoOriginarioPage.selecionarPreferencia('Medida Liminar', 'Réu Preso');
+        preautuacaoOriginarioPage.selecionarSigilo("Público");
         preautuacaoOriginarioPage.preencherMotivo('Petição OK.');
     });
     

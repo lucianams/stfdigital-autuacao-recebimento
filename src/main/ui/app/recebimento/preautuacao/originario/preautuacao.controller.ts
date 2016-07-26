@@ -1,7 +1,8 @@
 import IStateService = angular.ui.IStateService;
-import {Classe, Remessa, Preferencia} from "../../services/model";
+import {Classe, Remessa, Preferencia, Sigilo} from "../../services/model";
 import preautuacao from "./preautuacao.module";
-import {PreautuacaoService, DevolverRemessaCommand, PreautuarRemessaCommand} from "./preautuacao.service";
+import {PreautuacaoService, PreautuarRemessaCommand} from "./preautuacao.service";
+import {DevolucaoService, DevolverRemessaCommand} from "../devolucao/devolucao.service";
 
 /**
  * @author Viniciusk
@@ -12,14 +13,18 @@ export class PreautuacaoController {
 	public classe : Classe;
 	public preferencias : Array<Preferencia> = [];
 
+	public path = {id: 'tarefas.preautuacao', translation:'Preautuação', uisref: 'app.tarefas.recebimento-preautuacao', parent: 'tarefas'};
+
 	public cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
 	public cmdDevolucao: DevolverRemessaCommand = new DevolverRemessaCommand();
 
-	static $inject = ["$state", "messagesService", "app.recebimento.preautuacao-originario.PreautuacaoService", "classes", "remessa"];
+	static $inject = ["$state", "messagesService",
+		"app.recebimento.preautuacao-originario.PreautuacaoService", "app.recebimento.preautuacao-devolucao.DevolucaoService",
+		"classes", "remessa", "sigilos"];
 
 	constructor(private $state: IStateService, private messagesService: app.support.messaging.MessagesService, 
-			private preautuacaoService: PreautuacaoService, public classes : Classe[], public remessa: Remessa){
-		this.cmdPreautuar.sigilo = 'PUBLICO';
+			private preautuacaoService: PreautuacaoService, private devolucaoService: DevolucaoService,
+			public classes : Classe[], public remessa: Remessa, public sigilos: Sigilo[]){
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
 		this.cmdDevolucao.protocoloId = remessa.protocolo;
 	}
@@ -34,7 +39,7 @@ export class PreautuacaoController {
 	}
 	
 	public devolver(): void {
-		this.preautuacaoService.devolver(this.cmdDevolucao)
+		this.devolucaoService.devolver(this.cmdDevolucao)
 		.then(() => {
             this.$state.go('app.tarefas.minhas-tarefas');
 			this.messagesService.success('Remessa devolvida com sucesso.');

@@ -11,6 +11,8 @@ export class DevolucaoAssinaturaController {
     static $inject = ['$state', 'app.recebimento.devolucao-assinatura.DevolucaoAssinaturaService', 'devolucoes', 'app.certification.SignatureService',
         'messagesService'];
 
+    public path = {id: 'tarefas.devolucao-assinatura', translation: 'Assinatura do Ofício de Devolução', uisref: 'app.tarefas.recebimento-devolucao-assinatura', parent: 'tarefas'};
+
     public devolucoesParaAssinar: DevolucaoEmAssinatura[] = [];
     private devolucoesAssinadas: Devolucao[] = [];
     private devolucoesComErroDuranteAssinatura: Devolucao[] = [];

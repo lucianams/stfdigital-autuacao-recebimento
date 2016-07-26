@@ -7,6 +7,8 @@ export class PrepararOficioDevolucaoController {
 	
     static $inject = ['$state', 'app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'messagesService'];
     
+	public path = {id: 'tarefas.preparar-oficio-devolucao', translation:'Elaborar Ofício de Devolução', uisref: 'app.tarefas.recebimento-preparar-oficio-devolucao', parent: 'tarefas'};
+
     public modelos: Modelo[];
     
     public motivoDevolucao: MotivoDevolucao;

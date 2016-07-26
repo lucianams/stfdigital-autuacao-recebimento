@@ -16,6 +16,10 @@ export class PreautuacaoOriginarioPage {
 		element(by.id('preautuar-originario')).click();
 	}
 	
+    public selecionarSigilo(sigilo: string): void {
+        mdHelpers.selectOptionWithText(element(by.id('sigilo')), sigilo);
+    }
+
 	public preencherMotivo(motivo: string): void {
 		element(by.id('motivo')).sendKeys(motivo);
 	}

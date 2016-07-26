@@ -2,6 +2,7 @@ import IStateService = angular.ui.IStateService;
 import {Classe, Remessa, Preferencia, Sigilo} from "../../services/model";
 import preautuacaoRecursal from "./preautuacao-recursal.module";
 import {PreautuacaoRecursalService, PreautuarRecursalCommand} from "./preautuacao-recursal.service";
+import {DevolucaoService, DevolverRemessaCommand} from "../devolucao/devolucao.service";
 import "./preautuacao-recursal.service";
 
 /**
@@ -16,12 +17,19 @@ export class PreautuacaoRecursalController {
 	public preferencias : Array<Preferencia>;
 
 	public cmdPreautuar: PreautuarRecursalCommand = new PreautuarRecursalCommand();
-	
-	static $inject = ["$state", "app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "classes", "remessa", "sigilos", "messagesService"];
+	public cmdDevolver: DevolverRemessaCommand = new DevolverRemessaCommand();
 
-	constructor(private $state: IStateService, private preautuacaoRecursalService: PreautuacaoRecursalService, public classes: Classe[], public remessa: Remessa,
-		public sigilos: Sigilo[], private messagesService: app.support.messaging.MessagesService){
+	public path = {id: 'tarefas.preautuacao-recursal', translation:'Preautuação Recursal', uisref: 'app.tarefas.recebimento-preautuacao-recursal', parent: 'tarefas'};
+	
+	static $inject = ["$state",
+		"app.recebimento.preautuacao-recursal.PreautuacaoRecursalService", "app.recebimento.preautuacao-devolucao.DevolucaoService",
+		"classes", "remessa", "sigilos", "messagesService"];
+
+	constructor(private $state: IStateService,
+		private preautuacaoRecursalService: PreautuacaoRecursalService, private devolucaoService: DevolucaoService,
+		public classes: Classe[], public remessa: Remessa, public sigilos: Sigilo[], private messagesService: app.support.messaging.MessagesService) {
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
+		this.cmdDevolver.protocoloId = remessa.protocolo;
 	}
 	
 	/*
@@ -47,6 +55,16 @@ export class PreautuacaoRecursalController {
 				this.messagesService.error('Erro ao preautuar remessa recursal.');
 			});
 	}
+
+	public devolver(): void {
+		this.devolucaoService.devolver(this.cmdDevolver)
+		.then(() => {
+            this.$state.go('app.tarefas.minhas-tarefas');
+			this.messagesService.success('Remessa devolvida com sucesso.');
+    	}, () => {
+			this.messagesService.error('Erro ao devolver remessa.');
+		});
+	}	
 }
 
 preautuacaoRecursal.controller("app.recebimento.preautuacao-recursal.PreautuacaoRecursalController", PreautuacaoRecursalController);

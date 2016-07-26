@@ -1,23 +1,22 @@
 import {PeticaoFisicaCommand, PeticaoFisicaService} from "./peticao-fisica.service";
 import IStateService = angular.ui.IStateService;
 import IPromise = angular.IPromise;
+import {Sigilo} from "../services/model";
 import recebimento from "./peticao-fisica.module";
 
 export class PeticaoFisicaController {
 
     public tiposProcessos : Object[] = PeticaoFisicaController.mockTiposProcessos();
 	public cmd: PeticaoFisicaCommand = new PeticaoFisicaCommand();
-	public path = [{translation:'Iniciar Processo', uisref: 'app.novo-processo'},
-	               {translation:'Recebimento', uisref: 'app.novo-processo.recebimento-peticao-fisica'}]
+    public path = {id: 'novo-processo.recebimento', translation:'Recebimento', uisref: 'app.novo-processo.recebimento-peticao-fisica', parent: 'novo-processo'};
 
-    static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento', 'messagesService'];
+    static $inject = ['$state', 'app.recebimento.peticoes-fisicas.PeticaoFisicaService', 'formasRecebimento', 'messagesService', 'sigilos'];
     
     constructor(private $state: IStateService,
                 private peticaoFisicaService: PeticaoFisicaService,
                 public formasRecebimento,
-                private messagesService: app.support.messaging.MessagesService) {
-
-    	this.cmd.sigilo = 'PUBLICO';
+                private messagesService: app.support.messaging.MessagesService,
+                public sigilos: Sigilo[]) {
     }
     
     public registrarRemessa(): void {

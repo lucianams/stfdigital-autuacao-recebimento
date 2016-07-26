@@ -22,9 +22,9 @@
     
     {
         "id": "preparar-oficio-devolucao",
-        "stateName": "app.tarefas.recebimento-preparar-oficio-devolucao",
+        "stateName": "app.tarefas.recebimento-preparacao-oficio-devolucao",
         "urlPrefix": "/tarefas/preparar-oficio-devolucao",
-        "src": "recebimento/preparar-oficio-devolucao"
+        "src": "recebimento/preparacao-oficio-devolucao"
     },
     
     {

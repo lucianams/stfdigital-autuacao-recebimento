@@ -1,13 +1,13 @@
-import {PrepararOficioDevolucaoService, MotivoDevolucao, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparar-oficio-devolucao.service";
+import {PreparacaoOficioDevolucaoService, MotivoDevolucao, Tag, SubstituicaoTag, GerarTextoCommand, Texto, PrepararOficioParaDevolucaoCommand} from "./preparacao-oficio-devolucao.service";
 import {Modelo} from "./../services/model";
 import {Documento} from "./documento";
-import prepararOficioDevolucao from "./preparar-oficio-devolucao.module";
+import preparacaoOficioDevolucao from "./preparacao-oficio-devolucao.module";
 
-export class PrepararOficioDevolucaoController {
+export class PreparacaoOficioDevolucaoController {
 	
-    static $inject = ['$state', 'app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'messagesService'];
+    static $inject = ['$state', 'app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'messagesService'];
     
-	public path = {id: 'tarefas.preparar-oficio-devolucao', translation:'Elaborar Ofício de Devolução', uisref: 'app.tarefas.recebimento-preparar-oficio-devolucao', parent: 'tarefas'};
+	public path = {id: 'tarefas.preparacao-oficio-devolucao', translation:'Elaborar Ofício de Devolução', uisref: 'app.tarefas.recebimento-preparacao-oficio-devolucao', parent: 'tarefas'};
 
     public modelos: Modelo[];
     
@@ -30,7 +30,7 @@ export class PrepararOficioDevolucaoController {
     
     public modelosSendoCarregados: boolean = false;
 
-    constructor(private $state: ng.ui.IStateService, private prepararOficioDevolucaoService: PrepararOficioDevolucaoService,
+    constructor(private $state: ng.ui.IStateService, private preparacaoOficioDevolucaoService: PreparacaoOficioDevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private messagesService: app.support.messaging.MessagesService) {
     	
     }
@@ -41,7 +41,7 @@ export class PrepararOficioDevolucaoController {
     
     public carregarModelos(): void {
     	this.modelosSendoCarregados = true;
-    	this.prepararOficioDevolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
+    	this.preparacaoOficioDevolucaoService.consultarModelosPorMotivo(this.motivoDevolucao.id).then(
     		(modelos: Modelo[]) => {
     			this.modelos = modelos;
     		},
@@ -55,7 +55,7 @@ export class PrepararOficioDevolucaoController {
 	
     public extrairTags(): void {
     	this.tagsSendoCarregadas = true;
-    	this.prepararOficioDevolucaoService.extrairTags(this.modelo.documento).then(
+    	this.preparacaoOficioDevolucaoService.extrairTags(this.modelo.documento).then(
     		(tags: Tag[]) => {
     			this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
     				return new SubstituicaoTag(tag.nome, "");
@@ -78,7 +78,7 @@ export class PrepararOficioDevolucaoController {
     }
     
 	concluiuEdicao() {
-		this.prepararOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
+		this.preparacaoOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
 			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
 		)).then(() => {
 			this.$state.go('app.tarefas.minhas-tarefas');
@@ -89,7 +89,7 @@ export class PrepararOficioDevolucaoController {
 	}
     
     public gerarTexto(): void {
-    	this.prepararOficioDevolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
+    	this.preparacaoOficioDevolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
     		.then((texto: Texto) => {
     			this.texto = texto;
     			this.documento = {
@@ -108,5 +108,5 @@ export class PrepararOficioDevolucaoController {
     
 }
 
-prepararOficioDevolucao.controller('app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoController', PrepararOficioDevolucaoController);
-export default prepararOficioDevolucao;
+preparacaoOficioDevolucao.controller('app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoController', PreparacaoOficioDevolucaoController);
+export default preparacaoOficioDevolucao;

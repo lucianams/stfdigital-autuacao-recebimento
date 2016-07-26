@@ -1,4 +1,4 @@
-import devolucao from "./preparar-oficio-devolucao.module";
+import preparacaoOficioDevolucao from "./preparacao-oficio-devolucao.module";
 import {Modelo} from "../services/model";
 
 export class MotivoDevolucao {
@@ -26,7 +26,7 @@ export class PrepararOficioParaDevolucaoCommand {
 	constructor(public protocoloId: number, public motivo: number, public modeloId: number, public textoId: number) {}
 }
 
-export class PrepararOficioDevolucaoService {
+export class PreparacaoOficioDevolucaoService {
 
     private static apiRemessaDevolucao: string = '/recebimento/api/devolucao';
     private static apiRemessa: string = '/recebimento/api/remessas';
@@ -38,37 +38,37 @@ export class PrepararOficioDevolucaoService {
     constructor(private $http: ng.IHttpService, private properties) { }
 
     public listarMotivosDevolucao(): ng.IPromise<MotivoDevolucao[]> {
-        return this.$http.get(this.properties.url + ":" + this.properties.port + PrepararOficioDevolucaoService.apiRemessaDevolucao + '/motivos-devolucao')
+        return this.$http.get(this.properties.url + ":" + this.properties.port + PreparacaoOficioDevolucaoService.apiRemessaDevolucao + '/motivos-devolucao')
             .then((response: ng.IHttpPromiseCallbackArg<MotivoDevolucao[]>) => { 
                 return response.data; 
             });
     }
     
     public consultarModelosPorMotivo(idMotivo: number): ng.IPromise<Modelo[]> {
-    	return this.$http.get(this.properties.apiUrl + PrepararOficioDevolucaoService.apiRemessaDevolucao + '/motivos-devolucao/' + idMotivo + '/modelos')
+    	return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessaDevolucao + '/motivos-devolucao/' + idMotivo + '/modelos')
     		.then((response: ng.IHttpPromiseCallbackArg<Modelo[]>) => {
     			return response.data;
     		});
     }
     
     public extrairTags(idDocumento: number): ng.IPromise<Tag[]> {
-    	return this.$http.get(this.properties.apiUrl + PrepararOficioDevolucaoService.apiDocumentos + "/" + idDocumento + "/tags")
+    	return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiDocumentos + "/" + idDocumento + "/tags")
     		.then((response: ng.IHttpPromiseCallbackArg<Tag[]>) => {
     			return response.data;
     		});
     }
     
     public gerarTextoComTags(command: GerarTextoCommand) {
-    	return this.$http.post(this.properties.apiUrl + PrepararOficioDevolucaoService.apiTextos + "/gerar-texto", command)
+    	return this.$http.post(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiTextos + "/gerar-texto", command)
     		.then((response: ng.IHttpPromiseCallbackArg<Texto>) => {
     			return response.data;
     		});
     }
     
     public finalizarDevolucao(command: PrepararOficioParaDevolucaoCommand): ng.IPromise<any> {
-    	return this.$http.post(this.properties.apiUrl + PrepararOficioDevolucaoService.apiRemessa + "/devolucao-oficio", command);
+    	return this.$http.post(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessa + "/devolucao-oficio", command);
     }
 }
 
-devolucao.service('app.recebimento.preparar-oficio-devolucao.PrepararOficioDevolucaoService', PrepararOficioDevolucaoService);
-export default devolucao;
+preparacaoOficioDevolucao.service('app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoService', PreparacaoOficioDevolucaoService);
+export default preparacaoOficioDevolucao;

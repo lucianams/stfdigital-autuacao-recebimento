@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.ResultActions;
@@ -20,6 +22,7 @@ import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
 @WithMockOauth2User("recebedor")
+@Transactional
 public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test

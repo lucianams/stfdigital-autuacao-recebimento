@@ -9,6 +9,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.transaction.Transactional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
@@ -43,6 +45,7 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
 @WithMockOauth2User("recebedor")
+@Transactional
 public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 
 	@MockBean

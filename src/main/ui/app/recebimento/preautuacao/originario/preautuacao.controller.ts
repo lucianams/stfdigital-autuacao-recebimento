@@ -51,11 +51,11 @@ export class PreautuacaoController {
 	/*
 	 * Realiza a preautuação do processo recursal.
 	 */
-	public preautuarProcessoOriginario(): void {
-		this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
+	public preautuarProcessoOriginario(): ng.IPromise<any> {
+		return this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
 		.then(() => {
-            this.$state.go('app.tarefas.minhas-tarefas');
 			this.messagesService.success('Remessa preautuada com sucesso.');
+            return this.$state.go('app.tarefas.minhas-tarefas');
     	}, () => {
 			this.messagesService.error('Erro ao preautuar remessa.');
 		});

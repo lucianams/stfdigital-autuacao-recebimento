@@ -19,11 +19,11 @@ export class PeticaoFisicaController {
                 public sigilos: Sigilo[]) {
     }
     
-    public registrarRemessa(): void {
-        this.peticaoFisicaService.registrar(this.cmd)
+    public registrarRemessa(): ng.IPromise<any> {
+        return this.peticaoFisicaService.registrar(this.cmd)
             .then(() => {
-                this.$state.go('app.tarefas.minhas-tarefas');
                 this.messagesService.success('Remessa registrada com sucesso!');
+                return this.$state.go('app.tarefas.minhas-tarefas');
         });
     }
     

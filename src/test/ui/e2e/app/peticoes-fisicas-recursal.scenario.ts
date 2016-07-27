@@ -3,7 +3,7 @@ import {PrincipalPage} from "./shared/pages/principal.page";
 
 import {RecebimentoPage} from "./pages/recebimento.page";
 
-describe('Recebimento de Petições Físicas de Processo do Tipo Recursal', () => {
+describe('Recebimento de Remessas de Processo do Tipo Recursal', () => {
 
     let loginPage: LoginPage = new LoginPage();
     let principalPage: PrincipalPage = new PrincipalPage();

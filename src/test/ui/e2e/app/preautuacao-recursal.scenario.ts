@@ -35,8 +35,9 @@ describe('Preautuação de Remessa Recursal', () => {
 	it('Deveria fazer o logout do sistema', () => {
 		principalPage.logout();
 	});
+});
 
-describe('Preautuação de Remessa de Processo Recursal - Devolver', () => {	
+describe('Preautuação de Remessa de Processo Recursal - Devolver', () => {
 	
     let loginPage: LoginPage = new LoginPage();
     let principalPage: PrincipalPage = new PrincipalPage();

@@ -29,6 +29,7 @@ export class PreautuacaoRecursalController {
 		private preautuacaoRecursalService: PreautuacaoRecursalService, private devolucaoService: DevolucaoService,
 		public classes: Classe[], public remessa: Remessa, public sigilos: Sigilo[], private messagesService: app.support.messaging.MessagesService) {
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
+		this.cmdPreautuar.sigilo = remessa.sigilo;
 		this.cmdDevolver.protocoloId = remessa.protocolo;
 	}
 	
@@ -45,25 +46,24 @@ export class PreautuacaoRecursalController {
 	 * Realiza a préautuação do processo recursal.
 	 */
 	
-	public preautuarProcessoRecursal(): void {
-
-		this.preautuacaoRecursalService.preautuarRecursal(this.cmdPreautuar)
+	public preautuarProcessoRecursal(): ng.IPromise<any> {
+		return this.preautuacaoRecursalService.preautuarRecursal(this.cmdPreautuar)
 	        .then(() => {
-	            this.$state.go('app.tarefas.minhas-tarefas');
 				this.messagesService.success('Remessa recursal preautuada com sucesso.');
+				return this.$state.go('app.tarefas.minhas-tarefas');
 	    	}, () => {
 				this.messagesService.error('Erro ao preautuar remessa recursal.');
 			});
 	}
 
-	public devolver(): void {
-		this.devolucaoService.devolver(this.cmdDevolver)
-		.then(() => {
-            this.$state.go('app.tarefas.minhas-tarefas');
-			this.messagesService.success('Remessa devolvida com sucesso.');
-    	}, () => {
-			this.messagesService.error('Erro ao devolver remessa.');
-		});
+	public devolver(): ng.IPromise<any> {
+		return this.devolucaoService.devolver(this.cmdDevolver)
+			.then(() => {
+				this.messagesService.success('Remessa devolvida com sucesso.');
+				return this.$state.go('app.tarefas.minhas-tarefas');
+			}, () => {
+				this.messagesService.error('Erro ao devolver remessa.');
+			});
 	}	
 }
 

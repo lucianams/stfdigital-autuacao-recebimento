@@ -27,14 +27,16 @@ export class Remessa {
     public qtdApensos: number;
     public formaRecebimento: string;
     public numeroSedex: string;
+    public sigilo: string;
     
-    constructor (protocolo: number, classe: string, qtdVolumes: number, qtdApensos: number, formaRecebimento: string, numeroSedex: string){
+    constructor (protocolo: number, classe: string, qtdVolumes: number, qtdApensos: number, formaRecebimento: string, numeroSedex: string, sigilo: string){
         this.classe = classe;
         this.qtdVolumes = qtdVolumes;
         this.qtdApensos = qtdApensos;
         this.formaRecebimento = formaRecebimento;
         this.numeroSedex = numeroSedex;
         this.protocolo = protocolo;
+        this.sigilo = sigilo;
     }
 }
 

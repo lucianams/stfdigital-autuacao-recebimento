@@ -32,4 +32,8 @@ export class PreautuacaoRecursalPage {
         element(by.id('preautuar-recursal')).click();
     }
 
+	public devolver() : void {
+		element(by.id('devolver-remessa')).click();
+	}
+
 }

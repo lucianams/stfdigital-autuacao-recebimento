@@ -6,29 +6,26 @@ import java.sql.SQLException;
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
-import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 @Configuration
+@DependsOn("runtimeServiceBean")
 @Profile("e2e")
 public class E2ETestsDataLoader {
-
-	@Autowired
-	private RuntimeService runtimeService;
 
 	@Autowired
 	private DataSource dataSource;
 
 	@PostConstruct
 	public void init() throws SQLException {
-		System.out.println(runtimeService);
 		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql", "devolverRemessaOriginario.sql",
-				"preautarRemessaOriginario.sql", "preautuarRemessaRecursal.sql",
+				"devolverRemessaRecursal.sql", "preautarRemessaOriginario.sql", "preautuarRemessaRecursal.sql",
 				"prepararOficioDevolucaoRemessaOriginario.sql");
 	}
 

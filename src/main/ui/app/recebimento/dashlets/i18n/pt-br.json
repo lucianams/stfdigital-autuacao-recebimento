@@ -7,14 +7,6 @@
 			"GRAFICO-REMESSAS": {
 				"NOME": "Gráfico de Remessas"
 			}
-		},
-		"DASHBOARDS": {
-			"RECEBIMENTO": {
-				"NOME": "Recebimento"
-			},
-			"GESTAO-RECEBIMENTO": {
-				"NOME": "Gestão de Recebimento"
-			}
 		}
 	}
 }

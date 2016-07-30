@@ -74,6 +74,11 @@ public class RemessaRestResource {
 	@Autowired
 	private DevolucaoDtoAssembler devolucaoDtoAssembler;
     
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public List<RemessaDto> listar() {
+		return remessaRepossitory.findAll().stream().map((remessa) -> remessaDtoAssembler.toDto(remessa)).collect(Collectors.toList());
+	}
+	
     /**
      * @param command
      * @param binding

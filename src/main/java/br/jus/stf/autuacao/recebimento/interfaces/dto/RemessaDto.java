@@ -19,19 +19,22 @@ public class RemessaDto {
 	private String numeroSedex;
 	
 	private String sigilo;
+	
+	private String numero;
 
-	public RemessaDto(Long protocolo, String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo) {
-		this(classe, qtdVolumes, qtdApensos, formaRecebimento, numeroSedex, sigilo);
+	public RemessaDto(Long protocolo, String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo, String numero) {
+		this(classe, qtdVolumes, qtdApensos, formaRecebimento, numeroSedex, sigilo, numero);
 		this.protocolo = protocolo;
 	}
 	
-	public RemessaDto(String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo) {
+	public RemessaDto(String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo, String numero) {
 		this.classe = classe;
 		this.qtdVolumes = qtdVolumes;
 		this.qtdApensos = qtdApensos;
 		this.formaRecebimento = formaRecebimento;
 		this.numeroSedex = numeroSedex;
 		this.sigilo = sigilo;
+		this.numero = numero;
 	}
 
 	public Long getProtocolo() {
@@ -90,4 +93,8 @@ public class RemessaDto {
 		this.sigilo = sigilo;
 	}
 
+	public String getNumero() {
+		return numero;
+	}
+	
 }

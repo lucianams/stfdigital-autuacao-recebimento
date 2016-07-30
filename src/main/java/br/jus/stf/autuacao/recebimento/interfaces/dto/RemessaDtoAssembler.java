@@ -10,7 +10,7 @@ public class RemessaDtoAssembler {
 	
 	public RemessaDto toDto(Remessa remessa) {
 		Validate.notNull(remessa);
-		String classe = remessa.classe() != null ? remessa.classe().toString() : "";
-		return new RemessaDto(remessa.identity().toLong(), classe, remessa.volumes(), remessa.apensos(), remessa.formaRecebimento().toString(), remessa.numeroSedex(), remessa.sigilo().name());
+		String classe = remessa.classe() != null ? remessa.classe().identity().toString() : "";
+		return new RemessaDto(remessa.identity().toLong(), classe, remessa.volumes(), remessa.apensos(), remessa.formaRecebimento().toString(), remessa.numeroSedex(), remessa.sigilo().name(), remessa.numero().numero() + "/" + remessa.numero().ano().toString());
 	} 
 }

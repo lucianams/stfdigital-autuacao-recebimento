@@ -1,23 +1,20 @@
 import dashlets from "../dashlets.module";
 
-let controllerName: string = "app.recebimento.dashlets.MinhasRemessasDashletController";
+import {RemessasDashletService} from "../remessas-dashlet.service";
+import {Remessa} from "../../services/model";
 
-export interface Remessa {
-	identificacao: string;
-	dataCadastramento: Date;
-}
+let controllerName: string = "app.recebimento.dashlets.MinhasRemessasDashletController";
 
 export class MinhasRemessasDashletController {
 	
 	public remessas: Remessa[];
 	
-	constructor() {
-		this.remessas = [{identificacao: "1/2016", dataCadastramento: new Date()},
-		                 {identificacao: "2/2016", dataCadastramento: new Date()},
-		                 {identificacao: "3/2016", dataCadastramento: new Date()},
-		                 {identificacao: "4/2016", dataCadastramento: new Date()},
-		                 {identificacao: "5/2016", dataCadastramento: new Date()},
-		                 {identificacao: "6/2016", dataCadastramento: new Date()}];
+    public static $inject = ['app.recebimento.dashlets.RemessasDashletService'];
+
+	constructor(remessasDashletsService: RemessasDashletService) {
+		remessasDashletsService.listarRemessas().then((remessas: Remessa[]) => {
+			this.remessas = remessas;
+		});
 	}
 	
 }

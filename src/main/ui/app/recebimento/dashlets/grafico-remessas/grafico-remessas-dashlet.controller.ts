@@ -15,24 +15,24 @@ export class GraficoRemessasDashletController {
     public static $inject = ['app.recebimento.dashlets.RemessasDashletService'];
 
     constructor(remessasDashletsService: RemessasDashletService) {
-        remessasDashletsService.listarRemessas().then((remessas: Remessa[]) => {
+        this.options = {
+            chart : {
+                type : 'pieChart',
+                noData: "",
+                height : 300,
+                margin : {top : 20, right : 20, bottom : 20, left : 55},
+                x : function(d) {
+                    return d.label;
+                },
+                y : function(d) {
+                    return d.value;
+                },
+                showValues : true
+            }
+        };
+    	
+    	remessasDashletsService.listarRemessas().then((remessas: Remessa[]) => {
             this.remessas = remessas;
-            
-            this.options = {
-                chart : {
-                    type : 'pieChart',
-                    noData: "",
-                    height : 300,
-                    margin : {top : 20, right : 20, bottom : 20, left : 55},
-                    x : function(d) {
-                        return d.label;
-                    },
-                    y : function(d) {
-                        return d.value;
-                    },
-                    showValues : true
-                }
-            };
             
             this.data = _(this.remessas)
 	            .groupBy("classe")

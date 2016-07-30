@@ -12,7 +12,7 @@
 
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
-                <form name="formularioDevolucao" ng-submit="vm.finalizarDevolucao()" class="md-inline-form">
+                <form name="formularioDevolucao" ng-submit="vm.finalizarDevolucao()" stf-processing class="md-inline-form">
                     <div layout="column" layout-gt-xs="row">
                         <md-input-container flex>
                             <label>Motivo da Devolução</label>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div layout="column" layout-gt-xs="row" class="layout-gt-xs-row">
-                        <div ng-if="vm.documento" onlyoffice-editor="vm.documento" api="vm.editor.api" edicao-concluida="vm.concluiuEdicao()" edicao-iniciada="vm.callbackEdicaoIniciada()" aguardar-conclusao="true" style="width: 100%;"></div>
+                        <div ng-if="vm.documento" onlyoffice-editor="vm.documento" api="vm.editor.api" edicao-concluida="vm.concluiuEdicao()" edicao-iniciada="vm.callbackEdicaoIniciada()" aguardar-conclusao="true" flex editor-height="700px"></div>
                     </div>
                     
                     <md-button type="submit" class="md-raised md-accent" id="btnFinalizarTexto" aria-label="Finalizar Elaboração" ng-disabled="formularioDevolucao.$invalid || !vm.isTextoCriado()">

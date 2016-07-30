@@ -29,7 +29,6 @@ describe('Preautuação de Remessa Recursal', () => {
     it('Deveria preautuar', () => {
         preautuacaoRecursalPage.registrarPreautuacao();
         expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
-        expect(principalPage.mensagem()).toEqual('Remessa recursal preautuada com sucesso.');
     });
 
 	it('Deveria fazer o logout do sistema', () => {
@@ -61,12 +60,6 @@ describe('Preautuação de Remessa de Processo Recursal - Devolver', () => {
     it('Deveria devolver', () => {
 	    preautuacaoRecursalPage.devolver();
         expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
-    });
-    
-    xit('Deveria gerar a próxima tarefa', () => {
-        principalPage.atualizarTarefas();
-        expect(principalPage.tarefaPresente('Elaborar Ofício para Devolução', protocolo))
-            .toBeTruthy('Tarefa com protocolo ' + protocolo + ' não encontrada.');
     });
 
 	it('Deveria fazer o logout do sistema', () => {

@@ -60,13 +60,6 @@ describe('Preautuação de Remessa de Processo Originário - Devolver', () => {
     it('Deveria devolver', () => {
 	    preautuacaoOriginarioPage.devolver();
         expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
-        expect(principalPage.mensagem()).toEqual('Remessa devolvida com sucesso.');
-    });
-    
-    xit('Deveria gerar a próxima tarefa', () => {
-        principalPage.atualizarTarefas();
-        expect(principalPage.tarefaPresente('Elaborar Ofício para Devolução', protocolo))
-            .toBeTruthy('Tarefa com protocolo ' + protocolo + ' não encontrada.');
     });
 
 	it('Deveria fazer o logout do sistema', () => {

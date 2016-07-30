@@ -34,13 +34,6 @@ describe('Preparação do Ofício de Devolução', () => {
 	    devolucaoPage.finalizarElaboracao();
         principalPage.aguardarMensagem();
         expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
-        expect(principalPage.mensagem()).toEqual('Documento de devolução elaborado com sucesso!');
-    });
-
-    xit('Deveria gerar a próxima tarefa', () => {
-        principalPage.atualizarTarefas();
-        expect(principalPage.tarefaPresente('Assinar Ofício de Devolução', protocolo))
-            .toBeTruthy('Tarefa com protocolo ' + protocolo + ' não encontrada.');
     });
 
     it('Deveria fazer o logout do sistema', () => {

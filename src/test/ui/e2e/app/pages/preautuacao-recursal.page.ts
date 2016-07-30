@@ -13,11 +13,11 @@ export class PreautuacaoRecursalPage {
     }
 
     public selecionarClasse(classe: string): void {
-        mdHelpers.selectOptionWithText(element(by.id('cboClasses')), classe);
+        mdHelpers.mdSelect.selectOptionWithText(element(by.id('cboClasses')), classe);
     }
 
     public selecionarSigilo(sigilo: string): void {
-        mdHelpers.selectOptionWithText(element(by.id('cboSigilo')), sigilo);
+        mdHelpers.mdSelect.selectOptionWithText(element(by.id('cboSigilo')), sigilo);
     }
 
 	public preencherMotivo(motivo: string): void {
@@ -25,7 +25,7 @@ export class PreautuacaoRecursalPage {
 	}
 
     public selecionarPreferencia(...preferencias: string[]): void {
-        mdHelpers.multipleSelectOptionsWithText(element(by.id('cboPreferencias')), preferencias);
+        mdHelpers.mdSelect.selectMultipleOptionsWithText(element(by.id('cboPreferencias')), preferencias);
     }
         
     public registrarPreautuacao(): void {

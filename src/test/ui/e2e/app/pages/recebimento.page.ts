@@ -10,7 +10,7 @@ export class RecebimentoPage {
 	}
 	
 	public selecionarFormaRecebimento(formaRecebimento: string) : void {
-		mdHelpers.selectOptionWithText(element(by.id('formaRecebimento')), formaRecebimento);
+		mdHelpers.mdSelect.selectOptionWithText(element(by.id('formaRecebimento')), formaRecebimento);
 	}
 	
 	public preencherQtdApensos(quantidade : number) : void {
@@ -22,11 +22,11 @@ export class RecebimentoPage {
 	}
 
     public selecionarSigilo(sigilo: string): void {
-        mdHelpers.selectOptionWithText(element(by.id('sigilo')), sigilo);
+        mdHelpers.mdSelect.selectOptionWithText(element(by.id('sigilo')), sigilo);
     }
 
 	public selecionarTipoProcesso(tipoProcesso: string) : void {
-		mdHelpers.selectOptionWithText(element(by.id('tipoProcesso')), tipoProcesso);
+		mdHelpers.mdSelect.selectOptionWithText(element(by.id('tipoProcesso')), tipoProcesso);
 	}
 	
 	public registrarRemessa() : void {

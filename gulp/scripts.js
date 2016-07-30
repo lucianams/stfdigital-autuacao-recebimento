@@ -45,7 +45,7 @@ gulp.task('json', function() {
     return gulp.src(path.join(conf.paths.app, custom.project, '**/*.json'))
         .pipe($.destClean(conf.paths.dist, '**/!(*.json)'))
         .pipe(gulp.dest(conf.paths.dist))
-		.pipe(gulp.dest(conf.paths.bin));
+        .pipe(gulp.dest(conf.paths.bin));
 });
 
 gulp.task('scripts', ['ts-lint', 'json'], function() {

@@ -34,7 +34,7 @@ describe('Teste do controlador preautuacao.controller', () => {
 		mockDevolucaoService = {
 			devolver : () => {},
 		};
-		let remessa: Remessa = new Remessa(123, 'HC', 4, 7, 'BALCAO', null);
+		let remessa: Remessa = new Remessa(123, 'HC', 4, 7, 'BALCAO', null, 'PUBLICO');
 	    controller = new PreautuacaoController(mockState, mockMessagesService, mockPreautuacaoService, mockDevolucaoService, [new Classe('HC', 'Habeas Corpus', [])], remessa, [{nome: "PUBLICO", descricao: "Público"}, {nome: "SEGREDO_JUSTICA", descricao: "Segredo de Justiça"}]);
 	});
 	

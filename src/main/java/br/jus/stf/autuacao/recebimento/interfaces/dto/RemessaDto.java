@@ -22,11 +22,30 @@ public class RemessaDto {
 	
 	private String numero;
 
+	/**
+	 * @param protocolo
+	 * @param classe
+	 * @param qtdVolumes
+	 * @param qtdApensos
+	 * @param formaRecebimento
+	 * @param numeroSedex
+	 * @param sigilo
+	 * @param numero
+	 */
 	public RemessaDto(Long protocolo, String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo, String numero) {
 		this(classe, qtdVolumes, qtdApensos, formaRecebimento, numeroSedex, sigilo, numero);
 		this.protocolo = protocolo;
 	}
 	
+	/**
+	 * @param classe
+	 * @param qtdVolumes
+	 * @param qtdApensos
+	 * @param formaRecebimento
+	 * @param numeroSedex
+	 * @param sigilo
+	 * @param numero
+	 */
 	public RemessaDto(String classe, int qtdVolumes, int qtdApensos, String formaRecebimento, String numeroSedex, String sigilo, String numero) {
 		this.classe = classe;
 		this.qtdVolumes = qtdVolumes;

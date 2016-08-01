@@ -32,7 +32,7 @@ public class RegistrarRemessaCommand {
     private String sigilo;
     
     public RegistrarRemessaCommand() {
-    	
+    	// Construtor default
     }
     
     public String getFormaRecebimento() {

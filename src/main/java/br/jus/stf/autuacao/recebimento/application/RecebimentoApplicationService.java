@@ -117,7 +117,7 @@ public class RecebimentoApplicationService {
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
-				.get();
+				.orElse(null);
             
         remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
@@ -136,7 +136,7 @@ public class RecebimentoApplicationService {
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
-				.get();
+				.orElse(null);
             
         remessa.preautuar(classe, preferencias, sigilo, command.getNumeroProcessoOrigem(), command.getNumeroUnicoProcesso(), status);
         remessaRepository.save(remessa);

@@ -40,7 +40,6 @@ services:
     image: supremotribunalfederal/stfdigital-plataforma-discovery
     ports:
      - "8761:8761"
-     - "8161:8161"
      - "47961:${JAVA_DEBUG_PORT}"
     environment:
      - spring.profiles.active=native,${JAVA_SERVICE_SPRING_PROFILES}

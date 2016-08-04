@@ -4,5 +4,8 @@ services:
   userauthentication: # Ambassador apontando para o userauthentication rodando localmente
     container_name: userauthentication
     image: svendowideit/ambassador
+    ports:
+     - "8095:8095"
+     - "8195:8195"
     environment:
      - USERAUTHENTICATION_PORT_8095_TCP=tcp://${AMBASSADOR_HOST}:8095

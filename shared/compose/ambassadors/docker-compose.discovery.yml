@@ -4,5 +4,7 @@ services:
   discovery: # Ambassador apontando para o discovery rodando localmente
     container_name: discovery
     image: svendowideit/ambassador
+    ports:
+     - "8761:8761"
     environment:
      - DISCOVERY_PORT_8761_TCP=tcp://${AMBASSADOR_HOST}:8761

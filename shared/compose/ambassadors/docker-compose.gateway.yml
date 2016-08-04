@@ -4,5 +4,7 @@ services:
   gateway: # Ambassador apontando para o gateway rodando localmente
     container_name: gateway
     image: svendowideit/ambassador
+    ports:
+     - "8765:8765"
     environment:
      - GATEWAY_PORT_8765_TCP=tcp://${AMBASSADOR_HOST}:8765

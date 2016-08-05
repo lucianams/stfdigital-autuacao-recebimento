@@ -39,7 +39,7 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 1.0.0
  * @since 01.08.2016
  */
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false"}, classes = ApplicationContextInitializer.class)
+@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
 @WithMockOauth2User("recebedor")
 @Transactional
 public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {

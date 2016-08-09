@@ -2,35 +2,35 @@
     {
         "id": "registrar-remessa",
         "stateName": "app.novo-processo.recebimento-peticao-fisica",
-        "urlPrefix": "/novo-processo/recebimento",
+        "url": "/recebimento",
         "src": "recebimento/peticoes-fisicas"
     },
     
     {
         "id": "preautuar-originario",
         "stateName": "app.tarefas.recebimento-preautuacao",
-        "urlPrefix": "/tarefas/preautuacao/originario",
+        "url": "/preautuacao/originario/:informationId",
         "src": "recebimento/preautuacao"
     },
     
     {
         "id": "preautuar-recursal",
         "stateName": "app.tarefas.recebimento-preautuacao-recursal",
-        "urlPrefix": "/tarefas/preautuacao/recursal",
+        "url": "/preautuacao/recursal/:informationId",
         "src": "recebimento/preautuacao-recursal"
     },
     
     {
         "id": "preparar-oficio-devolucao",
         "stateName": "app.tarefas.recebimento-preparacao-oficio-devolucao",
-        "urlPrefix": "/tarefas/preparar-oficio-devolucao",
+        "url": "/preparacao-oficio-devolucao/:informationId",
         "src": "recebimento/preparacao-oficio-devolucao"
     },
     
     {
         "id": "assinar-oficio-devolucao",
         "stateName": "app.tarefas.recebimento-devolucao-assinatura",
-        "urlPrefix": "/tarefas/devolucao-assinatura",
+        "url": "/devolucao-assinatura/:informationId",
         "src": "recebimento/devolucao-assinatura"
     }
 ]

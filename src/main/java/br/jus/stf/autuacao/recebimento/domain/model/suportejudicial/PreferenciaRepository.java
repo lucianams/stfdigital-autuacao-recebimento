@@ -1,6 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.preferencia;
-
-import java.util.List;
+package br.jus.stf.autuacao.recebimento.domain.model.suportejudicial;
 
 import br.jus.stf.core.shared.preferencia.PreferenciaId;
 
@@ -10,10 +8,13 @@ import br.jus.stf.core.shared.preferencia.PreferenciaId;
  * @since 1.0.0
  * @since 06.04.2016
  */
+@FunctionalInterface
 public interface PreferenciaRepository {
 
-	List<Preferencia> findAll();
-	
+	/**
+	 * @param id
+	 * @return
+	 */
 	Preferencia findOne(PreferenciaId id);
 
 }

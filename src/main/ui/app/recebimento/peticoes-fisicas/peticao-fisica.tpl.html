@@ -13,7 +13,7 @@
             <!-- BASIC FORM -->
             <div class="form-wrapper md-whiteframe-1dp" flex="100">
 
-                <form name="basicForm" ng-submit="registro.registrarRemessa()" class="md-inline-form">
+                <form name="basicForm" ng-submit="registro.registrarRemessa()" class="md-inline-form" stf-processing>
 
                     <div layout="row" layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container flex>
@@ -50,7 +50,7 @@
                             </md-select>
                         </md-input-container>
                     	<md-input-container flex="50">
-                            <label>Sigilio *</label>
+                            <label>Sigilo *</label>
                             <md-select ng-model="registro.cmd.sigilo" id="sigilo"">
                                 <md-option ng-repeat="sigilo in registro.sigilos" ng-value="sigilo.nome">
                                     {{sigilo.descricao}}

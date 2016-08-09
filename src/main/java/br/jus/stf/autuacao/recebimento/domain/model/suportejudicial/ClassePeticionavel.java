@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento.domain.model.classe;
+package br.jus.stf.autuacao.recebimento.domain.model.suportejudicial;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
@@ -20,7 +20,6 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.Validate;
 
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.processo.TipoProcesso;
@@ -54,6 +53,12 @@ public class ClassePeticionavel extends EntitySupport<ClassePeticionavel, Classe
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param sigla
+	 * @param nome
+	 * @param tipo
+	 * @param preferencias
+	 */
 	public ClassePeticionavel(ClasseId sigla, String nome, TipoProcesso tipo, Set<Preferencia> preferencias) {
 		Validate.notNull(sigla, "Sigle requerida.");
 		Validate.notBlank(nome, "Nome requerido.");
@@ -70,14 +75,23 @@ public class ClassePeticionavel extends EntitySupport<ClassePeticionavel, Classe
 		return sigla;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String nome() {
 		return nome;
 	}
 	
+	/**
+	 * @return
+	 */
 	public TipoProcesso tipo() {
 		return tipo;
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<Preferencia> preferencias() {
 		return Collections.unmodifiableSet(preferencias);
 	}

@@ -12,6 +12,7 @@ describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
 	let mockState;
 	let mockPreparacaoOficioDevolucaoService;
 	let mockMessagesService;
+	let mockEditorApi;
 
 	let protocolo: number;
 
@@ -35,11 +36,17 @@ describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
 			success: () => {}
 		};
 
+		mockEditorApi = {
+			salvar: () => {}
+		}
+
 		protocolo = 12345;
 
-		controller = new PreparacaoOficioDevolucaoController(mockState, mockPreparacaoOficioDevolucaoService,
+		controller = new PreparacaoOficioDevolucaoController($q, mockState, mockPreparacaoOficioDevolucaoService,
 			[new MotivoDevolucao(123, "AI Intempestivo", [1, 2, 3])],
 			protocolo, mockMessagesService);
+
+		controller.editor.api = mockEditorApi;
 	}));
 	
 	it('Deveria carregar os modelos de acordo com o motivo de devolução', () => {
@@ -164,6 +171,8 @@ describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
 		controller.texto = <Texto>{id: 13, documentoId: 234};
 
+		controller.finalizarDevolucao();
+
 		controller.concluiuEdicao();
 
 		$rootScope.$apply();
@@ -185,6 +194,8 @@ describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
 		controller.motivoDevolucao = controller.motivosDevolucao[0];
 		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
 		controller.texto = <Texto>{id: 13, documentoId: 234};
+
+		controller.finalizarDevolucao();
 
 		controller.concluiuEdicao();
 

@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.0.RC1'
+        springBootVersion = '1.4.0.RELEASE'
         
         dependencyManagementPluginVersion = '0.6.0.RELEASE'
         gradleDockerPluginVersion = '0.8.0'
@@ -8,9 +8,9 @@ buildscript {
         gradleGulpPluginVersion = '0.12'
         sonarqubeGradlePluginVersion = '2.0.1'
         
-        springCloudReleaseTrainVersion = 'Brixton.SR3'
+        springCloudReleaseTrainVersion = 'Brixton.SR4'
         apacheCommonsVersion = '3.3.2'
-        jacksonVersion = '2.7.2'
+        jacksonVersion = '2.8.1'
         jacksonMapperVersion = '1.9.13'
         swaggerVersion = '1.0.2'
         guavaVersion = '19.0'
@@ -81,7 +81,9 @@ dependencies {
     }
     
     compile("org.springframework.boot:spring-boot-starter-undertow")
-    
+
+    compile("org.springframework.cloud:spring-cloud-starter-config")
+
     compile("org.springframework.cloud:spring-cloud-starter-oauth2")
     
     compile("org.springframework.boot:spring-boot-starter-security")
@@ -128,27 +130,9 @@ dependencies {
     testCompile("br.jus.stf.digital:test:${stfdigitalTestVersion}")
 }
 
-import org.gradle.plugins.ide.eclipse.model.SourceFolder 
-eclipse.classpath.file {
-    beforeMerged { classpath -> 
-        classpath.entries.clear()
-    }
-    whenMerged {  cp -> 
-        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/main/") }*.output = "bin/main" 
-        cp.entries.findAll { it instanceof SourceFolder && it.path.startsWith("src/test/") }*.output = "bin/test" 
-        cp.entries.removeAll { it.kind == "output" }
-    }
-}
-
 // Cobertura de testes
 jacoco {
     toolVersion = '0.7.7.201606060606'
-}
-
-test {
-	testLogging {
-		showStandardStreams = true
-	}
 }
 
 node {

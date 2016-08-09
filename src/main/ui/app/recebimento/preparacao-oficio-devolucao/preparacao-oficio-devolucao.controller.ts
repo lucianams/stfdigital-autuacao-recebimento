@@ -5,7 +5,7 @@ import preparacaoOficioDevolucao from "./preparacao-oficio-devolucao.module";
 
 export class PreparacaoOficioDevolucaoController {
 	
-    static $inject = ['$state', 'app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'messagesService'];
+    static $inject = ['$q', '$state', 'app.recebimento.preparacao-oficio-devolucao.PreparacaoOficioDevolucaoService', 'motivosDevolucao', 'protocolo', 'messagesService'];
     
 	public path = {id: 'tarefas.preparacao-oficio-devolucao', translation:'Elaborar Ofício de Devolução', uisref: 'app.tarefas.recebimento-preparacao-oficio-devolucao', parent: 'tarefas'};
 
@@ -29,8 +29,10 @@ export class PreparacaoOficioDevolucaoController {
     public tagsSendoCarregadas: boolean = false;
     
     public modelosSendoCarregados: boolean = false;
+	
+	private salvarDocumentoDeferred: ng.IDeferred<any>;
 
-    constructor(private $state: ng.ui.IStateService, private preparacaoOficioDevolucaoService: PreparacaoOficioDevolucaoService,
+    constructor(private $q: ng.IQService, private $state: ng.ui.IStateService, private preparacaoOficioDevolucaoService: PreparacaoOficioDevolucaoService,
                 public motivosDevolucao: MotivoDevolucao[], private protocolo: number, private messagesService: app.support.messaging.MessagesService) {
     	
     }
@@ -78,16 +80,13 @@ export class PreparacaoOficioDevolucaoController {
     }
     
 	concluiuEdicao() {
-		this.preparacaoOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
-			this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
-		)).then(() => {
-			this.$state.go('app.tarefas.minhas-tarefas');
-			this.messagesService.success("Documento de devolução elaborado com sucesso!");
-		}, () => {
-			this.messagesService.error("Erro ao concluir a elaboração do texto!");
-		});
+		this.salvarDocumentoDeferred.resolve();
 	}
     
+   timeoutEdicao() {
+        this.salvarDocumentoDeferred.reject();
+   }
+	
     public gerarTexto(): void {
     	this.preparacaoOficioDevolucaoService.gerarTextoComTags(new GerarTextoCommand(this.modelo.id, this.substituicoesTags))
     		.then((texto: Texto) => {
@@ -102,8 +101,21 @@ export class PreparacaoOficioDevolucaoController {
     		});
     }
     
-    public finalizarDevolucao(): void {
-    	this.editor.api.salvar();
+    public finalizarDevolucao(): ng.IPromise<any> {
+        this.salvarDocumentoDeferred = this.$q.defer();
+        this.editor.api.salvar();
+        return this.salvarDocumentoDeferred.promise.then(() => {
+        	return this.preparacaoOficioDevolucaoService.finalizarDevolucao(new PrepararOficioParaDevolucaoCommand(
+                    this.protocolo, this.motivoDevolucao.id, this.modelo.id, this.texto.id
+            )).then(() => {
+            	this.messagesService.success("Documento de devolução elaborado com sucesso!");
+                return this.$state.go('app.tarefas.minhas-tarefas');
+            }, () => {
+                this.messagesService.error("Erro ao concluir a elaboração do texto!");
+            });
+        }, () => {
+            this.messagesService.error('Não foi possível concluir a edição do documento de devolução.');
+        });
     }
     
 }

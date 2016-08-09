@@ -27,12 +27,12 @@ import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
-import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
-import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucaoRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavel;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavelRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.PreferenciaRepository;
 import br.jus.stf.core.framework.component.command.Command;
 import br.jus.stf.core.framework.domaindrivendesign.ApplicationService;
 import br.jus.stf.core.framework.domaindrivendesign.DomainEventPublisher;
@@ -117,7 +117,7 @@ public class RecebimentoApplicationService {
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
-				.get();
+				.orElse(null);
             
         remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
@@ -136,7 +136,7 @@ public class RecebimentoApplicationService {
 		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
 				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
 						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
-				.get();
+				.orElse(null);
             
         remessa.preautuar(classe, preferencias, sigilo, command.getNumeroProcessoOrigem(), command.getNumeroUnicoProcesso(), status);
         remessaRepository.save(remessa);

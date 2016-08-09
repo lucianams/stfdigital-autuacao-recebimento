@@ -30,9 +30,17 @@ public class PreautuarRecursalCommand {
 	private String numeroUnicoProcesso;
 	
 	public PreautuarRecursalCommand() {
-		
+		// Construtor default
 	}
 	
+    /**
+     * @param protocoloId
+     * @param classeId
+     * @param sigilo
+     * @param preferencias
+     * @param numeroProcessoOrigem
+     * @param numeroUnicoProcesso
+     */
     public PreautuarRecursalCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias, String numeroProcessoOrigem, String numeroUnicoProcesso) {
 		this.protocoloId = protocoloId;
 		this.classeId = classeId;

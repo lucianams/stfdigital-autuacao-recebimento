@@ -5,11 +5,11 @@ import mdHelpers = require('../shared/helpers/md-helpers');
 export class PreautuacaoOriginarioPage {
 
 	public selecionarClasse(classe: string): void {
-		mdHelpers.selectOptionWithText(element(by.id('classes')), classe);
+		mdHelpers.mdSelect.selectOptionWithText(element(by.id('classes')), classe);
 	}
 	
 	public selecionarPreferencia(...preferencias: string[]): void {
-		mdHelpers.multipleSelectOptionsWithText(element(by.id('preferencias')), preferencias);
+		mdHelpers.mdSelect.selectMultipleOptionsWithText(element(by.id('preferencias')), preferencias);
 	}
 	
 	public preautuar(): void {
@@ -17,7 +17,7 @@ export class PreautuacaoOriginarioPage {
 	}
 	
     public selecionarSigilo(sigilo: string): void {
-        mdHelpers.selectOptionWithText(element(by.id('sigilo')), sigilo);
+        mdHelpers.mdSelect.selectOptionWithText(element(by.id('sigilo')), sigilo);
     }
 
 	public preencherMotivo(motivo: string): void {

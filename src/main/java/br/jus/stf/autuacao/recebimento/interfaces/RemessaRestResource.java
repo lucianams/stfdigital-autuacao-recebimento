@@ -17,21 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService;
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
-import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PreautuarOriginarioCommand;
+import br.jus.stf.autuacao.recebimento.application.commands.PreautuarRecursalCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavelRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.PreferenciaRepository;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavelRepository;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
-import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDto;
-import br.jus.stf.autuacao.recebimento.interfaces.dto.PreferenciaDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.SigiloDto;
@@ -66,14 +63,16 @@ public class RemessaRestResource {
 	private ClasseDtoAssembler classeDtoAssembler;
 	
 	@Autowired
-	private PreferenciaDtoAssembler preferenciaDtoAssembler;
-	
-	@Autowired
-	private PreferenciaRepository preferenciaRepository;
-	
-	@Autowired
 	private DevolucaoDtoAssembler devolucaoDtoAssembler;
     
+	/**
+	 * @return
+	 */
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public List<RemessaDto> listar() {
+		return remessaRepossitory.findAll().stream().map(remessaDtoAssembler::toDto).collect(Collectors.toList());
+	}
+	
     /**
      * @param command
      * @param binding
@@ -199,15 +198,6 @@ public class RemessaRestResource {
     	TipoProcesso tipoProcesso = TipoProcesso.valueOf(tipoRemessa); 
 		
     	return classePeticionavelRepository.findByTipo(tipoProcesso).stream().map(classeDtoAssembler::toDto)
-				.collect(Collectors.toList());
-    }
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(value="/preferencia", method = RequestMethod.GET)
-    public List<PreferenciaDto> listarPrefencias(){
-		return preferenciaRepository.findAll().stream().map(preferenciaDtoAssembler::toDto)
 				.collect(Collectors.toList());
     }
 

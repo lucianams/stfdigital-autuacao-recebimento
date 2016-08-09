@@ -32,7 +32,7 @@ describe('Teste do controlador preautuacao-recursal.controller', () => {
 
 	    };
 		let protocoloId = 123;
-		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null);
+		let remessa: Remessa = new Remessa(protocoloId, 'HC', 4, 7, 'BALCAO', null, 'PUBLICO');
 	    controller = new PreautuacaoRecursalController(mockState, mockPreautuacaoRecursalService, mockDevolucaoService, [new Classe('HC', 'Habeas Corpus', [new Preferencia(1,'Criminal')])], remessa, [{nome: "PUBLICO", descricao: "Público"}, {nome: "SEGREDO_JUSTICA", descricao: "Segredo de Justiça"}] , mockMessagesService);
 	});
 	

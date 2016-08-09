@@ -46,5 +46,12 @@ public interface RemessaRepository {
 	 * @param motivo
 	 */
 	void deleteMotivoDevolucao(MotivoDevolucao motivo);
+	
+	/**
+	 * Recupera todas as remessas.
+	 * 
+	 * @return
+	 */
+	List<Remessa> findAll();
 
 }

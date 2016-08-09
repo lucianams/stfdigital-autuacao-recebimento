@@ -1,5 +1,8 @@
 import dashlets from "../dashlets.module";
 
+import {RemessasDashletService} from "../remessas-dashlet.service";
+import {Remessa} from "../../services/model";
+
 let controllerName: string = "app.recebimento.dashlets.GraficoRemessasDashletController";
 
 export class GraficoRemessasDashletController {
@@ -7,9 +10,12 @@ export class GraficoRemessasDashletController {
 	public nvd3: any = {};
 	public options = {};
 	public data = [];
+	public remessas: Remessa[];
 	
-	constructor() {
-		this.options = {
+    public static $inject = ['app.recebimento.dashlets.RemessasDashletService'];
+
+    constructor(remessasDashletsService: RemessasDashletService) {
+        this.options = {
             chart : {
                 type : 'pieChart',
                 noData: "",
@@ -24,12 +30,19 @@ export class GraficoRemessasDashletController {
                 showValues : true
             }
         };
-		
-		this.data.push({"label": 'RE', "value" : 4});
-		this.data.push({"label": 'ADI', "value" : 6});
-		this.data.push({"label": 'ARE', "value" : 10});
-		
-		//this.nvd3.api.refresh(); TODO Colocar no callback da chamada de carregamento dos dados.
+    	
+    	remessasDashletsService.listarRemessas().then((remessas: Remessa[]) => {
+            this.remessas = remessas;
+            
+            this.data = _(this.remessas)
+	            .groupBy("classe")
+	            .mapValues((remessasDaClasse: Remessa[]) => remessasDaClasse.length)
+	            .transform((result, value, key) => result.push({
+	            	label: (key ? key : 'NÃO CLASSIFICADO'), value: value
+	            }), []).value();
+            
+            this.nvd3.api.refresh();
+        });
 	}
 	
 }

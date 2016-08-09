@@ -26,6 +26,7 @@ export class PreautuacaoController {
 			private preautuacaoService: PreautuacaoService, private devolucaoService: DevolucaoService,
 			public classes : Classe[], public remessa: Remessa, public sigilos: Sigilo[]){
 		this.cmdPreautuar.protocoloId = remessa.protocolo;
+		this.cmdPreautuar.sigilo = remessa.sigilo;
 		this.cmdDevolucao.protocoloId = remessa.protocolo;
 	}
 
@@ -38,11 +39,11 @@ export class PreautuacaoController {
 		 this.preferencias = this.classe.preferencias;
 	}
 	
-	public devolver(): void {
-		this.devolucaoService.devolver(this.cmdDevolucao)
+	public devolver(): ng.IPromise<any> {
+		return this.devolucaoService.devolver(this.cmdDevolucao)
 		.then(() => {
-            this.$state.go('app.tarefas.minhas-tarefas');
 			this.messagesService.success('Remessa devolvida com sucesso.');
+            return this.$state.go('app.tarefas.minhas-tarefas');
     	}, () => {
 			this.messagesService.error('Erro ao devolver remessa.');
 		});
@@ -51,11 +52,11 @@ export class PreautuacaoController {
 	/*
 	 * Realiza a preautuação do processo recursal.
 	 */
-	public preautuarProcessoOriginario(): void {
-		this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
+	public preautuarProcessoOriginario(): ng.IPromise<any> {
+		return this.preautuacaoService.preautuarProcesso(this.cmdPreautuar)
 		.then(() => {
-            this.$state.go('app.tarefas.minhas-tarefas');
 			this.messagesService.success('Remessa preautuada com sucesso.');
+            return this.$state.go('app.tarefas.minhas-tarefas');
     	}, () => {
 			this.messagesService.error('Erro ao preautuar remessa.');
 		});

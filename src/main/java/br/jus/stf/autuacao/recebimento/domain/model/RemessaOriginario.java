@@ -5,8 +5,8 @@ import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-import br.jus.stf.autuacao.recebimento.domain.model.classe.ClassePeticionavel;
-import br.jus.stf.autuacao.recebimento.domain.model.preferencia.Preferencia;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavel;
+import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Protocolo;

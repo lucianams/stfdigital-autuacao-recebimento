@@ -7,11 +7,11 @@ import mdHelpers = require('../shared/helpers/md-helpers');
 export class PrepararOficioDevolucaoPage {
 
 	public selecionarMotivo(motivoDevolucao: string): void {
-		mdHelpers.selectOptionWithText(element(by.id('motivoDevolucao')), motivoDevolucao);
+		mdHelpers.mdSelect.selectOptionWithText(element(by.id('motivoDevolucao')), motivoDevolucao);
 	}
 	
 	public selecionarModelo(modelo: string): void {
-		mdHelpers.selectOptionWithText(element(by.id('modeloTexto')), modelo);
+		mdHelpers.mdSelect.selectOptionWithText(element(by.id('modeloTexto')), modelo);
 	}
 	
 	public aguardarCarregamentoTags(): void {

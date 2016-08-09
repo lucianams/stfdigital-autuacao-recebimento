@@ -17,7 +17,7 @@ services:
       service: recebimento
     image: stfdigital-autuacao-recebimento
     environment:
-     - spring.profiles.active=development,e2e
+     - spring.profiles.active=development,docker,e2e
     depends_on:
      - rabbit
      - discovery

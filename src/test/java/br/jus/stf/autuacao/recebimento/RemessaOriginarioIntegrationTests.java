@@ -70,6 +70,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 	}
 	
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void registrarUmaRemessa() throws Exception {
 		JsonObject remessaValida = object(
 			field("formaRecebimento", "SEDEX"),
@@ -86,6 +87,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "preautuar-originario")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautarRemessaOriginario.sql");
         
@@ -102,6 +104,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "devolver-remessa")
     public void devolverUmaRemessa() throws Exception {
 		loadDataTests("devolverRemessaOriginario.sql");
 
@@ -116,6 +119,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "preparar-oficio-devolucao")
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
 		
@@ -132,6 +136,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "assinar-oficio-devolucao")
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
 		

@@ -62,6 +62,7 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
 	}
 	
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void registrarUmaRemessa() throws Exception {
 		JsonObject remessaValida = object(
 			field("formaRecebimento", "SEDEX"),
@@ -78,6 +79,7 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "preautuar-recursal")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautuarRemessaRecursal.sql");
         

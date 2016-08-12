@@ -40,7 +40,6 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 01.08.2016
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
-@WithMockOauth2User("recebedor")
 @Transactional
 public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
 
@@ -79,7 +78,7 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
-	@WithMockOauth2User(value = "recebedor", components = "preautuar-recursal")
+	@WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautuarRemessaRecursal.sql");
         
@@ -98,6 +97,7 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
         		field("classeId", "RE"),

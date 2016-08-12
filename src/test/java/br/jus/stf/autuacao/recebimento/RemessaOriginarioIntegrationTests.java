@@ -44,7 +44,6 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 18.12.2015
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
-@WithMockOauth2User("recebedor")
 @Transactional
 public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 
@@ -87,7 +86,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
-	@WithMockOauth2User(value = "recebedor", components = "preautuar-originario")
+	@WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautarRemessaOriginario.sql");
         
@@ -104,7 +103,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
-	@WithMockOauth2User(value = "recebedor", components = "devolver-remessa")
+	@WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
     public void devolverUmaRemessa() throws Exception {
 		loadDataTests("devolverRemessaOriginario.sql");
 
@@ -119,7 +118,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
-	@WithMockOauth2User(value = "recebedor", components = "preparar-oficio-devolucao")
+	@WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
 		
@@ -136,7 +135,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
-	@WithMockOauth2User(value = "recebedor", components = "assinar-oficio-devolucao")
+	@WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
 		
@@ -151,6 +150,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void naoDeveRegistrarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
         	field("formaRecebimento", "SEDEX"),
@@ -164,6 +164,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
         	field("protocoloId", 1),
@@ -177,6 +178,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 
 	@Test
+	@WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
     public void naoDeveElaborarOficioParaDevolucaoDaRemessaInvalida() throws Exception {
 		JsonObject remessaInvalida = object().get();
         
@@ -186,6 +188,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void naoDeveAssinarUmOficioDeDevolucao() throws Exception {
         JsonObject remessaInvalida = object().get();
         

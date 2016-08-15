@@ -22,11 +22,11 @@ import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
  *
  */
 @SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
-@WithMockOauth2User("recebedor")
 @Transactional
 public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	
 	@Test
+	@WithMockOauth2User("gestor-recebimento")
     public void consultarDevolucaoDeUmaRemessa() throws Exception {
 		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
 		
@@ -38,6 +38,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("preautuador-originario")
     public void listarClasses() throws Exception {
 		ResultActions result = mockMvc.perform(get("/api/remessas/classes"));
         
@@ -45,6 +46,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("recebedor")
     public void consultarSigilos() throws Exception {
 		ResultActions result = mockMvc.perform(get("/api/remessas/sigilos"));
         
@@ -52,6 +54,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("recebedor")
     public void consultarFormasRecebimento() throws Exception {
 		ResultActions result = mockMvc.perform(get("/api/remessas/formas-recebimento"));
         
@@ -59,6 +62,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("preautuador-recursal")
     public void consultarClassesPorTipoRemessa() throws Exception {
 		ResultActions result = mockMvc.perform(get("/api/remessas/classes/tipos-remessa/RECURSAL"));
         
@@ -66,6 +70,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("gestor-recebimento")
     public void listar() throws Exception {
 		loadDataTests("consultarRemessa-limpar.sql", "consultarRemessa.sql");
 		
@@ -75,6 +80,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User("recebedor")
     public void consultarRemessa() throws Exception {
 		loadDataTests("consultarRemessa-limpar.sql", "consultarRemessa.sql");
 		

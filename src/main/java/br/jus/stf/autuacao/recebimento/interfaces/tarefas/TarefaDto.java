@@ -34,18 +34,19 @@ public class TarefaDto {
     
     private String notes;
     
-    private List<RotuloDto> tags = new LinkedList<RotuloDto>();
+    private List<RotuloDto> tags = new LinkedList<>();
 
-	public TarefaDto(String id, TaskEntity task) {
+	public TarefaDto(String id, Task task) {
+		TaskEntity taskEntity = (TaskEntity) task;
 		this.id = id;
-		this.title = task.getName();
-		this.command = task.getTaskDefinitionKey();
-		this.startDate = task.getCreateTime();
-		this.dueDate = task.getDueDate();
-		this.completed = DelegationState.RESOLVED.equals(task.getDelegationState()) || task.isDeleted();
-		this.starred = Boolean.TRUE.equals(task.getTaskLocalVariables().get("starred"));
-		this.important = task.getPriority() > Task.DEFAULT_PRIORITY;
-		this.notes = (String) task.getTaskLocalVariables().get("notes");
+		this.title = taskEntity.getName();
+		this.command = taskEntity.getTaskDefinitionKey();
+		this.startDate = taskEntity.getCreateTime();
+		this.dueDate = taskEntity.getDueDate();
+		this.completed = DelegationState.RESOLVED.equals(taskEntity.getDelegationState()) || taskEntity.isDeleted();
+		this.starred = Boolean.TRUE.equals(taskEntity.getTaskLocalVariables().get("starred"));
+		this.important = taskEntity.getPriority() > Task.DEFAULT_PRIORITY;
+		this.notes = (String) taskEntity.getTaskLocalVariables().get("notes");
 	}
 	
 	public String getId() {

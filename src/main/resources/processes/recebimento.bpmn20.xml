@@ -15,7 +15,7 @@
             <conditionExpression xsi:type="tFormalExpression">${transition == 'RECURSAL'}</conditionExpression>
         </sequenceFlow>
         
-        <userTask id="preautuar-recursal" name="Pré-Autuar Remessa de Processo Recursal" activiti:candidateGroups="recebedor-recursais">
+        <userTask id="preautuar-recursal" name="Pré-Autuar Remessa de Processo Recursal" activiti:candidateGroups="preautuador-recursal">
             <documentation>PREAUTUACAO</documentation>
         </userTask>
         
@@ -37,7 +37,7 @@
             <conditionExpression xsi:type="tFormalExpression">${transition == 'ORIGINARIO'}</conditionExpression>
         </sequenceFlow>
         
-        <userTask id="preautuar-originario" name="Pré-Autuar Remessa de Processo Originário" activiti:candidateGroups="recebedor-originarios">
+        <userTask id="preautuar-originario" name="Pré-Autuar Remessa de Processo Originário" activiti:candidateGroups="preautuador-originario">
             <documentation>PREAUTUACAO</documentation>
         </userTask>
         

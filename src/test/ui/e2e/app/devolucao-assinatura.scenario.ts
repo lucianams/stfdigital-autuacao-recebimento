@@ -35,7 +35,6 @@ describe('Assinatura do Ofício de Devolução', () => {
 		devolucaoAssinaturaPage.assinar();
 		principalPage.aguardarMensagem();
 		expect(principalPage.exibiuMensagemSucesso()).toBeTruthy();
-        expect(principalPage.mensagem()).toEqual('1 documento(s) de devolução assinados com sucesso.');
     });
     
 	it('Deveria fazer o logout do sistema', () => {

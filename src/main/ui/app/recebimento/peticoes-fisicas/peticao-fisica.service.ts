@@ -30,7 +30,7 @@ export class PeticaoFisicaService {
 
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties: Properties, commandService: cmd.CommandService) { 
-    	commandService.setValidator('registrar-remessa', new ValidadorRemessa());
+    	commandService.addValidator('registrar-remessa', new ValidadorRemessa());
     }
 
     public registrar(peticao: PeticaoFisicaCommand): IPromise<any> {

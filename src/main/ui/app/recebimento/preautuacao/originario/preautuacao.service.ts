@@ -20,7 +20,7 @@ export class PreautuacaoService {
     
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
-    	commandService.setValidator('preautuar-originario', new ValidadorPreautuacao());
+    	commandService.addValidator('preautuar-originario', new ValidadorPreautuacao());
     }
 
     /*

@@ -17,7 +17,7 @@ export class DevolucaoService {
     
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
-        commandService.setValidator('devolver-remessa', new ValidadorDevolucao());
+        commandService.addValidator('devolver-remessa', new ValidadorDevolucao());
     }
 
 	public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<any> {

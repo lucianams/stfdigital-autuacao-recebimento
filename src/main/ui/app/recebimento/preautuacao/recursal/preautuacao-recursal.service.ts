@@ -22,7 +22,7 @@ export class PreautuacaoRecursalService {
     
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties : Properties, commandService: cmd.CommandService) {
-    	commandService.setValidator('preautuar-recursal', new ValidadorPreautuacao());
+    	commandService.addValidator('preautuar-recursal', new ValidadorPreautuacao());
     }
     /*
      * Envia os dados da préautuação para o serviço de recebimento (back-end).

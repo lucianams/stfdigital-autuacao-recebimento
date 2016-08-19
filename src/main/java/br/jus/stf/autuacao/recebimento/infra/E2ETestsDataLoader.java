@@ -26,7 +26,7 @@ public class E2ETestsDataLoader {
 	public void init() throws SQLException {
 		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql", "devolverRemessaOriginario.sql",
 				"devolverRemessaRecursal.sql", "preautarRemessaOriginario.sql", "preautuarRemessaRecursal.sql",
-				"prepararOficioDevolucaoRemessaOriginario.sql", "autuacao/autuarCriminalEleitoral.sql");
+				"prepararOficioDevolucaoRemessaOriginario.sql");
 	}
 
 	private void loadDataTests(String... scriptsSql) throws SQLException {

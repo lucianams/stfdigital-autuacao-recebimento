@@ -45,7 +45,7 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-51', '-47', '-47', NULL, 'informationId', 'serializable', 2, '-52', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.273');   
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-56', 'recebedor-originarios', 'candidate', NULL, '-55', NULL),
+('-56', 'preautuador-originario', 'candidate', NULL, '-55', NULL),
 ('-59', 'cartoraria', 'candidate', NULL, '-58', NULL),
 ('-62', NULL, 'candidate', 'gestor-recebimento', '-61', NULL),
 ('-63', NULL, 'participant', 'gestor-recebimento', NULL, '-47');        
@@ -95,7 +95,7 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-68', '-64', '-64', NULL, 'informationId', 'serializable', 2, '-69', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.273');   
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-73', 'recebedor-originarios', 'candidate', NULL, '-72', NULL),
+('-73', 'preautuador-originario', 'candidate', NULL, '-72', NULL),
 ('-76', 'cartoraria', 'candidate', NULL, '-75', NULL),
 ('-79', NULL, 'candidate', 'gestor-recebimento', '-78', NULL),
 ('-80', NULL, 'participant', 'gestor-recebimento', NULL, '-64');        
@@ -145,7 +145,7 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-85', '-81', '-81', NULL, 'informationId', 'serializable', 2, '-86', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.273');   
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-90', 'recebedor-originarios', 'candidate', NULL, '-89', NULL),
+('-90', 'preautuador-originario', 'candidate', NULL, '-89', NULL),
 ('-93', 'cartoraria', 'candidate', NULL, '-92', NULL),
 ('-96', NULL, 'candidate', 'gestor-recebimento', '-95', NULL),
 ('-97', NULL, 'participant', 'gestor-recebimento', NULL, '-81');        
@@ -195,7 +195,7 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-102', '-98', '-98', NULL, 'informationId', 'serializable', 2, '-103', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:55.226', TIMESTAMP '2016-05-31 17:42:55.273');   
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-107', 'recebedor-originarios', 'candidate', NULL, '-106', NULL),
+('-107', 'preautuador-originario', 'candidate', NULL, '-106', NULL),
 ('-110', 'cartoraria', 'candidate', NULL, '-109', NULL),
 ('-113', NULL, 'candidate', 'gestor-recebimento', '-112', NULL),
 ('-114', NULL, 'participant', 'gestor-recebimento', NULL, '-98');        

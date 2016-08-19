@@ -14,7 +14,7 @@ INSERT INTO PUBLIC.ACT_RU_TASK(ID_, REV_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF
 ('-32', 1, '-24', '-24', @proc_def_id_, STRINGDECODE('Pr\u00e9-Autuar Remessa de Processo Origin\u00e1rio'), NULL, 'PREAUTUACAO', 'preautuar-originario', NULL, NULL, NULL, 50, TIMESTAMP '2016-05-31 17:42:37.772', NULL, NULL, 1, NULL, NULL);       
 
 INSERT INTO PUBLIC.ACT_RU_IDENTITYLINK(ID_, REV_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) VALUES
-('-33', 1, 'recebedor-originarios', 'candidate', NULL, '-32', NULL, NULL);     
+('-33', 1, 'preautuador-originario', 'candidate', NULL, '-32', NULL, NULL);     
 
 INSERT INTO PUBLIC.ACT_RU_VARIABLE(ID_, REV_, TYPE_, NAME_, EXECUTION_ID_, PROC_INST_ID_, TASK_ID_, BYTEARRAY_ID_, DOUBLE_, LONG_, TEXT_, TEXT2_) VALUES
 ('-26', 1, 'string', 'transition', '-24', '-24', NULL, NULL, NULL, NULL, 'ORIGINARIO', NULL),
@@ -36,4 +36,4 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-28', '-24', '-24', NULL, 'informationId', 'serializable', 0, '-29', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:37.771', TIMESTAMP '2016-05-31 17:42:37.771'); 
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-33', 'recebedor-originarios', 'candidate', NULL, '-32', NULL);    
+('-33', 'preautuador-originario', 'candidate', NULL, '-32', NULL);    

@@ -41,5 +41,5 @@ INSERT INTO PUBLIC.ACT_HI_VARINST(ID_, PROC_INST_ID_, EXECUTION_ID_, TASK_ID_, N
 ('-38', '-34', '-34', NULL, 'informationId', 'serializable', 1, '-39', NULL, NULL, NULL, NULL, TIMESTAMP '2016-05-31 17:42:46.686', TIMESTAMP '2016-05-31 17:42:46.733');      
 
 INSERT INTO PUBLIC.ACT_HI_IDENTITYLINK(ID_, GROUP_ID_, TYPE_, USER_ID_, TASK_ID_, PROC_INST_ID_) VALUES
-('-43', 'recebedor-originarios', 'candidate', NULL, '-42', NULL),
+('-43', 'preautuador-originario', 'candidate', NULL, '-42', NULL),
 ('-46', 'cartoraria', 'candidate', NULL, '-45', NULL);             

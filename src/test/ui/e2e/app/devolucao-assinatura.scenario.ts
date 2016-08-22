@@ -6,7 +6,7 @@ import mockCryptoModule from './shared/mocks/crypto';
 
 import util = require('util');
 
-describe('Assinatura do Ofício de Devolução', () => {
+xdescribe('Assinatura do Ofício de Devolução', () => {
 
 	let loginPage: LoginPage = new LoginPage();
 	let principalPage: PrincipalPage = new PrincipalPage();

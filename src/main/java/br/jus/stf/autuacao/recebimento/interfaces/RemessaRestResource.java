@@ -51,7 +51,7 @@ public class RemessaRestResource {
     private RecebimentoApplicationService recebimentoApplicationService; 
 	
 	@Autowired 
-	private RemessaRepository remessaRepossitory;
+	private RemessaRepository remessaRepository;
 	
 	@Autowired
 	private RemessaDtoAssembler remessaDtoAssembler;
@@ -70,7 +70,7 @@ public class RemessaRestResource {
 	 */
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<RemessaDto> listar() {
-		return remessaRepossitory.findAll().stream().map(remessaDtoAssembler::toDto).collect(Collectors.toList());
+		return remessaRepository.findAll().stream().map(remessaDtoAssembler::toDto).collect(Collectors.toList());
 	}
 	
     /**
@@ -92,7 +92,7 @@ public class RemessaRestResource {
      */
     @RequestMapping(value="/{protocoloId}", method = RequestMethod.GET)
     public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id){
-    	return  remessaDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
+    	return  remessaDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
     
 
@@ -207,7 +207,7 @@ public class RemessaRestResource {
      */
     @RequestMapping(value="/{protocoloId}/devolucao", method = RequestMethod.GET)
     public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
-    	return devolucaoDtoAssembler.toDto(remessaRepossitory.findOne(new ProtocoloId(id)));
+    	return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
 	
 	private String message(BindingResult binding) {

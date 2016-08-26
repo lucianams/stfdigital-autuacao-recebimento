@@ -3,7 +3,6 @@ package br.jus.stf.autuacao.recebimento;
 import static com.github.jsonj.tools.JsonBuilder.field;
 import static com.github.jsonj.tools.JsonBuilder.object;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,10 +22,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.github.jsonj.JsonObject;
 
 import br.jus.stf.autuacao.recebimento.infra.ProtocoloRestAdapter;
-import br.jus.stf.autuacao.recebimento.infra.RabbitConfiguration;
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
-import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.protocolo.Numero;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
@@ -57,7 +54,6 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
 		MockitoAnnotations.initMocks(this);
 		
 		given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
-		willDoNothing().given(rabbitTemplate).convertAndSend(RabbitConfiguration.REMESSA_REGISTRADA_QUEUE, RemessaRegistrada.class);
 	}
 	
 	@Test

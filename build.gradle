@@ -97,6 +97,8 @@ dependencies {
                 
     compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
     
+    compile("org.springframework.cloud:spring-cloud-starter-stream-rabbit")
+
     // Remover essa dependência quando o elasticsearch tiver com essa dependência como não opcional.
     // Monitorar issue https://github.com/elastic/elasticsearch/issues/13245
     // Parece que na próxima versão já vai estar como não opcional.

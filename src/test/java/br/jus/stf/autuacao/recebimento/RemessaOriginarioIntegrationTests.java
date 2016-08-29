@@ -25,11 +25,9 @@ import com.github.jsonj.JsonObject;
 
 import br.jus.stf.autuacao.recebimento.infra.DevolucaoRestAdapter;
 import br.jus.stf.autuacao.recebimento.infra.ProtocoloRestAdapter;
-import br.jus.stf.autuacao.recebimento.infra.RabbitConfiguration;
 import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
 import br.jus.stf.core.shared.documento.TextoId;
-import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.protocolo.Numero;
 import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
@@ -64,7 +62,6 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 		MockitoAnnotations.initMocks(this);
 		
 		given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
-		willDoNothing().given(rabbitTemplate).convertAndSend(RabbitConfiguration.REMESSA_REGISTRADA_QUEUE, RemessaRegistrada.class);
 		willDoNothing().given(devolucaoAdapter).assinarTexto(new TextoId(9000L), "_DocTemp_12345");
 	}
 	

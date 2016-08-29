@@ -35,12 +35,9 @@ import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
 import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.PreferenciaRepository;
 import br.jus.stf.core.framework.component.command.Command;
 import br.jus.stf.core.framework.domaindrivendesign.ApplicationService;
-import br.jus.stf.core.framework.domaindrivendesign.DomainEventPublisher;
 import br.jus.stf.core.shared.classe.ClasseId;
 import br.jus.stf.core.shared.documento.ModeloDocumentoId;
 import br.jus.stf.core.shared.documento.TextoId;
-import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
-import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.preferencia.PreferenciaId;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
@@ -57,9 +54,6 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 @Transactional
 public class RecebimentoApplicationService {
 
-    @Autowired
-    private DomainEventPublisher publisher;
-    
     @Autowired
     private RemessaRepository remessaRepository;
     
@@ -102,7 +96,6 @@ public class RecebimentoApplicationService {
 				formaRecebimento, command.getNumeroSedex(), sigilo, tipoProcesso, recebedor, status);
         
         remessaRepository.save(remessa);
-        publisher.publish(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
     }
 
     /**
@@ -121,7 +114,6 @@ public class RecebimentoApplicationService {
             
         remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
-        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
     /**
@@ -140,7 +132,6 @@ public class RecebimentoApplicationService {
             
         remessa.preautuar(classe, preferencias, sigilo, command.getNumeroProcessoOrigem(), command.getNumeroUnicoProcesso(), status);
         remessaRepository.save(remessa);
-        publisher.publish(new RecebimentoFinalizado(remessa.identity().toLong(), classe.identity().toString(), remessa.tipoProcesso().toString(), remessa.sigilo().toString(), remessa.isCriminalEleitoral()));
     }
     
     /**

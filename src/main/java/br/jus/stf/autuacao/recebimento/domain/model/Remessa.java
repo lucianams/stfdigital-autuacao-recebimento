@@ -1,11 +1,13 @@
 package br.jus.stf.autuacao.recebimento.domain.model;
 
+import static java.util.Comparator.comparing;
 import static javax.persistence.CascadeType.ALL;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -32,8 +34,11 @@ import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavel;
 import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
 import br.jus.stf.core.framework.domaindrivendesign.AggregateRoot;
+import br.jus.stf.core.framework.domaindrivendesign.DomainEvent;
 import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 import br.jus.stf.core.shared.documento.TextoId;
+import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
+import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.Numero;
@@ -104,6 +109,11 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     @Enumerated(EnumType.STRING)
     private Sigilo sigilo;
 
+    @OneToMany(cascade = ALL)
+    @JoinTable(name = "REMESSA_EVENTO", schema = "RECEBIMENTO", joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
+		inverseJoinColumns = @JoinColumn(name = "SEQ_EVENTO", nullable = false))
+    private Set<Evento> eventos = new TreeSet<>(comparing(Evento::criacao));
+    
     public Remessa() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
@@ -139,8 +149,14 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.sigilo = sigilo;
         this.recebedor = recebedor;
         this.status = status;
+        
+        registrarEvento(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
     }
     
+	private void registrarEvento(DomainEvent<?> evento) {
+		eventos.add(new Evento(evento));
+	}
+	
     /**
      * @return
      */
@@ -158,6 +174,8 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     	this.sigilo = sigilo;
     	this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
     	this.status = status;
+    	
+    	registrarEvento(new RecebimentoFinalizado(identity().toLong(), classe.identity().toString(), tipoProcesso().toString(), sigilo().toString(), isCriminalEleitoral()));
     }
     
     /**

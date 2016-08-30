@@ -37,12 +37,16 @@ public class ModeloDevolucaoRestResource {
 	@Autowired
 	private ModeloDtoAssembler modeloDtoAssembler;
 
+	/**
+	 * @param idMotivo
+	 * @return
+	 */
 	@ApiOperation("Recupera os modelos de devolução de remessa")
 	@RequestMapping(value = "/motivos-devolucao/{idMotivo}/modelos", method = RequestMethod.GET)
 	public List<ModeloDevolucaoDto> consultarPorModeloDevolucao(@PathVariable("idMotivo") Long idMotivo) {
 		MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(idMotivo);
 		List<ModeloDevolucao> modelos = modeloDevolucaoRepository.findModeloDevolucaoByMotivoDevolucao(motivo);
-		return modelos.stream().map(modelo -> modeloDtoAssembler.toDto(modelo)).collect(Collectors.toList());
+		return modelos.stream().map(modeloDtoAssembler::toDto).collect(Collectors.toList());
 	}
 
 }

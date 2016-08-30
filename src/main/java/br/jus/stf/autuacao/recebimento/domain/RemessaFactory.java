@@ -22,6 +22,18 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @Component
 public class RemessaFactory {
 
+    /**
+     * @param protocolo
+     * @param volumes
+     * @param apensos
+     * @param formaRecebimento
+     * @param numeroSedex
+     * @param sigilo
+     * @param tipoProcesso
+     * @param recebedor
+     * @param status
+     * @return
+     */
     public Remessa novaRemessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, TipoProcesso tipoProcesso, Recebedor recebedor, Status status) {
         Remessa remessa;
         

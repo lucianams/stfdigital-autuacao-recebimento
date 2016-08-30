@@ -14,6 +14,10 @@ import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 @Component
 public class ModeloDtoAssembler {
 
+	/**
+	 * @param modelo
+	 * @return
+	 */
 	public ModeloDevolucaoDto toDto(ModeloDevolucao modelo) {
 		Validate.notNull(modelo);
 

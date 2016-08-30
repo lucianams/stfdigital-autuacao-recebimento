@@ -16,6 +16,11 @@ import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
  */
 @Component
 public class MotivoDevolucaoDtoAssembler {
+	
+	/**
+	 * @param motivo
+	 * @return
+	 */
 	public MotivoDevolucaoDto toDto(MotivoDevolucao motivo) {
 		Validate.notNull(motivo);
 		Set<Long> tiposDocumento = motivo.tiposDocumento().stream().map(t -> t.toLong()).collect(Collectors.toSet());

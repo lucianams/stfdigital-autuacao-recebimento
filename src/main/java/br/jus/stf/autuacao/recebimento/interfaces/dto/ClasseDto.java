@@ -13,6 +13,11 @@ public class ClasseDto {
 	private String nome;
 	private Set<PreferenciaDto> preferencias = new HashSet<>();
 	
+	/**
+	 * @param id
+	 * @param nome
+	 * @param preferencias
+	 */
 	public ClasseDto(String id, String nome, Set<PreferenciaDto> preferencias) {
 		this.id = id;
 		this.nome = nome;

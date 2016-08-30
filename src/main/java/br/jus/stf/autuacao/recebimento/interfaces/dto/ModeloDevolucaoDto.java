@@ -3,6 +3,12 @@ package br.jus.stf.autuacao.recebimento.interfaces.dto;
 import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
+/**
+ * @author Tomas Godoi
+ * 
+ * @since 31.05.2016
+ *
+ */
 @ApiModel("Representa um Modelo")
 public class ModeloDevolucaoDto {
 
@@ -18,6 +24,12 @@ public class ModeloDevolucaoDto {
 	@ApiModelProperty("O id do documento do modelo")
 	private Long documento;
 
+	/**
+	 * @param id
+	 * @param tipoDocumento
+	 * @param nome
+	 * @param documento
+	 */
 	public ModeloDevolucaoDto(final Long id, final Long tipoDocumento, final String nome, final Long documento) {
 		this.id = id;
 		this.tipoDocumento = tipoDocumento;

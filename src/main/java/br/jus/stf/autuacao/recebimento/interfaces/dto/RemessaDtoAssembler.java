@@ -5,9 +5,18 @@ import org.springframework.stereotype.Component;
 
 import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
 
+/**
+ * @author viniciusk
+ * 
+ *@since 11.05.2016
+ */
 @Component
 public class RemessaDtoAssembler {
 	
+	/**
+	 * @param remessa
+	 * @return
+	 */
 	public RemessaDto toDto(Remessa remessa) {
 		Validate.notNull(remessa);
 		String classe = remessa.classe() != null ? remessa.classe().identity().toString() : "";

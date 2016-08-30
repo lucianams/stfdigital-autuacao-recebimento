@@ -33,10 +33,13 @@ public class MotivoDevolucaoRestResource {
 //	@Autowired
 //	private ModeloDtoAssembler modeloDtoAssembler;
 	
+	/**
+	 * @return
+	 */
 	@ApiOperation("Recupera os motivos de devolução de petição cadastrados.")
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<MotivoDevolucaoDto> listar() {
-		return remessaRepository.findAllMotivoDevolucao().stream().map(md -> motivoDevolucaoDtoAssembler.toDto(md)).collect(Collectors.toList());
+		return remessaRepository.findAllMotivoDevolucao().stream().map(motivoDevolucaoDtoAssembler::toDto).collect(Collectors.toList());
 	}
 	
 //	@ApiOperation("Recupera os modelos de documentos de acordo com o motivo informado.")

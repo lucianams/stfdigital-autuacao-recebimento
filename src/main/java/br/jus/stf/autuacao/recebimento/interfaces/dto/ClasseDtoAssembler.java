@@ -20,11 +20,15 @@ public class ClasseDtoAssembler {
 	@Autowired
 	private PreferenciaDtoAssembler preferenciaDtoAssembler;
 	
+	/**
+	 * @param classe
+	 * @return
+	 */
 	public ClasseDto toDto(ClassePeticionavel classe) {
 		Validate.notNull(classe);
 		
 		return new ClasseDto(classe.identity().toString(), classe.nome(), classe.preferencias().stream()
-    			.map(preferencia -> preferenciaDtoAssembler.toDto(preferencia)).collect(Collectors.toSet()));
+    			.map(preferenciaDtoAssembler::toDto).collect(Collectors.toSet()));
 	}
 }
 

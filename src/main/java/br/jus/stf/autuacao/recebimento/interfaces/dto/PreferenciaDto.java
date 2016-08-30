@@ -9,6 +9,10 @@ public class PreferenciaDto {
 	private Long id;
 	private String nome;
 	
+	/**
+	 * @param id
+	 * @param nome
+	 */
 	public PreferenciaDto(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;

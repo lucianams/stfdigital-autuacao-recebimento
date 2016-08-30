@@ -23,6 +23,11 @@ public class MotivoDevolucaoDto {
 	@ApiModelProperty(value = "Os tipos de documento associados ao motivo")
 	private Set<Long> tiposDocumento;
 	
+	/**
+	 * @param id
+	 * @param descricao
+	 * @param tiposDocumento
+	 */
 	public MotivoDevolucaoDto(Long id, String descricao, Set<Long> tiposDocumento) {
 		this.id = id;
 		this.descricao = descricao;

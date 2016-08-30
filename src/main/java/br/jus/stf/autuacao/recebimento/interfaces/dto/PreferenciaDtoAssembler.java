@@ -15,6 +15,10 @@ import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
 @Component
 public class PreferenciaDtoAssembler {
 	
+	/**
+	 * @param prefenrecia
+	 * @return
+	 */
 	public PreferenciaDto toDto(Preferencia prefenrecia) {
 		Validate.notNull(prefenrecia);
 		return new PreferenciaDto(prefenrecia.identity().toLong(), prefenrecia.nome());

@@ -5,11 +5,13 @@ import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
 import br.jus.stf.core.framework.stream.StreamConfigurerSupport;
-import br.jus.stf.core.shared.eventos.PeticaoRegistrada;
 import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 
 /**
+ * Configuração do mecanismo que será usado pelo serviço para 
+ * publicação e/ou recebimento de eventos de domínio.
+ * 
  * @author Rodrigo Barreiros
  * 
  * @since 1.0.0
@@ -27,8 +29,7 @@ public class StreamConfigurer extends StreamConfigurerSupport {
 	}
 	
 	/**
-	 * Configuração dos canais que serão usados pelo serviço de peticionamento
-	 * para publicação de eventos de domínio.
+	 * Declaração dos canais mencionados acima.
 	 * 
 	 * @author Rodrigo Barreiros
 	 * 
@@ -38,13 +39,18 @@ public class StreamConfigurer extends StreamConfigurerSupport {
 	public interface Channels {
 
 		/**
-		 * O canal que será usado para publicação de eventos do tipo {@link PeticaoRegistrada}.
+		 * O canal que será usado para publicação de eventos do tipo {@link RemessaRegistrada}.
 		 * 
-		 * @return o canal para as petições registradas
+		 * @return o canal para as remessas registradas
 		 */
 		@Output(RemessaRegistrada.EVENT_KEY)
 		MessageChannel remessaRegistrada();
 
+		/**
+		 * O canal que será usado para publicação de eventos do tipo {@link RecebimentoFinalizado}.
+		 * 
+		 * @return o canal para os recebimentos finalizados
+		 */
 		@Output(RecebimentoFinalizado.EVENT_KEY)
 		MessageChannel recebimentoFinalizado();
 

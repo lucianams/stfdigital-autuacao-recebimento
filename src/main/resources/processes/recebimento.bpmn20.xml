@@ -62,7 +62,7 @@
 		
 		<sequenceFlow id="assinatura-oficio-devolucao" sourceRef="preparar-oficio-devolucao" targetRef="assinar-oficio-devolucao" />
 		
-		<userTask id="assinar-oficio-devolucao" name="Assinar Ofício de Devolução" activiti:candidateUsers="gestor-recebimento">
+		<userTask id="assinar-oficio-devolucao" name="Assinar Ofício de Devolução" activiti:candidateGroups="gestor-recebimento">
             <documentation>ASSINATURA</documentation>
         </userTask>
 		

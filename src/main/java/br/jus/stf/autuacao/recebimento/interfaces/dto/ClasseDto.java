@@ -9,23 +9,23 @@ import java.util.Set;
  */
 public class ClasseDto {
 	
-	private String id;
+	private String sigla;
 	private String nome;
 	private Set<PreferenciaDto> preferencias = new HashSet<>();
 	
 	/**
-	 * @param id
+	 * @param sigla
 	 * @param nome
 	 * @param preferencias
 	 */
-	public ClasseDto(String id, String nome, Set<PreferenciaDto> preferencias) {
-		this.id = id;
+	public ClasseDto(String sigla, String nome, Set<PreferenciaDto> preferencias) {
+		this.sigla = sigla;
 		this.nome = nome;
 		this.preferencias = preferencias;
 	}
 
-	public String getId() {
-		return id;
+	public String getSigla() {
+		return sigla;
 	}
 
 

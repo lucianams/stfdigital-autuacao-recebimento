@@ -26,9 +26,9 @@ alter table recebimento.devolucao add constraint fk_motivo_devolucao_devo foreig
 alter table recebimento.devolucao add constraint fk_modelo_devolucao_devo foreign key (seq_modelo_documento) references recebimento.modelo_devolucao(seq_modelo_documento);
 
 alter table recebimento.remessa drop column dsc_motivo;
-alter table recebimento.remessa add column num_remessa number not null;
-alter table recebimento.remessa add column num_ano integer not null;
-alter table recebimento.remessa add column sig_recebedor varchar2(30) not null;
-alter table recebimento.remessa add column dat_recebimento date not null;
-alter table recebimento.remessa add constraint uk_reme_num_remessa unique key (num_remessa, num_ano);
+alter table recebimento.remessa add num_remessa number not null;
+alter table recebimento.remessa add num_ano integer not null;
+alter table recebimento.remessa add sig_recebedor varchar2(30) not null;
+alter table recebimento.remessa add dat_recebimento date not null;
+alter table recebimento.remessa add constraint uk_reme_num_remessa unique (num_remessa, num_ano);
 alter table recebimento.remessa add constraint fk_classe_peticionavel_reme foreign key (sig_classe) references recebimento.classe_peticionavel(sig_classe);

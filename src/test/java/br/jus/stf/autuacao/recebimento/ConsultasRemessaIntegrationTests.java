@@ -40,7 +40,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	@WithMockOauth2User("preautuador-originario")
     public void listarClasses() throws Exception {
-		ResultActions result = mockMvc.perform(get("/api/remessas/classes"));
+		ResultActions result = mockMvc.perform(get("/api/classes"));
         
         result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(34)));
     }
@@ -64,7 +64,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 	@Test
 	@WithMockOauth2User("preautuador-recursal")
     public void consultarClassesPorTipoRemessa() throws Exception {
-		ResultActions result = mockMvc.perform(get("/api/remessas/classes/tipos-remessa/RECURSAL"));
+		ResultActions result = mockMvc.perform(get("/api/classes").param("tipoRemessa", "RECURSAL"));
         
         result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(5)));
     }

@@ -3,6 +3,7 @@ import IStateProvider = angular.ui.IStateProvider;
 import IStateParams = angular.ui.IStateParamsService;
 import IModule = angular.IModule;
 import {RemessaService} from '../../services/remessa.service';
+import {ClasseService} from './../../services/classe.service';
 import Properties = app.support.constants.Properties;
 import cmd = app.support.command; 
 
@@ -20,8 +21,8 @@ function config($stateProvider: IStateProvider,
             }
         },
         resolve: {
-            classes: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
-                return remessaService.listarClassesPorTipoRemessa("RECURSAL")
+            classes: ['app.recebimento.services.ClasseService', (classeService: ClasseService) => {
+                return classeService.listar("RECURSAL")
             }],
             remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams : IStateParams) => {
                 let protocoloId = $stateParams['informationId'];

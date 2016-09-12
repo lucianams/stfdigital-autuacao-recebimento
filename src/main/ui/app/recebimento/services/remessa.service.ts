@@ -36,19 +36,6 @@ export class RemessaService {
                     });
     }
     
-    /* 
-     * Retorna uma array classes conforme o tipo de remessa informado.
-     * @param tipoRemessa Tipo de remessa (ORIGINARIO/RECURSAL).
-     * @return Array de classes.
-     */
-    public listarClassesPorTipoRemessa(tipoRemessa: string) : IPromise<Classe[]> {
-        return this.$http.get(this.properties.url + ":" + this.properties.port 
-            + RemessaService.urlServicoRemessa + "/classes/tipos-remessa/" + tipoRemessa)
-                .then((response: IHttpPromiseCallbackArg<Classe[]>) => { 
-                    return response.data; 
-                });
-    }
-    
     /*
      * Consulta uma remessa de acordo com o nº de protocolo informado.
      * @param protocoloId Nº do protocolo de recebimento da remessa.

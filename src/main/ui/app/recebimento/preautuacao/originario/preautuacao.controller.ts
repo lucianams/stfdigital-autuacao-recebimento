@@ -35,7 +35,7 @@ export class PreautuacaoController {
 	 * @return Array de objetos Preferencia.
 	 */
 	public carregarPreferencias(): void {
-		 this.cmdPreautuar.classeId = this.classe.id;
+		 this.cmdPreautuar.classeId = this.classe.sigla;
 		 this.preferencias = this.classe.preferencias;
 	}
 	

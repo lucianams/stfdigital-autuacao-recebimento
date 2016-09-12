@@ -6,16 +6,21 @@ import {Classe, Preferencia} from "./model";
 
 export class ClasseService {
 
-    private static apiRemessa: string = '/recebimento/api/remessas';
+    private static apiClasse: string = '/recebimento/api/classes';
 
     /** @ngInject **/
     constructor(private $http: IHttpService, private properties) { }
 
-    public listar(tipoRemessa: string) : IPromise<Classe[]> {
-        return this.$http.get(this.properties.url + ":" + this.properties.port 
-            + ClasseService.apiRemessa + "/classes/tipos-remessa/" + tipoRemessa)
-                .then((response: IHttpPromiseCallbackArg<Classe[]>) => { 
-                    return response.data; 
+    public listar(tipoRemessa?: string) : IPromise<Classe[]> {
+        let config: ng.IRequestShortcutConfig = { };
+        if (tipoRemessa) { 
+            config.params = { tipoRemessa : tipoRemessa };
+        }
+        config.cache = true;
+
+        return this.$http.get(this.properties.apiUrl + ClasseService.apiClasse, config)
+                .then((response: IHttpPromiseCallbackArg<Classe[]>) => {
+                    return response.data;
                 });
     }
 }

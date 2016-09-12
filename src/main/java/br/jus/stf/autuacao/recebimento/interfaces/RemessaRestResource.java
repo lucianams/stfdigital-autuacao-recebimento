@@ -23,9 +23,6 @@ import br.jus.stf.autuacao.recebimento.application.commands.PrepararOficioParaDe
 import br.jus.stf.autuacao.recebimento.application.commands.RegistrarRemessaCommand;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
-import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePeticionavelRepository;
-import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDto;
-import br.jus.stf.autuacao.recebimento.interfaces.dto.ClasseDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.DevolucaoDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.FormaRecebimentoDto;
@@ -33,7 +30,6 @@ import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDto;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.RemessaDtoAssembler;
 import br.jus.stf.autuacao.recebimento.interfaces.dto.SigiloDto;
 import br.jus.stf.core.shared.processo.Sigilo;
-import br.jus.stf.core.shared.processo.TipoProcesso;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
@@ -55,12 +51,6 @@ public class RemessaRestResource {
 	
 	@Autowired
 	private RemessaDtoAssembler remessaDtoAssembler;
-	
-	@Autowired
-	private ClassePeticionavelRepository classePeticionavelRepository;
-	
-	@Autowired
-	private ClasseDtoAssembler classeDtoAssembler;
 	
 	@Autowired
 	private DevolucaoDtoAssembler devolucaoDtoAssembler;
@@ -177,28 +167,6 @@ public class RemessaRestResource {
 	@RequestMapping(value="/sigilos", method = RequestMethod.GET)
     public List<SigiloDto> consultarSigilos(){
     	return Arrays.asList(Sigilo.values()).stream().map(sigilo -> new SigiloDto(sigilo.toString(), sigilo.descricao())).collect(Collectors.toList());
-    }
-	
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(value="/classes", method = RequestMethod.GET)
-    public List<ClasseDto> listarClasses(){
-		return classePeticionavelRepository.findAll().stream().map(classeDtoAssembler::toDto)
-				.collect(Collectors.toList());
-    }
-	
-	/**
-	 * @param tipoRemessa
-	 * @return
-	 */
-	@RequestMapping(value="/classes/tipos-remessa/{tipoRemessa}", method = RequestMethod.GET)
-    public List<ClasseDto> consultarClassesPorTipoRemessa(@PathVariable("tipoRemessa") String tipoRemessa){
-    	TipoProcesso tipoProcesso = TipoProcesso.valueOf(tipoRemessa); 
-		
-    	return classePeticionavelRepository.findByTipo(tipoProcesso).stream().map(classeDtoAssembler::toDto)
-				.collect(Collectors.toList());
     }
 
     /**

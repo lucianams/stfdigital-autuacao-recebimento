@@ -1,77 +1,37 @@
 export class Preferencia {
-    public id: number;
-    public nome: string;
-    
-    constructor(id: number, nome: string){
-        this.id = id;
-        this.nome = nome;
-    }
+
+    constructor(public id: number, public nome: string) { }
 }
 
 export class Classe {
-	public id: string;
-    public nome: string;
-    public preferencias: Array<Preferencia>;
     
-    constructor(id: string, nome: string, preferencias: Array<Preferencia>) {
-        this.id = id;
-        this.nome = nome;
-        this.preferencias = preferencias;
-    }
+    constructor(public sigla: string, public nome: string, public preferencias: Array<Preferencia>) { }
 }
 
 export class Remessa {
-    public protocolo: number;
-	public classe: string;
-    public qtdVolumes: number;
-    public qtdApensos: number;
-    public formaRecebimento: string;
-    public numeroSedex: string;
-    public sigilo: string;
-    
-    constructor (protocolo: number, classe: string, qtdVolumes: number, qtdApensos: number, formaRecebimento: string, numeroSedex: string, sigilo: string){
-        this.classe = classe;
-        this.qtdVolumes = qtdVolumes;
-        this.qtdApensos = qtdApensos;
-        this.formaRecebimento = formaRecebimento;
-        this.numeroSedex = numeroSedex;
-        this.protocolo = protocolo;
-        this.sigilo = sigilo;
-    }
+
+    constructor (public protocolo: number, public classe: string, public qtdVolumes: number,
+            public qtdApensos: number, public formaRecebimento: string, public numeroSedex: string,
+            public sigilo: string) { }
 }
 
 export class Processo {
-    public processoId: number;
-    public remessa: Remessa;
-    	
-	constructor (processoId: number, remessa: Remessa) {
-        this.processoId = processoId;
-        this.remessa = remessa;
-    }
+
+	constructor (public processoId: number, public remessa: Remessa) { }
 }
 
 export class Sigilo {
-	public nome : string;
-	public descricao : string;
-    
-	constructor (nome: string, descricao: string){
-		this.nome = nome;
-		this.descricao = descricao;
-	}
+	
+	constructor (public nome: string, public descricao: string) { }
 }
 
 export class TipoProcesso {
-    public id: string;
-    public nome: string;
-    
-    constructor(id: string, nome: string){
-        this.id = id;
-        this.nome = nome;
-    }
+
+    constructor(public id: string, public nome: string) { }
 }
 
 export class TipoDocumento {
-	constructor(public id: number, public descricao: string) {}
+	constructor(public id: number, public descricao: string) { }
 }
 
 export interface Modelo {

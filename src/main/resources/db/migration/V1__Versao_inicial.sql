@@ -9,3 +9,5 @@ alter table recebimento.remessa add constraint ck_reme_tip_forma_recebimento che
 create table recebimento.evento (seq_evento number not null, nom_evento varchar2(100) not null, dat_criacao date not null, bin_detalhe clob not null, tip_status smallint not null, constraint pk_evento primary key (seq_evento));
 
 create table recebimento.remessa_evento (seq_protocolo number not null, seq_evento number not null, constraint pk_remessa_evento primary key (seq_protocolo, seq_evento));
+alter table recebimento.remessa_evento add constraint fk_remessa_reev foreign key (seq_protocolo) references recebimento.remessa(seq_protocolo);
+alter table recebimento.remessa_evento add constraint fk_evento_reev foreign key (seq_evento) references recebimento.evento(seq_evento);

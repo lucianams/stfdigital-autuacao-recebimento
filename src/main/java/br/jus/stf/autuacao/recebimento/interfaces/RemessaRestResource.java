@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wordnik.swagger.annotations.ApiOperation;
+
 import br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService;
 import br.jus.stf.autuacao.recebimento.application.commands.AssinarOficioParaDevolucaoCommand;
 import br.jus.stf.autuacao.recebimento.application.commands.DevolverRemessaCommand;
@@ -33,6 +35,8 @@ import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
+ * Serviços Rest de Remessas.
+ * 
  * @author Rodrigo Barreiros
  * 
  * @since 1.0.0
@@ -41,28 +45,31 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 @RestController
 @RequestMapping("/api/remessas")
 public class RemessaRestResource {
-    
+
     private static final String REMESSA_INVALIDA_PATTERN = "Remessa Inválida: %S";
-	@Autowired
-    private RecebimentoApplicationService recebimentoApplicationService; 
-	
-	@Autowired 
-	private RemessaRepository remessaRepository;
-	
-	@Autowired
-	private RemessaDtoAssembler remessaDtoAssembler;
-	
-	@Autowired
-	private DevolucaoDtoAssembler devolucaoDtoAssembler;
-    
-	/**
-	 * @return
-	 */
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<RemessaDto> listar() {
-		return remessaRepository.findAll().stream().map(remessaDtoAssembler::toDto).collect(Collectors.toList());
-	}
-	
+
+    @Autowired
+    private RecebimentoApplicationService recebimentoApplicationService;
+
+    @Autowired
+    private RemessaRepository remessaRepository;
+
+    @Autowired
+    private RemessaDtoAssembler remessaDtoAssembler;
+
+    @Autowired
+    private DevolucaoDtoAssembler devolucaoDtoAssembler;
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<RemessaDto> listar() {
+        return remessaRepository.findAll().stream()
+                .map(remessaDtoAssembler::toDto)
+                .collect(Collectors.toList());
+    }
+
     /**
      * @param command
      * @param binding
@@ -72,19 +79,18 @@ public class RemessaRestResource {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
-    
+
     /**
      * @param id
      * @return
      */
-    @RequestMapping(value="/{protocoloId}", method = RequestMethod.GET)
-    public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id){
-    	return  remessaDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
+    @RequestMapping(value = "/{protocoloId}", method = RequestMethod.GET)
+    public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id) {
+        return remessaDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
-    
 
     /**
      * @param command
@@ -95,10 +101,10 @@ public class RemessaRestResource {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
-    
+
     /**
      * @param command
      * @param binding
@@ -108,10 +114,10 @@ public class RemessaRestResource {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
-    
+
     /**
      * @param command
      * @param binding
@@ -121,7 +127,7 @@ public class RemessaRestResource {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
 
@@ -134,7 +140,7 @@ public class RemessaRestResource {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
 
@@ -143,43 +149,47 @@ public class RemessaRestResource {
      * @param binding
      */
     @RequestMapping(value = "/devolucao-assinatura", method = RequestMethod.POST)
-    public void assinarOficio(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command, BindingResult binding) {
+    @ApiOperation(value = "Realiza a assinatura do ofício de devolução de uma remessa")
+    public void assinarOficio(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command,
+            BindingResult binding) {
         if (binding.hasErrors()) {
             throw new IllegalArgumentException(message(binding));
         }
-        
+
         recebimentoApplicationService.handle(command);
     }
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(value="/formas-recebimento", method = RequestMethod.GET)
-    public List<FormaRecebimentoDto> consultarFormasRecebimento(){
-    	return Arrays.asList(FormaRecebimento.values()).stream()
-    			.map(forma -> new FormaRecebimentoDto(forma.name(), forma.descricao(), forma.exigeNumeracao()))
-    			.collect(Collectors.toList());
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/formas-recebimento", method = RequestMethod.GET)
+    public List<FormaRecebimentoDto> consultarFormasRecebimento() {
+        return Arrays.asList(FormaRecebimento.values()).stream()
+                .map(forma -> new FormaRecebimentoDto(forma.name(), forma.descricao(), forma.exigeNumeracao()))
+                .collect(Collectors.toList());
     }
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(value="/sigilos", method = RequestMethod.GET)
-    public List<SigiloDto> consultarSigilos(){
-    	return Arrays.asList(Sigilo.values()).stream().map(sigilo -> new SigiloDto(sigilo.toString(), sigilo.descricao())).collect(Collectors.toList());
+
+    /**
+     * @return
+     */
+    @RequestMapping(value = "/sigilos", method = RequestMethod.GET)
+    public List<SigiloDto> consultarSigilos() {
+        return Arrays.asList(Sigilo.values()).stream()
+                .map(sigilo -> new SigiloDto(sigilo.toString(), sigilo.descricao()))
+                .collect(Collectors.toList());
     }
 
     /**
      * @param id
      * @return
      */
-    @RequestMapping(value="/{protocoloId}/devolucao", method = RequestMethod.GET)
+    @RequestMapping(value = "/{protocoloId}/devolucao", method = RequestMethod.GET)
     public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
-    	return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
+        return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
-	
-	private String message(BindingResult binding) {
-		return String.format(REMESSA_INVALIDA_PATTERN, binding.getAllErrors());
-	}
+
+    private String message(BindingResult binding) {
+        return String.format(REMESSA_INVALIDA_PATTERN, binding.getAllErrors());
+    }
 
 }

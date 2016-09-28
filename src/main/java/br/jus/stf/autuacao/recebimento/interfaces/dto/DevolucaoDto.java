@@ -1,19 +1,29 @@
 package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /**
  * @author Tomas Godoi
  * 
  * @since 22.06.2016
  */
+@ApiModel("Representa uma devolução.")
 public class DevolucaoDto {
 
+	@ApiModelProperty("O id da remessa.")
 	private Long remessaProtocoloId;
 	
+	@ApiModelProperty("Número da remessa.")
 	private Long remessaNumero;
+	
+	@ApiModelProperty("Ano da remessa.")
 	private Integer remessaAno;
 
+	@ApiModelProperty("Modelo de devolução.")
 	private ModeloDevolucaoDto modeloDevolucao;
 
+	@ApiModelProperty("O id do texto.")
 	private Long textoId;
 
 	/**
@@ -35,40 +45,20 @@ public class DevolucaoDto {
 		return remessaProtocoloId;
 	}
 
-	public void setRemessaProtocoloId(Long remessaProtocoloId) {
-		this.remessaProtocoloId = remessaProtocoloId;
-	}
-
 	public Long getRemessaNumero() {
 		return remessaNumero;
-	}
-
-	public void setRemessaNumero(Long remessaNumero) {
-		this.remessaNumero = remessaNumero;
 	}
 
 	public Integer getRemessaAno() {
 		return remessaAno;
 	}
 
-	public void setRemessaAno(Integer remessaAno) {
-		this.remessaAno = remessaAno;
-	}
-
 	public ModeloDevolucaoDto getModeloDevolucao() {
 		return modeloDevolucao;
 	}
 
-	public void setModeloDevolucao(ModeloDevolucaoDto modeloDevolucao) {
-		this.modeloDevolucao = modeloDevolucao;
-	}
-
 	public Long getTextoId() {
 		return textoId;
-	}
-
-	public void setTextoId(Long textoId) {
-		this.textoId = textoId;
 	}
 
 }

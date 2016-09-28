@@ -6,48 +6,41 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /**
  * @author lucas.rodrigues
  *
  */
+@ApiModel("Command que realiza a ação de preautuação de uma remessa recursal.")
 public class PreautuarRecursalCommand {
 
+	@ApiModelProperty(value = "Protocolo da remessa.", required = true)
 	@NotNull
 	private Long protocoloId;
 	
+	@ApiModelProperty(value = "Classe da remessa.", required = true)
 	@NotBlank
 	private String classeId;
 	
+	@ApiModelProperty(value = "Grau de sigilo da remessa.", required = true)
 	@NotBlank
 	private String sigilo;
 	
+	@ApiModelProperty(value = "Lista de preferências da remessa.")
 	private Set<Long> preferencias;
     
+	@ApiModelProperty(value = "Número do processo na origem.", required = true)
     @NotBlank
 	private String numeroProcessoOrigem;
 	
+	@ApiModelProperty(value = "Número único do processo.", required = true)
 	@NotBlank
 	private String numeroUnicoProcesso;
 	
 	public PreautuarRecursalCommand() {
-		// Construtor default
-	}
-	
-    /**
-     * @param protocoloId
-     * @param classeId
-     * @param sigilo
-     * @param preferencias
-     * @param numeroProcessoOrigem
-     * @param numeroUnicoProcesso
-     */
-    public PreautuarRecursalCommand(Long protocoloId, String classeId, String sigilo, Set<Long> preferencias, String numeroProcessoOrigem, String numeroUnicoProcesso) {
-		this.protocoloId = protocoloId;
-		this.classeId = classeId;
-		this.sigilo = sigilo;
-		this.preferencias = preferencias;
-		this.numeroProcessoOrigem = numeroProcessoOrigem;
-		this.numeroUnicoProcesso = numeroUnicoProcesso;
+		// Construtor default.
 	}
     
     public Long getProtocoloId() {

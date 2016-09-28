@@ -28,12 +28,7 @@ public class AssinarOficioParaDevolucaoCommand {
     private String documentoTemporarioId;
 
     public AssinarOficioParaDevolucaoCommand() {
-
-    }
-
-    public AssinarOficioParaDevolucaoCommand(Long protocoloId, String documentoTemporarioId) {
-        this.protocoloId = protocoloId;
-        this.documentoTemporarioId = documentoTemporarioId;
+    	// Construtor default.
     }
 
     public Long getProtocoloId() {

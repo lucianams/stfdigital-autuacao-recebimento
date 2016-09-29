@@ -13,10 +13,21 @@ import br.jus.stf.core.shared.documento.ModeloDocumentoId;
  */
 public interface ModeloDevolucaoRepository {
 
+	/**
+	 * @return
+	 */
 	List<ModeloDevolucao> findAll();
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	ModeloDevolucao findOne(ModeloDocumentoId id);
 	
+	/**
+	 * @param motivo
+	 * @return
+	 */
 	List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo);
 
 }

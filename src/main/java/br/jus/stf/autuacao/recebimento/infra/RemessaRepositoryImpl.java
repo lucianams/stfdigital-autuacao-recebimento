@@ -44,7 +44,7 @@ public class RemessaRepositoryImpl extends SimpleJpaRepository<Remessa, Protocol
 
 		query.setParameter("id", id);
 		
-		return query.getSingleResult();
+		return query.getResultList().stream().findFirst().orElse(null);
 	}
 	
 	@Override

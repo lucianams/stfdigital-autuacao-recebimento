@@ -49,7 +49,7 @@ public class ClassePeticionavel extends EntitySupport<ClassePeticionavel, Classe
     @Enumerated(EnumType.STRING)
     private TipoProcesso tipo;
 	
-	public ClassePeticionavel() {
+	ClassePeticionavel() {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	

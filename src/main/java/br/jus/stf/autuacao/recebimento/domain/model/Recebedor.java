@@ -24,10 +24,14 @@ public class Recebedor extends ValueObjectSupport<Recebedor> {
 	@Transient
 	private PessoaId pessoa;
 	
-	public Recebedor() {
+	Recebedor() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param login
+	 * @param pessoa
+	 */
 	public Recebedor(String login, PessoaId pessoa) {
 		Validate.notBlank(login, "Login requerido.");
 		Validate.notNull(pessoa, "Pessoa requerida.");
@@ -36,10 +40,16 @@ public class Recebedor extends ValueObjectSupport<Recebedor> {
 		this.pessoa = pessoa;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String login() {
 		return login;
 	}
 	
+	/**
+	 * @return
+	 */
 	public PessoaId pessoa() {
 		return pessoa;
 	}

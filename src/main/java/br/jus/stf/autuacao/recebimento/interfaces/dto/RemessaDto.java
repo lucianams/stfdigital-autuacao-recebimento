@@ -1,25 +1,37 @@
 package br.jus.stf.autuacao.recebimento.interfaces.dto;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
+
 /**
  * @author viniciusk
  *
  */
+@ApiModel("Representa uma remessa.")
 public class RemessaDto {
 
+	@ApiModelProperty("O id do protocolo.")
 	private Long protocolo;
 
+	@ApiModelProperty("Classe da remessa.")
 	private String classe;
 
+	@ApiModelProperty("Quantidade de volumes.")
 	private int qtdVolumes;
 
+	@ApiModelProperty("Quantidade de apensos.")
 	private int qtdApensos;
 
+	@ApiModelProperty("Forma de recebimento.")
 	private String formaRecebimento;
 
+	@ApiModelProperty("Número do sedex.")
 	private String numeroSedex;
 	
+	@ApiModelProperty("Grau de sigilo da remessa.")
 	private String sigilo;
 	
+	@ApiModelProperty("Número da remessa.")
 	private String numero;
 
 	/**
@@ -60,56 +72,28 @@ public class RemessaDto {
 		return protocolo;
 	}
 
-	public void setProtocolo(Long protocolo) {
-		this.protocolo = protocolo;
-	}
-
 	public String getClasse() {
 		return classe;
-	}
-
-	public void setClasse(String classe) {
-		this.classe = classe;
 	}
 
 	public int getQtdVolumes() {
 		return qtdVolumes;
 	}
 
-	public void setQtdVolumes(int qtdVolumes) {
-		this.qtdVolumes = qtdVolumes;
-	}
-
 	public int getQtdApensos() {
 		return qtdApensos;
-	}
-
-	public void setQtdApensos(int qtdApensos) {
-		this.qtdApensos = qtdApensos;
 	}
 
 	public String getFormaRecebimento() {
 		return formaRecebimento;
 	}
 
-	public void setFormaRecebimento(String formaRecebimento) {
-		this.formaRecebimento = formaRecebimento;
-	}
-
 	public String getNumeroSedex() {
 		return numeroSedex;
 	}
 
-	public void setNumeroSedex(String numeroSedex) {
-		this.numeroSedex = numeroSedex;
-	}
-
 	public String getSigilo() {
 		return sigilo;
-	}
-
-	public void setSigilo(String sigilo) {
-		this.sigilo = sigilo;
 	}
 
 	public String getNumero() {

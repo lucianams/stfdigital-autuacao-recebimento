@@ -42,10 +42,14 @@ public class Devolucao extends ValueObjectSupport<Devolucao> {
 	@Embedded
 	private TextoId texto;
 	
-	public Devolucao() {
+	Devolucao() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param remessa
+	 * @param motivacao
+	 */
 	public Devolucao(ProtocoloId remessa, String motivacao) {
 		Validate.notNull(remessa, "Remessa requerida.");
 		Validate.notBlank(motivacao, "Motivação requerida.");
@@ -54,6 +58,13 @@ public class Devolucao extends ValueObjectSupport<Devolucao> {
 		this.motivacao = motivacao;
 	}
 	
+	/**
+	 * @param remessa
+	 * @param motivacao
+	 * @param motivo
+	 * @param modelo
+	 * @param texto
+	 */
 	public Devolucao(ProtocoloId remessa, String motivacao, MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto) {
 		this(remessa, motivacao);
 		
@@ -68,22 +79,37 @@ public class Devolucao extends ValueObjectSupport<Devolucao> {
 		this.texto = texto;
 	}
 	
+	/**
+	 * @return
+	 */
 	public ProtocoloId remessa() {
 		return remessa;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String motivacao() {
 		return motivacao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public ModeloDevolucao modelo() {
 		return modelo;
 	}
 	
+	/**
+	 * @return
+	 */
 	public MotivoDevolucao motivo() {
 		return motivo;
 	}
 	
+	/**
+	 * @return
+	 */
 	public TextoId texto() {
 		return texto;
 	}

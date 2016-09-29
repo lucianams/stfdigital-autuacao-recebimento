@@ -183,15 +183,15 @@ Insert into RECEBIMENTO.CLASSE_PREFERENCIA (SIG_CLASSE,SEQ_PREFERENCIA) values (
 Insert into RECEBIMENTO.CLASSE_PREFERENCIA (SIG_CLASSE,SEQ_PREFERENCIA) values ('RvC','15');
 
 -- SELECT seq_motivo_devolucao, dsc_motivo_devolucao FROM stf.motivo_devolucao;
-Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (1,'Faltam Peças');
-Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (2,'AI intempestivo');
-Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (3,'RE intempestivo');
+Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (recebimento.seq_motivo_devolucao.nextval,'Faltam Peças');
+Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (recebimento.seq_motivo_devolucao.currval, 8);
+Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (recebimento.seq_motivo_devolucao.nextval,'AI intempestivo');
+Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (recebimento.seq_motivo_devolucao.currval, 8);
+Insert into RECEBIMENTO.MOTIVO_DEVOLUCAO (SEQ_MOTIVO_DEVOLUCAO,DSC_MOTIVO_DEVOLUCAO) values (recebimento.seq_motivo_devolucao.nextval,'RE intempestivo');
+Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (recebimento.seq_motivo_devolucao.currval, 8);
 
 Insert into RECEBIMENTO.MODELO_DEVOLUCAO (SEQ_MODELO_DOCUMENTO,NOM_MODELO_DOCUMENTO,SEQ_TIPO_DOCUMENTO,SEQ_DOCUMENTO_TEMPLATE) values (1,'Ofício de devolução de remessa',8,2);
 
-Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (1, 8);
-Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (2, 8);
-Insert into RECEBIMENTO.MOTIVO_TIPO_DOCUMENTO (SEQ_MOTIVO_DEVOLUCAO, SEQ_TIPO_DOCUMENTO) values (3, 8);
 /*
 Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (1, 'RE' , 1, 1, 'SEDEX', '123456789BR', 'RECEBIDA', 1, 2016, 'KAKAROTO', SYSDATE, 'RECURSAL', 'PUBLICO');
 Insert into RECEBIMENTO.REMESSA(seq_protocolo, sig_classe, qtd_volume, qtd_apenso, tip_forma_recebimento, num_sedex, tip_status, num_remessa, num_ano, sig_recebedor, dat_recebimento, tip_processo, tip_sigilo) values (2, 'ADI', 2, 1, 'SEDEX', '444555667BR', 'RECEBIDA', 2, 2016, 'JASPION', SYSDATE, 'RECURSAL', 'PUBLICO');

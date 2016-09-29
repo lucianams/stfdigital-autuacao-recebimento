@@ -45,6 +45,7 @@ public class DevolucaoUnitTests {
 		remessa.iniciarDevolucao(motivacao, Status.DEVOLUCAO);
 		
 		assertNotNull("Devolução não pode ser nula.", remessa.devolucao());
+		assertEquals("Identidade da remessa e da devolução devem ser iguais.", remessa.identity(), remessa.devolucao().remessa());
 		assertEquals("Motivação deve ser igual a Remessa inválida.", motivacao, remessa.devolucao().motivacao());
 	}
 	

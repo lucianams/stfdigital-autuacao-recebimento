@@ -30,7 +30,7 @@ public class Preferencia extends EntitySupport<Preferencia, PreferenciaId> {
 	@Column(name = "NOM_PREFERENCIA")
 	private String nome;
 	
-	public Preferencia() {
+	Preferencia() {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	

@@ -22,10 +22,16 @@ public enum FormaRecebimento {
 		this.exigeNumeracao = exigeNumeracao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String descricao() {
 		return descricao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public boolean exigeNumeracao() {
 		return exigeNumeracao;
 	}

@@ -46,7 +46,7 @@ public class MotivoDevolucao extends EntitySupport<MotivoDevolucao, Long> {
 		joinColumns = @JoinColumn(name = "SEQ_MOTIVO_DEVOLUCAO", nullable = false))
 	private Set<TipoDocumentoId> tiposDocumento = new HashSet<>(0);
 	
-	public MotivoDevolucao() {
+	MotivoDevolucao() {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	

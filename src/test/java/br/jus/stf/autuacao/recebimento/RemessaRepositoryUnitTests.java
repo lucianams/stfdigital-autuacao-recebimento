@@ -3,7 +3,10 @@ package br.jus.stf.autuacao.recebimento;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
@@ -31,6 +34,7 @@ import br.jus.stf.autuacao.recebimento.domain.model.RemessaRecursal;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaRepository;
 import br.jus.stf.autuacao.recebimento.domain.model.Status;
 import br.jus.stf.autuacao.recebimento.infra.RemessaRepositoryImpl;
+import br.jus.stf.core.shared.documento.TipoDocumentoId;
 import br.jus.stf.core.shared.identidade.PessoaId;
 import br.jus.stf.core.shared.processo.Sigilo;
 import br.jus.stf.core.shared.protocolo.Numero;
@@ -113,6 +117,21 @@ public class RemessaRepositoryUnitTests {
 		assertNotNull("Motivo salvo não pode ser nulo.", motivoSalvo);
 		assertEquals(String.format("Descrição deve ser igual a %s.", motivo.descricao()), motivo.descricao(),
 				motivoSalvo.descricao());
+	}
+	
+	@Test
+	public void atualizarMotivoDevolucao() {
+		MotivoDevolucao motivo = motivoDevolucao();
+		
+		motivo.atribuirTiposDocumento(new HashSet<TipoDocumentoId>(Arrays.asList(new TipoDocumentoId(1L))));
+		motivo = repository.saveMotivoDevolucao(motivo);
+		
+		assertEquals("O motivo deve ter um tipo de documento associado.", 1, motivo.tiposDocumento().size());
+		
+		motivo.removerTiposDocumento(new HashSet<TipoDocumentoId>(Arrays.asList(new TipoDocumentoId(1L))));
+		motivo = repository.saveMotivoDevolucao(motivo);
+		
+		assertTrue("O motivo não deve ter tipo de documento associado.", motivo.tiposDocumento().isEmpty());
 	}
 	
 	@Test

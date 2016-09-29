@@ -38,15 +38,17 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
- * Testes unitários para devolução de remessas.
+ * Testes unitários para repositório de remessas.
  * 
  * @author Rafael Alencar
  * 
  * @since 1.0.0
- * @since 30.06.2016
+ * @since 28.09.2016
  */
-@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.discovery.enabled:false", "spring.cloud.config.enabled:false" }, classes = { ApplicationContextInitializer.class })
-@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class,  SqlScriptsTestExecutionListener.class })
+@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.discovery.enabled:false",
+		"spring.cloud.config.enabled:false" }, classes = { ApplicationContextInitializer.class })
+@TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class,
+		SqlScriptsTestExecutionListener.class })
 @RunWith(SpringRunner.class)
 @DataJpaTest(showSql = false)
 @ActiveProfiles("test")
@@ -60,7 +62,7 @@ public class RemessaRepositoryUnitTests {
 	private Long protocoloId = 1L;
 	
 	@Before
-	public void config() {
+	public void setUp() {
 		repository = new RemessaRepositoryImpl(entityManager.getEntityManager());
 	}
 	

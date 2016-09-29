@@ -17,7 +17,7 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 import br.jus.stf.core.shared.protocolo.ProtocoloId;
 
 /**
- * Valida a API de número de protocolo.
+ * Valida o Adapter de número de protocolo.
  * 
  * @author Rafael Alencar
  * 

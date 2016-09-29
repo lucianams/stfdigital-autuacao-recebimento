@@ -57,12 +57,4 @@ public class RemessaFactoryUnitTests {
 		assertEquals("Forma de recebimento deve ser BALCAO.", FormaRecebimento.BALCAO, remessa.formaRecebimento());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void criaProcessoRecursalPorEnvioValido() {
-		new RemessaFactory().novaRemessa(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)), 1, 0,
-				FormaRecebimento.BALCAO, null, Sigilo.PUBLICO, TipoProcesso.valueOf("INVALIDO"),
-				new Recebedor("RECEBEDOR", new PessoaId(1L)),
-				br.jus.stf.autuacao.recebimento.domain.model.Status.PREAUTUACAO);
-	}
-	
 }

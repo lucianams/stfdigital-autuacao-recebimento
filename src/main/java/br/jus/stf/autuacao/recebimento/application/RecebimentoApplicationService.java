@@ -1,6 +1,5 @@
 package br.jus.stf.autuacao.recebimento.application;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -107,11 +106,10 @@ public class RecebimentoApplicationService {
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
         Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
-		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
-				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
-						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
+		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias()).map(prefs -> prefs.stream()
+				.map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref))).collect(Collectors.toSet()))
 				.orElse(null);
-            
+
         remessa.preautuar(classe, preferencias, sigilo, status);
         remessaRepository.save(remessa);
     }
@@ -125,9 +123,8 @@ public class RecebimentoApplicationService {
         Status status = statusAdapter.nextStatus(remessa.identity(), "AUTUAR");
         Sigilo sigilo = Sigilo.valueOf(command.getSigilo());
         ClassePeticionavel classe = classeRepository.findOne(new ClasseId(command.getClasseId()));
-		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias())
-				.map(prefs -> prefs.stream().map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref)))
-						.collect(Collectors.toCollection(() -> new HashSet<>(0))))
+		Set<Preferencia> preferencias = Optional.ofNullable(command.getPreferencias()).map(prefs -> prefs.stream()
+				.map(pref -> preferenciaRepository.findOne(new PreferenciaId(pref))).collect(Collectors.toSet()))
 				.orElse(null);
             
         remessa.preautuar(classe, preferencias, sigilo, command.getNumeroProcessoOrigem(), command.getNumeroUnicoProcesso(), status);

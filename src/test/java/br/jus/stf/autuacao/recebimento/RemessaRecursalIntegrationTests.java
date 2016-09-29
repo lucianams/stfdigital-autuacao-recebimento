@@ -1,5 +1,6 @@
 package br.jus.stf.autuacao.recebimento;
 
+import static com.github.jsonj.tools.JsonBuilder.array;
 import static com.github.jsonj.tools.JsonBuilder.field;
 import static com.github.jsonj.tools.JsonBuilder.object;
 import static org.mockito.BDDMockito.given;
@@ -83,6 +84,7 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
 			field("classeId", "RE"),
 			field("numeroProcessoOrigem", "RE-100"),
 			field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
+			field("preferencias", array(1)),
 			field("sigilo", "PUBLICO")
 		);
 

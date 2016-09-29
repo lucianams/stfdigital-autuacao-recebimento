@@ -21,7 +21,7 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @DiscriminatorValue("ORIGINARIO")
 public class RemessaOriginario extends Remessa {
 
-    public RemessaOriginario() {
+    RemessaOriginario() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     

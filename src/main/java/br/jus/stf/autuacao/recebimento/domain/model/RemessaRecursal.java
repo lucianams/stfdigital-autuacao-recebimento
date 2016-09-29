@@ -30,7 +30,7 @@ public class RemessaRecursal extends Remessa {
 	@Column(name = "NUM_UNICO_PROCESSO")
 	private String numeroUnicoProcesso;
 	
-	public RemessaRecursal() {
+	RemessaRecursal() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     

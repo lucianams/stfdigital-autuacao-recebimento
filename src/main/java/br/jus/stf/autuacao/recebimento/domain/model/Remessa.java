@@ -114,7 +114,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 		inverseJoinColumns = @JoinColumn(name = "SEQ_EVENTO", nullable = false))
     private Set<Evento> eventos = new TreeSet<>(comparing(Evento::criacao));
     
-    public Remessa() {
+    Remessa() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
     }
     

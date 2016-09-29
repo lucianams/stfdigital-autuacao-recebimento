@@ -38,10 +38,16 @@ public class ModeloDevolucao extends EntitySupport<ModeloDevolucao, ModeloDocume
 	@AttributeOverride(name = "id", column = @Column(name = "SEQ_DOCUMENTO_TEMPLATE", nullable = false))
 	private DocumentoId template;
 	
-	public ModeloDevolucao() {
+	ModeloDevolucao() {
     	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param id
+	 * @param nome
+	 * @param tipo
+	 * @param template
+	 */
 	public ModeloDevolucao(ModeloDocumentoId id, String nome, TipoDocumentoId tipo, DocumentoId template) {
 		Validate.notNull(id, "Id requerido.");
 		Validate.notBlank(nome, "Nome requerido.");
@@ -54,21 +60,30 @@ public class ModeloDevolucao extends EntitySupport<ModeloDevolucao, ModeloDocume
 		this.template = template;
 	}
 	
-	@Override
-	public ModeloDocumentoId identity() {
-		return id;
-	}
-	
+	/**
+	 * @return
+	 */
 	public String nome() {
 		return nome;
 	}
 	
+	/**
+	 * @return
+	 */
 	public TipoDocumentoId tipo() {
 		return tipo;
 	}
 	
+	/**
+	 * @return
+	 */
 	public DocumentoId template() {
 		return template;
+	}
+	
+	@Override
+	public ModeloDocumentoId identity() {
+		return id;
 	}
 	
 	@Override

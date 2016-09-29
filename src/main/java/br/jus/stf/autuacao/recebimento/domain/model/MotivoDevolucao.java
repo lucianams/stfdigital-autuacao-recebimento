@@ -44,32 +44,48 @@ public class MotivoDevolucao extends EntitySupport<MotivoDevolucao, Long> {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "MOTIVO_TIPO_DOCUMENTO", schema = "RECEBIMENTO",
 		joinColumns = @JoinColumn(name = "SEQ_MOTIVO_DEVOLUCAO", nullable = false))
-	private Set<TipoDocumentoId> tiposDocumento = new HashSet<TipoDocumentoId>(0);
+	private Set<TipoDocumentoId> tiposDocumento = new HashSet<>(0);
 	
 	public MotivoDevolucao() {
 		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
 	}
 	
+	/**
+	 * @param descricao
+	 */
 	public MotivoDevolucao(String descricao) {
 		Validate.notBlank(descricao, "Descrição requerida.");
 		
 		this.descricao = descricao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String descricao() {
 		return descricao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public Set<TipoDocumentoId> tiposDocumento() {
 		return Collections.unmodifiableSet(tiposDocumento);
 	}
 	
+	/**
+	 * @param tiposDocumento
+	 */
 	public void atribuirTiposDocumento(Set<TipoDocumentoId> tiposDocumento) {
 		Validate.notEmpty(tiposDocumento, "Tipos de documento requeridos.");
 		
 		this.tiposDocumento.addAll(tiposDocumento);
 	}
 	
+	/**
+	 * @param tiposDocumento
+	 * @return
+	 */
 	public boolean removerTiposDocumento(Set<TipoDocumentoId> tiposDocumento) {
 		Validate.notEmpty(tiposDocumento, "Tipos de documento requeridos.");
 		

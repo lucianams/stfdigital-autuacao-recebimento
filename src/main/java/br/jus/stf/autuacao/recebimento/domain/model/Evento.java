@@ -45,7 +45,7 @@ public class Evento extends EntitySupport<Evento, Long> {
 	@Column(name = "TIP_STATUS")
 	private Integer status = 1;
 	
-	public Evento() {
+	Evento() {
     	// Usado apenas pelo Jackson durante a conversação de Json para uma nova instância.
 	}
 	
@@ -70,10 +70,16 @@ public class Evento extends EntitySupport<Evento, Long> {
 		return criacao;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String tipo() {
 		return tipo;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String detalhes() {
 		return detalhes;
 	}

@@ -88,7 +88,9 @@ gulp.task('install-shared:unit', function() {
 gulp.task('ts-lint', ['install-typings'], function() {
     return gulp.src(allTypeScript)
     			.pipe($.tslint())
-    			.pipe($.tslint.report('prose'));
+    			.pipe($.tslint.report('prose', {
+                    emitError: false
+                }));
 });
 
 /**
@@ -97,7 +99,9 @@ gulp.task('ts-lint', ['install-typings'], function() {
 gulp.task('ts-lint:e2e', ['install-typings:e2e', 'install-shared:e2e'], function() {
     return gulp.src(allTypeScriptE2E)
     			.pipe($.tslint())
-    			.pipe($.tslint.report('prose'));
+    			.pipe($.tslint.report('prose', {
+                    emitError: false
+                }));
 });
 
 /**
@@ -106,7 +110,9 @@ gulp.task('ts-lint:e2e', ['install-typings:e2e', 'install-shared:e2e'], function
 gulp.task('ts-lint:unit', ['install-typings:unit', 'install-shared:unit'], function() {
     return gulp.src(allTypeScriptUnit)
     			.pipe($.tslint())
-    			.pipe($.tslint.report('prose'));
+    			.pipe($.tslint.report('prose', {
+                    emitError: false
+                }));
 });
 
 gulp.task('generate-definitions', function() {

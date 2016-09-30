@@ -1,0 +1,44 @@
+{
+    "rules": {
+        "member-access": [true, "check-accessor", "check-constructor"],
+        "member-ordering": [true, {"order": ["public-static-field", "public-instance-field", "protected-instance-field", "private-instance-field", "constructor"]}],
+        "no-any": true,
+        "no-internal-module": true,
+        "typedef-whitespace": [
+            true, {
+                "call-signature": "nospace",
+                "index-signature": "nospace",
+                "parameter": "nospace",
+                "property-declaration": "nospace",
+                "variable-declaration": "nospace"
+            }, {
+                "call-signature": "onespace",
+                "index-signature": "onespace",
+                "parameter": "onespace",
+                "property-declaration": "onespace",
+                "variable-declaration": "onespace"
+        }],
+        
+        "curly": true,
+        "no-duplicate-variable": true,
+        "no-switch-case-fall-through": true,
+        "no-unreachable": true,
+        "no-unused-expression": true,
+        "no-use-before-declare": true,
+        "no-var-keyword": true,
+        "triple-equals": true,
+        
+        "indent": [true, "spaces"],
+        "no-consecutive-blank-lines": true,
+        "max-line-length": [true, 120],
+        "no-trailing-whitespace": true,
+        "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+        
+        "align": [true, "statements"],
+        "class-name": true,
+        "quotemark": [true, "double"],
+        "semicolon": [true, "always"],
+        "variable-name": [true, "check-format", "ban-keywords"],
+        "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-module", "check-separator", "check-type"]
+    }
+}

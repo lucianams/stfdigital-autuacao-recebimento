@@ -1,45 +1,65 @@
-import {DevolucaoAssinaturaController, DevolucaoEmAssinatura} from "recebimento/devolucao-assinatura/devolucao-assinatura.controller";
-import {Devolucao, Documento, AssinarOficioParaDevolucaoCommand} from "recebimento/devolucao-assinatura/devolucao-assinatura.service";
+import {DevolucaoAssinaturaController, DevolucaoEmAssinatura} from
+        "recebimento/devolucao-assinatura/devolucao-assinatura.controller";
+import {AssinarOficioParaDevolucaoCommand, Devolucao, Documento} from
+        "recebimento/devolucao-assinatura/devolucao-assinatura.service";
 import {Modelo, TipoDocumento} from "recebimento/services/model";
 
-describe('Teste do controlador devolucao-assinatura.controller', () => {
+describe("Teste do controlador devolucao-assinatura.controller", () => {
+    let $rootScope: ng.IRootScopeService;
+    let $q: ng.IQService;
 
-	let $rootScope: ng.IRootScopeService;
-	let $q: ng.IQService;
-
-	let controller: DevolucaoAssinaturaController;
-	let mockState;
-	let mockDevolucaoAssinaturaService;
-	let mockMessagesService;
+    let controller: DevolucaoAssinaturaController;
+    let mockState;
+    let mockDevolucaoAssinaturaService;
+    let mockMessagesService;
     let mockSignatureService;
-    
+
     let mockSigningManager;
     let mockSigner;
 
     let mockDevolucoes: Devolucao[];
 
-	beforeEach(inject((_$rootScope_: ng.IRootScopeService, _$q_: ng.IQService) => {
-		$rootScope = _$rootScope_;
-		$q = _$q_;
+    beforeEach(inject((_$rootScope_: ng.IRootScopeService, _$q_: ng.IQService) => {
+        $rootScope = _$rootScope_;
+        $q = _$q_;
 
-		mockState = {
-			go : () => {}
-		};
+        mockState = {
+            go : () => {}
+        };
 
-		mockDevolucaoAssinaturaService = {
+        mockDevolucaoAssinaturaService = {
             consultarDocumentoFinalDoTexto: () => {},
             assinarOficioDevolucao: () => {}
-		};
+        };
 
-		mockMessagesService = {
-			error: () => {},
-			success: () => {}
-		};
+        mockMessagesService = {
+            error: () => {},
+            success: () => {}
+        };
 
-        mockDevolucoes = [<Devolucao>{textoId: 1, remessaProtocoloId: 9001, remessaNumero: 123, remessaAno: 2016,
-            modeloDevolucao: <Modelo>{id: 4, documento: 7, nome: "Modelo de devolução", tipoDocumento: new TipoDocumento(1, 'Ofício de devolução')}},
-            <Devolucao>{textoId: 2, remessaProtocoloId: 9002, remessaNumero: 124, remessaAno: 2016,
-            modeloDevolucao: <Modelo>{id: 5, documento: 8, nome: "Modelo de devolução 2", tipoDocumento: new TipoDocumento(2, 'Carta de devolução')}}];
+        mockDevolucoes = [{
+            textoId: 1,
+            remessaProtocoloId: 9001,
+            remessaNumero: 123,
+            remessaAno: 2016,
+            modeloDevolucao: {
+                id: 4,
+                documento: 7,
+                nome: "Modelo de devolução",
+                tipoDocumento: new TipoDocumento(1, "Ofício de devolução")
+            }
+        }, {
+            textoId: 2,
+            remessaProtocoloId: 9002,
+            remessaNumero: 124,
+            remessaAno: 2016,
+            modeloDevolucao: {
+                id: 5,
+                documento: 8,
+                nome: "Modelo de devolução 2",
+                tipoDocumento: new TipoDocumento(2, "Carta de devolução")
+            }
+        }];
 
         mockSigner = {
             onSignerReady: () => {},
@@ -62,26 +82,27 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
             }
         };
 
-		controller = new DevolucaoAssinaturaController(mockState, mockDevolucaoAssinaturaService, mockDevolucoes, mockSignatureService, mockMessagesService);
-	}));
-	
-    describe('Método assinar', () => {
-        it('Deveria chamar mensagem de erro se nenhuma devolução tiver sido selecionada para assinar', () => {
-            spyOn(mockMessagesService, 'error').and.callThrough();
+        controller = new DevolucaoAssinaturaController(mockState, mockDevolucaoAssinaturaService, mockDevolucoes,
+                mockSignatureService, mockMessagesService);
+    }));
+
+    describe("Método assinar", () => {
+        it("Deveria chamar mensagem de erro se nenhuma devolução tiver sido selecionada para assinar", () => {
+            spyOn(mockMessagesService, "error").and.callThrough();
 
             controller.devolucoesParaAssinar = [];
             controller.assinar();
 
-            expect(mockMessagesService.error).toHaveBeenCalledWith('É necessário selecionar pelo menos uma remessa para assinar.');
+            expect(mockMessagesService.error).toHaveBeenCalledWith(
+                    "É necessário selecionar pelo menos uma remessa para assinar.");
         });
 
-        describe('Interação com o mecanismo de assinatura', () => {
-
-            it('Deveria registrar corretamente os callbacks', () => {
-                spyOn(mockSigner, 'start').and.callThrough();
-                spyOn(mockSigner, 'onSignerReady').and.callThrough();
-                spyOn(mockSigner, 'onSigningCompleted').and.callThrough();
-                spyOn(mockSigner, 'onErrorCallback').and.callThrough();
+        describe("Interação com o mecanismo de assinatura", () => {
+            it("Deveria registrar corretamente os callbacks", () => {
+                spyOn(mockSigner, "start").and.callThrough();
+                spyOn(mockSigner, "onSignerReady").and.callThrough();
+                spyOn(mockSigner, "onSigningCompleted").and.callThrough();
+                spyOn(mockSigner, "onErrorCallback").and.callThrough();
 
                 controller.devolucoesParaAssinar = <DevolucaoEmAssinatura[]>controller.devolucoes;
 
@@ -94,20 +115,20 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
                 expect(mockSigner.onErrorCallback).toHaveBeenCalledTimes(2);
             });
 
-            it('Deveria interagir via callback onSignerReady corretamente', () => {
+            it("Deveria interagir via callback onSignerReady corretamente", () => {
                 let callbacks = [];
-                spyOn(mockSigner, 'onSignerReady').and.callFake((cb) => {
+                spyOn(mockSigner, "onSignerReady").and.callFake((cb) => {
                     callbacks.push(cb);
                 });
-                spyOn(mockDevolucaoAssinaturaService, 'consultarDocumentoFinalDoTexto').and.callFake((textoId: number) => {
+                spyOn(mockDevolucaoAssinaturaService, "consultarDocumentoFinalDoTexto").and
+                        .callFake((textoId: number) => {
                     if (textoId === 1) {
                         return $q.when(<Documento>{documentoId: 7, quantidadePaginas: 2, tamanho: 1024});
                     } else if (textoId === 2) {
                         return $q.when(<Documento>{documentoId: 8, quantidadePaginas: 3, tamanho: 1025});
                     }
-                    
                 });
-                spyOn(mockSigner, 'provideExistingDocument').and.callThrough();
+                spyOn(mockSigner, "provideExistingDocument").and.callThrough();
 
                 controller.devolucoesParaAssinar = <DevolucaoEmAssinatura[]>controller.devolucoes;
 
@@ -130,22 +151,22 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
                 expect(mockSigner.provideExistingDocument).toHaveBeenCalledWith(8);
             });
 
-            it('Deveria interagir via callback onSigningCompleted corretamente', () => {
+            it("Deveria interagir via callback onSigningCompleted corretamente", () => {
                 let callbacks = [];
-                spyOn(mockSigner, 'onSigningCompleted').and.callFake((cb) => {
+                spyOn(mockSigner, "onSigningCompleted").and.callFake((cb) => {
                     callbacks.push(cb);
                 });
 
-                spyOn(mockSigner, 'saveSignedDocument').and.callFake(() => {
-                    return $q.when(<app.certification.SignedDocumentDto>{documentId: '1abcd-bef87'});
+                spyOn(mockSigner, "saveSignedDocument").and.callFake(() => {
+                    return $q.when(<app.certification.SignedDocumentDto>{documentId: "1abcd-bef87"});
                 });
 
-                spyOn(mockDevolucaoAssinaturaService, 'assinarOficioDevolucao').and.callFake(() => {
+                spyOn(mockDevolucaoAssinaturaService, "assinarOficioDevolucao").and.callFake(() => {
                     return $q.when();
                 });
 
-                spyOn(mockState, 'go').and.callThrough();
-                spyOn(mockMessagesService, 'success').and.callThrough();
+                spyOn(mockState, "go").and.callThrough();
+                spyOn(mockMessagesService, "success").and.callThrough();
 
                 controller.devolucoesParaAssinar = <DevolucaoEmAssinatura[]>controller.devolucoes;
 
@@ -158,9 +179,9 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
 
                 expect(controller.devolucoesParaAssinar[0].teminou()).toEqual(false);
                 $rootScope.$apply();
-                
+
                 expect(mockDevolucaoAssinaturaService.assinarOficioDevolucao).toHaveBeenCalledWith(
-                    new AssinarOficioParaDevolucaoCommand(9001, '1abcd-bef87')
+                    new AssinarOficioParaDevolucaoCommand(9001, "1abcd-bef87")
                 );
                 expect(controller.devolucoesParaAssinar[0].teminou()).toEqual(true);
 
@@ -169,22 +190,23 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
 
                 expect(controller.devolucoesParaAssinar[1].teminou()).toEqual(false);
                 $rootScope.$apply();
-                
+
                 expect(mockDevolucaoAssinaturaService.assinarOficioDevolucao).toHaveBeenCalledWith(
-                    new AssinarOficioParaDevolucaoCommand(9002, '1abcd-bef87')
+                    new AssinarOficioParaDevolucaoCommand(9002, "1abcd-bef87")
                 );
                 expect(controller.devolucoesParaAssinar[1].teminou()).toEqual(true);
-                expect(mockState.go).toHaveBeenCalledWith('app.tarefas.minhas-tarefas');
-                expect(mockMessagesService.success).toHaveBeenCalledWith('2 documento(s) de devolução assinados com sucesso.');
+                expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
+                expect(mockMessagesService.success)
+                        .toHaveBeenCalledWith("2 documento(s) de devolução assinados com sucesso.");
             });
 
-            it('Deveria interagir via callback onErrorCallback corretamente', () => {
+            it("Deveria interagir via callback onErrorCallback corretamente", () => {
                 let callbacks = [];
-                spyOn(mockSigner, 'onErrorCallback').and.callFake((cb) => {
+                spyOn(mockSigner, "onErrorCallback").and.callFake((cb) => {
                     callbacks.push(cb);
                 });
 
-                spyOn(mockMessagesService, 'error').and.callThrough();
+                spyOn(mockMessagesService, "error").and.callThrough();
 
                 controller.devolucoesParaAssinar = <DevolucaoEmAssinatura[]>controller.devolucoes;
 
@@ -192,14 +214,11 @@ describe('Teste do controlador devolucao-assinatura.controller', () => {
 
                 expect(mockSigner.onErrorCallback).toHaveBeenCalledTimes(2);
 
-                callbacks[0]({error: 'Erro ao assinar'});
+                callbacks[0]({error: "Erro ao assinar"});
 
                 expect(mockMessagesService.error).toHaveBeenCalledWith(
-                    'Erro ao assinar documento de devolução da Remessa 123/2016. Erro ao assinar'
-                );
+                        "Erro ao assinar documento de devolução da Remessa 123/2016. Erro ao assinar");
             });
-
         });
     });
-	
 });

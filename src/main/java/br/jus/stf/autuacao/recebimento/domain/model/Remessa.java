@@ -58,6 +58,8 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 @Table(name = "REMESSA", schema = "RECEBIMENTO")
 public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implements AggregateRoot<Remessa, ProtocoloId> {
 
+    private static final String STATUS_REQUERIDO = "Status requerido.";
+
     @EmbeddedId
     private ProtocoloId protocoloId;
     
@@ -134,11 +136,11 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
 		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
 		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
 		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
-		Validate.isTrue(!formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex),
-				"Forma de recebimento exige número de sedex.");
+        Validate.isTrue(isNumeroSedexInformadoQuandoExigido(formaRecebimento, numeroSedex),
+                "Forma de recebimento exige número de sedex.");
 		Validate.notNull(sigilo, "Sigilo requerido.");
 		Validate.notNull(recebedor, "Recebedor requerido.");
-    	Validate.notNull(status, "Status requerido.");
+    	Validate.notNull(status, STATUS_REQUERIDO);
     	
     	this.protocoloId = protocolo.identity();
     	this.numero = protocolo.numero();
@@ -151,6 +153,10 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         this.status = status;
         
         registrarEvento(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
+    }
+
+    private boolean isNumeroSedexInformadoQuandoExigido(FormaRecebimento formaRecebimento, String numeroSedex) {
+        return !formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex);
     }
     
 	private void registrarEvento(DomainEvent<?> evento) {
@@ -165,7 +171,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
     protected void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
 		Validate.notNull(classe, "Classe requerida.");
 		Validate.notNull(sigilo, "Sigilo requerido.");
-		Validate.notNull(status, "Status requerido.");
+		Validate.notNull(status, STATUS_REQUERIDO);
     	Validate.isTrue(tipoProcesso().equals(classe.tipo()), "O tipo da remessa e da classe são incompatíveis.");
 		Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
 				"Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
@@ -183,7 +189,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
      * @param status
      */
     public void iniciarDevolucao(String motivacao, Status status) {
-    	Validate.notNull(status, "Status requerido.");
+    	Validate.notNull(status, STATUS_REQUERIDO);
     	
         devolucao = new Devolucao(protocoloId, motivacao);
         this.status = status;
@@ -197,7 +203,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
      */
     public void elaborarDevolucao(MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto, Status status) {
     	Validate.notNull(devolucao, "O processo de devolução não está iniciado.");
-    	Validate.notNull(status, "Status requerido.");
+    	Validate.notNull(status, STATUS_REQUERIDO);
     	
     	devolucao = new Devolucao(protocoloId, devolucao.motivacao(), motivo, modelo, texto);
         this.status = status;
@@ -207,7 +213,7 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
      * @param status
      */
     public void devolver(Status status) {
-    	Validate.notNull(status, "Status requerido.");
+    	Validate.notNull(status, STATUS_REQUERIDO);
     	
         this.status = status;
     }

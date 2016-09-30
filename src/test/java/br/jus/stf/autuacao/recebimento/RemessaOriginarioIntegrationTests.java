@@ -185,6 +185,21 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     }
 	
 	@Test
+	@WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
+    public void naoDeveDevolverUmaRemessaSemMotivo() throws Exception {
+		loadDataTests("devolverRemessaOriginario.sql");
+
+        JsonObject remessaParaDevolver = object(
+        	field("protocoloId", 9001),
+        	field("motivo", "")
+        );
+        
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
+        
+        result.andExpect(status().isBadRequest());
+    }
+	
+	@Test
 	@WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void naoDeveAssinarUmOficioDeDevolucao() throws Exception {
         JsonObject remessaInvalida = object().get();

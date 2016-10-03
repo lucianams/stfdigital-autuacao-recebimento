@@ -21,9 +21,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class ApplicationContextInitializer {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(ApplicationContextInitializer.class, args);
-	}
-	
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApplicationContextInitializer.class, args);
+    }
+
 }

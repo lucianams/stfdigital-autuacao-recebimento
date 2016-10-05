@@ -1,16 +1,16 @@
-import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
-import IStateProvider = angular.ui.IStateProvider;
-import IStateParams = angular.ui.IStateParamsService;
 import IModule = angular.IModule;
-import {RemessaService} from '../../services/remessa.service';
-import {ClasseService} from './../../services/classe.service';
+import ITranslatePartialLoaderService = angular.translate.ITranslatePartialLoaderService;
+import IStateParams = angular.ui.IStateParamsService;
+import IStateProvider = angular.ui.IStateProvider;
+
+import {ClasseService} from "./../../services/classe.service";
+import {RemessaService} from "../../services/remessa.service";
+
 import Properties = app.support.constants.Properties;
-import cmd = app.support.command; 
+import cmd = app.support.command;
 
 /** @ngInject **/
-function config($stateProvider: IStateProvider,
-                properties: Properties) {
-
+function config($stateProvider: IStateProvider, properties: Properties) {
     $stateProvider.state("app.tarefas.recebimento-preautuacao-recursal", {
         url : "/preautuacao/recursal/:informationId",
         views : {
@@ -21,14 +21,15 @@ function config($stateProvider: IStateProvider,
             }
         },
         resolve: {
-            classes: ['app.recebimento.services.ClasseService', (classeService: ClasseService) => {
-                return classeService.listar("RECURSAL")
+            classes: ["app.recebimento.services.ClasseService", (classeService: ClasseService) => {
+                return classeService.listar("RECURSAL");
             }],
-            remessa: ['app.recebimento.services.RemessaService', '$stateParams', (remessaService: RemessaService, $stateParams : IStateParams) => {
-                let protocoloId = $stateParams['informationId'];
+            remessa: ["app.recebimento.services.RemessaService", "$stateParams",
+                    (remessaService: RemessaService, $stateParams: IStateParams) => {
+                let protocoloId = $stateParams["informationId"];
                 return remessaService.consultarRemessa(protocoloId);
             }],
-            sigilos: ['app.recebimento.services.RemessaService', (remessaService: RemessaService) => {
+            sigilos: ["app.recebimento.services.RemessaService", (remessaService: RemessaService) => {
                 return remessaService.listarSigilo();
             }]
         }
@@ -36,10 +37,8 @@ function config($stateProvider: IStateProvider,
 }
 
 /** @ngInject **/
-function run($translatePartialLoader: ITranslatePartialLoaderService,
-			 properties: Properties) {
-	
-	$translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/recursal");
+function run($translatePartialLoader: ITranslatePartialLoaderService, properties: Properties) {
+    $translatePartialLoader.addPart(properties.apiUrl + "/recebimento/preautuacao/recursal");
 }
 
 let preautuacaoRecursal: IModule = angular.module("app.recebimento.preautuacao-recursal", [

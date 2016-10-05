@@ -31,12 +31,12 @@ export class DevolucaoService {
     private static urlServicoPreautuacao: string = "/recebimento/api/remessas";
 
     /** @ngInject **/
-    public constructor(private $http: IHttpService, private properties : Properties,
+    public constructor(private $http: IHttpService, private properties: Properties,
             commandService: cmd.CommandService) {
         commandService.addValidator("devolver-remessa", new ValidadorDevolucao());
     }
 
-    public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<any> {
+    public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<{}> {
         return this.$http.post(this.properties.apiUrl + DevolucaoService.urlServicoPreautuacao + "/devolucao",
                 cmdDevolver);
     }

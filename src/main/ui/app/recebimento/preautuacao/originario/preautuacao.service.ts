@@ -5,49 +5,46 @@ import cmd = app.support.command;
 import Properties = app.support.constants.Properties;
 
 export class PreautuarRemessaCommand implements cmd.Command{
-    public protocoloId: number; 
-	public classeId: string;
-	public sigilo: string;
-	public preferencias: Array<number>;
+    public protocoloId: number;
+    public classeId: string;
+    public sigilo: string;
+    public preferencias: Array<number>;
     public motivo: string;
-	
-    constructor() {};
+
+    public constructor() { }
+}
+
+class ValidadorPreautuacao implements cmd.CommandValidator {
+
+    public constructor() { }
+
+    public isValid(command: PreautuarRemessaCommand): boolean {
+        if (angular.isString(command.classeId) &&
+            angular.isDefined(command.sigilo)) {
+            return true;
+        }
+        return false;
+    }
+
 }
 
 export class PreautuacaoService {
 
-    private static urlServicoPreautuacao: string = '/recebimento/api/remessas';
-    
+    private static urlServicoPreautuacao: string = "/recebimento/api/remessas";
+
     /** @ngInject **/
-    constructor(private $http: IHttpService, private properties : Properties,  commandService: cmd.CommandService) {
-    	commandService.addValidator('preautuar-originario', new ValidadorPreautuacao());
+    public constructor(private $http: IHttpService, private properties: Properties,
+            commandService: cmd.CommandService) {
+        commandService.addValidator("preautuar-originario", new ValidadorPreautuacao());
     }
 
     /*
-     * Envia os dados da préautuação para o serviço de recebimento (back-end).
-     * @param protocoloId Nº do protocolo de recebimento da remessa.
-     * @param classeId Id da classe processual.
-     * @param sigilo Sigilo do processo.
-     * @param preferencias Preferências processuais.
+     * Envia os dados da preautuação para o serviço de recebimento (back-end).
      */
-    public preautuarProcesso(cmdPreautuar : PreautuarRemessaCommand): IPromise<any> {
-        return this.$http.post(this.properties.url + ":" + this.properties.port + 
-            PreautuacaoService.urlServicoPreautuacao + '/preautuacao', cmdPreautuar);        
+    public preautuarProcesso(cmdPreautuar: PreautuarRemessaCommand): IPromise<{}> {
+        return this.$http.post(this.properties.url + ":" + this.properties.port +
+                PreautuacaoService.urlServicoPreautuacao + "/preautuacao", cmdPreautuar);
     }
-}
-
-class ValidadorPreautuacao implements cmd.CommandValidator {
-	
-	constructor() {}
-	
-	public isValid(command: PreautuarRemessaCommand): boolean {
-		if (angular.isString(command.classeId) &&
-			angular.isDefined(command.sigilo)) {
-			return true;
-		}
-		return false;
-	}
-
 }
 
 preautuacao.service("app.recebimento.preautuacao-originario.PreautuacaoService", PreautuacaoService);

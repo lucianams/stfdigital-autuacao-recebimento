@@ -13,3 +13,4 @@ spring:
     
 flyway:
   validate-on-migrate: false
+  table: SCHEMA_VERSION

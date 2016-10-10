@@ -1,212 +1,250 @@
-import {PreparacaoOficioDevolucaoController} from "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.controller";
-import {MotivoDevolucao, Tag, SubstituicaoTag, Texto, PrepararOficioParaDevolucaoCommand} from "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.service";
-import {Modelo, TipoDocumento} from "recebimento/services/model";
 import {Documento} from "recebimento/preparacao-oficio-devolucao/documento";
+import {PreparacaoOficioDevolucaoController} from
+        "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.controller";
+import {MotivoDevolucao, PrepararOficioParaDevolucaoCommand, SubstituicaoTag, Tag, Texto} from
+        "recebimento/preparacao-oficio-devolucao/preparacao-oficio-devolucao.service";
+import {Modelo, TipoDocumento} from "recebimento/services/model";
 
-describe('Teste do controlador preparacao-oficio-devolucao.controller', () => {
+describe("Teste do controlador preparacao-oficio-devolucao.controller", () => {
 
-	let $rootScope: ng.IRootScopeService;
-	let $q: ng.IQService;
+    let $rootScope: ng.IRootScopeService;
+    let $q: ng.IQService;
 
-	let controller: PreparacaoOficioDevolucaoController;
-	let mockState;
-	let mockPreparacaoOficioDevolucaoService;
-	let mockMessagesService;
-	let mockEditorApi;
+    let controller: PreparacaoOficioDevolucaoController;
+    let mockState;
+    let mockPreparacaoOficioDevolucaoService;
+    let mockMessagesService;
+    let mockEditorApi;
 
-	let protocolo: number;
+    let protocolo: number;
 
-	beforeEach(inject((_$rootScope_: ng.IRootScopeService, _$q_: ng.IQService) => {
-		$rootScope = _$rootScope_;
-		$q = _$q_;
+    beforeEach(inject((_$rootScope_: ng.IRootScopeService, _$q_: ng.IQService) => {
+        $rootScope = _$rootScope_;
+        $q = _$q_;
 
-		mockState = {
-			go : () => {}
-		};
+        mockState = {
+            go : () => {}
+        };
 
-		mockPreparacaoOficioDevolucaoService = {
-			consultarModelosPorMotivo: () => {},
-			extrairTags: () => {},
-			gerarTextoComTags: () => {},
-			finalizarDevolucao: () => {}
-		};
+        mockPreparacaoOficioDevolucaoService = {
+            consultarModelosPorMotivo: () => {},
+            extrairTags: () => {},
+            gerarTextoComTags: () => {},
+            finalizarDevolucao: () => {}
+        };
 
-		mockMessagesService = {
-			error: () => {},
-			success: () => {}
-		};
+        mockMessagesService = {
+            error: () => {},
+            success: () => {}
+        };
 
-		mockEditorApi = {
-			salvar: () => {}
-		}
+        mockEditorApi = {
+            salvar: () => {}
+        };
 
-		protocolo = 12345;
+        protocolo = 12345;
 
-		controller = new PreparacaoOficioDevolucaoController($q, mockState, mockPreparacaoOficioDevolucaoService,
-			[new MotivoDevolucao(123, "AI Intempestivo", [1, 2, 3])],
-			protocolo, mockMessagesService);
+        controller = new PreparacaoOficioDevolucaoController($q, mockState, mockPreparacaoOficioDevolucaoService,
+            [new MotivoDevolucao(123, "AI Intempestivo", [1, 2, 3])],
+            protocolo, mockMessagesService);
 
-		controller.editor.api = mockEditorApi;
-	}));
-	
-	it('Deveria carregar os modelos de acordo com o motivo de devolução', () => {
-		let modelos: Modelo[] = [<Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")}];
-		spyOn(mockPreparacaoOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.when(modelos));
-		
-		// Escolhendo o motivo de devolução
-		controller.motivoDevolucao = controller.motivosDevolucao[0];
+        controller.editor.api = mockEditorApi;
+    }));
 
-		expect(controller.modelosSendoCarregados).toEqual(false, 'Modelos não deveriam estar sendo carregados');
+    it("Deveria carregar os modelos de acordo com o motivo de devolução", () => {
+        let modelos: Modelo[] = [{
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        }];
+        spyOn(mockPreparacaoOficioDevolucaoService, "consultarModelosPorMotivo").and.callFake(() => $q.when(modelos));
 
-		controller.carregarModelos();
+        // Escolhendo o motivo de devolução
+        controller.motivoDevolucao = controller.motivosDevolucao[0];
 
-		expect(controller.modelosSendoCarregados).toEqual(true, 'Modelos deveriam estar sendo carregados');
+        expect(controller.modelosSendoCarregados).toEqual(false, "Modelos não deveriam estar sendo carregados");
 
-		$rootScope.$apply(); // Resolvendo promises
+        controller.carregarModelos();
 
-		expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
+        expect(controller.modelosSendoCarregados).toEqual(true, "Modelos deveriam estar sendo carregados");
 
-		expect(controller.modelos).toEqual(modelos);
+        $rootScope.$apply(); // Resolvendo promises
 
-		expect(controller.modelosSendoCarregados).toEqual(false, 'Modelos não deveriam mais estar sendo carregados');
-	});
+        expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
 
-	it('Deveria tratar o possível erro ao carregar os modelos de acordo com o motivo de devolução', () => {
-		spyOn(mockPreparacaoOficioDevolucaoService, 'consultarModelosPorMotivo').and.callFake(() => $q.reject());
-		spyOn(mockMessagesService, 'error').and.callThrough();
+        expect(controller.modelos).toEqual(modelos);
 
-		// Escolhendo o motivo de devolução
-		controller.motivoDevolucao = controller.motivosDevolucao[0];
+        expect(controller.modelosSendoCarregados).toEqual(false, "Modelos não deveriam mais estar sendo carregados");
+    });
 
-		expect(controller.modelosSendoCarregados).toEqual(false, 'Modelos não deveriam estar sendo carregados');
+    it("Deveria tratar o possível erro ao carregar os modelos de acordo com o motivo de devolução", () => {
+        spyOn(mockPreparacaoOficioDevolucaoService, "consultarModelosPorMotivo").and.callFake(() => $q.reject());
+        spyOn(mockMessagesService, "error").and.callThrough();
 
-		controller.carregarModelos();
+        // Escolhendo o motivo de devolução
+        controller.motivoDevolucao = controller.motivosDevolucao[0];
 
-		expect(controller.modelosSendoCarregados).toEqual(true, 'Modelos deveriam estar sendo carregados');
+        expect(controller.modelosSendoCarregados).toEqual(false, "Modelos não deveriam estar sendo carregados");
 
-		$rootScope.$apply(); // Resolvendo promises
+        controller.carregarModelos();
 
-		expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
+        expect(controller.modelosSendoCarregados).toEqual(true, "Modelos deveriam estar sendo carregados");
 
-		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar os modelos.");
-	});
+        $rootScope.$apply(); // Resolvendo promises
 
-	it('Deveria extrair as tags do documento do modelo escolhido', () => {
-		let tags: Tag[] = [<Tag>{nome: 'Destinatário'}, <Tag>{nome: 'Vocativo'}];
-		spyOn(mockPreparacaoOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.when(tags));
+        expect(mockPreparacaoOficioDevolucaoService.consultarModelosPorMotivo).toHaveBeenCalledWith(123);
 
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
+        expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar os modelos.");
+    });
 
-		expect(controller.tagsSendoCarregadas).toEqual(false, 'Tags não deveriam estar sendo carregadas');
+    it("Deveria extrair as tags do documento do modelo escolhido", () => {
+        let tags: Tag[] = [<Tag>{nome: "Destinatário"}, <Tag>{nome: "Vocativo"}];
+        spyOn(mockPreparacaoOficioDevolucaoService, "extrairTags").and.callFake(() => $q.when(tags));
 
-		controller.extrairTags();
+        controller.modelo = {
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
 
-		expect(controller.tagsSendoCarregadas).toEqual(true, 'Tags deveriam estar sendo carregadas.');
+        expect(controller.tagsSendoCarregadas).toEqual(false, "Tags não deveriam estar sendo carregadas");
 
-		$rootScope.$apply(); // Resolvendo promises
+        controller.extrairTags();
 
-		expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+        expect(controller.tagsSendoCarregadas).toEqual(true, "Tags deveriam estar sendo carregadas.");
 
-		expect(controller.substituicoesTags).toEqual([new SubstituicaoTag('Destinatário', ''), new SubstituicaoTag('Vocativo', '')]);
+        $rootScope.$apply(); // Resolvendo promises
 
-		expect(controller.tagsSendoCarregadas).toEqual(false, "Tags não deveriam mais estar sendo carregadas");
-	});
+        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
 
-	it('Deveria tratar o possível erro ao extrair as tags do documento do modelo escolhido', () => {
-		spyOn(mockPreparacaoOficioDevolucaoService, 'extrairTags').and.callFake(() => $q.reject());
-		spyOn(mockMessagesService, 'error').and.callThrough();
+        expect(controller.substituicoesTags).toEqual([new SubstituicaoTag("Destinatário", ""),
+                new SubstituicaoTag("Vocativo", "")]);
 
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
+        expect(controller.tagsSendoCarregadas).toEqual(false, "Tags não deveriam mais estar sendo carregadas");
+    });
 
-		expect(controller.tagsSendoCarregadas).toEqual(false, 'Tags não deveriam estar sendo carregadas');
+    it("Deveria tratar o possível erro ao extrair as tags do documento do modelo escolhido", () => {
+        spyOn(mockPreparacaoOficioDevolucaoService, "extrairTags").and.callFake(() => $q.reject());
+        spyOn(mockMessagesService, "error").and.callThrough();
 
-		controller.extrairTags();
+        controller.modelo = {
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
 
-		expect(controller.tagsSendoCarregadas).toEqual(true, 'Tags deveriam estar sendo carregadas.');
+        expect(controller.tagsSendoCarregadas).toEqual(false, "Tags não deveriam estar sendo carregadas");
 
-		$rootScope.$apply(); // Resolvendo promises
+        controller.extrairTags();
 
-		expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+        expect(controller.tagsSendoCarregadas).toEqual(true, "Tags deveriam estar sendo carregadas.");
 
-		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar as tags.");
-	});
+        $rootScope.$apply(); // Resolvendo promises
 
-	it('Deveria gerar o texto a partir das tags preenchidas', () => {
-		let texto = <Texto>{id: 13, documentoId: 234};
-		spyOn(mockPreparacaoOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.when(texto));
+        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
 
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
-		controller.substituicoesTags = [new SubstituicaoTag('Destinatário', 'Fulano'), new SubstituicaoTag('Vocativo', 'Excelentíssimo')];
+        expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar as tags.");
+    });
 
-		controller.gerarTexto();
+    it("Deveria gerar o texto a partir das tags preenchidas", () => {
+        let texto = <Texto>{id: 13, documentoId: 234};
+        spyOn(mockPreparacaoOficioDevolucaoService, "gerarTextoComTags").and.callFake(() => $q.when(texto));
 
-		$rootScope.$apply();
-		
-		expect(controller.texto).toEqual(texto);
-		expect(controller.documento).toEqual(<Documento>{id: texto.documentoId, nome: 'Documento de Devolução'});
-		expect(controller.showEditor).toEqual(true, "Deveria ativar a exibição do editor");
-	});
+        controller.modelo = {id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
+        controller.substituicoesTags = [new SubstituicaoTag("Destinatário", "Fulano"),
+                new SubstituicaoTag("Vocativo", "Excelentíssimo")];
 
-	it('Deveria tratar o possível erro ao gerar o texto a partir das tags preenchidas', () => {
-		spyOn(mockPreparacaoOficioDevolucaoService, 'gerarTextoComTags').and.callFake(() => $q.reject());
-		spyOn(mockMessagesService, 'error').and.callThrough();
+        controller.gerarTexto();
 
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
-		controller.substituicoesTags = [new SubstituicaoTag('Destinatário', 'Fulano'), new SubstituicaoTag('Vocativo', 'Excelentíssimo')];
+        $rootScope.$apply();
 
-		controller.gerarTexto();
+        expect(controller.texto).toEqual(texto);
+        expect(controller.documento).toEqual(<Documento>{id: texto.documentoId, nome: "Documento de Devolução"});
+        expect(controller.showEditor).toEqual(true, "Deveria ativar a exibição do editor");
+    });
 
-		$rootScope.$apply();
-		
-		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao gerar o texto.");
-	});
+    it("Deveria tratar o possível erro ao gerar o texto a partir das tags preenchidas", () => {
+        spyOn(mockPreparacaoOficioDevolucaoService, "gerarTextoComTags").and.callFake(() => $q.reject());
+        spyOn(mockMessagesService, "error").and.callThrough();
 
-	it('Deveria finalizar a edição do documento de devolução quando o callback for chamado', () => {
-		spyOn(mockPreparacaoOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.when());
-		spyOn(mockMessagesService, 'success').and.callThrough();
-		spyOn(mockState, 'go').and.callThrough();
+        controller.modelo = {
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
+        controller.substituicoesTags = [new SubstituicaoTag("Destinatário", "Fulano"),
+                new SubstituicaoTag("Vocativo", "Excelentíssimo")];
 
-		// Escolhendo o motivo de devolução e as outras informações necessárias para concluir.
-		controller.motivoDevolucao = controller.motivosDevolucao[0];
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
-		controller.texto = <Texto>{id: 13, documentoId: 234};
+        controller.gerarTexto();
 
-		controller.finalizarDevolucao();
+        $rootScope.$apply();
 
-		controller.concluiuEdicao();
+        expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao gerar o texto.");
+    });
 
-		$rootScope.$apply();
+    it("Deveria finalizar a edição do documento de devolução quando o callback for chamado", () => {
+        spyOn(mockPreparacaoOficioDevolucaoService, "finalizarDevolucao").and.callFake(() => $q.when());
+        spyOn(mockMessagesService, "success").and.callThrough();
+        spyOn(mockState, "go").and.callThrough();
 
-		expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
-			protocolo, 123, 1, 13
-		));
+        // Escolhendo o motivo de devolução e as outras informações necessárias para concluir.
+        controller.motivoDevolucao = controller.motivosDevolucao[0];
+        controller.modelo = {
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
+        controller.texto = <Texto>{id: 13, documentoId: 234};
 
-		expect(mockState.go).toHaveBeenCalledWith('app.tarefas.minhas-tarefas');
-		expect(mockMessagesService.success).toHaveBeenCalledWith("Documento de devolução elaborado com sucesso!");
-	});
+        controller.finalizarDevolucao();
 
-	it('Deveria tratar o possível erro ao finalizar a edição do documento de devolução quando o callback for chamado', () => {
-		spyOn(mockPreparacaoOficioDevolucaoService, 'finalizarDevolucao').and.callFake(() => $q.reject());
-		spyOn(mockMessagesService, 'error').and.callThrough();
-		spyOn(mockState, 'go').and.callThrough();
+        controller.concluiuEdicao();
 
-		// Escolhendo o motivo de devolução e as outras informações necessárias para concluir.
-		controller.motivoDevolucao = controller.motivosDevolucao[0];
-		controller.modelo = <Modelo>{id: 1, nome: "Modelo de teste", documento: 3, tipoDocumento: new TipoDocumento(7, "Ofício de devolução")};
-		controller.texto = <Texto>{id: 13, documentoId: 234};
+        $rootScope.$apply();
 
-		controller.finalizarDevolucao();
+        expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(
+                new PrepararOficioParaDevolucaoCommand(protocolo, 123, 1, 13));
 
-		controller.concluiuEdicao();
+        expect(mockState.go).toHaveBeenCalledWith("app.tarefas.minhas-tarefas");
+        expect(mockMessagesService.success).toHaveBeenCalledWith("Documento de devolução elaborado com sucesso!");
+    });
 
-		$rootScope.$apply();
+    it("Deveria tratar o possível erro ao finalizar a edição do documento de devolução quando o callback for chamado",
+            () => {
+        spyOn(mockPreparacaoOficioDevolucaoService, "finalizarDevolucao").and.callFake(() => $q.reject());
+        spyOn(mockMessagesService, "error").and.callThrough();
+        spyOn(mockState, "go").and.callThrough();
 
-		expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(new PrepararOficioParaDevolucaoCommand(
-			protocolo, 123, 1, 13
-		));
+        // Escolhendo o motivo de devolução e as outras informações necessárias para concluir.
+        controller.motivoDevolucao = controller.motivosDevolucao[0];
+        controller.modelo = {
+            id: 1,
+            nome: "Modelo de teste",
+            documento: 3,
+            tipoDocumento: new TipoDocumento(7, "Ofício de devolução")
+        };
+        controller.texto = <Texto>{id: 13, documentoId: 234};
 
-		expect(mockState.go).not.toHaveBeenCalled();
-		expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao concluir a elaboração do texto!");
-	});
+        controller.finalizarDevolucao();
+
+        controller.concluiuEdicao();
+
+        $rootScope.$apply();
+
+        expect(mockPreparacaoOficioDevolucaoService.finalizarDevolucao).toHaveBeenCalledWith(
+                new PrepararOficioParaDevolucaoCommand(protocolo, 123, 1, 13));
+
+        expect(mockState.go).not.toHaveBeenCalled();
+        expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao concluir a elaboração do texto!");
+    });
 
 });

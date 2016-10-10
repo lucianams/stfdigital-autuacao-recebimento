@@ -4,7 +4,7 @@ import {GerarTextoCommand, MotivoDevolucao, PrepararOficioParaDevolucaoCommand, 
         SubstituicaoTag, Tag, Texto} from "./preparacao-oficio-devolucao.service";
 import preparacaoOficioDevolucao from "./preparacao-oficio-devolucao.module";
 
-interface EditorApi {
+export interface EditorApi {
     api: {
         salvar: Function
     };

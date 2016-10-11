@@ -9,15 +9,15 @@ import br.jus.stf.core.shared.documento.TextoId;
  */
 public interface DevolucaoAdapter {
 
-	/**
-	 * @param textoId
-	 */
-	void concluirTexto(TextoId textoId);
+    /**
+     * @param textoId Identificador do texto que será concluído.
+     */
+    void concluirTexto(TextoId textoId);
 
-	/**
-	 * @param texto
-	 * @param documentoTemporarioId
-	 */
-	void assinarTexto(TextoId texto, String documentoTemporarioId);
-	
+    /**
+     * @param texto Identificador do texto que será assinado.
+     * @param documentoTemporarioId Documento temporário assinado que será associado ao texto.
+     */
+    void assinarTexto(TextoId texto, String documentoTemporarioId);
+
 }

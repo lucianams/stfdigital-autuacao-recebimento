@@ -21,26 +21,29 @@ import br.jus.stf.core.shared.processo.TipoProcesso;
  * @since 06.04.2016
  */
 @Repository
-public class ClassePeticionavelRepositoryImpl extends SimpleJpaRepository<ClassePeticionavel, ClasseId> implements ClassePeticionavelRepository {
-	
-	private EntityManager entityManager;
+public class ClassePeticionavelRepositoryImpl extends SimpleJpaRepository<ClassePeticionavel, ClasseId>
+        implements ClassePeticionavelRepository {
 
-	/**
-	 * @param entityManager
-	 */
-	@Autowired
+    private EntityManager entityManager;
+
+    /**
+     * @param entityManager Entity manager.
+     */
+    @Autowired
     public ClassePeticionavelRepositoryImpl(EntityManager entityManager) {
         super(ClassePeticionavel.class, entityManager);
         this.entityManager = entityManager;
     }
 
-	@Override
-	public List<ClassePeticionavel> findByTipo(TipoProcesso tipo) {
-		TypedQuery<ClassePeticionavel> query = entityManager.createQuery("FROM ClassePeticionavel classe WHERE classe.tipo = :tipo", ClassePeticionavel.class);
-		
-		query.setParameter("tipo", tipo);
-		
-		return query.getResultList();
-	}
-    
+    @Override
+    public List<ClassePeticionavel> findByTipo(TipoProcesso tipo) {
+        TypedQuery<ClassePeticionavel> query = entityManager
+                .createQuery("FROM ClassePeticionavel classe WHERE classe.tipo = :tipo ORDER BY classe.nome",
+                        ClassePeticionavel.class);
+
+        query.setParameter("tipo", tipo);
+
+        return query.getResultList();
+    }
+
 }

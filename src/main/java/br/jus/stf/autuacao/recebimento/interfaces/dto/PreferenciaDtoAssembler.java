@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
 
-
 /**
  * @author anderson.araujo
  * 
@@ -14,13 +13,13 @@ import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.Preferencia;
  */
 @Component
 public class PreferenciaDtoAssembler {
-	
-	/**
-	 * @param prefenrecia
-	 * @return
-	 */
-	public PreferenciaDto toDto(Preferencia prefenrecia) {
-		Validate.notNull(prefenrecia);
-		return new PreferenciaDto(prefenrecia.identity().toLong(), prefenrecia.nome());
-	}
+
+    /**
+     * @param prefenrecia Preferência.
+     * @return Um DTO da preferência.
+     */
+    public PreferenciaDto toDto(Preferencia prefenrecia) {
+        Validate.notNull(prefenrecia);
+        return new PreferenciaDto(prefenrecia.identity().toLong(), prefenrecia.nome());
+    }
 }

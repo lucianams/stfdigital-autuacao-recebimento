@@ -8,8 +8,6 @@ import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 /**
- * Objeto usado para enviar os dados necessários para devolver uma remessa.
- * 
  * @author Rafael Alencar
  * 
  * @version 1.0.0
@@ -18,25 +16,24 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 @ApiModel("Command que realiza a ação de devolução de uma remessa.")
 public class DevolverRemessaCommand {
 
-	@ApiModelProperty(value = "Protocolo da remessa.", required = true)
-	@NotNull
-	private Long protocoloId;
-	
-	@ApiModelProperty(value = "Motivo de devolução da remessa.", required = true)
-	@NotBlank
-	private String motivo;
-	
-	public DevolverRemessaCommand() {
-		// Construtor default.
-	}
-	
-	public Long getProtocoloId() {
-		return protocoloId;
-	}
-	
-	public String getMotivo() {
+    @NotNull
+    @ApiModelProperty(value = "Protocolo da remessa.", required = true)
+    private Long protocoloId;
+
+    @NotBlank
+    @ApiModelProperty(value = "Motivo de devolução da remessa.", required = true)
+    private String motivo;
+
+    public DevolverRemessaCommand() {
+        // Construtor default.
+    }
+
+    public Long getProtocoloId() {
+        return protocoloId;
+    }
+
+    public String getMotivo() {
         return motivo;
     }
-	
-}
 
+}

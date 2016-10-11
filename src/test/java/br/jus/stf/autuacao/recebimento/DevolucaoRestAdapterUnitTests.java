@@ -25,40 +25,40 @@ import br.jus.stf.core.shared.documento.TextoId;
  * @since 29.09.2016
  */
 public class DevolucaoRestAdapterUnitTests {
-	
-	@Mock
+
+    @Mock
     private DocumentoRestClient documentoRestClient;
-	
-	@InjectMocks
-	private DevolucaoRestAdapter devolucaoRestAdapter;
-	
-	@Before
-	public void configuracao() {
-		MockitoAnnotations.initMocks(this);
-	}
-	
-	@Test
-	public void concluirTexto() {
-		TextoId textoId = new TextoId(1L);
-		Map<String, Object> command = ImmutableMap.of("textoId", textoId.toLong());
-		
-		devolucaoRestAdapter.concluirTexto(textoId);
-		
-		Mockito.verify(documentoRestClient, Mockito.times(1)).concluirTexto(command);
-	}
-	
-	@Test
-	public void assinarTexto() {
-		TextoId textoId = new TextoId(1L);
-		String documentoTemporarioId = "_DocTemp_";
-		Map<String, Object> command = new HashMap<>();
-		
-		command.put("textoId", textoId.toLong());
-		command.put("documentoTemporarioId", documentoTemporarioId);
-		
-		devolucaoRestAdapter.assinarTexto(textoId, documentoTemporarioId);
-		
-		Mockito.verify(documentoRestClient, Mockito.times(1)).assinarTexto(command);
-	}
+
+    @InjectMocks
+    private DevolucaoRestAdapter devolucaoRestAdapter;
+
+    @Before
+    public void configuracao() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void concluirTexto() {
+        TextoId textoId = new TextoId(1L);
+        Map<String, Object> command = ImmutableMap.of("textoId", textoId.toLong());
+
+        devolucaoRestAdapter.concluirTexto(textoId);
+
+        Mockito.verify(documentoRestClient, Mockito.times(1)).concluirTexto(command);
+    }
+
+    @Test
+    public void assinarTexto() {
+        TextoId textoId = new TextoId(1L);
+        String documentoTemporarioId = "_DocTemp_";
+        Map<String, Object> command = new HashMap<>();
+
+        command.put("textoId", textoId.toLong());
+        command.put("documentoTemporarioId", documentoTemporarioId);
+
+        devolucaoRestAdapter.assinarTexto(textoId, documentoTemporarioId);
+
+        Mockito.verify(documentoRestClient, Mockito.times(1)).assinarTexto(command);
+    }
 
 }

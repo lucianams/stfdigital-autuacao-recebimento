@@ -16,9 +16,9 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 public class StatusAdapter extends StatusAdapterSupport<ProtocoloId, Status> {
 
     private static final String RECEBIMENTO_PROCESS_KEY = "recebimento";
-    
+
     private static final String RECEBIMENTO_ID_PATTERN = "RE:%s";
-    
+
     @Override
     protected Status statusFromDescription(String description) {
         return Status.valueOf(description);
@@ -28,10 +28,10 @@ public class StatusAdapter extends StatusAdapterSupport<ProtocoloId, Status> {
     protected String processId(ProtocoloId informationId) {
         return String.format(RECEBIMENTO_ID_PATTERN, informationId.toString());
     }
-    
+
     @Override
     protected String processKey() {
         return RECEBIMENTO_PROCESS_KEY;
     }
-    
+
 }

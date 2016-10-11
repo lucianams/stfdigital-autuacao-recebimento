@@ -15,19 +15,20 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  */
 @Configuration
 public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
-	
-	@Autowired(required = false)
+
+    @Autowired(required = false)
     @Qualifier("oauth2StatelessSecurityContext")
     private Boolean stateless = Boolean.TRUE;
-	
-	@Override
-	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.stateless(stateless);
-	}
-	
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/bundle.js*", "/maps/bundle.js.map*", "/manage/**", "/api-docs/**").permitAll().anyRequest().authenticated();
-	}
-	
+
+    @Override
+    public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
+        resources.stateless(stateless);
+    }
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/bundle.js*", "/maps/bundle.js.map*", "/manage/**", "/api-docs/**")
+                .permitAll().anyRequest().authenticated();
+    }
+
 }

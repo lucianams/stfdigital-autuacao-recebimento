@@ -10,10 +10,10 @@ import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
  */
 @FunctionalInterface
 public interface RecebedorAdapter {
-	
-	/**
-	 * @return
-	 */
-	Recebedor recebedor();
+
+    /**
+     * @return Um recebedor.
+     */
+    Recebedor recebedor();
 
 }

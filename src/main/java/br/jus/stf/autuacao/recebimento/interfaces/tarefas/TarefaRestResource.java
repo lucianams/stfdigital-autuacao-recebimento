@@ -28,30 +28,37 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @RequestMapping("/api/tarefas")
 public class TarefaRestResource {
 
-	@Autowired
+    @Autowired
     private RuntimeService runtimeService;
-	
-	@Autowired
+
+    @Autowired
     private TaskService taskService;
-	
+
     /**
      * Lista todas as tarefas associadas ao usuário ou ao grupo do usuário
      * 
      * @return a lista de tarefas do autuador
      */
     @ApiOperation(value = "Lista todas as tarefas associadas ao usuário corrente")
-	@RequestMapping(method = GET)
-	public List<TarefaDto> tarefas() {
-    	Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-    	
-    	List<String> candidateGroup = authorities.stream().map(authority -> authority.getAuthority()).collect(toList());
-    	
-        return taskService.createTaskQuery().taskCandidateGroupIn(candidateGroup).list().stream().map(this::toDto).collect(toList());
-	}
+    @RequestMapping(method = GET)
+    public List<TarefaDto> tarefas() {
+        Collection<? extends GrantedAuthority> authorities =
+                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
 
-	private TarefaDto toDto(Task task) {
-		ProcessInstance process = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();		
-		return new TarefaDto(process.getBusinessKey(), task);
-	}
+        List<String> candidateGroup = authorities.stream()
+                .map(authority -> authority.getAuthority())
+                .collect(toList());
+
+        return taskService.createTaskQuery().taskCandidateGroupIn(candidateGroup).list().stream()
+                .map(this::toDto)
+                .collect(toList());
+    }
+
+    private TarefaDto toDto(Task task) {
+        ProcessInstance process = runtimeService.createProcessInstanceQuery()
+                .processInstanceId(task.getProcessInstanceId()).singleResult();
+
+        return new TarefaDto(process.getBusinessKey(), task);
+    }
 
 }

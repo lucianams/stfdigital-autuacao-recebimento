@@ -44,7 +44,7 @@ public class E2ETestsDataLoader {
 			if (connection != null) {
 				DataSourceUtils.releaseConnection(connection, dataSource);
 			}
-		}
-	}
+        }
+    }
 
 }

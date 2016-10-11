@@ -16,19 +16,18 @@ import br.jus.stf.autuacao.recebimento.domain.model.suportejudicial.ClassePetici
  */
 @Component
 public class ClasseDtoAssembler {
-	
-	@Autowired
-	private PreferenciaDtoAssembler preferenciaDtoAssembler;
-	
-	/**
-	 * @param classe
-	 * @return
-	 */
-	public ClasseDto toDto(ClassePeticionavel classe) {
-		Validate.notNull(classe);
-		
-		return new ClasseDto(classe.identity().toString(), classe.nome(), classe.preferencias().stream()
-    			.map(preferenciaDtoAssembler::toDto).collect(Collectors.toSet()));
-	}
-}
 
+    @Autowired
+    private PreferenciaDtoAssembler preferenciaDtoAssembler;
+
+    /**
+     * @param classe Classe peticionável.
+     * @return Um DTO da classe.
+     */
+    public ClasseDto toDto(ClassePeticionavel classe) {
+        Validate.notNull(classe);
+
+        return new ClasseDto(classe.identity().toString(), classe.nome(), classe.preferencias().stream()
+                .map(preferenciaDtoAssembler::toDto).collect(Collectors.toSet()));
+    }
+}

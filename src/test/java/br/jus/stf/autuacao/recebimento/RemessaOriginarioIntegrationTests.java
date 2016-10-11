@@ -41,171 +41,174 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 1.0.0
  * @since 18.12.2015
  */
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
+@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false" },
+        classes = ApplicationContextInitializer.class)
 @Transactional
 public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
 
-	@MockBean
-	private DevolucaoRestAdapter devolucaoAdapter;
-	
-	@MockBean
+    @MockBean
+    private DevolucaoRestAdapter devolucaoAdapter;
+
+    @MockBean
     private ProtocoloRestAdapter protocoloAdapter;
-	
-	@MockBean
-	private RabbitTemplate rabbitTemplate;
-	
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@Before
-	public void configuracao() {
-		MockitoAnnotations.initMocks(this);
-		
-		given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
-		willDoNothing().given(devolucaoAdapter).assinarTexto(new TextoId(9000L), "_DocTemp_12345");
-	}
-	
-	@Test
-	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
+
+    @MockBean
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Before
+    public void configuracao() {
+        MockitoAnnotations.initMocks(this);
+
+        given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
+        willDoNothing().given(devolucaoAdapter).assinarTexto(new TextoId(9000L), "_DocTemp_12345");
+    }
+
+    @Test
+    @WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void registrarUmaRemessa() throws Exception {
-		JsonObject remessaValida = object(
-			field("formaRecebimento", "SEDEX"),
-			field("volumes", 1),
-			field("tipoProcesso", "ORIGINARIO"),
-			field("apensos", 1),
-			field("numeroSedex", "SR123456789BR"),
-			field("sigilo", "PUBLICO")
-		);
-		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
-				.contentType(APPLICATION_JSON).content(remessaValida.toString()));
-        
+        JsonObject remessaValida = object(
+                field("formaRecebimento", "SEDEX"),
+                field("volumes", 1),
+                field("tipoProcesso", "ORIGINARIO"),
+                field("apensos", 1),
+                field("numeroSedex", "SR123456789BR"),
+                field("sigilo", "PUBLICO"));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
+                .contentType(APPLICATION_JSON).content(remessaValida.toString()));
+
         result.andExpect(status().isOk());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautarRemessaOriginario.sql");
-        
-		JsonObject remessaParaPreautuar = object(
-			field("protocoloId", 9000),
-			field("classeId", "ADI"),
-			field("preferencias", array(3, 8)),
-			field("sigilo", "PUBLICO")
-		);
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaParaPreautuar.toString()));
-        
+        JsonObject remessaParaPreautuar = object(
+                field("protocoloId", 9000),
+                field("classeId", "ADI"),
+                field("preferencias", array(3, 8)),
+                field("sigilo", "PUBLICO"));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON)
+                .content(remessaParaPreautuar.toString()));
+
         result.andExpect(status().isOk());
     }
 
-	@Test
-	@WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
+    @Test
+    @WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
     public void devolverUmaRemessa() throws Exception {
-		loadDataTests("devolverRemessaOriginario.sql");
+        loadDataTests("devolverRemessaOriginario.sql");
 
         JsonObject remessaParaDevolver = object(
-        	field("protocoloId", 9001),
-        	field("motivo", "Remessa inválida.")
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
-        
+                field("protocoloId", 9001),
+                field("motivo", "Remessa inválida."));
+
+        ResultActions result = mockMvc.perform(
+                post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
+
         result.andExpect(status().isOk());
     }
 
-	@Test
-	@WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
+    @Test
+    @WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
     public void prepararOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("prepararOficioDevolucaoRemessaOriginario.sql");
-		
+
         JsonObject remessaParaPrepararOficio = object(
-        	field("protocoloId", 9002),
-        	field("motivo", 1),
-        	field("modeloId", 1),
-        	field("textoId", 9000)
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaParaPrepararOficio.toString()));
-        
+                field("protocoloId", 9002),
+                field("motivo", 1),
+                field("modeloId", 1),
+                field("textoId", 9000));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON)
+                .content(remessaParaPrepararOficio.toString()));
+
         result.andExpect(status().isOk());
     }
 
-	@Test
-	@WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
+    @Test
+    @WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void assinarOficioDevolucaoDaRemessa() throws Exception {
         loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql");
-		
+
         JsonObject remessaParaAssinarOficio = object(
-        	field("protocoloId", 9003),
-        	field("documentoTemporarioId", "_DocTemp_12345")
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaParaAssinarOficio.toString()));
-        
+                field("protocoloId", 9003),
+                field("documentoTemporarioId", "_DocTemp_12345"));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON)
+                .content(remessaParaAssinarOficio.toString()));
+
         result.andExpect(status().isOk());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
+
+    @Test
+    @WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void naoDeveRegistrarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
-        	field("formaRecebimento", "SEDEX"),
-        	field("apensos", 1),
-        	field("numeroSedex", "SR123456789BR")
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
-        
+                field("formaRecebimento", "SEDEX"),
+                field("apensos", 1),
+                field("numeroSedex", "SR123456789BR"));
+
+        ResultActions result = mockMvc.perform(
+                post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
+
         result.andExpect(status().isBadRequest());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-originario", components = "preautuar-originario")
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
-        	field("protocoloId", 1),
-        	field("transicao", "devolver"),
-        	field("motivo", "Remessa enviado ao STF antes de passar ao STJ")
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
-        
+                field("protocoloId", 1),
+                field("transicao", "devolver"),
+                field("motivo", "Remessa enviado ao STF antes de passar ao STJ"));
+
+        ResultActions result = mockMvc.perform(
+                post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
+
         result.andExpect(status().isBadRequest());
     }
 
-	@Test
-	@WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
+    @Test
+    @WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
     public void naoDeveElaborarOficioParaDevolucaoDaRemessaInvalida() throws Exception {
-		JsonObject remessaInvalida = object().get();
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
-        
+        JsonObject remessaInvalida = object().get();
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON)
+                .content(remessaInvalida.toString()));
+
         result.andExpect(status().isBadRequest());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-originario", components = "devolver-remessa")
     public void naoDeveDevolverUmaRemessaSemMotivo() throws Exception {
-		loadDataTests("devolverRemessaOriginario.sql");
+        loadDataTests("devolverRemessaOriginario.sql");
 
         JsonObject remessaParaDevolver = object(
-        	field("protocoloId", 9001),
-        	field("motivo", "")
-        );
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
-        
+                field("protocoloId", 9001),
+                field("motivo", ""));
+
+        ResultActions result = mockMvc.perform(
+                post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
+
         result.andExpect(status().isBadRequest());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
+
+    @Test
+    @WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void naoDeveAssinarUmOficioDeDevolucao() throws Exception {
         JsonObject remessaInvalida = object().get();
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
-        
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON)
+                .content(remessaInvalida.toString()));
+
         result.andExpect(status().isBadRequest());
     }
 

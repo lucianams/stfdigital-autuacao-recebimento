@@ -16,19 +16,21 @@ import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
  * Valida a API de consulta do modelo de devolução
  * 
  * @author tomas.godoi
- *
+ * @since 27.06.2016
  */
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
+@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false" },
+        classes = ApplicationContextInitializer.class)
 @WithMockOauth2User("cartoraria")
 public class ConsultasModeloDevolucaoIntegrationTests extends IntegrationTestsSupport {
 
-	@Test
+    @Test
     public void consultarModelosPorMotivo() throws Exception {
-		String motivoDevolucaoId = "2";
-		ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
-        
+        String motivoDevolucaoId = "2";
+        ResultActions result =
+                mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
+
         result.andExpect(status().isOk()).andExpect(jsonPath("$[0].id", equalTo(1)))
-        	.andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));
+                .andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));
     }
-	
+
 }

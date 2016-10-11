@@ -9,7 +9,7 @@ import br.jus.stf.core.shared.eventos.RecebimentoFinalizado;
 import br.jus.stf.core.shared.eventos.RemessaRegistrada;
 
 /**
- * Configuração do mecanismo que será usado pelo serviço para 
+ * Configuração do mecanismo que será usado pelo serviço para
  * publicação e/ou recebimento de eventos de domínio.
  * 
  * @author Rodrigo Barreiros
@@ -19,41 +19,41 @@ import br.jus.stf.core.shared.eventos.RemessaRegistrada;
  */
 @EnableBinding(StreamConfigurer.Channels.class)
 public class StreamConfigurer extends StreamConfigurerSupport {
-	
-	/**
-	 * @see br.jus.stf.core.framework.stream.StreamConfigurerSupport#serviceSchema()
-	 */
-	@Override
-	protected String serviceSchema() {
-		return "recebimento";
-	}
-	
-	/**
-	 * Declaração dos canais mencionados acima.
-	 * 
-	 * @author Rodrigo Barreiros
-	 * 
-	 * @since 1.0.0
-	 * @since 18.08.2016
-	 */
-	public interface Channels {
 
-		/**
-		 * O canal que será usado para publicação de eventos do tipo {@link RemessaRegistrada}.
-		 * 
-		 * @return o canal para as remessas registradas
-		 */
-		@Output(RemessaRegistrada.EVENT_KEY)
-		MessageChannel remessaRegistrada();
+    /**
+     * @see br.jus.stf.core.framework.stream.StreamConfigurerSupport#serviceSchema()
+     */
+    @Override
+    protected String serviceSchema() {
+        return "recebimento";
+    }
 
-		/**
-		 * O canal que será usado para publicação de eventos do tipo {@link RecebimentoFinalizado}.
-		 * 
-		 * @return o canal para os recebimentos finalizados
-		 */
-		@Output(RecebimentoFinalizado.EVENT_KEY)
-		MessageChannel recebimentoFinalizado();
+    /**
+     * Declaração dos canais mencionados acima.
+     * 
+     * @author Rodrigo Barreiros
+     * 
+     * @since 1.0.0
+     * @since 18.08.2016
+     */
+    public interface Channels {
 
-	}
+        /**
+         * O canal que será usado para publicação de eventos do tipo {@link RemessaRegistrada}.
+         * 
+         * @return o canal para as remessas registradas
+         */
+        @Output(RemessaRegistrada.EVENT_KEY)
+        MessageChannel remessaRegistrada();
+
+        /**
+         * O canal que será usado para publicação de eventos do tipo {@link RecebimentoFinalizado}.
+         * 
+         * @return o canal para os recebimentos finalizados
+         */
+        @Output(RecebimentoFinalizado.EVENT_KEY)
+        MessageChannel recebimentoFinalizado();
+
+    }
 
 }

@@ -14,16 +14,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "processos")
 public interface ProtocoloRestClient {
 
-	/**
-	 * @param categoria
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/api/identificadores")
-	Long identificador(@RequestParam(value = "categoria") String categoria);
-	
-	/**
-	 * @return
-	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/api/identificadores")
-	Long identificador();
+    /**
+     * @param categoria Representa o ano de criação da remessa.
+     * @return Próximo número de remessa para o ano informado.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/api/identificadores")
+    Long identificador(@RequestParam(value = "categoria") String categoria);
+
+    /**
+     * @return Número que será utilizado para geração do ProtocoloId.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/api/identificadores")
+    Long identificador();
 }

@@ -17,46 +17,46 @@ import br.jus.stf.core.shared.identidade.PessoaId;
  */
 @Embeddable
 public class Recebedor extends ValueObjectSupport<Recebedor> {
-	
-	@Column(name = "SIG_RECEBEDOR")
-	private String login;
-	
-	@Transient
-	private PessoaId pessoa;
-	
-	Recebedor() {
-    	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
-	}
-	
-	/**
-	 * @param login
-	 * @param pessoa
-	 */
-	public Recebedor(String login, PessoaId pessoa) {
-		Validate.notBlank(login, "Login requerido.");
-		Validate.notNull(pessoa, "Pessoa requerida.");
-		
-		this.login = login;
-		this.pessoa = pessoa;
-	}
-	
-	/**
-	 * @return
-	 */
-	public String login() {
-		return login;
-	}
-	
-	/**
-	 * @return
-	 */
-	public PessoaId pessoa() {
-		return pessoa;
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("%s", login);
-	}
+
+    @Column(name = "SIG_RECEBEDOR")
+    private String login;
+
+    @Transient
+    private PessoaId pessoa;
+
+    Recebedor() {
+        // Construtor default utilizado pelo Hibernate.
+    }
+
+    /**
+     * @param login Login do usuário recebedor.
+     * @param pessoa Pessoa associada ao recebedor.
+     */
+    public Recebedor(String login, PessoaId pessoa) {
+        Validate.notBlank(login, "Login requerido.");
+        Validate.notNull(pessoa, "Pessoa requerida.");
+
+        this.login = login;
+        this.pessoa = pessoa;
+    }
+
+    /**
+     * @return Login do usuário recebedor.
+     */
+    public String login() {
+        return login;
+    }
+
+    /**
+     * @return Pessoa associada ao recebedor.
+     */
+    public PessoaId pessoa() {
+        return pessoa;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s", login);
+    }
 
 }

@@ -20,23 +20,23 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 @Component
 public class ProtocoloRestAdapter implements ProtocoloAdapter {
 
-	@Autowired
+    @Autowired
     private ProtocoloRestClient protocoloRestClient;
-    
-	@Override
-	public Protocolo novoProtocolo() {
-		return new Protocolo(novoProtocoloId(), novoNumero());
-	}
 
-	private ProtocoloId novoProtocoloId() {
-		Long identificadorId = protocoloRestClient.identificador();
-    	return new ProtocoloId(identificadorId);
-	}
+    @Override
+    public Protocolo novoProtocolo() {
+        return new Protocolo(novoProtocoloId(), novoNumero());
+    }
 
-	private Numero novoNumero() {
-		Integer ano = now().getValue();
-		Long identificador = protocoloRestClient.identificador(ano.toString());
-    	return new Numero(identificador, ano);
-	}
-	
+    private ProtocoloId novoProtocoloId() {
+        Long identificadorId = protocoloRestClient.identificador();
+        return new ProtocoloId(identificadorId);
+    }
+
+    private Numero novoNumero() {
+        Integer ano = now().getValue();
+        Long identificador = protocoloRestClient.identificador(ano.toString());
+        return new Numero(identificador, ano);
+    }
+
 }

@@ -27,7 +27,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
@@ -56,180 +55,223 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TIP_PROCESSO")
 @Table(name = "REMESSA", schema = "RECEBIMENTO")
-public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implements AggregateRoot<Remessa, ProtocoloId> {
+public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId>
+        implements AggregateRoot<Remessa, ProtocoloId> {
 
     private static final String STATUS_REQUERIDO = "Status requerido.";
 
     @EmbeddedId
     private ProtocoloId protocoloId;
-    
+
     @ManyToOne
     @JoinColumn(name = "SIG_CLASSE", nullable = false)
-	private ClassePeticionavel classe;
-    
+    private ClassePeticionavel classe;
+
     @Embedded
-    @AttributeOverrides( {
-        @AttributeOverride(name="numero", column = @Column(name="NUM_REMESSA", nullable = false)),
-        @AttributeOverride(name="ano", column = @Column(name="NUM_ANO", nullable = false))
+    @AttributeOverrides({
+            @AttributeOverride(name = "numero", column = @Column(name = "NUM_REMESSA", nullable = false)),
+            @AttributeOverride(name = "ano", column = @Column(name = "NUM_ANO", nullable = false))
     })
     private Numero numero;
-    
-    @Column(name ="QTD_VOLUME", nullable = false)
+
+    @Column(name = "QTD_VOLUME", nullable = false)
     private Integer volumes;
-    
+
     @Column(name = "QTD_APENSO")
     private Integer apensos;
-    
-    @Column(name = "TIP_FORMA_RECEBIMENTO", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private FormaRecebimento formaRecebimento;
-    
-    @Column(name = "NUM_SEDEX")
-    private String numeroSedex;
-    
+
+    @Embedded
+    private TipoRecebimento tipoRecebimento;
+
     @Column(name = "TIP_STATUS", nullable = false)
-	@Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Status status;
-    
+
     @OneToOne(cascade = ALL)
     @JoinColumn(name = "SEQ_PROTOCOLO", referencedColumnName = "SEQ_PROTOCOLO", insertable = false, updatable = false)
     private Devolucao devolucao;
-    
+
     @OneToMany(cascade = ALL)
-    @JoinTable(name = "REMESSA_PREFERENCIA", schema = "RECEBIMENTO", joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
-		inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
+    @JoinTable(name = "REMESSA_PREFERENCIA", schema = "RECEBIMENTO",
+            joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
     private Set<Preferencia> preferencias = new HashSet<>(0);
-    
+
     @Embedded
     @Column(nullable = false)
     private Recebedor recebedor;
-    
+
     @Column(name = "DAT_RECEBIMENTO", nullable = false)
     private Date dataRecebimento = new Date();
-    
+
     @Column(name = "TIP_SIGILO", nullable = false)
     @Enumerated(EnumType.STRING)
     private Sigilo sigilo;
 
     @OneToMany(cascade = ALL)
-    @JoinTable(name = "REMESSA_EVENTO", schema = "RECEBIMENTO", joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
-		inverseJoinColumns = @JoinColumn(name = "SEQ_EVENTO", nullable = false))
+    @JoinTable(name = "REMESSA_EVENTO", schema = "RECEBIMENTO",
+            joinColumns = @JoinColumn(name = "SEQ_PROTOCOLO", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "SEQ_EVENTO", nullable = false))
     private Set<Evento> eventos = new TreeSet<>(comparing(Evento::criacao));
-    
+
     Remessa() {
-    	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
+        // Construtor default deve ser utilizado apenas pelo Hibernate.
     }
-    
+
     /**
-     * @param protocolo
-     * @param volumes
-     * @param apensos
-     * @param formaRecebimento
-     * @param numeroSedex
-     * @param sigilo
-     * @param recebedor
-     * @param status
+     * @param protocolo Protocolo com identificação da remessa.
+     * @param volumes Quantidade de volumes da remessa.
+     * @param apensos Quantidade de apensos da remessa.
+     * @param tipoRecebimento Dados do tipo de recebimento da remessa.
+     * @param sigilo Grau de sigilo da remessa.
+     * @param recebedor Usuário que registrou a remessa.
+     * @param status Status inicial do BPM para remessa.
      */
-	public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento,
-			String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
-		Validate.notNull(protocolo, "Protocolo requerido.");
-		Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Volumes inválido.");
-		Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Apensos inválido.");
-		Validate.notNull(formaRecebimento, "Forma de recebimento requerida.");
-        Validate.isTrue(isNumeroSedexInformadoQuandoExigido(formaRecebimento, numeroSedex),
-                "Forma de recebimento exige número de sedex.");
-		Validate.notNull(sigilo, "Sigilo requerido.");
-		Validate.notNull(recebedor, "Recebedor requerido.");
-    	Validate.notNull(status, STATUS_REQUERIDO);
-    	
-    	this.protocoloId = protocolo.identity();
-    	this.numero = protocolo.numero();
+    public Remessa(Protocolo protocolo, Integer volumes, Integer apensos, TipoRecebimento tipoRecebimento,
+            Sigilo sigilo, Recebedor recebedor, Status status) {
+        Validate.notNull(protocolo, "Protocolo requerido.");
+        Validate.inclusiveBetween(1, Integer.MAX_VALUE, volumes, "Quantidade de volume deve ser maior ou igual a 1.");
+        Validate.inclusiveBetween(0, Integer.MAX_VALUE, apensos, "Quantidade de apenso deve ser maior ou igual a 0.");
+        Validate.notNull(tipoRecebimento, "Tipo de recebimento requerido.");
+        Validate.notNull(sigilo, "Sigilo requerido.");
+        Validate.notNull(recebedor, "Recebedor requerido.");
+        Validate.notNull(status, STATUS_REQUERIDO);
+
+        this.protocoloId = protocolo.identity();
+        this.numero = protocolo.numero();
         this.volumes = volumes;
         this.apensos = apensos;
-        this.formaRecebimento = formaRecebimento;
-        this.numeroSedex = numeroSedex;
+        this.tipoRecebimento = tipoRecebimento;
         this.sigilo = sigilo;
         this.recebedor = recebedor;
         this.status = status;
-        
+
         registrarEvento(new RemessaRegistrada(protocolo.identity().toLong(), protocolo.toString()));
     }
 
-    private boolean isNumeroSedexInformadoQuandoExigido(FormaRecebimento formaRecebimento, String numeroSedex) {
-        return !formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex);
+    private void registrarEvento(DomainEvent<?> evento) {
+        eventos.add(new Evento(evento));
     }
-    
-	private void registrarEvento(DomainEvent<?> evento) {
-		eventos.add(new Evento(evento));
-	}
-	
+
     /**
-     * @return
+     * @param classe Classe da remessa.
+     * @param preferencias Subconjunto de preferências da classe que estão associadas com a remessa.
+     * @param sigilo Revisão do grau de sigilo da remessa.
+     * @param status Status do BPM ligado com a fase de preautuação.
      */
-    public abstract TipoProcesso tipoProcesso();
-    
     protected void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
-		Validate.notNull(classe, "Classe requerida.");
-		Validate.notNull(sigilo, "Sigilo requerido.");
-		Validate.notNull(status, STATUS_REQUERIDO);
-    	Validate.isTrue(tipoProcesso().equals(classe.tipo()), "O tipo da remessa e da classe são incompatíveis.");
-		Validate.isTrue(!Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias),
-				"Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
-    	
-    	this.classe = classe;
-    	this.sigilo = sigilo;
-    	this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
-    	this.status = status;
-    	
-    	registrarEvento(new RecebimentoFinalizado(identity().toLong(), classe.identity().toString(), tipoProcesso().toString(), sigilo().toString(), isCriminalEleitoral()));
+        Validate.notNull(classe, "Classe requerida.");
+        Validate.notNull(sigilo, "Sigilo requerido.");
+        Validate.notNull(status, STATUS_REQUERIDO);
+        Validate.isTrue(isTipoProcessoRemessaEClasseCompativeis(classe),
+                "O tipo da remessa e da classe são incompatíveis.");
+        Validate.isTrue(
+                isPreferenciasRemessaEClasseCompativeis(classe, preferencias),
+                "Alguma(s) preferência(s) não pertence(m) à classe selecionada.");
+
+        this.classe = classe;
+        this.sigilo = sigilo;
+        this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
+        this.status = status;
+
+        registrarEvento(new RecebimentoFinalizado(identity().toLong(), classe.identity().toString(),
+                tipoProcesso().toString(), sigilo().toString(), isCriminalEleitoral()));
     }
-    
+
+    private boolean isPreferenciasRemessaEClasseCompativeis(ClassePeticionavel classe, Set<Preferencia> preferencias) {
+        return !Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias);
+    }
+
+    private boolean isTipoProcessoRemessaEClasseCompativeis(ClassePeticionavel classe) {
+        return tipoProcesso().equals(classe.tipo());
+    }
+
     /**
-     * @param motivacao
-     * @param status
+     * @param motivacao Motivação da devolução da remessa.
+     * @param status Status do BPM para início de devolução.
      */
     public void iniciarDevolucao(String motivacao, Status status) {
-    	Validate.notNull(status, STATUS_REQUERIDO);
-    	
+        Validate.notNull(status, STATUS_REQUERIDO);
+
         devolucao = new Devolucao(protocoloId, motivacao);
         this.status = status;
     }
 
     /**
-     * @param motivo
-     * @param modelo
-     * @param texto
-     * @param status
+     * @param motivo Motivo de devolução.
+     * @param modelo Modelo do ofício de devolução.
+     * @param texto Texto associado com a devolução.
+     * @param status Status do BPM para elaboração do ofício.
      */
     public void elaborarDevolucao(MotivoDevolucao motivo, ModeloDevolucao modelo, TextoId texto, Status status) {
-    	Validate.notNull(devolucao, "O processo de devolução não está iniciado.");
-    	Validate.notNull(status, STATUS_REQUERIDO);
-    	
-    	devolucao = new Devolucao(protocoloId, devolucao.motivacao(), motivo, modelo, texto);
+        Validate.notNull(devolucao, "O processo de devolução não está iniciado.");
+        Validate.notNull(status, STATUS_REQUERIDO);
+
+        devolucao = new Devolucao(protocoloId, devolucao.motivacao(), motivo, modelo, texto);
         this.status = status;
     }
 
     /**
-     * @param status
+     * @param status Status do BPM para remessa devolvida.
      */
     public void devolver(Status status) {
-    	Validate.notNull(status, STATUS_REQUERIDO);
-    	
+        Validate.notNull(status, STATUS_REQUERIDO);
+
         this.status = status;
     }
-    
+
     /**
-     * @return
+     * @return Número da remssa.
      */
     public Numero numero() {
-    	return numero;
+        return numero;
     }
-    
+
     /**
-     * @return
+     * @return Grau de sigilo da remessa.
      */
     public Sigilo sigilo() {
-    	return sigilo;
+        return sigilo;
+    }
+
+    /**
+     * @return Classe da remessa preautuada.
+     */
+    public ClassePeticionavel classe() {
+        return classe;
+    }
+
+    /**
+     * @return Quantidade de volumes.
+     */
+    public Integer volumes() {
+        return volumes;
+    }
+
+    /**
+     * @return Quantidade de apensos.
+     */
+    public Integer apensos() {
+        return apensos;
+    }
+
+    /**
+     * @return Dados do tipo de recebimento.
+     */
+    public TipoRecebimento tipoRecebimento() {
+        return tipoRecebimento;
+    }
+
+    /**
+     * @return Devolução associada com a remessa.
+     */
+    public Devolucao devolucao() {
+        return devolucao;
+    }
+
+    public Boolean isCriminalEleitoral() {
+        return preferencias.stream()
+                .anyMatch(preferencia -> preferencia.isCriminalEleitoral());
     }
 
     @Override
@@ -237,50 +279,9 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId> implem
         return protocoloId;
     }
 
-	/**
-	 * @return
-	 */
-	public ClassePeticionavel classe() {
-		return classe;
-	}
+    /**
+     * @return Tipo de processo da remessa.
+     */
+    public abstract TipoProcesso tipoProcesso();
 
-	/**
-	 * @return
-	 */
-	public Integer volumes() {
-		return volumes;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer apensos() {
-		return apensos;
-	}
-
-	/**
-	 * @return
-	 */
-	public FormaRecebimento formaRecebimento() {
-		return formaRecebimento;
-	}
-
-	/**
-	 * @return
-	 */
-	public String numeroSedex() {
-		return numeroSedex;
-	}
-
-	/**
-	 * @return
-	 */
-	public Devolucao devolucao() {
-		return devolucao;
-	}
-	
-	public Boolean isCriminalEleitoral() {
-		return preferencias.stream().anyMatch(preferencia -> preferencia.isCriminalEleitoral());
-	}
-    
 }

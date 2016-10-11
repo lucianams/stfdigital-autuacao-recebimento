@@ -8,27 +8,24 @@ import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 /**
- * Command da ação assinar-oficio-devolucao presente no
- * {@link br.jus.stf.autuacao.recebimento.application.RecebimentoApplicationService}
- * 
  * @author Rodrigo Barreiros
  * 
  * @since 1.0.0
  * @since 26.12.2015
  */
-@ApiModel(description = "Command que realiza a ação de assinatura do ofício de devolução de uma remessa")
+@ApiModel(description = "Command que realiza a ação de assinatura do ofício de devolução de uma remessa.")
 public class AssinarOficioParaDevolucaoCommand {
 
     @NotNull
-    @ApiModelProperty("Protocolo da remessa")
+    @ApiModelProperty(value = "Protocolo da remessa.", required = true)
     private Long protocoloId;
 
     @NotBlank
-    @ApiModelProperty("Id do documento temporário assinado")
+    @ApiModelProperty(value = "Id do documento temporário assinado.", required = true)
     private String documentoTemporarioId;
 
     public AssinarOficioParaDevolucaoCommand() {
-    	// Construtor default.
+        // Construtor default.
     }
 
     public Long getProtocoloId() {

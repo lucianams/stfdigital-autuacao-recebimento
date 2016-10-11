@@ -13,21 +13,21 @@ import br.jus.stf.core.shared.documento.ModeloDocumentoId;
  */
 public interface ModeloDevolucaoRepository {
 
-	/**
-	 * @return
-	 */
-	List<ModeloDevolucao> findAll();
-	
-	/**
-	 * @param id
-	 * @return
-	 */
-	ModeloDevolucao findOne(ModeloDocumentoId id);
-	
-	/**
-	 * @param motivo
-	 * @return
-	 */
-	List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo);
+    /**
+     * @return Todos os modelos de devolução.
+     */
+    List<ModeloDevolucao> findAll();
+
+    /**
+     * @param id Identificador do modelo de devolução procurado.
+     * @return Um modelo de devolução.
+     */
+    ModeloDevolucao findOne(ModeloDocumentoId id);
+
+    /**
+     * @param motivo Motivo de devolução associado aos modelos procurados.
+     * @return Todos os modelos de devolução do motivo.
+     */
+    List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo);
 
 }

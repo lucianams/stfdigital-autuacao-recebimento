@@ -19,33 +19,25 @@ import br.jus.stf.autuacao.recebimento.interfaces.dto.MotivoDevolucaoDtoAssemble
  * 
  * @author Anderson.Araujo
  * @since 15.03.2016
- *
  */
 @RestController
 @RequestMapping("/api/devolucao/motivos-devolucao")
 public class MotivoDevolucaoRestResource {
-	@Autowired
-	private RemessaRepository remessaRepository;
-	
-	@Autowired
-	private MotivoDevolucaoDtoAssembler motivoDevolucaoDtoAssembler;
-	
-//	@Autowired
-//	private ModeloDtoAssembler modeloDtoAssembler;
-	
-	/**
-	 * @return
-	 */
-	@ApiOperation("Recupera os motivos de devolução de petição cadastrados.")
-	@RequestMapping(value = "", method = RequestMethod.GET)
-	public List<MotivoDevolucaoDto> listar() {
-		return remessaRepository.findAllMotivoDevolucao().stream().map(motivoDevolucaoDtoAssembler::toDto).collect(Collectors.toList());
-	}
-	
-//	@ApiOperation("Recupera os modelos de documentos de acordo com o motivo informado.")
-//	@RequestMapping(value = "/{id}/modelos", method = RequestMethod.GET)
-//	public List<ModeloDto> consultarModelosPorMotivo(@PathVariable Long id) {
-//		MotivoDevolucao motivoDevolucao = remessaRepository.findOneMotivoDevolucao(id); 
-//		return remessaRepository.findModeloByMotivoDevolucao(motivoDevolucao).stream().map(m -> modeloDtoAssembler.toDto(m)).collect(Collectors.toList());
-//	}
+
+    @Autowired
+    private RemessaRepository remessaRepository;
+
+    @Autowired
+    private MotivoDevolucaoDtoAssembler motivoDevolucaoDtoAssembler;
+
+    /**
+     * @return Todos os motivos de devolução de remessa.
+     */
+    @ApiOperation(value = "Lista todos os motivos de devolução de remessa.", httpMethod = "GET")
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<MotivoDevolucaoDto> listar() {
+        return remessaRepository.findAllMotivoDevolucao().stream()
+                .map(motivoDevolucaoDtoAssembler::toDto)
+                .collect(Collectors.toList());
+    }
 }

@@ -15,12 +15,11 @@ import org.springframework.context.annotation.Profile;
  */
 @Configuration
 public class H2WebServerConfigurer {
-	
-	@Profile("development")
-	@Bean(initMethod = "start", destroyMethod = "stop")
-	public Server h2WebServer() throws SQLException {
-		return Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8191");	
-	}
-	
-}
 
+    @Profile("development")
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public Server h2WebServer() throws SQLException {
+        return Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8191");
+    }
+
+}

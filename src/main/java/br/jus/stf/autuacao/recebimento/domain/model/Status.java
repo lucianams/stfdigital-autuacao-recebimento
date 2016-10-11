@@ -7,7 +7,7 @@ package br.jus.stf.autuacao.recebimento.domain.model;
  * @since 12.02.2016
  */
 public enum Status {
-    
+
     PREAUTUACAO(),
     RECEBIDA(),
     DEVOLUCAO(),

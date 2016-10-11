@@ -14,15 +14,15 @@ import br.jus.stf.autuacao.recebimento.domain.model.documento.ModeloDevolucao;
 @Component
 public class ModeloDtoAssembler {
 
-	/**
-	 * @param modelo
-	 * @return
-	 */
-	public ModeloDevolucaoDto toDto(ModeloDevolucao modelo) {
-		Validate.notNull(modelo);
+    /**
+     * @param modelo Modelo de devolução
+     * @return Um DTO do modelo de devolução.
+     */
+    public ModeloDevolucaoDto toDto(ModeloDevolucao modelo) {
+        Validate.notNull(modelo);
 
-		return new ModeloDevolucaoDto(modelo.identity().toLong(), modelo.tipo().toLong(), modelo.nome(),
-				modelo.template().toLong());
-	}
+        return new ModeloDevolucaoDto(modelo.identity().toLong(), modelo.tipo().toLong(), modelo.nome(),
+                modelo.template().toLong());
+    }
 
 }

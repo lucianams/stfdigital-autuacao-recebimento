@@ -22,31 +22,31 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 public class RemessaOriginario extends Remessa {
 
     RemessaOriginario() {
-    	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
+        // Construtor default que deve ser utilizado apenas pelo Hibernate.
     }
-    
+
     /**
-     * @param protocolo
-     * @param volumes
-     * @param apensos
-     * @param formaRecebimento
-     * @param numeroSedex
-     * @param sigilo
-     * @param recebedor
-     * @param status
+     * @param protocolo Protocolo com identificação da remessa.
+     * @param volumes Quantidade de volumes da remessa.
+     * @param apensos Quantidade de apensos da remessa.
+     * @param tipoRecebimento Dados do tipo de recebimento da remessa.
+     * @param sigilo Grau de sigilo da remessa.
+     * @param recebedor Usuário que cadastrou a remessa.
+     * @param status Status inicial do BPM para remessa.
      */
-    public RemessaOriginario(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento, String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
-		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
+    public RemessaOriginario(Protocolo protocolo, Integer volumes, Integer apensos, TipoRecebimento tipoRecebimento,
+            Sigilo sigilo, Recebedor recebedor, Status status) {
+        super(protocolo, volumes, apensos, tipoRecebimento, sigilo, recebedor, status);
     }
     
     @Override
     public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo, Status status) {
-		super.preautuar(classe, preferencias, sigilo, status);
+        super.preautuar(classe, preferencias, sigilo, status);
     }
-    
+
     @Override
     public TipoProcesso tipoProcesso() {
-    	return TipoProcesso.ORIGINARIO;
+        return TipoProcesso.ORIGINARIO;
     }
-    
+
 }

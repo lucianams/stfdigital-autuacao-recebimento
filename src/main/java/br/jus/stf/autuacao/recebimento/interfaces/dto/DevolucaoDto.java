@@ -8,57 +8,58 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  * 
  * @since 22.06.2016
  */
-@ApiModel("Representa uma devolução.")
+@ApiModel(description = "DTO que representa uma devolução.")
 public class DevolucaoDto {
 
-	@ApiModelProperty("O id da remessa.")
-	private Long remessaProtocoloId;
-	
-	@ApiModelProperty("Número da remessa.")
-	private Long remessaNumero;
-	
-	@ApiModelProperty("Ano da remessa.")
-	private Integer remessaAno;
+    @ApiModelProperty(value = "O id da remessa.")
+    private Long remessaProtocoloId;
 
-	@ApiModelProperty("Modelo de devolução.")
-	private ModeloDevolucaoDto modeloDevolucao;
+    @ApiModelProperty(value = "Número da remessa.")
+    private Long remessaNumero;
 
-	@ApiModelProperty("O id do texto.")
-	private Long textoId;
+    @ApiModelProperty(value = "Ano da remessa.")
+    private Integer remessaAno;
 
-	/**
-	 * @param remessaProtocoloId
-	 * @param remessaNumero
-	 * @param remessaAno
-	 * @param modeloDevolucao
-	 * @param textoId
-	 */
-	public DevolucaoDto(Long remessaProtocoloId, Long remessaNumero, Integer remessaAno, ModeloDevolucaoDto modeloDevolucao, Long textoId) {
-		this.remessaProtocoloId = remessaProtocoloId;
-		this.remessaNumero = remessaNumero;
-		this.remessaAno = remessaAno;
-		this.modeloDevolucao = modeloDevolucao;
-		this.textoId = textoId;
-	}
-	
-	public Long getRemessaProtocoloId() {
-		return remessaProtocoloId;
-	}
+    @ApiModelProperty(value = "Modelo de devolução.")
+    private ModeloDevolucaoDto modeloDevolucao;
 
-	public Long getRemessaNumero() {
-		return remessaNumero;
-	}
+    @ApiModelProperty(value = "O id do texto.")
+    private Long textoId;
 
-	public Integer getRemessaAno() {
-		return remessaAno;
-	}
+    /**
+     * @param remessaProtocoloId O id da remessa.
+     * @param remessaNumero Número da remessa.
+     * @param remessaAno Ano da remessa.
+     * @param modeloDevolucao odelo de devolução.
+     * @param textoId O id do texto.
+     */
+    public DevolucaoDto(Long remessaProtocoloId, Long remessaNumero, Integer remessaAno,
+            ModeloDevolucaoDto modeloDevolucao, Long textoId) {
+        this.remessaProtocoloId = remessaProtocoloId;
+        this.remessaNumero = remessaNumero;
+        this.remessaAno = remessaAno;
+        this.modeloDevolucao = modeloDevolucao;
+        this.textoId = textoId;
+    }
 
-	public ModeloDevolucaoDto getModeloDevolucao() {
-		return modeloDevolucao;
-	}
+    public Long getRemessaProtocoloId() {
+        return remessaProtocoloId;
+    }
 
-	public Long getTextoId() {
-		return textoId;
-	}
+    public Long getRemessaNumero() {
+        return remessaNumero;
+    }
+
+    public Integer getRemessaAno() {
+        return remessaAno;
+    }
+
+    public ModeloDevolucaoDto getModeloDevolucao() {
+        return modeloDevolucao;
+    }
+
+    public Long getTextoId() {
+        return textoId;
+    }
 
 }

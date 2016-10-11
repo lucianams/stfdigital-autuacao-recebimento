@@ -3,8 +3,6 @@ package br.jus.stf.autuacao.recebimento.application.commands;
 import com.wordnik.swagger.annotations.ApiModel;
 
 /**
- * Objeto usado para enviar os dados necessários para préautuar uma remessa originária.
- * 
  * @author Anderson Araújo
  * @author Rodrigo Barreiros
  * 
@@ -14,9 +12,8 @@ import com.wordnik.swagger.annotations.ApiModel;
 @ApiModel("Command que realiza a ação de preautuação de uma remessa originária.")
 public class PreautuarOriginarioCommand extends PreautuarCommand {
 
-	public PreautuarOriginarioCommand() {
-    	// Construtor default.
+    public PreautuarOriginarioCommand() {
+        // Construtor default.
     }
-	
-}
 
+}

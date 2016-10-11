@@ -11,10 +11,10 @@ import br.jus.stf.core.shared.preferencia.PreferenciaId;
 @FunctionalInterface
 public interface PreferenciaRepository {
 
-	/**
-	 * @param id
-	 * @return
-	 */
-	Preferencia findOne(PreferenciaId id);
+    /**
+     * @param id Identificador da preferência produrada.
+     * @return Uma preferência.
+     */
+    Preferencia findOne(PreferenciaId id);
 
 }

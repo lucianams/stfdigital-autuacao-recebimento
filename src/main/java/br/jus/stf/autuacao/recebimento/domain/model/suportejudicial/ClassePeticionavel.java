@@ -33,72 +33,73 @@ import br.jus.stf.core.shared.processo.TipoProcesso;
 @Entity
 @Table(name = "CLASSE_PETICIONAVEL", schema = "RECEBIMENTO")
 public class ClassePeticionavel extends EntitySupport<ClassePeticionavel, ClasseId> {
-	
-	@EmbeddedId
-	private ClasseId sigla;
-	
-	@Column(name = "NOM_CLASSE")
-	private String nome;
-	
-	@OneToMany(cascade = ALL, fetch = EAGER)
-    @JoinTable(name = "CLASSE_PREFERENCIA", schema = "RECEBIMENTO", joinColumns = @JoinColumn(name = "SIG_CLASSE", nullable = false),
-		inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
-	private Set<Preferencia> preferencias = new HashSet<>(0);
-	
-	@Column(name = "TIP_PROCESSO", nullable = false)
+
+    @EmbeddedId
+    private ClasseId sigla;
+
+    @Column(name = "NOM_CLASSE")
+    private String nome;
+
+    @OneToMany(cascade = ALL, fetch = EAGER)
+    @JoinTable(name = "CLASSE_PREFERENCIA", schema = "RECEBIMENTO",
+            joinColumns = @JoinColumn(name = "SIG_CLASSE", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "SEQ_PREFERENCIA", nullable = false))
+    private Set<Preferencia> preferencias = new HashSet<>(0);
+
+    @Column(name = "TIP_PROCESSO", nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoProcesso tipo;
-	
-	ClassePeticionavel() {
-		// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
-	}
-	
-	/**
-	 * @param sigla
-	 * @param nome
-	 * @param tipo
-	 * @param preferencias
-	 */
-	public ClassePeticionavel(ClasseId sigla, String nome, TipoProcesso tipo, Set<Preferencia> preferencias) {
-		Validate.notNull(sigla, "Sigle requerida.");
-		Validate.notBlank(nome, "Nome requerido.");
-		Validate.notNull(tipo, "Tipo requerido.");
-		
-		this.sigla = sigla;
-		this.nome = nome;
-		this.tipo = tipo;
-		this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
-	}
-	
-	@Override
-	public ClasseId identity() {
-		return sigla;
-	}
-	
-	/**
-	 * @return
-	 */
-	public String nome() {
-		return nome;
-	}
-	
-	/**
-	 * @return
-	 */
-	public TipoProcesso tipo() {
-		return tipo;
-	}
-	
-	/**
-	 * @return
-	 */
-	public Set<Preferencia> preferencias() {
-		return Collections.unmodifiableSet(preferencias);
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("%s - %s", sigla.toString(), nome);
-	}
+
+    ClassePeticionavel() {
+        // Construtor default utilizado pelo Hibernate.
+    }
+
+    /**
+     * @param sigla Sigla da classe.
+     * @param nome Nome da classe.
+     * @param tipo Tipo de processo associado a classe.
+     * @param preferencias Preferências da classe.
+     */
+    public ClassePeticionavel(ClasseId sigla, String nome, TipoProcesso tipo, Set<Preferencia> preferencias) {
+        Validate.notNull(sigla, "Sigla requerida.");
+        Validate.notBlank(nome, "Nome requerido.");
+        Validate.notNull(tipo, "Tipo requerido.");
+
+        this.sigla = sigla;
+        this.nome = nome;
+        this.tipo = tipo;
+        this.preferencias = Optional.ofNullable(preferencias).orElse(new HashSet<>(0));
+    }
+
+    /**
+     * @return Nome da classe.
+     */
+    public String nome() {
+        return nome;
+    }
+
+    /**
+     * @return Tipo de processo associado a classe.
+     */
+    public TipoProcesso tipo() {
+        return tipo;
+    }
+
+    /**
+     * @return Preferências da clase.
+     */
+    public Set<Preferencia> preferencias() {
+        return Collections.unmodifiableSet(preferencias);
+    }
+
+    @Override
+    public ClasseId identity() {
+        return sigla;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s", sigla.toString(), nome);
+    }
 
 }

@@ -22,31 +22,34 @@ import br.jus.stf.autuacao.recebimento.interfaces.dto.ModeloDtoAssembler;
  * API Rest para recuperar os modelos de devolução.
  * 
  * @author Tomas.Godoi
- *
+ * @since 31.05.2016
  */
 @RestController
 @RequestMapping("/api/devolucao")
 public class ModeloDevolucaoRestResource {
 
-	@Autowired
-	private RemessaRepository remessaRepository;
+    @Autowired
+    private RemessaRepository remessaRepository;
 
-	@Autowired
-	private ModeloDevolucaoRepository modeloDevolucaoRepository;
+    @Autowired
+    private ModeloDevolucaoRepository modeloDevolucaoRepository;
 
-	@Autowired
-	private ModeloDtoAssembler modeloDtoAssembler;
+    @Autowired
+    private ModeloDtoAssembler modeloDtoAssembler;
 
-	/**
-	 * @param idMotivo
-	 * @return
-	 */
-	@ApiOperation("Recupera os modelos de devolução de remessa")
-	@RequestMapping(value = "/motivos-devolucao/{idMotivo}/modelos", method = RequestMethod.GET)
-	public List<ModeloDevolucaoDto> consultarPorModeloDevolucao(@PathVariable("idMotivo") Long idMotivo) {
-		MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(idMotivo);
-		List<ModeloDevolucao> modelos = modeloDevolucaoRepository.findModeloDevolucaoByMotivoDevolucao(motivo);
-		return modelos.stream().map(modeloDtoAssembler::toDto).collect(Collectors.toList());
-	}
+    /**
+     * @param idMotivo Identificador do motivo de devolução.
+     * @return Todos os modelos de devolução de um motivo.
+     */
+    @ApiOperation(value = "Lista todos os modelos de devolução de um motivo.", httpMethod = "GET")
+    @RequestMapping(value = "/motivos-devolucao/{idMotivo}/modelos", method = RequestMethod.GET)
+    public List<ModeloDevolucaoDto> consultarPorModeloDevolucao(@PathVariable("idMotivo") Long idMotivo) {
+        MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(idMotivo);
+        List<ModeloDevolucao> modelos = modeloDevolucaoRepository.findModeloDevolucaoByMotivoDevolucao(motivo);
+
+        return modelos.stream()
+                .map(modeloDtoAssembler::toDto)
+                .collect(Collectors.toList());
+    }
 
 }

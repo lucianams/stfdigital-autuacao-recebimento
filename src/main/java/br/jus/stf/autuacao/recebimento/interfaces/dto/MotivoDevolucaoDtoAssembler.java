@@ -1,4 +1,5 @@
 package br.jus.stf.autuacao.recebimento.interfaces.dto;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,14 @@ import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
  */
 @Component
 public class MotivoDevolucaoDtoAssembler {
-	
-	/**
-	 * @param motivo
-	 * @return
-	 */
-	public MotivoDevolucaoDto toDto(MotivoDevolucao motivo) {
-		Validate.notNull(motivo);
-		Set<Long> tiposDocumento = motivo.tiposDocumento().stream().map(t -> t.toLong()).collect(Collectors.toSet());
-		return new MotivoDevolucaoDto(motivo.identity(), motivo.descricao(), tiposDocumento);
-	}
+
+    /**
+     * @param motivo Motivo de devolução.
+     * @return Um DTO do motivo de devolução.
+     */
+    public MotivoDevolucaoDto toDto(MotivoDevolucao motivo) {
+        Validate.notNull(motivo);
+        Set<Long> tiposDocumento = motivo.tiposDocumento().stream().map(t -> t.toLong()).collect(Collectors.toSet());
+        return new MotivoDevolucaoDto(motivo.identity(), motivo.descricao(), tiposDocumento);
+    }
 }

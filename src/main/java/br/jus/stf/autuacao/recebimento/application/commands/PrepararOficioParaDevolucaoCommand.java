@@ -15,40 +15,40 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
 @ApiModel("Command que realiza a ação de preparação para devolução de uma remessa.")
 public class PrepararOficioParaDevolucaoCommand {
 
-	@ApiModelProperty(value = "Id do protocolo da remessa.", required = true)
-	@NotNull
-	private Long protocoloId;
-    
-	@ApiModelProperty(value = "Id do motivo da devolução.", required = true)
     @NotNull
+    @ApiModelProperty(value = "Id do protocolo da remessa.", required = true)
+    private Long protocoloId;
+
+    @NotNull
+    @ApiModelProperty(value = "Id do motivo da devolução.", required = true)
     private Long motivo;
-    
-	@ApiModelProperty(value = "Id do modelo de devolução.", required = true)
+
     @NotNull
+    @ApiModelProperty(value = "Id do modelo de devolução.", required = true)
     private Long modeloId;
-    
-	@ApiModelProperty(value = "Id do texto vinculado com a devolução.", required = true)
+
     @NotNull
+    @ApiModelProperty(value = "Id do texto vinculado com a devolução.", required = true)
     private Long textoId;
-    
+
     public PrepararOficioParaDevolucaoCommand() {
-    	// Construtor default.
+        // Construtor default.
     }
-    
+
     public Long getProtocoloId() {
         return protocoloId;
     }
-    
+
     public Long getMotivo() {
-    	return motivo;
+        return motivo;
     }
-    
+
     public Long getModeloId() {
-    	return modeloId;
+        return modeloId;
     }
-    
+
     public Long getTextoId() {
-    	return textoId;
+        return textoId;
     }
-    
+
 }

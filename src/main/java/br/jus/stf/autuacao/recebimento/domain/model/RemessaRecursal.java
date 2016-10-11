@@ -23,54 +23,53 @@ import br.jus.stf.core.shared.protocolo.Protocolo;
 @Entity
 @DiscriminatorValue("RECURSAL")
 public class RemessaRecursal extends Remessa {
-	
-	@Column(name = "NUM_PROCESSO_ORIGEM")
-	private String numeroProcessoOrigem;
-	
-	@Column(name = "NUM_UNICO_PROCESSO")
-	private String numeroUnicoProcesso;
-	
-	RemessaRecursal() {
-    	// Deve ser usado apenas pelo Hibernate, que sempre usa o construtor default antes de popular uma nova instância.
+
+    @Column(name = "NUM_PROCESSO_ORIGEM")
+    private String numeroProcessoOrigem;
+
+    @Column(name = "NUM_UNICO_PROCESSO")
+    private String numeroUnicoProcesso;
+
+    RemessaRecursal() {
+        // Construtor default que deve ser utilizado apenas pelo Hibernate.
     }
-    
-	/**
-	 * @param protocolo
-	 * @param volumes
-	 * @param apensos
-	 * @param formaRecebimento
-	 * @param numeroSedex
-	 * @param sigilo
-	 * @param recebedor
-	 * @param status
-	 */
-	public RemessaRecursal(Protocolo protocolo, Integer volumes, Integer apensos, FormaRecebimento formaRecebimento,
-			String numeroSedex, Sigilo sigilo, Recebedor recebedor, Status status) {
-		super(protocolo, volumes, apensos, formaRecebimento, numeroSedex, sigilo, recebedor, status);
+
+    /**
+     * @param protocolo Protocolo com identificação da remessa.
+     * @param volumes Quantidade de volumes da remessa.
+     * @param apensos Quantidade de apensos da remessa.
+     * @param tipoRecebimento Dados do tipo de recebimento da remessa.
+     * @param sigilo Grau de sigilo da remessa.
+     * @param recebedor Usuário que cadastrou a remessa.
+     * @param status Status inicial do BPM para remessa.
+     */
+    public RemessaRecursal(Protocolo protocolo, Integer volumes, Integer apensos, TipoRecebimento tipoRecebimento,
+            Sigilo sigilo, Recebedor recebedor, Status status) {
+        super(protocolo, volumes, apensos, tipoRecebimento, sigilo, recebedor, status);
     }
-	
-	/**
-	 * @param classe
-	 * @param preferencias
-	 * @param sigilo
-	 * @param numeroProcessoOrigem
-	 * @param numeroUnicoProcesso
-	 * @param status
-	 */
-	public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo,
-			String numeroProcessoOrigem, String numeroUnicoProcesso, Status status) {
-		super.preautuar(classe, preferencias, sigilo, status);
-		
-		Validate.notBlank(numeroProcessoOrigem, "Número na origem requerido.");
-		Validate.notBlank(numeroUnicoProcesso, "Número único requerido.");
-		
-		this.numeroProcessoOrigem = numeroProcessoOrigem;
-		this.numeroUnicoProcesso = numeroUnicoProcesso;
+
+    /**
+     * @param classe Classe da remessa.
+     * @param preferencias Subconjunto de preferências da classe que estão associadas com a remessa.
+     * @param sigilo Revisão do grau de sigilo da remessa.
+     * @param numeroProcessoOrigem Número do processo na origem.
+     * @param numeroUnicoProcesso Número único do processo (NUP).
+     * @param status Status do BPM ligado com a fase de preautuação.
+     */
+    public void preautuar(ClassePeticionavel classe, Set<Preferencia> preferencias, Sigilo sigilo,
+            String numeroProcessoOrigem, String numeroUnicoProcesso, Status status) {
+        super.preautuar(classe, preferencias, sigilo, status);
+
+        Validate.notBlank(numeroProcessoOrigem, "Número na origem requerido.");
+        Validate.notBlank(numeroUnicoProcesso, "Número único requerido.");
+
+        this.numeroProcessoOrigem = numeroProcessoOrigem;
+        this.numeroUnicoProcesso = numeroUnicoProcesso;
     }
-    
+
     @Override
-	public TipoProcesso tipoProcesso() {
-    	return TipoProcesso.RECURSAL;
+    public TipoProcesso tipoProcesso() {
+        return TipoProcesso.RECURSAL;
     }
-    
+
 }

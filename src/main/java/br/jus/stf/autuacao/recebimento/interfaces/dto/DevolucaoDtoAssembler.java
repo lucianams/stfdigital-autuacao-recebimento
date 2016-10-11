@@ -13,19 +13,19 @@ import br.jus.stf.autuacao.recebimento.domain.model.Remessa;
 @Component
 public class DevolucaoDtoAssembler {
 
-	@Autowired
-	private ModeloDtoAssembler modeloDtoAssembler;
-	
-	/**
-	 * @param remessa
-	 * @return
-	 */
-	public DevolucaoDto toDto(Remessa remessa) {
-		return new DevolucaoDto(remessa.identity().toLong(),
-			remessa.numero().numero(),
-			remessa.numero().ano(),
-			modeloDtoAssembler.toDto(remessa.devolucao().modelo()),
-			remessa.devolucao().texto().toLong());
-	}
-	
+    @Autowired
+    private ModeloDtoAssembler modeloDtoAssembler;
+
+    /**
+     * @param remessa Remessa.
+     * @return Um DTO da remessa.
+     */
+    public DevolucaoDto toDto(Remessa remessa) {
+        return new DevolucaoDto(remessa.identity().toLong(),
+                remessa.numero().numero(),
+                remessa.numero().ano(),
+                modeloDtoAssembler.toDto(remessa.devolucao().modelo()),
+                remessa.devolucao().texto().toLong());
+    }
+
 }

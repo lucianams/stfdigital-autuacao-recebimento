@@ -37,76 +37,75 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  * @since 1.0.0
  * @since 01.08.2016
  */
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
+@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false" },
+        classes = ApplicationContextInitializer.class)
 @Transactional
 public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
 
-	@MockBean
+    @MockBean
     private ProtocoloRestAdapter protocoloAdapter;
-	
-	@MockBean
-	private RabbitTemplate rabbitTemplate;
-	
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@Before
-	public void configuracao() {
-		MockitoAnnotations.initMocks(this);
-		
-		given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
-	}
-	
-	@Test
-	@WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
+
+    @MockBean
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Before
+    public void configuracao() {
+        MockitoAnnotations.initMocks(this);
+
+        given(protocoloAdapter.novoProtocolo()).willReturn(new Protocolo(new ProtocoloId(1L), new Numero(1L, 2016)));
+    }
+
+    @Test
+    @WithMockOauth2User(value = "recebedor", components = "registrar-remessa")
     public void registrarUmaRemessa() throws Exception {
-		JsonObject remessaValida = object(
-			field("formaRecebimento", "SEDEX"),
-			field("volumes", 1),
-			field("tipoProcesso", "RECURSAL"),
-			field("apensos", 1),
-			field("numeroSedex", "SR123456789BR"),
-			field("sigilo", "PUBLICO")
-		);
-		ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
-				.contentType(APPLICATION_JSON).content(remessaValida.toString()));
+        JsonObject remessaValida = object(
+                field("formaRecebimento", "SEDEX"),
+                field("volumes", 1),
+                field("tipoProcesso", "RECURSAL"),
+                field("apensos", 1),
+                field("numeroSedex", "SR123456789BR"),
+                field("sigilo", "PUBLICO"));
         
+        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
+                .contentType(APPLICATION_JSON).content(remessaValida.toString()));
+
         result.andExpect(status().isOk());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
     public void preautarUmaRemessa() throws Exception {
         loadDataTests("preautuarRemessaRecursal.sql");
-        
-		JsonObject remessaParaPreautuar = object(
-			field("protocoloId", 9007),
-			field("classeId", "RE"),
-			field("numeroProcessoOrigem", "RE-100"),
-			field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
-			field("preferencias", array(1)),
-			field("sigilo", "PUBLICO")
-		);
 
-		ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
-				.content(remessaParaPreautuar.toString()));
-        
+        JsonObject remessaParaPreautuar = object(
+                field("protocoloId", 9007),
+                field("classeId", "RE"),
+                field("numeroProcessoOrigem", "RE-100"),
+                field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
+                field("preferencias", array(1)),
+                field("sigilo", "PUBLICO"));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
+                .content(remessaParaPreautuar.toString()));
+
         result.andExpect(status().isOk());
     }
-	
-	@Test
-	@WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
-        		field("classeId", "RE"),
-    			field("numeroProcessoOrigem", "RE-100"),
-    			field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
-    			field("sigilo", "PUBLICO")
-        );
-        
-		ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
-				.content(remessaInvalida.toString()));
-        
+                field("classeId", "RE"),
+                field("numeroProcessoOrigem", "RE-100"),
+                field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
+                field("sigilo", "PUBLICO"));
+
+        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
+                .content(remessaInvalida.toString()));
+
         result.andExpect(status().isBadRequest());
     }
 

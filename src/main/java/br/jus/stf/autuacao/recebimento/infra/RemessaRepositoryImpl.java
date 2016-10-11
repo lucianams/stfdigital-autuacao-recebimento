@@ -23,46 +23,46 @@ import br.jus.stf.core.shared.protocolo.ProtocoloId;
  */
 @Repository
 public class RemessaRepositoryImpl extends SimpleJpaRepository<Remessa, ProtocoloId> implements RemessaRepository {
-	
-	private EntityManager entityManager;
 
-	/**
-	 * @param entityManager
-	 */
-	@Autowired
+    private EntityManager entityManager;
+
+    /**
+     * @param entityManager Entity manager.
+     */
+    @Autowired
     public RemessaRepositoryImpl(EntityManager entityManager) {
         super(Remessa.class, entityManager);
         this.entityManager = entityManager;
     }
-	
-	/** Motivo de devolução **/
-	
-	@Override
-	public MotivoDevolucao findOneMotivoDevolucao(Long id) {
-		TypedQuery<MotivoDevolucao> query = entityManager
-				.createQuery("FROM MotivoDevolucao motivo WHERE motivo.id = :id", MotivoDevolucao.class);
 
-		query.setParameter("id", id);
-		
-		return query.getResultList().stream().findFirst().orElse(null);
-	}
-	
-	@Override
-	public List<MotivoDevolucao> findAllMotivoDevolucao() {
-		TypedQuery<MotivoDevolucao> query = entityManager
-				.createQuery("FROM MotivoDevolucao motivo ORDER BY motivo.descricao", MotivoDevolucao.class);
+    /** Motivo de devolução **/
 
-		return query.getResultList();
-	}
-	
-	@Override
-	public <M extends MotivoDevolucao> M saveMotivoDevolucao(M motivo) {
-		return entityManager.merge(motivo);
-	}
-	
-	@Override
-	public void deleteMotivoDevolucao(MotivoDevolucao motivo) {
-		entityManager.remove(motivo);
-	}
+    @Override
+    public MotivoDevolucao findOneMotivoDevolucao(Long id) {
+        TypedQuery<MotivoDevolucao> query = entityManager
+                .createQuery("FROM MotivoDevolucao motivo WHERE motivo.id = :id", MotivoDevolucao.class);
+
+        query.setParameter("id", id);
+
+        return query.getResultList().stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public List<MotivoDevolucao> findAllMotivoDevolucao() {
+        TypedQuery<MotivoDevolucao> query = entityManager
+                .createQuery("FROM MotivoDevolucao motivo ORDER BY motivo.descricao", MotivoDevolucao.class);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public <M extends MotivoDevolucao> M saveMotivoDevolucao(M motivo) {
+        return entityManager.merge(motivo);
+    }
+
+    @Override
+    public void deleteMotivoDevolucao(MotivoDevolucao motivo) {
+        entityManager.remove(motivo);
+    }
 
 }

@@ -16,17 +16,18 @@ import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
  * Valida a API de consulta de motivo de devolução
  * 
  * @author tomas.godoi
- *
+ * @since 27.06.2016
  */
-@SpringBootTest(value = {"server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false"}, classes = ApplicationContextInitializer.class)
+@SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false" },
+        classes = ApplicationContextInitializer.class)
 @WithMockOauth2User("cartoraria")
 public class ConsultasMotivoDevolucaoIntegrationTests extends IntegrationTestsSupport {
 
-	@Test
+    @Test
     public void listarMotivosDevolucao() throws Exception {
-		ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao"));
-        
+        ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao"));
+
         result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)));
     }
-	
+
 }

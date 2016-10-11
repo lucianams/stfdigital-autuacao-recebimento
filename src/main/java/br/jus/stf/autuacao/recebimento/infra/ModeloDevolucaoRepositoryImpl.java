@@ -21,27 +21,28 @@ import br.jus.stf.core.shared.documento.ModeloDocumentoId;
  * @since 15.04.2016
  */
 @Repository
-public class ModeloDevolucaoRepositoryImpl extends SimpleJpaRepository<ModeloDevolucao, ModeloDocumentoId> implements ModeloDevolucaoRepository {
+public class ModeloDevolucaoRepositoryImpl extends SimpleJpaRepository<ModeloDevolucao, ModeloDocumentoId>
+        implements ModeloDevolucaoRepository {
 
-	private EntityManager entityManager;
-	
-	/**
-	 * @param entityManager
-	 */
-	@Autowired
+    private EntityManager entityManager;
+
+    /**
+     * @param entityManager Entity manager.
+     */
+    @Autowired
     public ModeloDevolucaoRepositoryImpl(EntityManager entityManager) {
         super(ModeloDevolucao.class, entityManager);
         this.entityManager = entityManager;
     }
-	
-	@Override
-	public List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo) {
-		TypedQuery<ModeloDevolucao> query = entityManager.createQuery(
-				"FROM ModeloDevolucao modelo WHERE modelo.tipo IN :tipos ORDER BY modelo.nome", ModeloDevolucao.class);
 
-		query.setParameter("tipos", motivo.tiposDocumento());
-		
-		return query.getResultList();
-	}
-    
+    @Override
+    public List<ModeloDevolucao> findModeloDevolucaoByMotivoDevolucao(MotivoDevolucao motivo) {
+        TypedQuery<ModeloDevolucao> query = entityManager.createQuery(
+                "FROM ModeloDevolucao modelo WHERE modelo.tipo IN :tipos ORDER BY modelo.nome", ModeloDevolucao.class);
+
+        query.setParameter("tipos", motivo.tiposDocumento());
+
+        return query.getResultList();
+    }
+
 }

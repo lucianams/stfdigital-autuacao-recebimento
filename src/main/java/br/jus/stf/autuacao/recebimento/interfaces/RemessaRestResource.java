@@ -61,8 +61,9 @@ public class RemessaRestResource {
     private DevolucaoDtoAssembler devolucaoDtoAssembler;
 
     /**
-     * @return
+     * @return Todas as remessas.
      */
+    @ApiOperation(value = "Lista todas as remessas.", httpMethod = "GET")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<RemessaDto> listar() {
         return remessaRepository.findAll().stream()
@@ -71,9 +72,10 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command para registrar uma remessa.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Registra uma remessa.", httpMethod = "POST")
     @RequestMapping(value = "/recebimento", method = RequestMethod.POST)
     public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -84,18 +86,20 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param id
-     * @return
+     * @param id Identificador da remessa.
+     * @return DTO da remessa procurada.
      */
+    @ApiOperation(value = "Consulta uma remessa pelo ID.", httpMethod = "GET")
     @RequestMapping(value = "/{protocoloId}", method = RequestMethod.GET)
     public RemessaDto consultarRemessa(@PathVariable("protocoloId") Long id) {
         return remessaDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command para preautuar uma remessa originária.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Preautua uma remessa originária.", httpMethod = "POST")
     @RequestMapping(value = "/preautuacao", method = RequestMethod.POST)
     public void preautuar(@RequestBody @Valid PreautuarOriginarioCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -106,9 +110,10 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command para preautuar uma remessa recursal.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Preautua uma remessa recursal.", httpMethod = "POST")
     @RequestMapping(value = "/preautuacao-recursal", method = RequestMethod.POST)
     public void preautuarRecursal(@RequestBody @Valid PreautuarRecursalCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -119,9 +124,10 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command para iniciar devolução de uma remessa.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Inicia a devolução de uma remessa.", httpMethod = "POST")
     @RequestMapping(value = "/devolucao", method = RequestMethod.POST)
     public void devolver(@RequestBody @Valid DevolverRemessaCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -132,9 +138,10 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command que prepara ofício de devolução.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Prepara ofício de devolução de uma remessa.", httpMethod = "POST")
     @RequestMapping(value = "/devolucao-oficio", method = RequestMethod.POST)
     public void prepararOficio(@RequestBody @Valid PrepararOficioParaDevolucaoCommand command, BindingResult binding) {
         if (binding.hasErrors()) {
@@ -145,11 +152,11 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param command
-     * @param binding
+     * @param command Command para assinar ofício de devolução da remessa.
+     * @param binding Binding com resultado da validação.
      */
+    @ApiOperation(value = "Realiza a assinatura do ofício de devolução de uma remessa.", httpMethod = "POST")
     @RequestMapping(value = "/devolucao-assinatura", method = RequestMethod.POST)
-    @ApiOperation(value = "Realiza a assinatura do ofício de devolução de uma remessa")
     public void assinarOficio(@RequestBody @Valid AssinarOficioParaDevolucaoCommand command,
             BindingResult binding) {
         if (binding.hasErrors()) {
@@ -160,8 +167,9 @@ public class RemessaRestResource {
     }
 
     /**
-     * @return
+     * @return Todas as formas de recebimento.
      */
+    @ApiOperation(value = "Lista todas as formas de recebimento.", httpMethod = "GET")
     @RequestMapping(value = "/formas-recebimento", method = RequestMethod.GET)
     public List<FormaRecebimentoDto> consultarFormasRecebimento() {
         return Arrays.asList(FormaRecebimento.values()).stream()
@@ -170,8 +178,9 @@ public class RemessaRestResource {
     }
 
     /**
-     * @return
+     * @return Todos os sigilos.
      */
+    @ApiOperation(value = "Lista todos os sigilos.", httpMethod = "GET")
     @RequestMapping(value = "/sigilos", method = RequestMethod.GET)
     public List<SigiloDto> consultarSigilos() {
         return Arrays.asList(Sigilo.values()).stream()
@@ -180,9 +189,10 @@ public class RemessaRestResource {
     }
 
     /**
-     * @param id
-     * @return
+     * @param id Identificador da remessa vinculada com a devolução.
+     * @return DTO com devolução procurada.
      */
+    @ApiOperation(value = "Retorna a devolução de uma remessa.", httpMethod = "GET")
     @RequestMapping(value = "/{protocoloId}/devolucao", method = RequestMethod.GET)
     public DevolucaoDto consultarDevolucao(@PathVariable("protocoloId") Long id) {
         return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));

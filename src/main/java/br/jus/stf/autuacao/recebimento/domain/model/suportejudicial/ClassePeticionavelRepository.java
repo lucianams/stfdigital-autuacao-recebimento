@@ -13,21 +13,21 @@ import br.jus.stf.core.shared.processo.TipoProcesso;
  */
 public interface ClassePeticionavelRepository {
 
-	/**
-	 * @return
-	 */
-	List<ClassePeticionavel> findAll();
-	
-	/**
-	 * @param id
-	 * @return
-	 */
-	ClassePeticionavel findOne(ClasseId id);
-	
-	/**
-	 * @param tipo
-	 * @return
-	 */
-	List<ClassePeticionavel> findByTipo(TipoProcesso tipo);
+    /**
+     * @return Todas as classes peticionáveis.
+     */
+    List<ClassePeticionavel> findAll();
+
+    /**
+     * @param id Identificador da classe procurada.
+     * @return Uma classe peticionável.
+     */
+    ClassePeticionavel findOne(ClasseId id);
+
+    /**
+     * @param tipo Tipo de processo associado as classes procuradas.
+     * @return Todas as classes do tipo de processo.
+     */
+    List<ClassePeticionavel> findByTipo(TipoProcesso tipo);
 
 }

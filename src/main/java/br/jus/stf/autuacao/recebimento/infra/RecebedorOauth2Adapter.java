@@ -19,18 +19,19 @@ import br.jus.stf.core.shared.identidade.PessoaId;
 @Component
 public class RecebedorOauth2Adapter implements RecebedorAdapter {
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public Recebedor recebedor() {
-		OAuth2Authentication authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
-		
-		Map<String, Object> principal = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
-		
-		Long pessoaId = Long.valueOf(principal.get("pessoaId").toString());
-		
-		String login = principal.get("login").toString();
-		
-		return new Recebedor(login, new PessoaId(pessoaId));
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public Recebedor recebedor() {
+        OAuth2Authentication authentication =
+                (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
+
+        Map<String, Object> principal = (Map<String, Object>) authentication.getUserAuthentication().getDetails();
+
+        Long pessoaId = Long.valueOf(principal.get("pessoaId").toString());
+
+        String login = principal.get("login").toString();
+
+        return new Recebedor(login, new PessoaId(pessoaId));
+    }
 
 }

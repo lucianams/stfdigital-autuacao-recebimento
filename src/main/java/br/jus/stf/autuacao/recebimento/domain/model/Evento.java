@@ -26,67 +26,66 @@ import br.jus.stf.core.framework.domaindrivendesign.EntitySupport;
 @Table(name = "EVENTO", schema = "RECEBIMENTO")
 public class Evento extends EntitySupport<Evento, Long> {
 
-	@Id
-	@Column(name = "SEQ_EVENTO")
-	@SequenceGenerator(name = "EVENTO_ID", sequenceName = "RECEBIMENTO.SEQ_EVENTO", allocationSize = 1)
-	@GeneratedValue(generator = "EVENTO_ID", strategy = GenerationType.SEQUENCE)
-	private Long id;
-	
-	@Column(name = "NOM_EVENTO")
-	private String tipo;
-	
-	@Column(name = "DAT_CRIACAO")
-	private Date criacao;
-	
-	@Column(name = "BIN_DETALHE")
-	@Lob
-	private String detalhes;
-	
-	@Column(name = "TIP_STATUS")
-	private Integer status = 1;
-	
-	Evento() {
-    	// Usado apenas pelo Jackson durante a conversação de Json para uma nova instância.
-	}
-	
-	/**
-	 * @param detalhes
-	 */
-	public Evento(Object detalhes) {
-		try {
-			this.detalhes = new ObjectMapper().writeValueAsString(detalhes);
-		}
-		catch (IOException e) {
-			throw new IllegalArgumentException(String.format("Não foi possível converter o objeto: %s", detalhes), e);
-		}
-		this.tipo = detalhes.getClass().getName();
-		criacao = new Date();
-	}
+    @Id
+    @Column(name = "SEQ_EVENTO")
+    @SequenceGenerator(name = "EVENTO_ID", sequenceName = "RECEBIMENTO.SEQ_EVENTO", allocationSize = 1)
+    @GeneratedValue(generator = "EVENTO_ID", strategy = GenerationType.SEQUENCE)
+    private Long id;
 
-	/**
-	 * @return
-	 */
-	public Date criacao() {
-		return criacao;
-	}
-	
-	/**
-	 * @return
-	 */
-	public String tipo() {
-		return tipo;
-	}
-	
-	/**
-	 * @return
-	 */
-	public String detalhes() {
-		return detalhes;
-	}
-	
-	@Override
-	public Long identity() {
-		return id;
-	}
-	
+    @Column(name = "NOM_EVENTO")
+    private String tipo;
+
+    @Column(name = "DAT_CRIACAO")
+    private Date criacao;
+
+    @Column(name = "BIN_DETALHE")
+    @Lob
+    private String detalhes;
+
+    @Column(name = "TIP_STATUS")
+    private Integer status = 1;
+
+    Evento() {
+        // Usado apenas pelo Jackson durante a conversação de Json para uma nova instância.
+    }
+
+    /**
+     * @param detalhes JSON com os detalhes do evento.
+     */
+    public Evento(Object detalhes) {
+        try {
+            this.detalhes = new ObjectMapper().writeValueAsString(detalhes);
+        } catch (IOException e) {
+            throw new IllegalArgumentException(String.format("Não foi possível converter o objeto: %s", detalhes), e);
+        }
+        this.tipo = detalhes.getClass().getName();
+        criacao = new Date();
+    }
+
+    /**
+     * @return Data de criação do evento.
+     */
+    public Date criacao() {
+        return criacao;
+    }
+
+    /**
+     * @return Tipo do evento, corresponde ao nome da classe que originou o evento.
+     */
+    public String tipo() {
+        return tipo;
+    }
+
+    /**
+     * @return JSON com os detalhes do evento.
+     */
+    public String detalhes() {
+        return detalhes;
+    }
+
+    @Override
+    public Long identity() {
+        return id;
+    }
+
 }

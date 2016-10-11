@@ -8,8 +8,6 @@ import com.wordnik.swagger.annotations.ApiModel;
 import com.wordnik.swagger.annotations.ApiModelProperty;
 
 /**
- * Representa o comando de registro de remessas.
- * 
  * @author Rodrigo Barreiros
  * 
  * @since 1.0.0
@@ -17,36 +15,40 @@ import com.wordnik.swagger.annotations.ApiModelProperty;
  */
 @ApiModel("Command que realiza a ação de registro de uma remessa.")
 public class RegistrarRemessaCommand {
-    
-	@ApiModelProperty(value = "Forma de recebimento da remessa..", required = true)
-	@NotBlank
+
+    @NotBlank
+    @ApiModelProperty(value = "Forma de recebimento da remessa..", required = true)
     private String formaRecebimento;
-    
-	@ApiModelProperty(value = "Quantidade de volumes.", required = true)
-    @Min(1L)
-    private int volumes;
-    
-	@ApiModelProperty(value = "Quantidade de apensos.", required = true)
-    @Min(0L)
-    private int apensos;
-    
-	@ApiModelProperty(value = "Número do sedex. Usado para forma de recebimento SEDEX.")
+
+    @ApiModelProperty(value = "Número do sedex. Usado para forma de recebimento SEDEX.")
     private String numeroSedex;
-    
-	@ApiModelProperty(value = "Tipo do processo da remessa.", required = true)
+
+    @Min(1L)
+    @ApiModelProperty(value = "Quantidade de volumes.", required = true)
+    private int volumes;
+
+    @Min(0L)
+    @ApiModelProperty(value = "Quantidade de apensos.", required = true)
+    private int apensos;
+
     @NotBlank
+    @ApiModelProperty(value = "Tipo do processo da remessa.", required = true)
     private String tipoProcesso;
-    
-	@ApiModelProperty(value = "Grau de sigilo da remessa.", required = true)
+
     @NotBlank
+    @ApiModelProperty(value = "Grau de sigilo da remessa.", required = true)
     private String sigilo;
-    
+
     public RegistrarRemessaCommand() {
-    	// Construtor default
+        // Construtor default
     }
-    
+
     public String getFormaRecebimento() {
         return formaRecebimento;
+    }
+
+    public String getNumeroSedex() {
+        return numeroSedex;
     }
 
     public int getVolumes() {
@@ -57,16 +59,12 @@ public class RegistrarRemessaCommand {
         return apensos;
     }
 
-    public String getNumeroSedex() {
-        return numeroSedex;
-    }
-    
     public String getTipoProcesso() {
         return tipoProcesso;
     }
 
-	public String getSigilo() {
-		return sigilo;
-	}
-    
+    public String getSigilo() {
+        return sigilo;
+    }
+
 }

@@ -20,24 +20,23 @@ import br.jus.stf.core.shared.documento.TextoId;
 @Component
 public class DevolucaoRestAdapter implements DevolucaoAdapter {
 
-	@Autowired
+    @Autowired
     private DocumentoRestClient documentoRestClient;
-	
-	@Override
-	public void concluirTexto(TextoId textoId) {
-		Map<String, Object> concluirTextoCommand = ImmutableMap.of("textoId", textoId.toLong());
-		
-		documentoRestClient.concluirTexto(concluirTextoCommand);
-	}
 
-	@Override
-	public void assinarTexto(TextoId textoId, String documentoTemporarioId) {
-		Map<String, Object> command = new HashMap<>();
-		
-		command.put("textoId", textoId.toLong());
-		command.put("documentoTemporarioId", documentoTemporarioId);
-		
-		documentoRestClient.assinarTexto(command);
-	}
+    @Override
+    public void concluirTexto(TextoId textoId) {
+        Map<String, Object> concluirTextoCommand = ImmutableMap.of("textoId", textoId.toLong());
+
+        documentoRestClient.concluirTexto(concluirTextoCommand);
+    }
+
+    @Override
+    public void assinarTexto(TextoId textoId, String documentoTemporarioId) {
+        Map<String, Object> command = new HashMap<>();
+
+        command.put("textoId", textoId.toLong());
+        command.put("documentoTemporarioId", documentoTemporarioId);
+        documentoRestClient.assinarTexto(command);
+    }
 
 }

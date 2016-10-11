@@ -19,31 +19,31 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 @Profile("e2e")
 public class E2ETestsDataLoader {
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@PostConstruct
-	public void init() throws SQLException {
-		loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql", "devolverRemessaOriginario.sql",
-				"devolverRemessaRecursal.sql", "preautarRemessaOriginario.sql", "preautuarRemessaRecursal.sql",
-				"prepararOficioDevolucaoRemessaOriginario.sql");
-	}
+    @PostConstruct
+    public void init() throws SQLException {
+        loadDataTests("assinarOficioDevolucaoRemessaOriginario.sql", "devolverRemessaOriginario.sql",
+                "devolverRemessaRecursal.sql", "preautarRemessaOriginario.sql", "preautuarRemessaRecursal.sql",
+                "prepararOficioDevolucaoRemessaOriginario.sql");
+    }
 
-	private void loadDataTests(String... scriptsSql) throws SQLException {
-		Connection connection = null;
-		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+    private void loadDataTests(String... scriptsSql) throws SQLException {
+        Connection connection = null;
+        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 
-		for (String scriptSql : scriptsSql) {
-			populator.addScript(new ClassPathResource("/db/tests/" + scriptSql));
-		}
+        for (String scriptSql : scriptsSql) {
+            populator.addScript(new ClassPathResource("/db/tests/" + scriptSql));
+        }
 
-		try {
-			connection = DataSourceUtils.getConnection(dataSource);
-			populator.populate(connection);
-		} finally {
-			if (connection != null) {
-				DataSourceUtils.releaseConnection(connection, dataSource);
-			}
+        try {
+            connection = DataSourceUtils.getConnection(dataSource);
+            populator.populate(connection);
+        } finally {
+            if (connection != null) {
+                DataSourceUtils.releaseConnection(connection, dataSource);
+            }
         }
     }
 

@@ -42,7 +42,7 @@ public class TipoRecebimento extends ValueObjectSupport<TipoRecebimento> {
         this.numeroSedex = numeroSedex;
     }
 
-    private boolean isNumeroSedexInformadoQuandoExigido(FormaRecebimento formaRecebimento, String numeroSedex) {
+    private static boolean isNumeroSedexInformadoQuandoExigido(FormaRecebimento formaRecebimento, String numeroSedex) {
         return !formaRecebimento.exigeNumeracao() || !StringUtils.isEmpty(numeroSedex);
     }
 

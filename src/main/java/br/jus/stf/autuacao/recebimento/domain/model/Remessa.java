@@ -178,7 +178,8 @@ public abstract class Remessa extends EntitySupport<Remessa, ProtocoloId>
                 tipoProcesso().toString(), sigilo().toString(), isCriminalEleitoral()));
     }
 
-    private boolean isPreferenciasRemessaEClasseCompativeis(ClassePeticionavel classe, Set<Preferencia> preferencias) {
+    private static boolean isPreferenciasRemessaEClasseCompativeis(ClassePeticionavel classe,
+            Set<Preferencia> preferencias) {
         return !Optional.ofNullable(preferencias).isPresent() || classe.preferencias().containsAll(preferencias);
     }
 

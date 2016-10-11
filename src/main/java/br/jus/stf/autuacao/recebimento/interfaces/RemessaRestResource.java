@@ -198,7 +198,7 @@ public class RemessaRestResource {
         return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
 
-    private String message(BindingResult binding) {
+    private static String message(BindingResult binding) {
         return String.format(REMESSA_INVALIDA_PATTERN, binding.getAllErrors());
     }
 

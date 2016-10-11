@@ -80,7 +80,7 @@ public class Devolucao extends ValueObjectSupport<Devolucao> {
         this.texto = texto;
     }
 
-    private boolean isTipoDocumentoModeloEMotivoCompativeis(MotivoDevolucao motivo, ModeloDevolucao modelo) {
+    private static boolean isTipoDocumentoModeloEMotivoCompativeis(MotivoDevolucao motivo, ModeloDevolucao modelo) {
         return motivo.tiposDocumento().contains(modelo.tipo());
     }
 

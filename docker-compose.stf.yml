@@ -8,6 +8,7 @@ services:
     extends:
       file: shared/compose/common.yml
       service: rabbit
+    image: registry.stf.jus.br/rabbitmq:management
   discovery:
     extends:
       file: shared/compose/common.yml
@@ -47,10 +48,12 @@ services:
     extends:
       file: shared/compose/common.yml
       service: cassandra
+    image: registry.stf.jus.br/cassandra:2.1
   onlyoffice:
     extends:
       file: shared/compose/common.yml
       service: onlyoffice_ambassador
+    image: registry.stf.jus.br/svendowideit/ambassador
   documents:
     extends:
       file: shared/compose/common.yml

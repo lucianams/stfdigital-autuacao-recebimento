@@ -13,7 +13,7 @@ describe("Recebimento de Remessas de Processo do Tipo Recursal", () => {
     });
 
     it ("Deveria acessar a página de remessa", () => {
-        principalPage.iniciarProcessoPorNome("Nova Petição Física");
+        principalPage.iniciarProcessoPorNome("Nova Remessa");
     });
 
     it("Deveria preencher as informações da remessa", () => {

@@ -3,7 +3,6 @@ import {PrepararOficioDevolucaoPage} from "./pages/preparar-oficio-devolucao.pag
 import {PrincipalPage}  from "./shared/pages/principal.page";
 
 xdescribe("Preparação do Ofício de Devolução", () => {
-
     let loginPage: LoginPage = new LoginPage();
     let principalPage: PrincipalPage = new PrincipalPage();
     let devolucaoPage: PrepararOficioDevolucaoPage = new PrepararOficioDevolucaoPage();

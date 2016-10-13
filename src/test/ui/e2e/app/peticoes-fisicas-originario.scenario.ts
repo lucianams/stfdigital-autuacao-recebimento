@@ -1,5 +1,5 @@
 import {LoginPage} from "./shared/pages/login.page";
-import {PrincipalPage}  from "./shared/pages/principal.page";
+import {PrincipalPage} from "./shared/pages/principal.page";
 import {RecebimentoPage} from "./pages/recebimento.page";
 
 describe("Recebimento de Remessas de Processo do Tipo Originário", () => {
@@ -13,7 +13,7 @@ describe("Recebimento de Remessas de Processo do Tipo Originário", () => {
     });
 
     it ("Deveria acessar a tarefa de recebimento", () => {
-        principalPage.iniciarProcessoPorNome("Nova Petição Física");
+        principalPage.iniciarProcessoPorNome("Nova Remessa");
     });
 
     it("Deveria preencher as informações da remessa", () => {
@@ -32,5 +32,4 @@ describe("Recebimento de Remessas de Processo do Tipo Originário", () => {
     it("Deveria fazer o logout do sistema", () => {
         principalPage.logout();
     });
-
 });

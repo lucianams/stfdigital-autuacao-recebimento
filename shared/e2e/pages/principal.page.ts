@@ -21,7 +21,7 @@ export class PrincipalPage {
     }
 
     public escolherProcesso(state: string): void {
-        element(by.css(`div[ui-sref="${state}"`)).click();
+        element(by.css(`div[ui-sref="${state}"]`)).click();
     }
 
     public escolherProcessoPorNome(nome: string): void {

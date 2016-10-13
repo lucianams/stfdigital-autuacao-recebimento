@@ -1,9 +1,11 @@
 package br.jus.stf.autuacao.recebimento;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,24 +15,22 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
 
 /**
- * Valida a API de consulta do modelo de devolução
+ * Valida a API de consulta de formas de recebimento.
  * 
- * @author tomas.godoi
- * @since 27.06.2016
+ * @author Rafael Alencar
+ * @since 13.10.2016
  */
 @SpringBootTest(value = { "server.port:0", "eureka.client.enabled:false", "spring.cloud.config.enabled:false" },
         classes = ApplicationContextInitializer.class)
-@WithMockOauth2User("cartoraria")
-public class ConsultasModeloDevolucaoIntegrationTests extends IntegrationTestsSupport {
+@Transactional
+public class ConsultasFormaRecebimentoIntegrationTests extends IntegrationTestsSupport {
 
     @Test
-    public void consultarModelosPorMotivo() throws Exception {
-        String motivoDevolucaoId = "2";
-        ResultActions result =
-                mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
+    @WithMockOauth2User("recebedor")
+    public void consultarFormasRecebimento() throws Exception {
+        ResultActions result = mockMvc.perform(get("/api/remessas/formas-recebimento"));
 
-        result.andExpect(status().isOk()).andExpect(jsonPath("$[0].id", equalTo(1)))
-                .andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));
+        result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(5)));
     }
 
 }

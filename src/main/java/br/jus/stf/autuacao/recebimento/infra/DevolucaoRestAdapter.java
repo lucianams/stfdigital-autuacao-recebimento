@@ -16,6 +16,7 @@ import br.jus.stf.core.shared.documento.TextoId;
  * @author Tomas Godoi
  * 
  * @since 1.0.0
+ * @since 21.06.2016
  */
 @Component
 public class DevolucaoRestAdapter implements DevolucaoAdapter {

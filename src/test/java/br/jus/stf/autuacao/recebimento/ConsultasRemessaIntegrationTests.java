@@ -39,22 +39,6 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
     }
 
     @Test
-    @WithMockOauth2User("recebedor")
-    public void consultarSigilos() throws Exception {
-        ResultActions result = mockMvc.perform(get("/api/remessas/sigilos"));
-
-        result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)));
-    }
-
-    @Test
-    @WithMockOauth2User("recebedor")
-    public void consultarFormasRecebimento() throws Exception {
-        ResultActions result = mockMvc.perform(get("/api/remessas/formas-recebimento"));
-
-        result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(5)));
-    }
-
-    @Test
     @WithMockOauth2User("gestor-recebimento")
     public void listar() throws Exception {
         loadDataTests("consultarRemessa-limpar.sql", "consultarRemessa.sql");

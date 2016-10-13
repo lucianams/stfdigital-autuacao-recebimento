@@ -1,5 +1,6 @@
 package br.jus.stf.autuacao.recebimento;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -13,7 +14,7 @@ import br.jus.stf.core.framework.testing.IntegrationTestsSupport;
 import br.jus.stf.core.framework.testing.oauth2.WithMockOauth2User;
 
 /**
- * Valida a API de consulta de motivo de devolução
+ * Valida a API de consulta de motivo de devolução.
  * 
  * @author tomas.godoi
  * @since 27.06.2016
@@ -28,6 +29,16 @@ public class ConsultasMotivoDevolucaoIntegrationTests extends IntegrationTestsSu
         ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao"));
 
         result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)));
+    }
+
+    @Test
+    public void consultarModelosPorMotivo() throws Exception {
+        String motivoDevolucaoId = "2";
+        ResultActions result =
+                mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
+
+        result.andExpect(status().isOk()).andExpect(jsonPath("$[0].id", equalTo(1)))
+                .andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));
     }
 
 }

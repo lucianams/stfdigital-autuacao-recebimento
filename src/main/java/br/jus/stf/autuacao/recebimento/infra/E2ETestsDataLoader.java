@@ -14,6 +14,11 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+/**
+ * @author Tomas.Godoi
+ * 
+ * @since 01.07.2016
+ */
 @Configuration
 @DependsOn("runtimeServiceBean")
 @Profile("e2e")

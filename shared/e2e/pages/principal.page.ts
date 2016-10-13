@@ -10,9 +10,9 @@ import helpers = require("protractor-helpers");
 export class PrincipalPage {
 
     private linkUserMenu: ElementFinder = element(by.id("user-menu"));
-    private linkSair: ElementFinder = element(by.css("[ng-click=\"vm.logout()\"]"));
-    private linkIniciarProcesso: ElementFinder = element.all(by.css("a[ui-sref=\"app.novo-processo\"]")).first();
-    private linkMinhasTarefas: ElementFinder = element(by.css("a[ui-sref=\"app.tarefas.minhas-tarefas\"]"));
+    private linkSair: ElementFinder = element(by.css(`[ng-click="vm.logout()"]`));
+    private linkIniciarProcesso: ElementFinder = element.all(by.css(`a[ui-sref="app.novo-processo"]`)).first();
+    private linkMinhasTarefas: ElementFinder = element(by.css(`a[ui-sref="app.tarefas.minhas-tarefas"]`));
 
     private listaTarefas: ElementArrayFinder = element(by.css(".todo-list-pane")).all(by.css(".todo-item"));
 
@@ -21,7 +21,7 @@ export class PrincipalPage {
     }
 
     public escolherProcesso(state: string): void {
-        element(by.css("div[ui-sref=\"\" + state + \"\"]")).click();
+        element(by.css(`div[ui-sref="${state}"`)).click();
     }
 
     public escolherProcessoPorNome(nome: string): void {
@@ -100,7 +100,7 @@ export class PrincipalPage {
     }
 
     public aguardarMensagemSucesso(timeout: number = 10000): void {
-        let mensagemElement: ElementFinder = element(by.css("[md-theme=\"success-toast\"]"));
+        let mensagemElement: ElementFinder = element(by.css(`[md-theme="success-toast"]`));
         if (timeout) {
             helpers.waitForElement(mensagemElement, timeout);
         } else {
@@ -121,10 +121,10 @@ export class PrincipalPage {
     }
 
     public exibiuMensagemSucesso(): Promise<boolean> {
-        return element(by.css("md-toast[md-theme=\"success-toast\"]")).isPresent();
+        return element(by.css(`md-toast[md-theme="success-toast"]`)).isPresent();
     }
 
     public exibiuMensagemErro(): Promise<boolean> {
-        return element(by.css("md-toast[md-theme=\"error-toast\"]")).isPresent();
+        return element(by.css(`md-toast[md-theme="error-toast"]`)).isPresent();
     }
 }

@@ -5,7 +5,7 @@ import helpers = require("protractor-helpers");
 export class LoginPage {
     private usernameInput: ElementFinder = element(by.model("vm.form.usuario"));
     private passwordInput: ElementFinder = element(by.model("vm.form.senha"));
-    private submitButton: ElementFinder = element(by.css("button[type=\"submit\"]"));
+    private submitButton: ElementFinder = element(by.css(`button[type="submit"]`));
 
     public constructor() {
 

@@ -6,7 +6,7 @@ import {Classe, Preferencia} from "./model";
 
 export class ClasseService {
 
-    private static apiClasse: string = "/recebimento/api/classes";
+    private static apiClasse: string = "/recebimento/api/remessas/classes";
 
     /** @ngInject **/
     public constructor(private $http: IHttpService, private properties) {}

@@ -26,7 +26,7 @@ import br.jus.stf.core.shared.processo.TipoProcesso;
  *
  */
 @RestController
-@RequestMapping("/api/classes")
+@RequestMapping("/api/remessas/classes")
 public class ClasseRestResource {
 
     @Autowired
@@ -39,8 +39,7 @@ public class ClasseRestResource {
      * @param tipoRemessa Tipo da remessa.
      * @return Lista todas as classes peticionáveis ou as de um tipo de remessa, quando informado.
      */
-    @ApiOperation(value = "Lista todas as classes peticionáveis ou as de um tipo de remessa, quando informado.",
-            httpMethod = "GET")
+    @ApiOperation(value = "Lista todas as classes peticionáveis ou as de um tipo de remessa, quando informado.")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<ClasseDto> consultarClassesPorTipoRemessa(
             @RequestParam(name = "tipoRemessa", required = false) String tipoRemessa) {

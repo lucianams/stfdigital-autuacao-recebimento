@@ -12,7 +12,7 @@ import {PeticaoFisicaService} from "./peticao-fisica.service";
 function config($stateProvider: IStateProvider, properties: app.support.constants.Properties) {
 
     $stateProvider.state("app.novo-processo.recebimento-peticao-fisica", {
-        url: "/recebimento",
+        url: "/",
         views: {
             "content@app.autenticado" : {
                 templateUrl : "./peticao-fisica.tpl.html",
@@ -27,6 +27,9 @@ function config($stateProvider: IStateProvider, properties: app.support.constant
             }],
             sigilos: ["app.recebimento.services.RemessaService", (remessaService: RemessaService) => {
                 return remessaService.listarSigilo();
+            }],
+            tiposProcessos: ["app.recebimento.services.RemessaService", (remessaService: RemessaService) => {
+                return remessaService.listarTiposProcessos();
             }]
         }
     });

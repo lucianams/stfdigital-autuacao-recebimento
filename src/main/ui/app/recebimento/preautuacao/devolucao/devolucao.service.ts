@@ -37,8 +37,8 @@ export class DevolucaoService {
     }
 
     public devolver(cmdDevolver: DevolverRemessaCommand): IPromise<{}> {
-        return this.$http.post(this.properties.apiUrl + DevolucaoService.urlServicoPreautuacao + "/devolucao",
-                cmdDevolver);
+        return this.$http.post(this.properties.apiUrl + DevolucaoService.urlServicoPreautuacao +
+                "/" + cmdDevolver.protocoloId + "/devolucao", cmdDevolver);
     }
 }
 

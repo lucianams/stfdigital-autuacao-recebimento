@@ -6,6 +6,7 @@ import static com.github.jsonj.tools.JsonBuilder.object;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
@@ -68,8 +69,8 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
                 field("apensos", 1),
                 field("numeroSedex", "SR123456789BR"),
                 field("sigilo", "PUBLICO"));
-        
-        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
+
+        ResultActions result = mockMvc.perform(post("/api/remessas")
                 .contentType(APPLICATION_JSON).content(remessaValida.toString()));
 
         result.andExpect(status().isOk());
@@ -88,8 +89,11 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
                 field("preferencias", array(1)),
                 field("sigilo", "PUBLICO"));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
-                .content(remessaParaPreautuar.toString()));
+        ResultActions result = mockMvc
+                .perform(put(
+                        "/api/remessas/" + remessaParaPreautuar.get("protocoloId").asLong() + "/preautuacao-recursal")
+                                .contentType(APPLICATION_JSON)
+                                .content(remessaParaPreautuar.toString()));
 
         result.andExpect(status().isOk());
     }
@@ -98,13 +102,16 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
     @WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
     public void naoDevePreautuarUmaRemessaInvalida() throws Exception {
         JsonObject remessaInvalida = object(
-                field("classeId", "RE"),
+                field("protocoloId", 1),
                 field("numeroProcessoOrigem", "RE-100"),
                 field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
                 field("sigilo", "PUBLICO"));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao-recursal").contentType(APPLICATION_JSON)
-                .content(remessaInvalida.toString()));
+        ResultActions result =
+                mockMvc.perform(
+                        put("/api/remessas/" + remessaInvalida.get("protocoloId").asLong() + "/preautuacao-recursal")
+                                .contentType(APPLICATION_JSON)
+                                .content(remessaInvalida.toString()));
 
         result.andExpect(status().isBadRequest());
     }

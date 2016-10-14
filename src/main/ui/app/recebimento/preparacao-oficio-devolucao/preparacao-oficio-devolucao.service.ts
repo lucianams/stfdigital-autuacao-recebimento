@@ -29,7 +29,7 @@ export class PrepararOficioParaDevolucaoCommand {
 
 export class PreparacaoOficioDevolucaoService {
 
-    private static apiRemessaDevolucao: string = "/recebimento/api/devolucao";
+    private static apiRemessaMotivosDevolucao: string = "/recebimento/api/remessas/motivos-devolucao";
     private static apiRemessa: string = "/recebimento/api/remessas";
     private static apiModelos: string = "/documents/api/modelos";
     private static apiDocumentos: string = "/documents/api/documentos";
@@ -39,15 +39,15 @@ export class PreparacaoOficioDevolucaoService {
     public constructor(private $http: ng.IHttpService, private properties) {}
 
     public listarMotivosDevolucao(): ng.IPromise<MotivoDevolucao[]> {
-        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessaDevolucao +
-                "/motivos-devolucao").then((response: ng.IHttpPromiseCallbackArg<MotivoDevolucao[]>) => {
+        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessaMotivosDevolucao)
+                .then((response: ng.IHttpPromiseCallbackArg<MotivoDevolucao[]>) => {
             return response.data;
         });
     }
 
     public consultarModelosPorMotivo(idMotivo: number): ng.IPromise<Modelo[]> {
-        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessaDevolucao +
-                "/motivos-devolucao/" + idMotivo + "/modelos")
+        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessaMotivosDevolucao +
+                "/" + idMotivo + "/modelos")
                 .then((response: ng.IHttpPromiseCallbackArg<Modelo[]>) => {
             return response.data;
         });
@@ -68,8 +68,8 @@ export class PreparacaoOficioDevolucaoService {
     }
 
     public finalizarDevolucao(command: PrepararOficioParaDevolucaoCommand): ng.IPromise<{}> {
-        return this.$http.post(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessa +
-                "/devolucao-oficio", command);
+        return this.$http.put(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiRemessa +
+                "/" + command.protocoloId + "/preparacao-devolucao", command);
     }
 }
 

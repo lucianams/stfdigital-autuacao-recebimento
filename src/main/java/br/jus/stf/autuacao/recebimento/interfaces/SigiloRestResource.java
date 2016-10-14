@@ -28,7 +28,7 @@ public class SigiloRestResource {
     /**
      * @return Todos os sigilos.
      */
-    @ApiOperation(value = "Lista todos os sigilos.", httpMethod = "GET")
+    @ApiOperation(value = "Lista todos os sigilos.")
     @RequestMapping(value = "/sigilos", method = RequestMethod.GET)
     public List<SigiloDto> consultarSigilos() {
         return Arrays.asList(Sigilo.values()).stream()

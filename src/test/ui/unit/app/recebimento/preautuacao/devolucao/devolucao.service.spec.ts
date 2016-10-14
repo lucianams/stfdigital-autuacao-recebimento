@@ -29,7 +29,8 @@ describe("Teste do serviço de devolução na preautuação", () => {
     it("deveria chamar o serviço rest de devolução", () => {
         let cmdDevolver: DevolverRemessaCommand = new DevolverRemessaCommand();
         cmdDevolver.motivo  = "Devolução por falta da classe do processo";
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/devolucao", cmdDevolver)
+        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/" +
+                cmdDevolver.protocoloId + "/devolucao", cmdDevolver)
                 .respond(200, "");
         devolucaoService.devolver(cmdDevolver);
         $httpBackend.flush();

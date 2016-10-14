@@ -34,7 +34,8 @@ describe("Teste do serviço devolucao-assinatura.service", () => {
 
     it("Deveria chamar o serviço rest de assinar o ofício de devolução", () => {
         let command: AssinarOficioParaDevolucaoCommand = new AssinarOficioParaDevolucaoCommand(9001, "1234-5675");
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/devolucao-assinatura", command)
+        $httpBackend.expectPUT(properties.apiUrl + "/recebimento/api/remessas/" +
+                command.protocoloId + "/assinatura-devolucao", command)
                 .respond(200, {});
 
         devolucaoAssinaturaService.assinarOficioDevolucao(command).then(handler.success, handler.error);
@@ -72,8 +73,8 @@ describe("Teste do serviço devolucao-assinatura.service", () => {
             }
         };
 
-        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/1/devolucao").respond(200, devolucao1);
-        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/2/devolucao").respond(200, devolucao2);
+        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/1/devolucoes").respond(200, devolucao1);
+        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/2/devolucoes").respond(200, devolucao2);
 
         devolucaoAssinaturaService.consultarDevolucoes(protocolos).then(handler.success, handler.error);
 

@@ -1,13 +1,12 @@
 import IPromise = angular.IPromise;
 import IStateService = angular.ui.IStateService;
 
-import {Sigilo} from "../services/model";
+import {Sigilo, TipoProcesso} from "../services/model";
 import {PeticaoFisicaCommand, PeticaoFisicaService} from "./peticao-fisica.service";
 import recebimento from "./peticao-fisica.module";
 
 export class PeticaoFisicaController {
 
-    public tiposProcessos: Object[] = PeticaoFisicaController.mockTiposProcessos();
     public cmd: PeticaoFisicaCommand = new PeticaoFisicaCommand();
     public path = {
         id: "novo-processo.recebimento",
@@ -17,13 +16,14 @@ export class PeticaoFisicaController {
     };
 
     public static $inject = ["$state", "app.recebimento.peticoes-fisicas.PeticaoFisicaService", "formasRecebimento",
-            "messagesService", "sigilos"];
+            "messagesService", "sigilos", "tiposProcessos"];
 
     public constructor(private $state: IStateService,
                 private peticaoFisicaService: PeticaoFisicaService,
                 public formasRecebimento,
                 private messagesService: app.support.messaging.MessagesService,
-                public sigilos: Sigilo[]) {
+                public sigilos: Sigilo[],
+                public tiposProcessos: Array<TipoProcesso>) {
     }
 
     public registrarRemessa(): ng.IPromise<{}> {
@@ -40,16 +40,6 @@ export class PeticaoFisicaController {
         }
         this.cmd.numeroSedex = "";
         return false;
-    }
-
-    private static mockTiposProcessos(): Object[] {
-        return [{
-            id: "ORIGINARIO",
-            nome: "Originário"
-        }, {id:
-            "RECURSAL",
-            nome: "Recursal"
-        }];
     }
 }
 

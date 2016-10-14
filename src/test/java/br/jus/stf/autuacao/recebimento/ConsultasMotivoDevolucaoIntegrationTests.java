@@ -26,7 +26,7 @@ public class ConsultasMotivoDevolucaoIntegrationTests extends IntegrationTestsSu
 
     @Test
     public void listarMotivosDevolucao() throws Exception {
-        ResultActions result = mockMvc.perform(get("/api/devolucao/motivos-devolucao"));
+        ResultActions result = mockMvc.perform(get("/api/remessas/motivos-devolucao"));
 
         result.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(3)));
     }
@@ -35,7 +35,7 @@ public class ConsultasMotivoDevolucaoIntegrationTests extends IntegrationTestsSu
     public void consultarModelosPorMotivo() throws Exception {
         String motivoDevolucaoId = "2";
         ResultActions result =
-                mockMvc.perform(get("/api/devolucao/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
+                mockMvc.perform(get("/api/remessas/motivos-devolucao/" + motivoDevolucaoId + "/modelos"));
 
         result.andExpect(status().isOk()).andExpect(jsonPath("$[0].id", equalTo(1)))
                 .andExpect(jsonPath("$[0].tipoDocumento", equalTo(8)));

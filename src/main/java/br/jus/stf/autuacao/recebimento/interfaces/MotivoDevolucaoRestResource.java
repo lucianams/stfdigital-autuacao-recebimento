@@ -27,7 +27,7 @@ import br.jus.stf.autuacao.recebimento.interfaces.dto.MotivoDevolucaoDtoAssemble
  * @since 15.03.2016
  */
 @RestController
-@RequestMapping("/api/devolucao/motivos-devolucao")
+@RequestMapping("/api/remessas/motivos-devolucao")
 public class MotivoDevolucaoRestResource {
 
     @Autowired
@@ -45,7 +45,7 @@ public class MotivoDevolucaoRestResource {
     /**
      * @return Todos os motivos de devolução de remessa.
      */
-    @ApiOperation(value = "Lista todos os motivos de devolução de remessa.", httpMethod = "GET")
+    @ApiOperation(value = "Lista todos os motivos de devolução de remessa.")
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<MotivoDevolucaoDto> listar() {
         return remessaRepository.findAllMotivoDevolucao().stream()
@@ -57,7 +57,7 @@ public class MotivoDevolucaoRestResource {
      * @param idMotivo Identificador do motivo de devolução.
      * @return Todos os modelos de devolução de um motivo.
      */
-    @ApiOperation(value = "Lista todos os modelos de devolução de um motivo.", httpMethod = "GET")
+    @ApiOperation(value = "Lista todos os modelos de devolução de um motivo.")
     @RequestMapping(value = "/{idMotivo}/modelos", method = RequestMethod.GET)
     public List<ModeloDevolucaoDto> consultarPorModeloDevolucao(@PathVariable("idMotivo") Long idMotivo) {
         MotivoDevolucao motivo = remessaRepository.findOneMotivoDevolucao(idMotivo);

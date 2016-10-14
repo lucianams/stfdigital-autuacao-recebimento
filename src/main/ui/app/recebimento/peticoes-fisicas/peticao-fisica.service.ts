@@ -69,12 +69,11 @@ export class PeticaoFisicaService {
     }
 
     public registrar(peticao: PeticaoFisicaCommand): IPromise<{}> {
-        return this.$http.post(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa +
-                "/recebimento", peticao);
+        return this.$http.post(this.properties.apiUrl + PeticaoFisicaService.apiRemessa, peticao);
     }
 
     public consultarFormasRecebimento(): IPromise<FormaRecebimento[]> {
-        return this.$http.get(this.properties.url + ":" + this.properties.port + PeticaoFisicaService.apiRemessa +
+        return this.$http.get(this.properties.apiUrl + PeticaoFisicaService.apiRemessa +
                 "/formas-recebimento")
             .then((response: IHttpPromiseCallbackArg<FormaRecebimento[]>) => {
                 return response.data;

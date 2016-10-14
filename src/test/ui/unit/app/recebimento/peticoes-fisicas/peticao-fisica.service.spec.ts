@@ -35,7 +35,7 @@ describe("Teste do serviço de petição física", () => {
     it("deveria chamar o serviço rest registro da remessa", () => {
         //"BALCAO", 2, 3, null, "ORIGINARIO", "PUBLICO", "PeticaoFisica"
         //"BALCAO", 2, 3, null, "ORIGINARIO", "PUBLICO", "PeticaoFisica"
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/recebimento",
+        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas",
                 new PeticaoFisicaCommand()).respond(200, "");
         peticaoService.registrar(new PeticaoFisicaCommand()).then(handler.success, handler.error);
         $httpBackend.flush();

@@ -46,8 +46,8 @@ export class PreautuacaoRecursalService {
      * Envia os dados da préautuação para o serviço de recebimento (back-end).
      */
     public preautuarRecursal(cmd: PreautuarRecursalCommand): IPromise<{}> {
-        return this.$http.post(this.properties.url + ":" + this.properties.port +
-            PreautuacaoRecursalService.urlServicoPreautuacao + "/preautuacao-recursal", cmd);
+        return this.$http.put(this.properties.apiUrl + PreautuacaoRecursalService.urlServicoPreautuacao +
+                "/" + cmd.protocoloId  + "/preautuacao-recursal", cmd);
     }
 
 }

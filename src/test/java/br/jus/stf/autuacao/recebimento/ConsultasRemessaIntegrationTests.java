@@ -33,7 +33,7 @@ public class ConsultasRemessaIntegrationTests extends IntegrationTestsSupport {
 
         String protocoloId = "9003";
 
-        ResultActions result = mockMvc.perform(get("/api/remessas/" + protocoloId + "/devolucao"));
+        ResultActions result = mockMvc.perform(get("/api/remessas/" + protocoloId + "/devolucoes"));
 
         result.andExpect(status().isOk()).andExpect(jsonPath("$.modeloDevolucao.id", equalTo(1)));
     }

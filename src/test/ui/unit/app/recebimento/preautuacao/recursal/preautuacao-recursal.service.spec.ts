@@ -36,7 +36,8 @@ describe("Teste do serviço de preautuação recursal", () => {
         cmdPreautuar.numeroProcessoOrigem = "123456";
         cmdPreautuar.numeroUnicoProcesso = "987645321";
         cmdPreautuar.sigilo = "";
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/preautuacao-recursal", cmdPreautuar)
+        $httpBackend.expectPUT(properties.apiUrl + "/recebimento/api/remessas/" +
+                cmdPreautuar.protocoloId + "/preautuacao-recursal", cmdPreautuar)
                 .respond(200, "");
         preautuacao.preautuarRecursal(cmdPreautuar).then(handler.success, handler.error);
         $httpBackend.flush();

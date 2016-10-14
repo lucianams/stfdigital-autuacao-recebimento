@@ -28,7 +28,7 @@ public class FormaRecebimentoRestResource {
     /**
      * @return Todas as formas de recebimento.
      */
-    @ApiOperation(value = "Lista todas as formas de recebimento.", httpMethod = "GET")
+    @ApiOperation(value = "Lista todas as formas de recebimento.")
     @RequestMapping(value = "/formas-recebimento", method = RequestMethod.GET)
     public List<FormaRecebimentoDto> consultarFormasRecebimento() {
         return Arrays.asList(FormaRecebimento.values()).stream()

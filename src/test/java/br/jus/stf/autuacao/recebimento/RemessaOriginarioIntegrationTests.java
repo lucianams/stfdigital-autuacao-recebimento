@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.transaction.Transactional;
@@ -77,7 +78,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("numeroSedex", "SR123456789BR"),
                 field("sigilo", "PUBLICO"));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/recebimento")
+        ResultActions result = mockMvc.perform(post("/api/remessas")
                 .contentType(APPLICATION_JSON).content(remessaValida.toString()));
 
         result.andExpect(status().isOk());
@@ -94,8 +95,11 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("preferencias", array(3, 8)),
                 field("sigilo", "PUBLICO"));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/preautuacao").contentType(APPLICATION_JSON)
-                .content(remessaParaPreautuar.toString()));
+        ResultActions result = mockMvc
+                .perform(put(
+                        "/api/remessas/" + remessaParaPreautuar.get("protocoloId").asLong() + "/preautuacao-originario")
+                                .contentType(APPLICATION_JSON)
+                                .content(remessaParaPreautuar.toString()));
 
         result.andExpect(status().isOk());
     }
@@ -110,7 +114,8 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("motivo", "Remessa inválida."));
 
         ResultActions result = mockMvc.perform(
-                post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
+                post("/api/remessas/" + remessaParaDevolver.get("protocoloId").asLong() + "/devolucao")
+                        .contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
 
         result.andExpect(status().isOk());
     }
@@ -126,8 +131,10 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("modeloId", 1),
                 field("textoId", 9000));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON)
-                .content(remessaParaPrepararOficio.toString()));
+        ResultActions result = mockMvc.perform(
+                put("/api/remessas/" + remessaParaPrepararOficio.get("protocoloId").asLong() + "/preparacao-devolucao")
+                        .contentType(APPLICATION_JSON)
+                        .content(remessaParaPrepararOficio.toString()));
 
         result.andExpect(status().isOk());
     }
@@ -141,8 +148,10 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("protocoloId", 9003),
                 field("documentoTemporarioId", "_DocTemp_12345"));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON)
-                .content(remessaParaAssinarOficio.toString()));
+        ResultActions result = mockMvc.perform(
+                put("/api/remessas/" + remessaParaAssinarOficio.get("protocoloId").asLong() + "/assinatura-devolucao")
+                        .contentType(APPLICATION_JSON)
+                        .content(remessaParaAssinarOficio.toString()));
 
         result.andExpect(status().isOk());
     }
@@ -156,7 +165,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("numeroSedex", "SR123456789BR"));
 
         ResultActions result = mockMvc.perform(
-                post("/api/remessas/recebimento").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
+                post("/api/remessas").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
 
         result.andExpect(status().isBadRequest());
     }
@@ -170,7 +179,8 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("motivo", "Remessa enviado ao STF antes de passar ao STJ"));
 
         ResultActions result = mockMvc.perform(
-                post("/api/remessas/preautuacao").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
+                put("/api/remessas/" + remessaInvalida.get("protocoloId").asLong() + "/preautuacao-originario")
+                        .contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
 
         result.andExpect(status().isBadRequest());
     }
@@ -178,10 +188,13 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     @Test
     @WithMockOauth2User(value = "cartoraria", components = "preparar-oficio-devolucao")
     public void naoDeveElaborarOficioParaDevolucaoDaRemessaInvalida() throws Exception {
-        JsonObject remessaInvalida = object().get();
+        JsonObject remessaInvalida = object(
+                field("protocoloId", 9002));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-oficio").contentType(APPLICATION_JSON)
-                .content(remessaInvalida.toString()));
+        ResultActions result = mockMvc
+                .perform(put("/api/remessas/" + remessaInvalida.get("protocoloId").asLong() + "/preparacao-devolucao")
+                        .contentType(APPLICATION_JSON)
+                        .content(remessaInvalida.toString()));
 
         result.andExpect(status().isBadRequest());
     }
@@ -196,7 +209,8 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 field("motivo", ""));
 
         ResultActions result = mockMvc.perform(
-                post("/api/remessas/devolucao").contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
+                post("/api/remessas/" + remessaParaDevolver.get("protocoloId").asLong() + "/devolucao")
+                        .contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
 
         result.andExpect(status().isBadRequest());
     }
@@ -204,10 +218,14 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
     @Test
     @WithMockOauth2User(value = "gestor-recebimento", components = "assinar-oficio-devolucao")
     public void naoDeveAssinarUmOficioDeDevolucao() throws Exception {
-        JsonObject remessaInvalida = object().get();
+        JsonObject remessaInvalida = object(
+                field("protocoloId", 1));
 
-        ResultActions result = mockMvc.perform(post("/api/remessas/devolucao-assinatura").contentType(APPLICATION_JSON)
-                .content(remessaInvalida.toString()));
+        ResultActions result =
+                mockMvc.perform(
+                        put("/api/remessas/" + remessaInvalida.get("protocoloId").asLong() + "/assinatura-devolucao")
+                                .contentType(APPLICATION_JSON)
+                                .content(remessaInvalida.toString()));
 
         result.andExpect(status().isBadRequest());
     }

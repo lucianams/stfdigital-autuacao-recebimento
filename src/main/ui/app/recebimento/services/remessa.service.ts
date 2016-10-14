@@ -27,7 +27,7 @@ export class RemessaService {
     public listarTiposProcessos(): Array<TipoProcesso> {
         let tiposProcesso = new Array<TipoProcesso>();
         tiposProcesso.push(new TipoProcesso("ORIGINARIO", "Originário"));
-        tiposProcesso.push(new TipoProcesso("RECURSAL", "RECURSAL"));
+        tiposProcesso.push(new TipoProcesso("RECURSAL", "Recursal"));
         return tiposProcesso;
     }
 

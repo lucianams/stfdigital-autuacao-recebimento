@@ -51,7 +51,7 @@ describe("Preautuação de Remessa de Processo Recursal - Devolver", () => {
         principalPage.acessarTarefa("Pré-Autuar Remessa de Processo Recursal", protocolo);
     });
 
-    it("Deveria preencher as informações da devolução da preautuação originária", () => {
+    it("Deveria preencher as informações da devolução da preautuação recursal", () => {
         preautuacaoRecursalPage.preencherMotivo("Petição indevida.");
     });
 

@@ -42,8 +42,8 @@ export class PreautuacaoService {
      * Envia os dados da preautuação para o serviço de recebimento (back-end).
      */
     public preautuarProcesso(cmdPreautuar: PreautuarRemessaCommand): IPromise<{}> {
-        return this.$http.post(this.properties.url + ":" + this.properties.port +
-                PreautuacaoService.urlServicoPreautuacao + "/preautuacao", cmdPreautuar);
+        return this.$http.put(this.properties.apiUrl + PreautuacaoService.urlServicoPreautuacao +
+                "/" + cmdPreautuar.protocoloId + "/preautuacao-originario", cmdPreautuar);
     }
 }
 

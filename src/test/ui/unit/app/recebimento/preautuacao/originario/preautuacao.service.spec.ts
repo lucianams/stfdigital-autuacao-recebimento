@@ -32,7 +32,8 @@ describe("Teste do serviço de preautuação", () => {
         let cmdPreautuar: PreautuarRemessaCommand = new PreautuarRemessaCommand();
         cmdPreautuar.classeId = "HC";
         cmdPreautuar.preferencias = [1];
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/preautuacao", cmdPreautuar)
+        $httpBackend.expectPUT(properties.apiUrl + "/recebimento/api/remessas/" +
+                cmdPreautuar.protocoloId + "/preautuacao-originario", cmdPreautuar)
                 .respond(200, "");
         preautuacao.preautuarProcesso(cmdPreautuar).then(handler.success, handler.error);
         $httpBackend.flush();

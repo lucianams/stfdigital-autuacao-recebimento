@@ -37,7 +37,7 @@ describe("Teste do serviço preparacao-oficio-devolucao.service", () => {
     it("Deveria chamar o serviço rest listagem de motivos de devolução", () => {
         let motivosDevolucao: MotivoDevolucao[] = [new MotivoDevolucao(123, "Motivo 1", [3, 4]),
                 new MotivoDevolucao(124, "Motivo 2", [5, 6])];
-        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/devolucao/motivos-devolucao")
+        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/motivos-devolucao")
                 .respond(200, motivosDevolucao);
 
         preparacaoOficioDevolucaoService.listarMotivosDevolucao().then(handler.success, handler.error);
@@ -52,7 +52,7 @@ describe("Teste do serviço preparacao-oficio-devolucao.service", () => {
         let modelos: Modelo[] = [<Modelo>{id: 1, nome: "Modelo de teste", documento: 3,
                 tipoDocumento: new TipoDocumento(7, "Ofício de devolução")}];
         let idMotivoDevolucao: number = 123;
-        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/devolucao/motivos-devolucao/" +
+        $httpBackend.expectGET(properties.apiUrl + "/recebimento/api/remessas/motivos-devolucao/" +
                 idMotivoDevolucao + "/modelos").respond(200, modelos);
 
         preparacaoOficioDevolucaoService.consultarModelosPorMotivo(idMotivoDevolucao)
@@ -96,7 +96,8 @@ describe("Teste do serviço preparacao-oficio-devolucao.service", () => {
 
     it("Deveria chamar o serviço rest de finalizar o ofício de devolução", () => {
         let command: PrepararOficioParaDevolucaoCommand = new PrepararOficioParaDevolucaoCommand(123, 3, 7, 8);
-        $httpBackend.expectPOST(properties.apiUrl + "/recebimento/api/remessas/devolucao-oficio", command)
+        $httpBackend.expectPUT(properties.apiUrl + "/recebimento/api/remessas/" + command.protocoloId +
+                "/preparacao-devolucao", command)
                 .respond(200, "");
 
         preparacaoOficioDevolucaoService.finalizarDevolucao(command).then(handler.success, handler.error);

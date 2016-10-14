@@ -40,8 +40,9 @@ export class DevolucaoAssinaturaService {
     }
 
     public assinarOficioDevolucao(command: AssinarOficioParaDevolucaoCommand): ng.IPromise<{}> {
-        return this.$http.post(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa +
-                "/devolucao-assinatura", command).then((response: ng.IHttpPromiseCallbackArg<{}>) => {
+        return this.$http.put(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa +
+                "/" + command.protocoloId +  "/assinatura-devolucao", command)
+                .then((response: ng.IHttpPromiseCallbackArg<{}>) => {
             return response.data;
         });
     }
@@ -50,7 +51,7 @@ export class DevolucaoAssinaturaService {
         let promises: ng.IPromise<Devolucao>[] = [];
         for (let protocoloId of protocolos) {
             promises.push(this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiRemessa + "/" +
-                    protocoloId + "/devolucao")
+                    protocoloId + "/devolucoes")
                 .then((response: ng.IHttpPromiseCallbackArg<Devolucao>) => {
                     return response.data;
                 }));

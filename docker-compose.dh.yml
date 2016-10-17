@@ -1,4 +1,4 @@
-# Define a configuração para rodar com imagens locais
+# Define a configuração para rodar com imagens do Docker Hub
 version: '2'
 volumes:
   logs:
@@ -8,24 +8,20 @@ services:
     extends:
       file: shared/compose/common.yml
       service: rabbit
-    image: registry.stf.jus.br/rabbitmq:management
   discovery:
     extends:
       file: shared/compose/common.yml
       service: discovery
-    image: registry.stf.jus.br/stfdigital/plataforma-discovery
   gateway:
     extends:
       file: shared/compose/common.yml
       service: gateway
-    image: registry.stf.jus.br/stfdigital/plataforma-gateway
     depends_on:
      - discovery
   services:
     extends:
       file: shared/compose/common.yml
       service: processos
-    image: registry.stf.jus.br/stfdigital/plataforma-processos
     depends_on:
      - rabbit
      - discovery
@@ -33,14 +29,12 @@ services:
     extends:
       file: shared/compose/common.yml
       service: ui
-    image: registry.stf.jus.br/stfdigital/plataforma-ui
     depends_on:
      - gateway
   userauthentication:
     extends:
       file: shared/compose/common.yml
       service: userauthentication
-    image: registry.stf.jus.br/stfdigital/plataforma-userauthentication
     depends_on:
      - rabbit
      - discovery
@@ -48,17 +42,14 @@ services:
     extends:
       file: shared/compose/common.yml
       service: cassandra
-    image: registry.stf.jus.br/cassandra:2.1
   onlyoffice:
     extends:
       file: shared/compose/common.yml
       service: onlyoffice_ambassador
-    image: registry.stf.jus.br/svendowideit/ambassador
   documents:
     extends:
       file: shared/compose/common.yml
       service: documents
-    image: registry.stf.jus.br/stfdigital/plataforma-documents
     links:
      - onlyoffice:docker # documents precisa acessar o onlyoffice pelo host docker para não dar erro de certificado
     depends_on:

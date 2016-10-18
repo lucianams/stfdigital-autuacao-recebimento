@@ -11,4 +11,4 @@ EUREKA_PREFER_IP_ADDRESS=false JAVA_SERVICE_SPRING_PROFILES=development,docker d
 ./scripts/wait-ready.sh $RUNNING_HOST
 ./shared/scripts/wait-up.sh "http://$RUNNING_HOST:4444/wd/hub" 30
 
-gradle gulpTestE2E
+gradle -Pe2eBaseUrl=https://localhost:8443 -Pe2eSeleniumAddress=http://docker:4444/wd/hub gulpTestE2E

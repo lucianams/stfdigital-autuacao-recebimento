@@ -1,5 +1,6 @@
 package br.jus.stf.autuacao.recebimento.interfaces;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,10 +75,7 @@ public class RemessaRestResource {
     @ApiOperation(value = "Registra uma remessa.")
     @RequestMapping(value = "", method = RequestMethod.POST)
     public void registrar(@RequestBody @Valid RegistrarRemessaCommand command, BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -100,10 +99,7 @@ public class RemessaRestResource {
     public void preautuar(@PathVariable("protocoloId") Long protocoloId,
             @RequestBody @Valid PreautuarOriginarioCommand command,
             BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(protocoloId, command.getProtocoloId(), binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -116,10 +112,7 @@ public class RemessaRestResource {
     @RequestMapping(value = "/{protocoloId}/preautuacao-recursal", method = RequestMethod.PUT)
     public void preautuarRecursal(@PathVariable("protocoloId") Long protocoloId,
             @RequestBody @Valid PreautuarRecursalCommand command, BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(protocoloId, command.getProtocoloId(), binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -132,10 +125,7 @@ public class RemessaRestResource {
     @RequestMapping(value = "/{protocoloId}/devolucao", method = RequestMethod.POST)
     public void devolver(@PathVariable Long protocoloId, @RequestBody @Valid DevolverRemessaCommand command,
             BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(protocoloId, command.getProtocoloId(), binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -147,10 +137,7 @@ public class RemessaRestResource {
     @RequestMapping(value = "/{protocoloId}/preparacao-devolucao", method = RequestMethod.PUT)
     public void prepararDevolucao(@PathVariable Long protocoloId,
             @RequestBody @Valid PrepararOficioParaDevolucaoCommand command, BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(protocoloId, command.getProtocoloId(), binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -163,10 +150,7 @@ public class RemessaRestResource {
     public void assinarDevolucao(@PathVariable Long protocoloId,
             @RequestBody @Valid AssinarOficioParaDevolucaoCommand command,
             BindingResult binding) {
-        if (binding.hasErrors()) {
-            throw new IllegalArgumentException(message(binding));
-        }
-
+        isValid(protocoloId, command.getProtocoloId(), binding);
         recebimentoApplicationService.handle(command);
     }
 
@@ -180,8 +164,24 @@ public class RemessaRestResource {
         return devolucaoDtoAssembler.toDto(remessaRepository.findOne(new ProtocoloId(id)));
     }
 
-    private static String message(BindingResult binding) {
-        return String.format(REMESSA_INVALIDA_PATTERN, binding.getAllErrors());
+    private static void isValid(Long protocoloIdPath, Long protocoloIdCommand, BindingResult binding) {
+        isValid(binding);
+
+        if (!protocoloIdPath.equals(protocoloIdCommand)) {
+            throw new IllegalArgumentException(message(
+                    Arrays.asList(
+                            new ObjectError("Remessa", "Identificadores do comando incompatíveis."))));
+        }
+    }
+
+    private static void isValid(BindingResult binding) {
+        if (binding.hasErrors()) {
+            throw new IllegalArgumentException(message(binding.getAllErrors()));
+        }
+    }
+
+    private static String message(List<ObjectError> errors) {
+        return String.format(REMESSA_INVALIDA_PATTERN, errors);
     }
 
 }

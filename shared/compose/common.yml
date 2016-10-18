@@ -104,9 +104,9 @@ services:
     image: supremotribunalfederal/stfdigital-plataforma-ui
     ports:
      - "8443:8443"
-  userauthentication:
-    container_name: userauthentication
-    image: supremotribunalfederal/stfdigital-plataforma-userauthentication
+  identidades:
+    container_name: identidades
+    image: supremotribunalfederal/stfdigital-plataforma-identidades
     volumes:
      - logs:/logs
     ports:

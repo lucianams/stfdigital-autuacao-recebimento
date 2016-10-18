@@ -36,11 +36,11 @@ services:
     image: registry.stf.jus.br/stfdigital/plataforma-ui
     depends_on:
      - gateway
-  userauthentication:
+  identidades:
     extends:
       file: shared/compose/common.yml
-      service: userauthentication
-    image: registry.stf.jus.br/stfdigital/plataforma-userauthentication
+      service: identidades
+    image: registry.stf.jus.br/stfdigital/plataforma-identidades
     depends_on:
      - rabbit
      - discovery

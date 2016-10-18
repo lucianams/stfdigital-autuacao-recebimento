@@ -1,4 +1,4 @@
-# Define a configuração para rodar com imagens locais
+# Define a configuração para rodar com imagens do registro corporativo
 version: '2'
 volumes:
   logs:

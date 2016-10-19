@@ -21,7 +21,7 @@ services:
     image: registry.stf.jus.br/stfdigital/plataforma-gateway
     depends_on:
      - discovery
-  services:
+  processos:
     extends:
       file: shared/compose/common.yml
       service: processos

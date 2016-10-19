@@ -1,2 +1,0 @@
-# Scripts shell devem ter LF como fim de linha
-*.sh text eol=lf

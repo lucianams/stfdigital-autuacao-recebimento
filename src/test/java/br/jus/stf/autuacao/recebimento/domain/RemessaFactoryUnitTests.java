@@ -1,11 +1,10 @@
-package br.jus.stf.autuacao.recebimento;
+package br.jus.stf.autuacao.recebimento.domain;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import br.jus.stf.autuacao.recebimento.domain.RemessaFactory;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;
 import br.jus.stf.autuacao.recebimento.domain.model.RemessaOriginario;

@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento;
+package br.jus.stf.autuacao.recebimento.infra;
 
 import static java.time.Year.now;
 

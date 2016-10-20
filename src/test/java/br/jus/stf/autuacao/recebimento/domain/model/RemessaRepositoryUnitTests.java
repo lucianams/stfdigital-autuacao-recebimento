@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento;
+package br.jus.stf.autuacao.recebimento.domain.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +25,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 
+import br.jus.stf.autuacao.recebimento.ApplicationContextInitializer;
 import br.jus.stf.autuacao.recebimento.domain.model.FormaRecebimento;
 import br.jus.stf.autuacao.recebimento.domain.model.MotivoDevolucao;
 import br.jus.stf.autuacao.recebimento.domain.model.Recebedor;

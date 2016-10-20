@@ -1,4 +1,4 @@
-package br.jus.stf.autuacao.recebimento;
+package br.jus.stf.autuacao.recebimento.domain.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

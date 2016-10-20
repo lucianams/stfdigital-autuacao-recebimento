@@ -167,7 +167,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
         ResultActions result = mockMvc.perform(
                 post("/api/remessas").contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -182,7 +182,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 put("/api/remessas/" + remessaInvalida.get("protocoloId").asLong() + "/preautuacao-originario")
                         .contentType(APPLICATION_JSON).content(remessaInvalida.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -196,7 +196,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                         .contentType(APPLICATION_JSON)
                         .content(remessaInvalida.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -212,7 +212,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                 post("/api/remessas/" + remessaParaDevolver.get("protocoloId").asLong() + "/devolucao")
                         .contentType(APPLICATION_JSON).content(remessaParaDevolver.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -227,7 +227,7 @@ public class RemessaOriginarioIntegrationTests extends IntegrationTestsSupport {
                                 .contentType(APPLICATION_JSON)
                                 .content(remessaInvalida.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
     }
 
 }

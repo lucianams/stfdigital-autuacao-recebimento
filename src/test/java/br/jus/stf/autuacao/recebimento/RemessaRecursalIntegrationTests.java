@@ -113,7 +113,27 @@ public class RemessaRecursalIntegrationTests extends IntegrationTestsSupport {
                                 .contentType(APPLICATION_JSON)
                                 .content(remessaInvalida.toString()));
 
-        result.andExpect(status().isBadRequest());
+        result.andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    @WithMockOauth2User(value = "preautuador-recursal", components = "preautuar-recursal")
+    public void naoDevePreautuarUmaRemessaCujosIdsSaoIncompativeis() throws Exception {
+        JsonObject remessaInvalida = object(
+                field("protocoloId", 1),
+                field("classeId", "RE"),
+                field("numeroProcessoOrigem", "RE-100"),
+                field("numeroUnicoProcesso", "00000100-15.2008.100.0000"),
+                field("preferencias", array(1)),
+                field("sigilo", "PUBLICO"));
+
+        ResultActions result =
+                mockMvc.perform(
+                        put("/api/remessas/2/preautuacao-recursal")
+                                .contentType(APPLICATION_JSON)
+                                .content(remessaInvalida.toString()));
+
+        result.andExpect(status().is4xxClientError());
     }
 
 }

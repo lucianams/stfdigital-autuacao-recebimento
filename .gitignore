@@ -56,3 +56,6 @@ logs
 
 # Certificado do registro
 stfca.pem
+
+# Relatórios para o sonar
+reports

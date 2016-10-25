@@ -90,7 +90,8 @@ module.exports = function(config) {
       'karma-coverage',
       'karma-jasmine',
 	    'karma-html-reporter',
-	    'karma-mocha-reporter'
+	    'karma-mocha-reporter',
+      'karma-junit-reporter'
     ],
 
     coverageReporter: {
@@ -105,12 +106,18 @@ module.exports = function(config) {
       }]
     },
 
-    reporters: ['mocha', 'html', 'coverage'],
+    reporters: ['mocha', 'html', 'coverage', 'junit'],
 
     htmlReporter : {
 		  outputDir : path.join(conf.paths.unit, 'results/html')
 	  },
     
+    junitReporter: {
+      outputDir: path.join(conf.paths.unit, 'results/xml'),
+      outputFile: 'junit-ts.xml',
+      useBrowserName: false
+    },
+
     systemjs: {
     	configFile:  path.join(conf.paths.test, 'system.conf.js'),
     	serveFiles: [path.join(conf.paths.dist, '**/*.js'), path.join(conf.paths.dist, 'maps/**/*.js.map'),

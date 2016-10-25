@@ -6,7 +6,7 @@ buildscript {
         gradleDockerPluginVersion = '0.8.0'
         gradleNodePluginVersion = '0.12'
         gradleGulpPluginVersion = '0.12'
-        sonarqubeGradlePluginVersion = '2.0.1'
+        sonarqubeGradlePluginVersion = '2.1'
         
         springCloudReleaseTrainVersion = 'Brixton.SR6'
         apacheCommonsVersion = '3.3.2'
@@ -147,7 +147,7 @@ dependencies {
 
 // Cobertura de testes
 jacoco {
-    toolVersion = '0.7.7.201606060606'
+    toolVersion = '0.7.3.201502191951'
 }
 
 node {
@@ -185,6 +185,10 @@ task gulpPublishUnitCoverage(type: GulpTask) {
     args = ['publish-unit-coverage']
 }
 
+task gulpSonarLint(type: GulpTask) {
+    args = ['sonar-lint']
+}
+
 ext.e2eBaseUrl = project.hasProperty('e2eBaseUrl') ? project.getProperty('e2eBaseUrl') : 'https://docker:8443'
 ext.e2eSeleniumAddress = project.hasProperty('e2eSeleniumAddress') ? project.getProperty('e2eSeleniumAddress') : 'http://docker:4444/wd/hub'
 
@@ -199,6 +203,8 @@ task gulpBuildDist(type: GulpTask) {
 npmInstall.dependsOn npm_prune
 gulpBuildDist.dependsOn tasks.npmInstall
 processResources.dependsOn tasks.gulpBuildDist
+
+tasks.sonarqube.dependsOn tasks.gulpSonarLint
 
 ext.dockerImageTag = project.hasProperty('dockerImageTag') ? project.getProperty('dockerImageTag') : ''
 

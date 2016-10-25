@@ -9,6 +9,8 @@ var $ = require('gulp-load-plugins')({
 		pattern: ['gulp-*', 'del']
 });
 
+var SonarWebReporters = require("sonar-web-frontend-reporters");
+
 var createTsProjectForDefinition = function() {
     return $.typescript.createProject(path.join(conf.paths.src, 'tsconfig.json'), {
     	declaration: true
@@ -149,4 +151,20 @@ gulp.task('compile-ts:unit', ['ts-lint:unit'], function() {
         .pipe($.sourcemaps.write('.'))
         .pipe($.destClean(tsOutputPathUnit))
         .pipe(gulp.dest(tsOutputPathUnit));
+});
+
+
+gulp.task('sonar-lint', function() {
+    return SonarWebReporters.launchReporters({
+        project: custom.project,
+        css : false,
+        scss : false,
+        html : false,
+        js : false,
+        eslint : false,
+        eslint_angular: false,
+        ts : {
+            src: "src/main/ui/app/**/*.ts"
+        }
+    });
 });

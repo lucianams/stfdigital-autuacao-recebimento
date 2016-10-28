@@ -53,9 +53,9 @@ export class PreparacaoOficioDevolucaoService {
         });
     }
 
-    public extrairTags(idDocumento: number): ng.IPromise<Tag[]> {
-        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiDocumentos + "/" +
-                idDocumento + "/tags").then((response: ng.IHttpPromiseCallbackArg<Tag[]>) => {
+    public extrairTags(idModelo: number): ng.IPromise<Tag[]> {
+        return this.$http.get(this.properties.apiUrl + PreparacaoOficioDevolucaoService.apiModelos + "/" +
+                idModelo + "/tags").then((response: ng.IHttpPromiseCallbackArg<Tag[]>) => {
             return response.data;
         });
     }

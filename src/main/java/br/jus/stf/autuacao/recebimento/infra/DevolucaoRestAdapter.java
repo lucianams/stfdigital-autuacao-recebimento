@@ -28,7 +28,7 @@ public class DevolucaoRestAdapter implements DevolucaoAdapter {
     public void concluirTexto(TextoId textoId) {
         Map<String, Object> concluirTextoCommand = ImmutableMap.of("textoId", textoId.toLong());
 
-        documentoRestClient.concluirTexto(concluirTextoCommand);
+        documentoRestClient.concluirTexto(textoId.toLong(), concluirTextoCommand);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class DevolucaoRestAdapter implements DevolucaoAdapter {
 
         command.put("textoId", textoId.toLong());
         command.put("documentoTemporarioId", documentoTemporarioId);
-        documentoRestClient.assinarTexto(command);
+        documentoRestClient.assinarTexto(textoId.toLong(), command);
     }
 
 }

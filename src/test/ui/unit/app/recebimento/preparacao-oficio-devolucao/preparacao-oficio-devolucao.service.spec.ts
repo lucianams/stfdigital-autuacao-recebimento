@@ -65,11 +65,11 @@ describe("Teste do serviço preparacao-oficio-devolucao.service", () => {
     });
 
     it("Deveria chamar o serviço rest de extração de tags", () => {
-        let documentoId: number = 77;
+        let modeloId: number = 77;
         let tags: Tag[] = [<Tag>{nome: "Destinatário"}, <Tag>{nome: "Vocativo"}];
-        $httpBackend.expectGET(properties.apiUrl + "/documents/api/documentos/77/tags").respond(200, tags);
+        $httpBackend.expectGET(properties.apiUrl + "/documents/api/modelos/77/tags").respond(200, tags);
 
-        preparacaoOficioDevolucaoService.extrairTags(documentoId).then(handler.success, handler.error);
+        preparacaoOficioDevolucaoService.extrairTags(modeloId).then(handler.success, handler.error);
 
         $httpBackend.flush();
 

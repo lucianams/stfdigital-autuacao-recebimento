@@ -91,7 +91,7 @@ describe("Teste do serviço devolucao-assinatura.service", () => {
             quantidadePaginas: 12,
             tamanho: 1024
         };
-        $httpBackend.expectGET(properties.apiUrl + "/documents/api/textos/3/documento-final").respond(200, documento);
+        $httpBackend.expectGET(properties.apiUrl + "/documents/api/textos/3/documento").respond(200, documento);
 
         devolucaoAssinaturaService.consultarDocumentoFinalDoTexto(textoId).then(handler.success, handler.error);
 

@@ -36,7 +36,7 @@ export class DevolucaoAssinaturaService {
             private $q: ng.IQService) { }
 
     public montarUrlConteudoTexto(textoId: number): string {
-        return this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + "/" + textoId + "/conteudo.pdf";
+        return this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + "/" + textoId + "/documento/conteudo";
     }
 
     public assinarOficioDevolucao(command: AssinarOficioParaDevolucaoCommand): ng.IPromise<{}> {
@@ -61,7 +61,7 @@ export class DevolucaoAssinaturaService {
 
     public consultarDocumentoFinalDoTexto(textoId: number): ng.IPromise<Documento> {
         return this.$http.get(this.properties.apiUrl + DevolucaoAssinaturaService.apiTexto + "/" + textoId +
-                "/documento-final")
+                "/documento")
             .then((response: ng.IHttpPromiseCallbackArg<Documento>) => {
                 return response.data;
             });

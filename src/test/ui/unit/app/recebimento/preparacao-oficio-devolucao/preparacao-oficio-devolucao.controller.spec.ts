@@ -117,7 +117,7 @@ describe("Teste do controlador preparacao-oficio-devolucao.controller", () => {
 
         $rootScope.$apply(); // Resolvendo promises
 
-        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(1);
 
         expect(controller.substituicoesTags).toEqual([new SubstituicaoTag("Destinatário", ""),
                 new SubstituicaoTag("Vocativo", "")]);
@@ -144,7 +144,7 @@ describe("Teste do controlador preparacao-oficio-devolucao.controller", () => {
 
         $rootScope.$apply(); // Resolvendo promises
 
-        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(3);
+        expect(mockPreparacaoOficioDevolucaoService.extrairTags).toHaveBeenCalledWith(1);
 
         expect(mockMessagesService.error).toHaveBeenCalledWith("Erro ao carregar as tags.");
     });

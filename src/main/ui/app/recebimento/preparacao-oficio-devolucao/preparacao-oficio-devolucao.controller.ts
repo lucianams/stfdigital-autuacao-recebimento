@@ -73,7 +73,7 @@ export class PreparacaoOficioDevolucaoController {
 
     public extrairTags(): void {
         this.tagsSendoCarregadas = true;
-        this.preparacaoOficioDevolucaoService.extrairTags(this.modelo.documento).then(
+        this.preparacaoOficioDevolucaoService.extrairTags(this.modelo.id).then(
                 (tags: Tag[]) => {
             this.substituicoesTags = tags.map<SubstituicaoTag>((tag: Tag) => {
                 return new SubstituicaoTag(tag.nome, "");

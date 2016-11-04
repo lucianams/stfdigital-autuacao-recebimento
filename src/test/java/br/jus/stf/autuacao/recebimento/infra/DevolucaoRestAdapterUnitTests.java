@@ -44,7 +44,7 @@ public class DevolucaoRestAdapterUnitTests {
 
         devolucaoRestAdapter.concluirTexto(textoId);
 
-        Mockito.verify(documentoRestClient, Mockito.times(1)).concluirTexto(command);
+        Mockito.verify(documentoRestClient, Mockito.times(1)).concluirTexto(textoId.toLong(), command);
     }
 
     @Test
@@ -58,7 +58,7 @@ public class DevolucaoRestAdapterUnitTests {
 
         devolucaoRestAdapter.assinarTexto(textoId, documentoTemporarioId);
 
-        Mockito.verify(documentoRestClient, Mockito.times(1)).assinarTexto(command);
+        Mockito.verify(documentoRestClient, Mockito.times(1)).assinarTexto(textoId.toLong(), command);
     }
 
 }

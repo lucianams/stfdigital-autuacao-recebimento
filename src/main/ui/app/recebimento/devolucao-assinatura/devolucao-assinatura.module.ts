@@ -31,6 +31,7 @@ function run($translatePartialLoader: ng.translate.ITranslatePartialLoaderServic
 }
 
 let devolucaoAssinatura: ng.IModule = angular.module("app.recebimento.devolucao-assinatura",
-        ["app.recebimento.services", "app.novo-processo", "app.support", "app.certification", "checklist-model"]);
+        ["app.recebimento.services", "app.novo-processo", "app.support", "app.documentos", "app.certification",
+        "checklist-model"]);
 devolucaoAssinatura.config(config).run(run);
 export default devolucaoAssinatura;
